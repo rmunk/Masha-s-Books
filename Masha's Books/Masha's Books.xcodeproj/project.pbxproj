@@ -20,6 +20,7 @@
 		C0B3FF8415742E42002DF30F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0B3FF6515742E41002DF30F /* Foundation.framework */; };
 		C0B3FF8C15742E42002DF30F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C0B3FF8A15742E42002DF30F /* InfoPlist.strings */; };
 		C0B3FF8F15742E42002DF30F /* Masha_s_BooksTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C0B3FF8E15742E42002DF30F /* Masha_s_BooksTests.m */; };
+		C0B3FF99157436CA002DF30F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0B3FF98157436CA002DF30F /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,7 @@
 		C0B3FF8B15742E42002DF30F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C0B3FF8D15742E42002DF30F /* Masha_s_BooksTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Masha_s_BooksTests.h; sourceTree = "<group>"; };
 		C0B3FF8E15742E42002DF30F /* Masha_s_BooksTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Masha_s_BooksTests.m; sourceTree = "<group>"; };
+		C0B3FF98157436CA002DF30F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0B3FF99157436CA002DF30F /* AVFoundation.framework in Frameworks */,
 				C0B3FF6415742E41002DF30F /* UIKit.framework in Frameworks */,
 				C0B3FF6615742E41002DF30F /* Foundation.framework in Frameworks */,
 				C0B3FF6815742E41002DF30F /* CoreGraphics.framework in Frameworks */,
@@ -81,6 +84,7 @@
 		C0B3FF5415742E41002DF30F = {
 			isa = PBXGroup;
 			children = (
+				C0B3FF98157436CA002DF30F /* AVFoundation.framework */,
 				C0B3FF6915742E41002DF30F /* Masha's Books */,
 				C0B3FF8715742E42002DF30F /* Masha's BooksTests */,
 				C0B3FF6215742E41002DF30F /* Frameworks */,
