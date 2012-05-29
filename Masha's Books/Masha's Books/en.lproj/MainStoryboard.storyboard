@@ -18,9 +18,96 @@
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Mashas Shop" image="Shop.png" id="iba-wP-Gil"/>
+                    <navigationItem key="navigationItem" id="Jfs-h4-KNe"/>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="211" y="274"/>
+            <point key="canvasLocation" x="-517" y="-706"/>
+        </scene>
+        <!--Mashas Shop View Controller - Mashas Shop-->
+        <scene sceneID="enu-2I-eXJ">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wuP-s6-Ygc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="jag-f8-AEm" customClass="MashasShopViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="NSR-PE-tog">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="blackTranslucent" id="ZXr-3y-dg4">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="rNw-1P-RZn"/>
+                                    <barButtonItem title="My Books" id="GVj-kz-hOG">
+                                        <connections>
+                                            <segue destination="3w0-9z-30H" kind="modal" modalTransitionStyle="flipHorizontal" id="q49-ZX-Jij"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Masha's Shop" id="xKH-o5-eTL"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="CAu-q4-4C6"/>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Mashas Shop" image="Shop.png" id="6mA-EY-eq2"/>
+                    <navigationItem key="navigationItem" id="NMk-Dx-Gsc"/>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="-1757" y="1346"/>
+        </scene>
+        <!--My Books View Controller-->
+        <scene sceneID="Wck-Jl-O2X">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IT5-pa-Wqu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="3w0-9z-30H" customClass="MyBooksViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="FTN-ZK-vaL">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" id="KmF-wD-yrh" customClass="ScrollViewContainer">
+                                <rect key="frame" x="0.0" y="44" width="1024" height="724"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <scrollView opaque="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="Sa6-T2-e8W">
+                                        <rect key="frame" x="187" y="72" width="651" height="580"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="3w0-9z-30H" id="wJT-JH-sBv"/>
+                                        </connections>
+                                    </scrollView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="scrollView" destination="Sa6-T2-e8W" id="tgU-Sr-F2w"/>
+                                </connections>
+                            </view>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="blackTranslucent" id="e8E-rL-FFc">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="XbP-zh-rdq"/>
+                                    <barButtonItem title="My Books" id="P4M-ZG-QKE"/>
+                                    <barButtonItem title="Masha's Shop" id="EKY-he-7xi">
+                                        <connections>
+                                            <segue destination="jag-f8-AEm" kind="modal" modalTransitionStyle="flipHorizontal" id="Evh-BY-xjD"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="maZ-i6-Ebf"/>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <connections>
+                        <outlet property="scrollView" destination="Sa6-T2-e8W" id="I6Q-kw-DBe"/>
+                        <outlet property="scrollViewContainer" destination="KmF-wD-yrh" id="nFl-gi-9Mo"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="-1757" y="347"/>
         </scene>
         <!--My Books View Controller - My Books-->
         <scene sceneID="9NB-gE-jkU">
@@ -30,20 +117,44 @@
                     <view key="view" contentMode="scaleToFill" id="EFD-r1-w2L">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="719"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" id="lfJ-I4-Nyn" customClass="ScrollViewContainer">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="719"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <scrollView opaque="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="Kdk-AG-gvB">
+                                        <rect key="frame" x="184" y="36" width="657" height="647"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="i4c-PB-hBI" id="7vU-cM-S0p"/>
+                                        </connections>
+                                    </scrollView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="scrollView" destination="Kdk-AG-gvB" id="FgW-do-1T7"/>
+                                </connections>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="My Books" image="MyBooks.png" id="b95-jO-Xcx"/>
+                    <connections>
+                        <outlet property="scrollView" destination="Kdk-AG-gvB" id="kSW-OB-Rxs"/>
+                        <outlet property="scrollViewContainer" destination="lfJ-I4-Nyn" id="ZOR-el-rBr"/>
+                    </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="211" y="-578"/>
+            <point key="canvasLocation" x="-517" y="-1603"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="I8b-r3-gmp">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G9T-9i-TNR" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tabBarController definesPresentationContext="YES" id="Vx0-Iu-9ec" sceneMemberID="viewController">
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="T6z-NY-daQ">
                         <rect key="frame" x="129" y="330" width="163" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -55,7 +166,7 @@
                     </connections>
                 </tabBarController>
             </objects>
-            <point key="canvasLocation" x="-1029" y="-150"/>
+            <point key="canvasLocation" x="-1757" y="-1130"/>
         </scene>
     </scenes>
     <resources>
@@ -68,6 +179,16 @@
         </class>
         <class className="MyBooksViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/MyBooksViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="scrollViewContainer" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="ScrollViewContainer" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ScrollViewContainer.h"/>
+            <relationships>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+            </relationships>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

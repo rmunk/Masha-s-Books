@@ -7,6 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C00383721575510F00999A19 /* ScrollViewContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = C00383711575510F00999A19 /* ScrollViewContainer.m */; };
+		C00383731575510F00999A19 /* ScrollViewContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = C00383711575510F00999A19 /* ScrollViewContainer.m */; };
+		C0038381157558DA00999A19 /* 00.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0038376157558DA00999A19 /* 00.jpg */; };
+		C0038382157558DA00999A19 /* 01.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0038377157558DA00999A19 /* 01.jpg */; };
+		C0038383157558DA00999A19 /* 02.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0038378157558DA00999A19 /* 02.jpg */; };
+		C0038384157558DA00999A19 /* 03.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0038379157558DA00999A19 /* 03.jpg */; };
+		C0038385157558DA00999A19 /* 04.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C003837A157558DA00999A19 /* 04.jpg */; };
+		C0038386157558DA00999A19 /* 05.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C003837B157558DA00999A19 /* 05.jpg */; };
+		C0038387157558DA00999A19 /* 06.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C003837C157558DA00999A19 /* 06.jpg */; };
+		C0038388157558DA00999A19 /* 07.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C003837D157558DA00999A19 /* 07.jpg */; };
+		C0038389157558DA00999A19 /* 08.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C003837E157558DA00999A19 /* 08.jpg */; };
+		C003838A157558DA00999A19 /* 09.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C003837F157558DA00999A19 /* 09.jpg */; };
+		C003838B157558DA00999A19 /* 10.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0038380157558DA00999A19 /* 10.jpg */; };
 		C0982991157501D1004EAA0D /* MyBooksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0982990157501D1004EAA0D /* MyBooksViewController.m */; };
 		C09829941575026E004EAA0D /* MashasShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C09829931575026E004EAA0D /* MashasShopViewController.m */; };
 		C09829A015750892004EAA0D /* MyBooks.png in Resources */ = {isa = PBXBuildFile; fileRef = C098299E15750892004EAA0D /* MyBooks.png */; };
@@ -39,6 +52,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C00383701575510F00999A19 /* ScrollViewContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollViewContainer.h; sourceTree = "<group>"; };
+		C00383711575510F00999A19 /* ScrollViewContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollViewContainer.m; sourceTree = "<group>"; };
+		C0038376157558DA00999A19 /* 00.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 00.jpg; sourceTree = "<group>"; };
+		C0038377157558DA00999A19 /* 01.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 01.jpg; sourceTree = "<group>"; };
+		C0038378157558DA00999A19 /* 02.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 02.jpg; sourceTree = "<group>"; };
+		C0038379157558DA00999A19 /* 03.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 03.jpg; sourceTree = "<group>"; };
+		C003837A157558DA00999A19 /* 04.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 04.jpg; sourceTree = "<group>"; };
+		C003837B157558DA00999A19 /* 05.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 05.jpg; sourceTree = "<group>"; };
+		C003837C157558DA00999A19 /* 06.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 06.jpg; sourceTree = "<group>"; };
+		C003837D157558DA00999A19 /* 07.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 07.jpg; sourceTree = "<group>"; };
+		C003837E157558DA00999A19 /* 08.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 08.jpg; sourceTree = "<group>"; };
+		C003837F157558DA00999A19 /* 09.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 09.jpg; sourceTree = "<group>"; };
+		C0038380157558DA00999A19 /* 10.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 10.jpg; sourceTree = "<group>"; };
 		C098298F157501D1004EAA0D /* MyBooksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyBooksViewController.h; sourceTree = "<group>"; };
 		C0982990157501D1004EAA0D /* MyBooksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyBooksViewController.m; sourceTree = "<group>"; };
 		C09829921575026E004EAA0D /* MashasShopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MashasShopViewController.h; sourceTree = "<group>"; };
@@ -92,9 +118,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C0038375157558A400999A19 /* Testing */ = {
+			isa = PBXGroup;
+			children = (
+				C0038376157558DA00999A19 /* 00.jpg */,
+				C0038377157558DA00999A19 /* 01.jpg */,
+				C0038378157558DA00999A19 /* 02.jpg */,
+				C0038379157558DA00999A19 /* 03.jpg */,
+				C003837A157558DA00999A19 /* 04.jpg */,
+				C003837B157558DA00999A19 /* 05.jpg */,
+				C003837C157558DA00999A19 /* 06.jpg */,
+				C003837D157558DA00999A19 /* 07.jpg */,
+				C003837E157558DA00999A19 /* 08.jpg */,
+				C003837F157558DA00999A19 /* 09.jpg */,
+				C0038380157558DA00999A19 /* 10.jpg */,
+			);
+			name = Testing;
+			sourceTree = "<group>";
+		};
 		C098299915750713004EAA0D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C0038375157558A400999A19 /* Testing */,
 				C09829A2157509A8004EAA0D /* Shop.png */,
 				C09829A3157509A8004EAA0D /* Shop@2x.png */,
 				C098299E15750892004EAA0D /* MyBooks.png */,
@@ -142,6 +187,8 @@
 				C09829931575026E004EAA0D /* MashasShopViewController.m */,
 				C098298F157501D1004EAA0D /* MyBooksViewController.h */,
 				C0982990157501D1004EAA0D /* MyBooksViewController.m */,
+				C00383701575510F00999A19 /* ScrollViewContainer.h */,
+				C00383711575510F00999A19 /* ScrollViewContainer.m */,
 				C098299915750713004EAA0D /* Resources */,
 				C0B3FF6A15742E41002DF30F /* Supporting Files */,
 			);
@@ -257,6 +304,17 @@
 				C09829A115750892004EAA0D /* MyBooks@2x.png in Resources */,
 				C09829A4157509A8004EAA0D /* Shop.png in Resources */,
 				C09829A5157509A8004EAA0D /* Shop@2x.png in Resources */,
+				C0038381157558DA00999A19 /* 00.jpg in Resources */,
+				C0038382157558DA00999A19 /* 01.jpg in Resources */,
+				C0038383157558DA00999A19 /* 02.jpg in Resources */,
+				C0038384157558DA00999A19 /* 03.jpg in Resources */,
+				C0038385157558DA00999A19 /* 04.jpg in Resources */,
+				C0038386157558DA00999A19 /* 05.jpg in Resources */,
+				C0038387157558DA00999A19 /* 06.jpg in Resources */,
+				C0038388157558DA00999A19 /* 07.jpg in Resources */,
+				C0038389157558DA00999A19 /* 08.jpg in Resources */,
+				C003838A157558DA00999A19 /* 09.jpg in Resources */,
+				C003838B157558DA00999A19 /* 10.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,6 +353,7 @@
 				C0B3FF7415742E41002DF30F /* MashasBooksAppDelegate.m in Sources */,
 				C0982991157501D1004EAA0D /* MyBooksViewController.m in Sources */,
 				C09829941575026E004EAA0D /* MashasShopViewController.m in Sources */,
+				C00383721575510F00999A19 /* ScrollViewContainer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,6 +362,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C0B3FF8F15742E42002DF30F /* Masha_s_BooksTests.m in Sources */,
+				C00383731575510F00999A19 /* ScrollViewContainer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
