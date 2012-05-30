@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MyBooksViewController : UIViewController
+@protocol MyBooksViewControllerDataSource <NSObject>
 
+@property (readonly) NSUInteger numberOfBooksInMyLibrary;
+
+- (UIImage *)BookCoverImageAtIndex:(NSUInteger)index;
+
+@end
+
+@interface MyBooksViewController : UIViewController
+@property (nonatomic, weak) id <MyBooksViewControllerDataSource> dataSource;
 @end

@@ -173,24 +173,6 @@
         <image name="MyBooks.png" width="30" height="30"/>
         <image name="Shop.png" width="30" height="30"/>
     </resources>
-    <classes>
-        <class className="MashasShopViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MashasShopViewController.h"/>
-        </class>
-        <class className="MyBooksViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MyBooksViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="scrollViewContainer" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="ScrollViewContainer" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ScrollViewContainer.h"/>
-            <relationships>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <nil key="statusBar"/>
         <simulatedOrientationMetrics key="orientation" orientation="landscapeRight"/>
