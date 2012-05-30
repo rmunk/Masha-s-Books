@@ -19,6 +19,8 @@
 @synthesize downloadUrl = _downloadUrl;
 @synthesize facebookLikeUrl = _facebookLikeUrl;
 @synthesize youTubeVideoUrl = _youTubeVideoUrl;
+@synthesize descriptionHTML = _descriptionHTML;
+@synthesize descriptionLongHTML = _descriptionLongHTML;
 
 @synthesize coverImage = _coverImage;
 @synthesize coverThumbnailImage = _coverThumbnailImage;

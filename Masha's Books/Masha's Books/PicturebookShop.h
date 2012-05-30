@@ -12,6 +12,20 @@
 #import "PicturebookCategory.h"
 #import "PicturebookAuthor.h"
 
+#define PICTUREBOOK_SHOP_DEBUG_LOGS 1
+
+#ifdef PICTUREBOOK_SHOP_DEBUG_LOGS
+
+#define PBDLOG(msg) NSLog(msg);
+#define PBDLOG_ARG(msg, arg) NSLog(msg, arg);
+
+#else
+
+#define PBDLOG(msg) 
+#define PBDLOG_ARG(msg, arg)
+
+#endif
+
 @interface PicturebookShop : NSObject <NSXMLParserDelegate>
 
 @property (nonatomic, strong) NSURL *urlBase;

@@ -11,10 +11,9 @@
 
 @interface CoverTableRowCell : UITableViewCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier withWidthOf:(NSInteger)width
-    desiredDistanceBetweenCovers:(NSInteger)distance andPictureBookCovers:(NSOrderedSet *)pbCovers;
+@property (readonly) CGFloat cellHeight;
 
-- (id)initWithFrame:(CGRect)frame withWidthOf:(NSInteger)width desiredDistanceBetweenCovers:(NSInteger)distance 
+- (id)initWithFrame:(CGRect)frame withNumberOfCoversInRow:(NSInteger)numOfCovers withWidthOf:(NSInteger)width desiredDistanceBetweenCovers:(NSInteger)distance 
 andPictureBookCovers:(NSOrderedSet *)pbCovers withTarget:(id)target withAction:(SEL)action;
 
 @end

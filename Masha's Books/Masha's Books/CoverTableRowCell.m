@@ -10,45 +10,24 @@
 
 @implementation CoverTableRowCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier withWidthOf:(NSInteger)width desiredDistanceBetweenCovers:(NSInteger)distance andPictureBookCovers:(NSArray *)pbCovers     
-{
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        // Initialization code
-        CGFloat ld = 0.;
-        int numOfCovers = pbCovers.count;
-        
-        ld = (width - (numOfCovers + 1.0) * distance) / numOfCovers; 
-        
-        for (int i = 0; i < numOfCovers; i++) {
-            CGRect frame = CGRectMake(((distance + ld) * i + distance), distance, ld, ld);
-            PicturebookInfo *pbInfo = [[PicturebookInfo alloc] init];
-            pbInfo = [pbCovers objectAtIndex:i];
-            PicturebookCover *pbCover = [[PicturebookCover alloc] initWithFrame:frame AndPicturebookInfo:pbInfo];
-            [pbCover setImage:pbInfo.coverImage forState:UIControlStateNormal];
-            [pbCover addTarget:self action:@selector(shopItemTapped:) forControlEvents:UIControlEventTouchUpInside];
-            //iView1.titleLabel.text = pbInfo.title;
-            [self.contentView addSubview:pbCover];
-            pbCover.contentMode = UIViewContentModeScaleAspectFit;
-            
-        }
-        
-    }
-    return self;
-}
+@synthesize cellHeight = _cellHeight;
 
-- (id)initWithFrame:(CGRect)frame withWidthOf:(NSInteger)width desiredDistanceBetweenCovers:(NSInteger)distance 
-    andPictureBookCovers:(NSArray *)pbCovers withTarget:(id)target withAction:(SEL)action;     
+- (id)initWithFrame:(CGRect)frame withNumberOfCoversInRow:(NSInteger)numOfCovers withWidthOf:(NSInteger)width desiredDistanceBetweenCovers:(NSInteger)distance 
+andPictureBookCovers:(NSArray *)pbCovers withTarget:(id)target withAction:(SEL)action;     
 {
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        
+        //ld - cover image width and height
         CGFloat ld = 0.;
-        int numOfCovers = pbCovers.count;
         
         ld = (width - (numOfCovers + 1.0) * distance) / numOfCovers; 
+        int numOfExistingCovers = pbCovers.count;
         
-        for (int i = 0; i < numOfCovers; i++) {
+        _cellHeight = ld + distance;
+        
+        for (int i = 0; i < numOfExistingCovers; i++) {
             CGRect frame = CGRectMake(((distance + ld) * i + distance), distance, ld, ld);
             PicturebookInfo *pbInfo = [[PicturebookInfo alloc] init];
             pbInfo = [pbCovers objectAtIndex:i];
@@ -60,6 +39,8 @@
             pbCover.contentMode = UIViewContentModeScaleAspectFit;
             
         }
+        
+        
         
     }
     return self;
