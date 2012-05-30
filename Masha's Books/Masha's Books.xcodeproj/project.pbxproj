@@ -27,12 +27,12 @@
 		C0038389157558DA00999A19 /* 08.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C003837E157558DA00999A19 /* 08.jpg */; };
 		C003838A157558DA00999A19 /* 09.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C003837F157558DA00999A19 /* 09.jpg */; };
 		C003838B157558DA00999A19 /* 10.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0038380157558DA00999A19 /* 10.jpg */; };
+		C08246E4157673E000054A3A /* MyBooks.png in Resources */ = {isa = PBXBuildFile; fileRef = C08246E0157673E000054A3A /* MyBooks.png */; };
+		C08246E5157673E000054A3A /* MyBooks@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C08246E1157673E000054A3A /* MyBooks@2x.png */; };
+		C08246E6157673E000054A3A /* Shop.png in Resources */ = {isa = PBXBuildFile; fileRef = C08246E2157673E000054A3A /* Shop.png */; };
+		C08246E7157673E000054A3A /* Shop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C08246E3157673E000054A3A /* Shop@2x.png */; };
 		C0982991157501D1004EAA0D /* MyBooksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0982990157501D1004EAA0D /* MyBooksViewController.m */; };
 		C09829941575026E004EAA0D /* MashasShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C09829931575026E004EAA0D /* MashasShopViewController.m */; };
-		C09829A015750892004EAA0D /* MyBooks.png in Resources */ = {isa = PBXBuildFile; fileRef = C098299E15750892004EAA0D /* MyBooks.png */; };
-		C09829A115750892004EAA0D /* MyBooks@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C098299F15750892004EAA0D /* MyBooks@2x.png */; };
-		C09829A4157509A8004EAA0D /* Shop.png in Resources */ = {isa = PBXBuildFile; fileRef = C09829A2157509A8004EAA0D /* Shop.png */; };
-		C09829A5157509A8004EAA0D /* Shop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C09829A3157509A8004EAA0D /* Shop@2x.png */; };
 		C0B3FF6415742E41002DF30F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0B3FF6315742E41002DF30F /* UIKit.framework */; };
 		C0B3FF6615742E41002DF30F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0B3FF6515742E41002DF30F /* Foundation.framework */; };
 		C0B3FF6815742E41002DF30F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0B3FF6715742E41002DF30F /* CoreGraphics.framework */; };
@@ -86,14 +86,14 @@
 		C003837E157558DA00999A19 /* 08.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 08.jpg; sourceTree = "<group>"; };
 		C003837F157558DA00999A19 /* 09.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 09.jpg; sourceTree = "<group>"; };
 		C0038380157558DA00999A19 /* 10.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 10.jpg; sourceTree = "<group>"; };
+		C08246E0157673E000054A3A /* MyBooks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MyBooks.png; sourceTree = "<group>"; };
+		C08246E1157673E000054A3A /* MyBooks@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MyBooks@2x.png"; sourceTree = "<group>"; };
+		C08246E2157673E000054A3A /* Shop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Shop.png; sourceTree = "<group>"; };
+		C08246E3157673E000054A3A /* Shop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Shop@2x.png"; sourceTree = "<group>"; };
 		C098298F157501D1004EAA0D /* MyBooksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyBooksViewController.h; sourceTree = "<group>"; };
 		C0982990157501D1004EAA0D /* MyBooksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyBooksViewController.m; sourceTree = "<group>"; };
 		C09829921575026E004EAA0D /* MashasShopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MashasShopViewController.h; sourceTree = "<group>"; };
 		C09829931575026E004EAA0D /* MashasShopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MashasShopViewController.m; sourceTree = "<group>"; };
-		C098299E15750892004EAA0D /* MyBooks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MyBooks.png; path = ../../../Resources/MyBooks.png; sourceTree = "<group>"; };
-		C098299F15750892004EAA0D /* MyBooks@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "MyBooks@2x.png"; path = "../../../Resources/MyBooks@2x.png"; sourceTree = "<group>"; };
-		C09829A2157509A8004EAA0D /* Shop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Shop.png; path = ../../../Resources/Shop.png; sourceTree = "<group>"; };
-		C09829A3157509A8004EAA0D /* Shop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Shop@2x.png"; path = "../../../Resources/Shop@2x.png"; sourceTree = "<group>"; };
 		C0B3FF5F15742E41002DF30F /* Masha's Books.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Masha's Books.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0B3FF6315742E41002DF30F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C0B3FF6515742E41002DF30F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -182,10 +182,10 @@
 			isa = PBXGroup;
 			children = (
 				C0038375157558A400999A19 /* Testing */,
-				C09829A2157509A8004EAA0D /* Shop.png */,
-				C09829A3157509A8004EAA0D /* Shop@2x.png */,
-				C098299E15750892004EAA0D /* MyBooks.png */,
-				C098299F15750892004EAA0D /* MyBooks@2x.png */,
+				C08246E0157673E000054A3A /* MyBooks.png */,
+				C08246E1157673E000054A3A /* MyBooks@2x.png */,
+				C08246E2157673E000054A3A /* Shop.png */,
+				C08246E3157673E000054A3A /* Shop@2x.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -343,10 +343,6 @@
 			files = (
 				C0B3FF6E15742E41002DF30F /* InfoPlist.strings in Resources */,
 				C0B3FF7715742E41002DF30F /* MainStoryboard.storyboard in Resources */,
-				C09829A015750892004EAA0D /* MyBooks.png in Resources */,
-				C09829A115750892004EAA0D /* MyBooks@2x.png in Resources */,
-				C09829A4157509A8004EAA0D /* Shop.png in Resources */,
-				C09829A5157509A8004EAA0D /* Shop@2x.png in Resources */,
 				C0038381157558DA00999A19 /* 00.jpg in Resources */,
 				C0038382157558DA00999A19 /* 01.jpg in Resources */,
 				C0038383157558DA00999A19 /* 02.jpg in Resources */,
@@ -358,6 +354,10 @@
 				C0038389157558DA00999A19 /* 08.jpg in Resources */,
 				C003838A157558DA00999A19 /* 09.jpg in Resources */,
 				C003838B157558DA00999A19 /* 10.jpg in Resources */,
+				C08246E4157673E000054A3A /* MyBooks.png in Resources */,
+				C08246E5157673E000054A3A /* MyBooks@2x.png in Resources */,
+				C08246E6157673E000054A3A /* Shop.png in Resources */,
+				C08246E7157673E000054A3A /* Shop@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
