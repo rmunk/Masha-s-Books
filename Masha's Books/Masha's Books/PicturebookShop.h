@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <CoreData/CoreData.h>
 #import "PicturebookInfo.h"
 #import "PicturebookCategory.h"
 #import "PicturebookAuthor.h"
@@ -33,6 +34,8 @@
 @property (nonatomic, strong) NSMutableOrderedSet *categories;
 @property (nonatomic, strong) NSMutableOrderedSet *authors;
 @property (readwrite) BOOL isShopLoaded;
+
+@property (nonatomic, strong) UIManagedDocument *libraryDatabase;
 
 - (PicturebookShop *)initShop;
 - (void)refreshShop;    

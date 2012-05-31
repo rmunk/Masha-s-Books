@@ -20,6 +20,8 @@
 @implementation PicturebookShopViewController
 @synthesize shopRefreshButton = _shopRefreshButton;
 @synthesize shopWebView = _shopWebView;
+@synthesize selectedCoverTumbnailView = _selectedCoverTumbnailView;
+@synthesize buyButton = _buyButton;
 
 @synthesize picturebookShop = _picturebookShop;
 @synthesize selectedPicturebookCategory = _selectedPicturebookCategory;
@@ -61,9 +63,12 @@
     self.navigationItem.rightBarButtonItem = activityItem;*/
 
 }
+- (IBAction)buyPictureBook:(UIButton *)sender {
+}
 
 - (void)picturebookShopFinishedLoading:(NSNotification *) notification {
     PBDLOG(@"Picture book shop reports loading finished!");
+    
     
     /* Za testiranje kad bude implementiran description html
     PicturebookInfo *pbInfo = [[self.picturebookShop getBooksForCategory:self.selectedPicturebookCategory] objectAtIndex:0];
@@ -71,6 +76,9 @@
     NSURL *baseURL = [NSURL fileURLWithPath:bundlePath];
     [self.shopWebView loadHTMLString:pbInfo. baseURL:
      */
+    
+    [[self getTableViewForTag:COVERS_TABLEVIEW_TAG] reloadData];
+    [self.view setNeedsDisplay];
 }
 
 - (void)picturebookShopLoadingError:(NSNotification *) notification {
@@ -82,7 +90,10 @@
     
     [self.shopWebView loadHTMLString:sender.pbInfo.descriptionHTML baseURL:nil];
     PBDLOG_ARG(@"Picturebook descriptionHTML: %@", sender.pbInfo.descriptionHTML);
-    //[self.shopWebView reload]; 
+    self.selectedCoverTumbnailView.image = sender.pbInfo.coverImage;
+    [self.selectedCoverTumbnailView setContentMode:UIViewContentModeScaleAspectFit];
+    //[self.shopWebView reload];
+    self.buyButton.hidden = FALSE;
 }
 
 - (void)viewDidLoad
@@ -94,6 +105,7 @@
     self.selectedPicturebookCategory = [[PicturebookCategory alloc] initWithName:@"All" AndID:0];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(picturebookShopFinishedLoading:) name:@"PicturebookShopFinishedLoading" object:nil ]; 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(picturebookShopLoadingError:) name:@"PicturebookShopLoadingError" object:nil ];
+    self.buyButton.hidden = TRUE;
     
 }
 
@@ -101,6 +113,8 @@
 {
     [self setShopRefreshButton:nil];
     [self setShopWebView:nil];
+    [self setSelectedCoverTumbnailView:nil];
+    [self setBuyButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -189,8 +203,7 @@
             if (tableView.rowHeight != cell.cellHeight) {
                 tableView.rowHeight = cell.cellHeight;
                 [tableView reloadData];
-            }
-            
+            }            
         }
     }	
     

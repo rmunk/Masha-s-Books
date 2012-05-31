@@ -29,6 +29,8 @@
 @synthesize categories = _categories;
 @synthesize authors = _authors;
 
+@synthesize libraryDatabase = _libraryDatabase;
+
 @synthesize shopURL = _shopURL;
 @synthesize xmlParser = _xmlParser;
 @synthesize pbookInfo = _pbookInfo;
@@ -44,38 +46,61 @@
 
 - (PicturebookShop *)initShop {
     self = [super init];
-    _shopURL = [[NSURL alloc] initWithString:@"http://www.mashasbooks.com/storeops/bookstore-xml.aspx"];
+    self.shopURL = [[NSURL alloc] initWithString:@"http://www.mashasbooks.com/storeops/bookstore-xml.aspx"];
     //_shopURL = [[NSURL alloc] initWithString:@"http://dl.dropbox.com/u/286270/PicturebookShop.xml"];
     
-    _xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:self.shopURL];
-    if (_xmlParser) {
-        PBDLOG_ARG(@"Picturebook shop found at %@", _shopURL.description);
+    self.xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:self.shopURL];
+    if (self.xmlParser) {
+        PBDLOG_ARG(@"Picturebook shop found at %@", self.shopURL.description);
     }
-    [_xmlParser setDelegate:self];
+    [self.xmlParser setDelegate:self];
     
-    _categories = [[NSMutableOrderedSet alloc] init];
-    _books = [[NSMutableOrderedSet alloc] init];
-    _authors = [[NSMutableOrderedSet alloc] init];
+    self.categories = [[NSMutableOrderedSet alloc] init];
+    self.books = [[NSMutableOrderedSet alloc] init];
+    self.authors = [[NSMutableOrderedSet alloc] init];
     
-    _currentElementValue = [[NSString alloc] init];
-    _currentBookElement = [[NSString alloc] init];
-    _currentAuthorElement = [[NSString alloc] init];
+    self.currentElementValue = [[NSString alloc] init];
+    self.currentBookElement = [[NSString alloc] init];
+    self.currentAuthorElement = [[NSString alloc] init];
     
-    _df = [[NSDateFormatter alloc] init];
-    [_df setDateFormat:@"dd.mm.yyyy"]; 
+    self.df = [[NSDateFormatter alloc] init];
+    [self.df setDateFormat:@"dd.mm.yyyy"]; 
     
-    _isShopLoaded = NO;
+    self.isShopLoaded = NO;
     
     return self;
+}
+
+- (void)useDocument
+{
+    if (![[NSFileManager defaultManager] fileExistsAtPath:[self.libraryDatabase.fileURL path]]) {
+        [self.libraryDatabase saveToURL:self.libraryDatabase.fileURL forSaveOperation:UIDocumentSaveForCreating completionHandler:^(BOOL success){
+            
+        }];
+    } else if (self.libraryDatabase.documentState == UIDocumentStateClosed) {
+        [self.libraryDatabase openWithCompletionHandler:^(BOOL success){
+            
+        }];
+    } else if (self.libraryDatabase.documentState == UIDocumentStateNormal) {
+        
+    }
+}
+
+- (void)setLibraryDatabase:(UIManagedDocument *)libraryDatabase
+{
+    if (_libraryDatabase != libraryDatabase) {
+        _libraryDatabase = libraryDatabase;
+        [self useDocument];
+    }
 }
 
 - (void)refreshShop {
     PBDLOG_ARG(@"Picturebook shop: Refreshing shop from URL %@", [self.shopURL description]);
     
     [self.categories removeAllObjects];
-    PicturebookCategory *all = [[PicturebookCategory alloc] initWithName:@"All" AndID:0];
+    PicturebookCategory *all = [[PicturebookCategory alloc] initWithName:@"All" AndID:0];   
 
-    [self.categories addObject:all];
+    [self.categories addObject:all];    // Add "All" category to categories sets
  
     [self.books removeAllObjects];
     
@@ -98,37 +123,41 @@
 // Populating PicturebookInfo instances with cover images
 - (void)populateStoreWithImages {
     for (PicturebookInfo *pbInfo in self.books) {
-        if ([pbInfo isKindOfClass:[PicturebookInfo class]]) {
-            /*
-             NSMutableURLRequest *req = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:                                                                                 [NSString stringWithFormat:@"%@%d%@",                                                                                   @"http://www.mashasbooks.com/covers/", pbInfo.iD, @"_t.jpg"]] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:10];
-            [req setHTTPMethod:@"GET"];
-            // Set headers etc. if you need
-            NSURLConnection *connection =[[NSURLConnection alloc] initWithRequest:req delegate:self];           
-            
-            self.responseData = [[NSMutableData alloc] init]; 
-             */
+        
+        if ([pbInfo isKindOfClass:[PicturebookInfo class]]) { 
             
             NSURL *coverURL = [[NSURL alloc] initWithString:
                                [NSString stringWithFormat:@"%@%d%@", 
                                 @"http://www.mashasbooks.com/covers/", pbInfo.iD, @"_t.jpg"]]; 
             PBDLOG_ARG(@"Downloading cover image for book %@", pbInfo.title);
+            
             // Get an image from the URL below
-            UIImage *coverImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:coverURL]];
-            if (coverImage) {
-                PBDLOG(@"Image downloaded!");
-            }
-            pbInfo.coverImage = coverImage;
+            dispatch_queue_t downloadQueue = dispatch_queue_create("image download", NULL);
+            dispatch_async(downloadQueue, ^{
+                UIImage *coverImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:coverURL]];
+                dispatch_async(dispatch_get_main_queue(), ^{                    
+                    if (coverImage) {                                    
+                        PBDLOG(@"Image downloaded!");
+                    }
+                });                       
+                           
+                pbInfo.coverImage = coverImage;
+                [self shopDataLoaded];
+            });
+            dispatch_release(downloadQueue);
+            
         }
     }    
 }
 
 - (NSOrderedSet *)getBooksForCategory:(PicturebookCategory *)pbCategory {
+    
     NSMutableOrderedSet *booksForCategory = [[NSMutableOrderedSet alloc] init];
     
-    if (pbCategory.name == @"All") {
-        return [self.books copy];
+    if (pbCategory.name == @"All") {    
+        return [self.books copy];   // Adding new category "All"
     }
-    else {
+    else {  // Populate c
         for (PicturebookInfo *pbInfo in self.books) {
             if (pbInfo.catID == pbCategory.iD) {
                 [booksForCategory addObject:pbInfo];    
@@ -176,8 +205,7 @@
     self.currentElementValue = elementName;
     
     if([elementName isEqualToString:@"bookstore"]) {
-		//Initialize the array.
-		
+		return;		
 	}
     else if([elementName isEqualToString:@"categories"]) {
         
@@ -194,9 +222,7 @@
         PBDLOG_ARG(@"Category name: %@", self.pbookCategory.name);        
         
     }
-	else if([elementName isEqualToString:@"book"]) {
-        
-        
+	else if([elementName isEqualToString:@"book"]) {       
         
         //Initialize new picture book
         self.pbookInfo = [[PicturebookInfo alloc] init];
