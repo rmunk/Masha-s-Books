@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 #import "MyBooksViewController.h"
 
-@interface MyLibrary : NSObject<MyBooksViewControllerDataSource>
-
+@interface MyLibrary : NSObject <MyBooksViewControllerDataSource>
+@property (nonatomic, strong) UIManagedDocument *libraryDatabase;
 @end

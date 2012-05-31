@@ -2,7 +2,7 @@
 //  Book.h
 //  Masha's Books
 //
-//  Created by Ranko Munk on 5/30/12.
+//  Created by Ranko Munk on 5/31/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -22,6 +22,7 @@
 @property (nonatomic, retain) id coverImage;
 @property (nonatomic, retain) id coverThumbnailImage;
 @property (nonatomic, retain) id backgroundMusic;
+@property (nonatomic, retain) NSNumber * downloaded;
 @property (nonatomic, retain) Author *author;
 @property (nonatomic, retain) NSSet *category;
 @property (nonatomic, retain) NSOrderedSet *pages;

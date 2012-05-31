@@ -11,7 +11,9 @@
 @protocol MyBooksViewControllerDataSource <NSObject>
 
 @property (readonly) NSUInteger numberOfBooksInMyLibrary;
-
+- (NSArray *)MyBooks;
+- (UIImage *)CoverImageForBook:(NSString *)bookTitle;
+@optional
 - (UIImage *)BookCoverImageAtIndex:(NSUInteger)index;
 
 @end

@@ -2,7 +2,7 @@
 //  Book.m
 //  Masha's Books
 //
-//  Created by Ranko Munk on 5/30/12.
+//  Created by Ranko Munk on 5/31/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -23,6 +23,7 @@
 @dynamic coverImage;
 @dynamic coverThumbnailImage;
 @dynamic backgroundMusic;
+@dynamic downloaded;
 @dynamic author;
 @dynamic category;
 @dynamic pages;
