@@ -7,8 +7,10 @@
 //
 
 #import "MyBooksViewController.h"
+#import "MyLibrary.h"
 
 @interface MyBooksViewController ()<UIScrollViewDelegate>
+@property (nonatomic, strong) MyLibrary *modelController;
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, weak) IBOutlet UIView *scrollViewContainer;
 @property (nonatomic, strong) NSArray *pageImages;
@@ -16,10 +18,20 @@
 @end
 
 @implementation MyBooksViewController
+@synthesize modelController = _modelController;
+@synthesize dataSource = _dataSource;
 @synthesize scrollView = _scrollView;
 @synthesize scrollViewContainer = _scrollViewContainer;
 @synthesize pageImages = _pageImages;
 @synthesize pageViews = _pageViews;
+
+- (MyLibrary *)modelController
+{
+    if (!_modelController) {
+        _modelController = [[MyLibrary alloc] init];
+    }
+    return _modelController;
+}
 
 - (void)loadVisiblePages {
     // First, determine which page is currently visible
@@ -40,13 +52,13 @@
     for (NSInteger i=firstPage; i<=lastPage; i++) {
         [self loadPage:i];
     }
-    for (NSInteger i=lastPage+1; i<self.pageImages.count; i++) {
+    for (NSInteger i=lastPage+1; i<[self.dataSource numberOfBooksInMyLibrary]; i++) {
         [self purgePage:i];
     }
 }
 
 - (void)loadPage:(NSInteger)page {
-    if (page < 0 || page >= self.pageImages.count) {
+    if (page < 0 || page >= [self.dataSource numberOfBooksInMyLibrary]) {
         // If it's outside the range of what we have to display, then do nothing
         return;
     }
@@ -59,16 +71,20 @@
         frame.origin.y = 0.0f;
         frame = CGRectInset(frame, 50.0f, 0.0f);
         
-        UIImageView *newPageView = [[UIImageView alloc] initWithImage:[self.pageImages objectAtIndex:page]];
+//        UIImageView *newPageView = [[UIImageView alloc] initWithImage:[self.pageImages objectAtIndex:page]];
+        UIImageView *newPageView = [[UIImageView alloc] initWithImage:[self.dataSource BookCoverImageAtIndex:page]];
         newPageView.contentMode = UIViewContentModeScaleAspectFit;
         newPageView.frame = frame;
+        newPageView.tag = page;
+        newPageView.userInteractionEnabled = YES;
+        [newPageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userTappedImage:)]];
         [self.scrollView addSubview:newPageView];
         [self.pageViews replaceObjectAtIndex:page withObject:newPageView];
     }
 }
 
 - (void)purgePage:(NSInteger)page {
-    if (page < 0 || page >= self.pageImages.count) {
+    if (page < 0 || page >= [self.dataSource numberOfBooksInMyLibrary]) {
         // If it's outside the range of what we have to display, then do nothing
         return;
     }
@@ -86,24 +102,10 @@
     [super viewDidLoad];
     
     self.title = @"My Books";
-    
-    // Set up the image we want to scroll & zoom and add it to the scroll view
-    self.pageImages = [NSArray arrayWithObjects:
-                       [UIImage imageNamed:@"01.jpg"],
-                       [UIImage imageNamed:@"02.jpg"],
-                       [UIImage imageNamed:@"03.jpg"],
-                       [UIImage imageNamed:@"04.jpg"],
-                       [UIImage imageNamed:@"05.jpg"],
-                       [UIImage imageNamed:@"06.jpg"],
-                       [UIImage imageNamed:@"07.jpg"],
-                       [UIImage imageNamed:@"08.jpg"],
-                       [UIImage imageNamed:@"09.jpg"],
-                       [UIImage imageNamed:@"10.jpg"],
-                       nil];
-    
+    self.dataSource = self.modelController;
 
     // Set up the array to hold the views for each page
-    NSInteger pageCount = self.pageImages.count;
+    NSInteger pageCount = [self.dataSource numberOfBooksInMyLibrary];
     self.pageViews = [[NSMutableArray alloc] init];
     for (NSInteger i = 0; i < pageCount; ++i) {
         [self.pageViews addObject:[NSNull null]];
@@ -115,14 +117,14 @@
     
     // Set up the content size of the scroll view
     CGSize pagesScrollViewSize = self.scrollView.frame.size;
-    self.scrollView.contentSize = CGSizeMake(pagesScrollViewSize.width * self.pageImages.count, pagesScrollViewSize.height);
+    self.scrollView.contentSize = CGSizeMake(pagesScrollViewSize.width * [self.dataSource numberOfBooksInMyLibrary], pagesScrollViewSize.height);
     
     // Load the initial set of pages that are on screen
     [self loadVisiblePages];
     
     
     
-//    NSInteger pageCount = self.pageImages.count;
+//    NSInteger pageCount = [self.dataSource numberOfBooks];
 //    
 //    for (NSInteger i = 0; i < pageCount; ++i) {
 //        CGRect frame = CGRectMake(0, 0, self.scrollView2.bounds.size.height * 1.33, self.scrollView2.bounds.size.height);

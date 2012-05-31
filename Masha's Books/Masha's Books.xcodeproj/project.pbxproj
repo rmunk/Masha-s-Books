@@ -31,6 +31,13 @@
 		C08246E5157673E000054A3A /* MyBooks@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C08246E1157673E000054A3A /* MyBooks@2x.png */; };
 		C08246E6157673E000054A3A /* Shop.png in Resources */ = {isa = PBXBuildFile; fileRef = C08246E2157673E000054A3A /* Shop.png */; };
 		C08246E7157673E000054A3A /* Shop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C08246E3157673E000054A3A /* Shop@2x.png */; };
+		C08246ED157680E900054A3A /* Library.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C08246EB157680E900054A3A /* Library.xcdatamodeld */; };
+		C08247201576895D00054A3A /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C082471F1576895D00054A3A /* CoreData.framework */; };
+		C0824723157689FB00054A3A /* MyLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = C0824722157689FB00054A3A /* MyLibrary.m */; };
+		C082474B1576CA1600054A3A /* Author.m in Sources */ = {isa = PBXBuildFile; fileRef = C082474A1576CA1600054A3A /* Author.m */; };
+		C082474E1576CA1600054A3A /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = C082474D1576CA1600054A3A /* Category.m */; };
+		C08247511576CA1600054A3A /* Page.m in Sources */ = {isa = PBXBuildFile; fileRef = C08247501576CA1600054A3A /* Page.m */; };
+		C08247541576CA1600054A3A /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = C08247531576CA1600054A3A /* Book.m */; };
 		C0982991157501D1004EAA0D /* MyBooksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0982990157501D1004EAA0D /* MyBooksViewController.m */; };
 		C09829941575026E004EAA0D /* MashasShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C09829931575026E004EAA0D /* MashasShopViewController.m */; };
 		C0B3FF6415742E41002DF30F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0B3FF6315742E41002DF30F /* UIKit.framework */; };
@@ -90,6 +97,18 @@
 		C08246E1157673E000054A3A /* MyBooks@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MyBooks@2x.png"; sourceTree = "<group>"; };
 		C08246E2157673E000054A3A /* Shop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Shop.png; sourceTree = "<group>"; };
 		C08246E3157673E000054A3A /* Shop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Shop@2x.png"; sourceTree = "<group>"; };
+		C08246EC157680E900054A3A /* Library.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Library.xcdatamodel; sourceTree = "<group>"; };
+		C082471F1576895D00054A3A /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		C0824721157689FB00054A3A /* MyLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyLibrary.h; sourceTree = "<group>"; };
+		C0824722157689FB00054A3A /* MyLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyLibrary.m; sourceTree = "<group>"; };
+		C08247491576CA1600054A3A /* Author.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Author.h; sourceTree = "<group>"; };
+		C082474A1576CA1600054A3A /* Author.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Author.m; sourceTree = "<group>"; };
+		C082474C1576CA1600054A3A /* Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Category.h; sourceTree = "<group>"; };
+		C082474D1576CA1600054A3A /* Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Category.m; sourceTree = "<group>"; };
+		C082474F1576CA1600054A3A /* Page.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Page.h; sourceTree = "<group>"; };
+		C08247501576CA1600054A3A /* Page.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Page.m; sourceTree = "<group>"; };
+		C08247521576CA1600054A3A /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Book.h; sourceTree = "<group>"; };
+		C08247531576CA1600054A3A /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Book.m; sourceTree = "<group>"; };
 		C098298F157501D1004EAA0D /* MyBooksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyBooksViewController.h; sourceTree = "<group>"; };
 		C0982990157501D1004EAA0D /* MyBooksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyBooksViewController.m; sourceTree = "<group>"; };
 		C09829921575026E004EAA0D /* MashasShopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MashasShopViewController.h; sourceTree = "<group>"; };
@@ -119,6 +138,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C08247201576895D00054A3A /* CoreData.framework in Frameworks */,
 				C0B3FF99157436CA002DF30F /* AVFoundation.framework in Frameworks */,
 				C0B3FF6415742E41002DF30F /* UIKit.framework in Frameworks */,
 				C0B3FF6615742E41002DF30F /* Foundation.framework in Frameworks */,
@@ -178,6 +198,22 @@
 			name = Testing;
 			sourceTree = "<group>";
 		};
+		C08247061576870C00054A3A /* LibraryDataModel */ = {
+			isa = PBXGroup;
+			children = (
+				C08247491576CA1600054A3A /* Author.h */,
+				C082474A1576CA1600054A3A /* Author.m */,
+				C08247521576CA1600054A3A /* Book.h */,
+				C08247531576CA1600054A3A /* Book.m */,
+				C082474F1576CA1600054A3A /* Page.h */,
+				C08247501576CA1600054A3A /* Page.m */,
+				C082474C1576CA1600054A3A /* Category.h */,
+				C082474D1576CA1600054A3A /* Category.m */,
+				C08246EB157680E900054A3A /* Library.xcdatamodeld */,
+			);
+			name = LibraryDataModel;
+			sourceTree = "<group>";
+		};
 		C098299915750713004EAA0D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -212,6 +248,7 @@
 		C0B3FF6215742E41002DF30F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C082471F1576895D00054A3A /* CoreData.framework */,
 				C0B3FF98157436CA002DF30F /* AVFoundation.framework */,
 				C0B3FF6315742E41002DF30F /* UIKit.framework */,
 				C0B3FF6515742E41002DF30F /* Foundation.framework */,
@@ -224,16 +261,17 @@
 		C0B3FF6915742E41002DF30F /* Masha's Books */ = {
 			isa = PBXGroup;
 			children = (
+				C08247061576870C00054A3A /* LibraryDataModel */,
 				BA98025F1575AF9600EE06BB /* PicturebookShop */,
 				C0B3FF7515742E41002DF30F /* MainStoryboard.storyboard */,
 				C09829921575026E004EAA0D /* MashasShopViewController.h */,
 				C09829931575026E004EAA0D /* MashasShopViewController.m */,
 				C098298F157501D1004EAA0D /* MyBooksViewController.h */,
 				C0982990157501D1004EAA0D /* MyBooksViewController.m */,
-				C00383701575510F00999A19 /* ScrollViewContainer.h */,
-				C00383711575510F00999A19 /* ScrollViewContainer.m */,
-				C098299915750713004EAA0D /* Resources */,
+				C0824721157689FB00054A3A /* MyLibrary.h */,
+				C0824722157689FB00054A3A /* MyLibrary.m */,
 				C0B3FF6A15742E41002DF30F /* Supporting Files */,
+				C098299915750713004EAA0D /* Resources */,
 			);
 			path = "Masha's Books";
 			sourceTree = "<group>";
@@ -241,6 +279,8 @@
 		C0B3FF6A15742E41002DF30F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C00383701575510F00999A19 /* ScrollViewContainer.h */,
+				C00383711575510F00999A19 /* ScrollViewContainer.m */,
 				C0B3FF7215742E41002DF30F /* MashasBooksAppDelegate.h */,
 				C0B3FF7315742E41002DF30F /* MashasBooksAppDelegate.m */,
 				C0B3FF6B15742E41002DF30F /* Masha's Books-Info.plist */,
@@ -404,6 +444,12 @@
 				BA9802731575AFC600EE06BB /* PicturebookInfo.m in Sources */,
 				BA9802741575AFC600EE06BB /* PicturebookShop.m in Sources */,
 				BA9802751575AFC600EE06BB /* PicturebookShopViewController.m in Sources */,
+				C08246ED157680E900054A3A /* Library.xcdatamodeld in Sources */,
+				C0824723157689FB00054A3A /* MyLibrary.m in Sources */,
+				C082474B1576CA1600054A3A /* Author.m in Sources */,
+				C082474E1576CA1600054A3A /* Category.m in Sources */,
+				C08247511576CA1600054A3A /* Page.m in Sources */,
+				C08247541576CA1600054A3A /* Book.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -588,6 +634,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		C08246EB157680E900054A3A /* Library.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				C08246EC157680E900054A3A /* Library.xcdatamodel */,
+			);
+			currentVersion = C08246EC157680E900054A3A /* Library.xcdatamodel */;
+			path = Library.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = C0B3FF5615742E41002DF30F /* Project object */;
 }
