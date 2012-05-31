@@ -16,6 +16,9 @@
 @property (nonatomic, strong) PicturebookCategory *pbookCategory;
 @property (nonatomic, strong) PicturebookAuthor *pbookAuthor;
 @property (nonatomic, strong) NSDateFormatter *df;
+@property (nonatomic, strong) NSString *currentElementValue;
+@property (nonatomic, strong) NSString *currentBookElement;
+@property (nonatomic, strong) NSString *currentAuthorElement;
 
 @end
 
@@ -32,6 +35,10 @@
 @synthesize pbookCategory = _pbookCategory;
 @synthesize pbookAuthor = _pbookAuthor;
 @synthesize df = _df;
+@synthesize currentElementValue = _currentElementValue;
+@synthesize currentBookElement = _currentBookElement;
+@synthesize currentAuthorElement = _currentAuthorElement;
+
 @synthesize isShopLoaded = _isShopLoaded;
 
 
@@ -42,13 +49,17 @@
     
     _xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:self.shopURL];
     if (_xmlParser) {
-        NSLog(@"Picturebook shop found at %@", _shopURL.description);
+        PBDLOG_ARG(@"Picturebook shop found at %@", _shopURL.description);
     }
     [_xmlParser setDelegate:self];
     
     _categories = [[NSMutableOrderedSet alloc] init];
     _books = [[NSMutableOrderedSet alloc] init];
     _authors = [[NSMutableOrderedSet alloc] init];
+    
+    _currentElementValue = [[NSString alloc] init];
+    _currentBookElement = [[NSString alloc] init];
+    _currentAuthorElement = [[NSString alloc] init];
     
     _df = [[NSDateFormatter alloc] init];
     [_df setDateFormat:@"dd.mm.yyyy"]; 
@@ -59,7 +70,7 @@
 }
 
 - (void)refreshShop {
-    NSLog(@"Picturebook shop: Refreshing shop from URL %@", [self.shopURL description]);
+    PBDLOG_ARG(@"Picturebook shop: Refreshing shop from URL %@", [self.shopURL description]);
     
     [self.categories removeAllObjects];
     PicturebookCategory *all = [[PicturebookCategory alloc] initWithName:@"All" AndID:0];
@@ -88,17 +99,15 @@
 - (void)populateStoreWithImages {
     for (PicturebookInfo *pbInfo in self.books) {
         if ([pbInfo isKindOfClass:[PicturebookInfo class]]) {
-            //NSLog([NSString stringWithFormat:@"%@%d%@", 
-            //       @"http://www.mashasbooks.com/covers/", pbInfo.iD, @".jpg"]);
             
             NSURL *coverURL = [[NSURL alloc] initWithString:
                                [NSString stringWithFormat:@"%@%d%@", 
                                 @"http://www.mashasbooks.com/covers/", pbInfo.iD, @"_t.jpg"]]; 
-            NSLog(@"Downloading cover image for book %@", pbInfo.title);
+            PBDLOG_ARG(@"Downloading cover image for book %@", pbInfo.title);
             // Get an image from the URL below
             UIImage *coverImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:coverURL]];
             if (coverImage) {
-                NSLog(@"Image downloaded!");
+                PBDLOG(@"Image downloaded!");
             }
             pbInfo.coverImage = coverImage;
         }
@@ -155,7 +164,8 @@
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName 
   namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qualifiedName 
 	attributes:(NSDictionary *)attributeDict {
-    //NSLog(@"Parser has found element %@", elementName);
+    
+    self.currentElementValue = elementName;
     
     if([elementName isEqualToString:@"bookstore"]) {
 		//Initialize the array.
@@ -165,71 +175,81 @@
         
         //Initialize new book category
         self.pbookCategory = [[PicturebookCategory alloc] init];
-        NSLog(@"New book category found!");
+        PBDLOG(@"\n");
+        PBDLOG(@"New book category found!");
         
         //Extract category attributes from XML
         self.pbookCategory.iD = [[attributeDict objectForKey:@"ID"] integerValue];
-        NSLog(@"Category ID: %i", self.pbookCategory.iD);
+        PBDLOG_ARG(@"Category ID: %i", self.pbookCategory.iD);
         
         self.pbookCategory.name = [attributeDict objectForKey:@"Name"];
-        NSLog(@"Category name: %@", self.pbookCategory.name);
-        
+        PBDLOG_ARG(@"Category name: %@", self.pbookCategory.name);        
         
     }
 	else if([elementName isEqualToString:@"book"]) {
         
+        
+        
         //Initialize new picture book
         self.pbookInfo = [[PicturebookInfo alloc] init];
-        NSLog(@"New book found!");
+        PBDLOG(@"\n");
+        PBDLOG(@"New book found!");
 		
 		//Extract the picture book attributes from XML
         self.pbookInfo.catID = [[attributeDict objectForKey:@"catID"] integerValue];
-        NSLog(@"Category ID: %i", self.pbookInfo.catID);
+        PBDLOG_ARG(@"Category ID: %i", self.pbookInfo.catID);
         
         self.pbookInfo.iD = [[attributeDict objectForKey:@"ID"] integerValue];
-        NSLog(@"Book ID: %i", self.pbookInfo.iD);
+        PBDLOG_ARG(@"Book ID: %i", self.pbookInfo.iD);
         
         self.pbookInfo.title = [attributeDict objectForKey:@"Title"];
-        NSLog(@"Book title: %@", self.pbookInfo.title);
+        self.currentBookElement = self.pbookInfo.title;
+        PBDLOG_ARG(@"Book title: %@", self.pbookInfo.title);
         
         self.pbookInfo.authorID = [[attributeDict objectForKey:@"AppleStoreID"] integerValue];
-        NSLog(@"Applestore ID:%i", self.pbookInfo.appStoreID);
+        PBDLOG_ARG(@"Applestore ID:%i", self.pbookInfo.appStoreID);
         
         self.pbookInfo.authorID = [[attributeDict objectForKey:@"AuthorID"] integerValue];
-        NSLog(@"Author ID:%i", self.pbookInfo.authorID);
+        PBDLOG_ARG(@"Author ID:%i", self.pbookInfo.authorID);
         
         self.pbookInfo.publishDate = [self.df dateFromString:[attributeDict objectForKey:@"PublishDate"]];
-        NSLog(@"Publish date:%@", self.pbookInfo.publishDate.description);
+        PBDLOG_ARG(@"Publish date:%@", self.pbookInfo.publishDate.description);
         
         self.pbookInfo.downloadUrl = [NSURL URLWithString:[attributeDict objectForKey:@"DownloadURL"]];
-        NSLog(@"Download URL:%@", self.pbookInfo.downloadUrl.description);
+        PBDLOG_ARG(@"Download URL:%@", self.pbookInfo.downloadUrl.description);
         
         self.pbookInfo.facebookLikeUrl = [NSURL URLWithString:[attributeDict objectForKey:@"FacebookLikeURL"]];
-        NSLog(@"Facebook URL:%@", self.pbookInfo.facebookLikeUrl.description);
+        PBDLOG_ARG(@"Facebook URL:%@", self.pbookInfo.facebookLikeUrl.description);
         
         self.pbookInfo.youTubeVideoUrl = [NSURL URLWithString:[attributeDict objectForKey:@"YouTubeVideoURL"]];
-        NSLog(@"YouTube video URL:%@", self.pbookInfo.youTubeVideoUrl.description);
+        PBDLOG_ARG(@"YouTube video URL:%@", self.pbookInfo.youTubeVideoUrl.description);
+        
 	}
     else if([elementName isEqualToString:@"author"]) {
         
         //Initialize new author
         self.pbookAuthor = [[PicturebookAuthor alloc] init];
-        NSLog(@"New author found!");
+        PBDLOG(@"\n");
+        PBDLOG(@"New author found!");
         
         //Extract the author attributes from XML
         self.pbookAuthor.iD = [[attributeDict objectForKey:@"ID"] integerValue];
-        NSLog(@"Author ID: %i", self.pbookInfo.iD);
+        PBDLOG_ARG(@"Author ID: %i", self.pbookInfo.iD);
         
         self.pbookAuthor.name = [attributeDict objectForKey:@"Name"];
-        NSLog(@"Author name: %@", self.pbookAuthor.name);
+        self.currentAuthorElement = self.pbookAuthor.name;
+        PBDLOG_ARG(@"Author name: %@", self.pbookAuthor.name);
                 
         self.pbookAuthor.websiteUrl = [NSURL URLWithString:[attributeDict objectForKey:@"AuthorWebsiteURL"]];
-        NSLog(@"Author website:%@", self.pbookAuthor.websiteUrl.description);
+        PBDLOG_ARG(@"Author website:%@", self.pbookAuthor.websiteUrl.description);
     }    
     else if([elementName isEqualToString:@"DescriptionHTML"]) {
         return;
     }
     else if([elementName isEqualToString:@"DescriptionLongHTML"]) {
+        return;
+    }
+    else if([elementName isEqualToString:@"AuthorBioHTML"]) {
         return;
     }
     else {
@@ -239,8 +259,22 @@
 }
 
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string { 
-    //NSLog(@"Parser has found string %@", string);
     
+    if ([self.currentElementValue isEqualToString:@"DescriptionHTML"]) {
+        self.pbookInfo.descriptionHTML = string;
+        PBDLOG_ARG(@"For book %@", self.currentBookElement);    
+        PBDLOG_ARG(@"DescriptionHTML %@", string);
+    }
+    else if ([self.currentElementValue isEqualToString:@"DescriptionLongHTML"]) {
+        self.pbookInfo.descriptionLongHTML = string;
+        PBDLOG_ARG(@"For book %@", self.currentBookElement);    
+        PBDLOG_ARG(@"DescriptionLongHTML %@", string);
+    }
+    else if ([self.currentElementValue isEqualToString:@"AuthorBioHTML"]) {
+        self.pbookAuthor.bioHtml = string;
+        PBDLOG_ARG(@"For author %@", self.currentAuthorElement);    
+        PBDLOG_ARG(@"AuthorBioHTML %@", string);
+    }
 	
 }
 
@@ -249,18 +283,16 @@
     
     if ([elementName isEqualToString:@"book"] && ![self.books containsObject:self.pbookInfo]) {
         [self.books addObject:self.pbookInfo];
-        NSLog(@"Book info storred!");
+        PBDLOG(@"Book info storred!");
     }
     else if ([elementName isEqualToString:@"categories"] && ![self.categories containsObject:self.pbookCategory]) {
         [self.categories addObject:self.pbookCategory];
-        NSLog(@"Category info storred!");
+        PBDLOG(@"Category info storred!");
     }
     else if ([elementName isEqualToString:@"author"]) {
         [self.authors addObject:self.pbookAuthor];
-        NSLog(@"Author info storred!");
+        PBDLOG(@"Author info storred!");
     }
-    //NSLog(@"Parser has found element %@", elementName);
-	
 }
 
 

@@ -19,6 +19,9 @@
 @property (nonatomic, strong) NSURL *downloadUrl;
 @property (nonatomic, strong) NSURL *facebookLikeUrl;
 @property (nonatomic, strong) NSURL *youTubeVideoUrl;
+@property (nonatomic, strong) NSString *descriptionHTML;
+@property (nonatomic, strong) NSString *descriptionLongHTML;
+
 
 @property (nonatomic, strong) UIImage *coverImage;
 @property (nonatomic, strong) UIImage *coverThumbnailImage;
