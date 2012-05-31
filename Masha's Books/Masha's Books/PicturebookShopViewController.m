@@ -40,11 +40,25 @@
 }
 
 - (IBAction)refreshPicturebookShop:(UIBarButtonItem *)sender {
-    [self.picturebookShop refreshShop];
+    
     PBDLOG(@"PicturebookShopViewController: Calling refreshShop."); 
-    [self.view setNeedsDisplay];
+    
+    //self.shopRefreshButton.style = UIBarButtonSystemItemCamera;
+    [self.shopRefreshButton setStyle:UIBarButtonSystemItemCamera];
+    [self.picturebookShop refreshShop];
+    
     [[self getTableViewForTag:CATEGORY_TABLEVIEW_TAG] reloadData];
     [[self getTableViewForTag:COVERS_TABLEVIEW_TAG] reloadData];
+    
+    [self.view setNeedsDisplay];
+    
+    /*
+    UIActivityIndicatorView *activityIndicator =
+    [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+    [activityIndicator startAnimating];
+    UIBarButtonItem *activityItem =
+    [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
+    self.navigationItem.rightBarButtonItem = activityItem;*/
 
 }
 
@@ -172,7 +186,11 @@
                                                  withTarget:self 
                                                  withAction:@selector(shopItemTapped:)];
             
-            tableView.rowHeight = cell.cellHeight;
+            if (tableView.rowHeight != cell.cellHeight) {
+                tableView.rowHeight = cell.cellHeight;
+                [tableView reloadData];
+            }
+            
         }
     }	
     

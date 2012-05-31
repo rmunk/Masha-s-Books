@@ -99,6 +99,14 @@
 - (void)populateStoreWithImages {
     for (PicturebookInfo *pbInfo in self.books) {
         if ([pbInfo isKindOfClass:[PicturebookInfo class]]) {
+            /*
+             NSMutableURLRequest *req = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:                                                                                 [NSString stringWithFormat:@"%@%d%@",                                                                                   @"http://www.mashasbooks.com/covers/", pbInfo.iD, @"_t.jpg"]] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:10];
+            [req setHTTPMethod:@"GET"];
+            // Set headers etc. if you need
+            NSURLConnection *connection =[[NSURLConnection alloc] initWithRequest:req delegate:self];           
+            
+            self.responseData = [[NSMutableData alloc] init]; 
+             */
             
             NSURL *coverURL = [[NSURL alloc] initWithString:
                                [NSString stringWithFormat:@"%@%d%@", 
