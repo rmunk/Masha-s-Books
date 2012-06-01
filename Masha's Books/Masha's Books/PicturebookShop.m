@@ -138,11 +138,12 @@
                 dispatch_async(dispatch_get_main_queue(), ^{                    
                     if (coverImage) {                                    
                         PBDLOG(@"Image downloaded!");
+                        pbInfo.coverImage = coverImage;
+                        [self shopDataLoaded];
                     }
                 });                       
                            
-                pbInfo.coverImage = coverImage;
-                [self shopDataLoaded];
+                
             });
             dispatch_release(downloadQueue);
             

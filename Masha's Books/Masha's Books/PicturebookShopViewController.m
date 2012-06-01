@@ -45,8 +45,8 @@
     
     PBDLOG(@"PicturebookShopViewController: Calling refreshShop."); 
     
-    //self.shopRefreshButton.style = UIBarButtonSystemItemCamera;
-    [self.shopRefreshButton setStyle:UIBarButtonSystemItemCamera];
+    self.shopRefreshButton.style = UIBarButtonSystemItemRedo;
+    //[self.shopRefreshButton setStyle:UIBarButtonSystemItemCamera];
     [self.picturebookShop refreshShop];
     
     [[self getTableViewForTag:CATEGORY_TABLEVIEW_TAG] reloadData];
