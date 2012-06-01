@@ -158,6 +158,11 @@
 {
     UIView *page = sender.view;
     NSLog(@"Page: %d", page.tag);
+    
+    UIStoryboard *settingsStoryboard = [UIStoryboard storyboardWithName:@"SlikovnicaStoryboard" bundle:nil];
+    UIViewController *initialSettingsVC = [settingsStoryboard instantiateInitialViewController];
+    initialSettingsVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self presentModalViewController:initialSettingsVC animated:YES];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

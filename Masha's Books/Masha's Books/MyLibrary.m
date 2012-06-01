@@ -71,16 +71,14 @@
        
         // Set up the image we want to scroll & zoom and add it to the scroll view
         self.bookCovers = [NSArray arrayWithObjects:
-                           [UIImage imageNamed:@"01.jpg"],
-                           [UIImage imageNamed:@"02.jpg"],
-                           [UIImage imageNamed:@"03.jpg"],
-                           [UIImage imageNamed:@"04.jpg"],
-                           [UIImage imageNamed:@"05.jpg"],
-                           [UIImage imageNamed:@"06.jpg"],
-                           [UIImage imageNamed:@"07.jpg"],
-                           [UIImage imageNamed:@"08.jpg"],
-                           [UIImage imageNamed:@"09.jpg"],
-                           [UIImage imageNamed:@"10.jpg"],
+                           [UIImage imageNamed:@"01c.jpeg"],
+                           [UIImage imageNamed:@"02c.jpeg"],
+                           [UIImage imageNamed:@"03c.jpeg"],
+                        //   [UIImage imageNamed:@"04c.jpeg"],
+                           [UIImage imageNamed:@"05c.jpeg"],
+                           [UIImage imageNamed:@"06c.jpeg"],
+                           [UIImage imageNamed:@"07c.jpeg"],
+                           [UIImage imageNamed:@"08c.jpeg"],
                            nil];
         
         
