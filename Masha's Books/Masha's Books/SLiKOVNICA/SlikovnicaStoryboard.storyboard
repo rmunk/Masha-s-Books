@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11E53" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="12">
+    <dependencies>
+        <deployment defaultVersion="1296" identifier="iOS"/>
+        <development defaultVersion="4200" identifier="xcode"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
+    </dependencies>
+    <scenes>
+        <!--Slikovnica Data View Controller-->
+        <scene sceneID="8">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7" sceneMemberID="firstResponder"/>
+                <viewController storyboardIdentifier="SlikovnicaDataViewController" id="5" customClass="SlikovnicaDataViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="9">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="320"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="00.jpg" id="CaA-1x-1oe">
+                                <rect key="frame" x="0.0" y="0.0" width="480" height="320"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <gestureRecognizers/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <connections>
+                        <outlet property="dataImage" destination="CaA-1x-1oe" id="ym0-W0-a42"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="-11" y="843"/>
+        </scene>
+        <!--Navigation-->
+        <scene sceneID="fmm-Ty-SzO">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="htL-x8-j1Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController storyboardIdentifier="Navigation" modalTransitionStyle="crossDissolve" id="3nJ-SR-DKJ" userLabel="Navigation" customClass="SlikovnicaNavigationViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="TVA-Bj-8Xs">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="320"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.80000000000000004" contentMode="scaleToFill" id="3KK-a9-E8f">
+                                <rect key="frame" x="0.0" y="144" width="480" height="176"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outlet property="delegate" destination="Fui-Vt-Kyj" id="9Li-XF-oaM"/>
+                                </connections>
+                            </scrollView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="blackTranslucent" id="SNt-ik-ydR">
+                                <rect key="frame" x="0.0" y="0.0" width="480" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <barButtonItem systemItem="bookmarks" id="5nh-70-4gC">
+                                        <connections>
+                                            <action selector="goBackToLibrary:" destination="3nJ-SR-DKJ" id="bGi-qV-NWy"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="pMP-tO-LeQ"/>
+                                    <barButtonItem title="My Way" style="plain" id="X3i-hO-t1g"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="Kzj-y8-QXy"/>
+                                    <barButtonItem title="0/0" style="plain" id="jAA-5l-m5C"/>
+                                </items>
+                            </toolbar>
+                            <view contentMode="scaleToFill" id="XBn-Gs-k0D">
+                                <rect key="frame" x="125" y="74" width="233" height="52"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="7Xt-0f-bla" appends="YES" id="N2Z-Pt-404"/>
+                                </connections>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <connections>
+                        <outlet property="pageNumberLabel" destination="jAA-5l-m5C" id="Tv2-iq-dMk"/>
+                        <outlet property="scrollView" destination="3KK-a9-E8f" id="OSJ-xi-qQp"/>
+                    </connections>
+                </viewController>
+                <tapGestureRecognizer id="7Xt-0f-bla">
+                    <connections>
+                        <action selector="tapReturn:" destination="3nJ-SR-DKJ" id="37S-5F-tPU"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="575" y="402"/>
+        </scene>
+        <!--Slikovnica Page Scroll View Controller-->
+        <scene sceneID="zcV-lL-MgP">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jSw-le-wlQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="Fui-Vt-Kyj" customClass="SlikovnicaPageScrollViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wDk-iq-lvQ">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="320"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" id="NPD-vf-RqN" customClass="ScrollViewContainer">
+                                <rect key="frame" x="0.0" y="256" width="480" height="64"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <scrollView opaque="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" id="pts-V3-4SH">
+                                        <rect key="frame" x="0.0" y="0.0" width="85" height="64"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="Fui-Vt-Kyj" id="SVD-j4-R75"/>
+                                        </connections>
+                                    </scrollView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="scrollView" destination="pts-V3-4SH" id="pR6-hW-pCG"/>
+                                </connections>
+                            </view>
+                            <scrollView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="3JU-1J-sx4">
+                                <rect key="frame" x="0.0" y="0.0" width="480" height="64"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outlet property="delegate" destination="Fui-Vt-Kyj" id="ifk-Lk-Aah"/>
+                                </connections>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <connections>
+                        <outlet property="scrollView" destination="pts-V3-4SH" id="J5C-KB-aae"/>
+                        <outlet property="scrollView2" destination="3JU-1J-sx4" id="3w7-Nf-OV3"/>
+                        <outlet property="scrollViewContainer" destination="NPD-vf-RqN" id="8fd-jh-DFc"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="-695" y="402"/>
+        </scene>
+        <!--Slikovnica Root View Controller-->
+        <scene sceneID="15">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="14" sceneMemberID="firstResponder"/>
+                <viewController id="12" customClass="SlikovnicaRootViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="13">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="320"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" id="1aN-4r-8Bz">
+                                <rect key="frame" x="125" y="74" width="230" height="172"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="8DI-k7-PnL" appends="YES" id="DkY-Kg-SEr"/>
+                                </connections>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.60000002379999995" green="0.40000000600000002" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <connections>
+                        <outlet property="navigationRequestView" destination="1aN-4r-8Bz" id="jeZ-ii-7Zj"/>
+                    </connections>
+                </viewController>
+                <tapGestureRecognizer id="8DI-k7-PnL">
+                    <connections>
+                        <action selector="userTappedForNavigation:" destination="12" id="Tbg-Jc-UxI"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="-11" y="402"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="00.jpg" width="1024" height="768"/>
+    </resources>
+    <classes>
+        <class className="ScrollViewContainer" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ScrollViewContainer.h"/>
+            <relationships>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+            </relationships>
+        </class>
+        <class className="SlikovnicaDataViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SlikovnicaDataViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="dataImage" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="SlikovnicaNavigationViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SlikovnicaNavigationViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="pageNumberLabel" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+            </relationships>
+        </class>
+        <class className="SlikovnicaRootViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SlikovnicaRootViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="navigationRequestView" candidateClass="UIView"/>
+            </relationships>
+        </class>
+    </classes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <nil key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination"/>
+    </simulatedMetricsContainer>
+</document>
