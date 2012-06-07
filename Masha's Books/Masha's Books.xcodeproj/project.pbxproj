@@ -136,6 +136,8 @@
 		C0B3FF8C15742E42002DF30F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C0B3FF8A15742E42002DF30F /* InfoPlist.strings */; };
 		C0B3FF8F15742E42002DF30F /* Masha_s_BooksTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C0B3FF8E15742E42002DF30F /* Masha_s_BooksTests.m */; };
 		C0B3FF99157436CA002DF30F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0B3FF98157436CA002DF30F /* AVFoundation.framework */; };
+		C0F3010E157AC0A5000798F7 /* BookDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F3010D157AC0A5000798F7 /* BookDownloader.m */; };
+		C0F3010F157AC0A5000798F7 /* BookDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F3010D157AC0A5000798F7 /* BookDownloader.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -301,6 +303,8 @@
 		C0B3FF8D15742E42002DF30F /* Masha_s_BooksTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Masha_s_BooksTests.h; sourceTree = "<group>"; };
 		C0B3FF8E15742E42002DF30F /* Masha_s_BooksTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Masha_s_BooksTests.m; sourceTree = "<group>"; };
 		C0B3FF98157436CA002DF30F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		C0F3010C157AC0A5000798F7 /* BookDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookDownloader.h; sourceTree = "<group>"; };
+		C0F3010D157AC0A5000798F7 /* BookDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookDownloader.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -559,6 +563,8 @@
 				C0982990157501D1004EAA0D /* MyBooksViewController.m */,
 				C0824721157689FB00054A3A /* MyLibrary.h */,
 				C0824722157689FB00054A3A /* MyLibrary.m */,
+				C0F3010C157AC0A5000798F7 /* BookDownloader.h */,
+				C0F3010D157AC0A5000798F7 /* BookDownloader.m */,
 				C0B3FF6A15742E41002DF30F /* Supporting Files */,
 				C098299915750713004EAA0D /* Resources */,
 			);
@@ -822,6 +828,7 @@
 				C072881C15784A6100B64A68 /* SlikovnicaModelController.m in Sources */,
 				C072881D15784A6100B64A68 /* SlikovnicaNavigationViewController.m in Sources */,
 				C072881E15784A6100B64A68 /* SlikovnicaRootViewController.m in Sources */,
+				C0F3010E157AC0A5000798F7 /* BookDownloader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -831,6 +838,7 @@
 			files = (
 				C0B3FF8F15742E42002DF30F /* Masha_s_BooksTests.m in Sources */,
 				C00383731575510F00999A19 /* ScrollViewContainer.m in Sources */,
+				C0F3010F157AC0A5000798F7 /* BookDownloader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
