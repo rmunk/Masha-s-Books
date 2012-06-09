@@ -98,13 +98,19 @@
     PBDLOG_ARG(@"Picturebook shop: Refreshing shop from URL %@", [self.shopURL description]);
     
     [self.categories removeAllObjects];
-    PicturebookCategory *all = [[PicturebookCategory alloc] initWithName:@"All" AndID:0];   
+    //PicturebookCategory *all = [[PicturebookCategory alloc] initWithName:@"All" AndID:0];   
 
-    [self.categories addObject:all];    // Add "All" category to categories sets
+    //[self.categories addObject:all];    // Add "All" category to categories sets
  
     [self.books removeAllObjects];
     
     [self.authors removeAllObjects];
+     
+    self.xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:self.shopURL];
+    if (self.xmlParser) {
+        PBDLOG_ARG(@"Picturebook shop found at %@", self.shopURL.description);
+    }
+    [self.xmlParser setDelegate:self];
     
     BOOL parsingSuccesfulll = [self.xmlParser parse];
     
@@ -141,10 +147,10 @@
                         pbInfo.coverImage = coverImage;
                         [self shopDataLoaded];
                     }
-                });                       
-                           
+                });                                                 
                 
             });
+            
             dispatch_release(downloadQueue);
             
         }
@@ -155,9 +161,14 @@
     
     NSMutableOrderedSet *booksForCategory = [[NSMutableOrderedSet alloc] init];
     
+    NSLog(@"Books in category:");
+    for (NSNumber *num in pbCategory.booksInCategory) {
+        NSLog(@"bookID = %d", [num intValue]);
+    }
+    
     if (pbCategory.name == @"All") {    
         return [self.books copy];   // Adding new category "All"
-    }
+    }/*
     else {  // Populate c
         for (PicturebookInfo *pbInfo in self.books) {
             if (pbInfo.catID == pbCategory.iD) {
@@ -165,27 +176,14 @@
             }
         }
         return [booksForCategory copy];
-    }
-}
-
-- (NSOrderedSet *)getBooksForCategoryName:(NSString *)name {
-    NSMutableOrderedSet *booksForCategory = [[NSMutableOrderedSet alloc] init];
-    PicturebookCategory *pbCategory = [[PicturebookCategory alloc] init];
-    
-    for (PicturebookCategory *pbCat in self.categories) {
-        if (pbCat.name == name) {
-            pbCategory = pbCat;    
-        }
-    }
-    
-    if (name == @"All") {
-        return [self.books copy];
-    }
-    else {
-        for (PicturebookInfo *pbInfo in self.books) {
-            if (pbInfo.catID == pbCategory.iD) {
-                [booksForCategory addObject:pbInfo];    
-            }
+    }*/
+    else {  // Populate categories other version
+        for (NSNumber *pbID in pbCategory.booksInCategory) {
+            for (PicturebookInfo *pbInfo in self.books) {
+                if (pbInfo.iD == [pbID intValue]) {
+                    [booksForCategory addObject:pbInfo];    
+                }
+            }            
         }
         return [booksForCategory copy];
     }
@@ -209,19 +207,65 @@
 		return;		
 	}
     else if([elementName isEqualToString:@"categories"]) {
-        
-        //Initialize new book category
-        self.pbookCategory = [[PicturebookCategory alloc] init];
+                    
         PBDLOG(@"\n");
         PBDLOG(@"New book category found!");
         
         //Extract category attributes from XML
-        self.pbookCategory.iD = [[attributeDict objectForKey:@"ID"] integerValue];
-        PBDLOG_ARG(@"Category ID: %i", self.pbookCategory.iD);
+        NSInteger pbID = [[attributeDict objectForKey:@"ID"] integerValue];
+        PBDLOG_ARG(@"Category ID: %i", pbID);
         
-        self.pbookCategory.name = [attributeDict objectForKey:@"Name"];
-        PBDLOG_ARG(@"Category name: %@", self.pbookCategory.name);        
+        NSString *pbName = [attributeDict objectForKey:@"Name"];
+        PBDLOG_ARG(@"Category name: %@", pbName);        
         
+        //Initialize new book category
+        self.pbookCategory = [[PicturebookCategory alloc] initWithName:pbName AndID:pbID];
+        
+    }
+    else if([elementName isEqualToString:@"categorybooks"]) {
+        
+        NSInteger catID, bookID;
+        
+        PBDLOG(@"\n");
+        PBDLOG(@"New category-book link found!");
+        
+        catID = [[attributeDict objectForKey:@"catID"] integerValue];
+        PBDLOG_ARG(@"Category ID: %i", catID);
+        
+        bookID = [[attributeDict objectForKey:@"bookID"] integerValue];
+        PBDLOG_ARG(@"Book ID: %i", bookID);
+        
+        /*
+        for (int i = 0; i < self.categories.count; i++) {
+            if (((PicturebookCategory *)[self.categories objectAtIndex:i]).iD == catID) {
+                [((PicturebookCategory *)[self.categories objectAtIndex:i]).booksInCategory addObject:[NSNumber numberWithInt:bookID]];
+                NSLog(@"Matching category found: catID = %i, bookID = %i", catID, bookID);
+            }
+        }*/
+        
+        for (PicturebookCategory *cat in self.categories) {
+            if (cat.iD == catID) {
+                NSNumber *pbID = [NSNumber numberWithInt:bookID];
+                [cat.booksInCategory addObject:pbID];
+                NSLog(@"Books in category: %i", cat.booksInCategory.count);
+                NSLog(@"Matching category found: catID = %i, bookID = %i", cat.iD, [[cat.booksInCategory lastObject] intValue]);
+            }
+            else {
+                //PBDLOG_ARG(@"No matching category found for bookID: %i", bookID);
+            }
+        }
+               
+        //Initialize new category-book link
+        /*
+        self.pbookCategoryBookLink = [[PicturebookCategorybooks alloc] init];
+        PBDLOG(@"\n");
+        PBDLOG(@"New category-book link found!");
+        
+        self.pbookCategoryBookLink.catID = [[attributeDict objectForKey:@"catID"] integerValue];
+        PBDLOG_ARG(@"Category ID: %i", self.pbookCategoryBookLink.catID);
+        
+        self.pbookCategoryBookLink.bookID = [[attributeDict objectForKey:@"bookID"] integerValue];
+        PBDLOG_ARG(@"Book ID: %i", self.pbookCategoryBookLink.);*/
     }
 	else if([elementName isEqualToString:@"book"]) {       
         
@@ -241,7 +285,7 @@
         self.currentBookElement = self.pbookInfo.title;
         PBDLOG_ARG(@"Book title: %@", self.pbookInfo.title);
         
-        self.pbookInfo.authorID = [[attributeDict objectForKey:@"AppleStoreID"] integerValue];
+        self.pbookInfo.appStoreID = [[attributeDict objectForKey:@"AppleStoreID"] integerValue];
         PBDLOG_ARG(@"Applestore ID:%i", self.pbookInfo.appStoreID);
         
         self.pbookInfo.authorID = [[attributeDict objectForKey:@"AuthorID"] integerValue];
@@ -276,7 +320,7 @@
         PBDLOG_ARG(@"Author name: %@", self.pbookAuthor.name);
                 
         self.pbookAuthor.websiteUrl = [NSURL URLWithString:[attributeDict objectForKey:@"AuthorWebsiteURL"]];
-        PBDLOG_ARG(@"Author website:%@", self.pbookAuthor.websiteUrl.description);
+        PBDLOG_ARG(@"Author website: %@", self.pbookAuthor.websiteUrl.description);
     }    
     else if([elementName isEqualToString:@"DescriptionHTML"]) {
         return;
@@ -297,18 +341,18 @@
     
     if ([self.currentElementValue isEqualToString:@"DescriptionHTML"]) {
         self.pbookInfo.descriptionHTML = string;
-        PBDLOG_ARG(@"For book %@", self.currentBookElement);    
-        PBDLOG_ARG(@"DescriptionHTML %@", string);
+        //PBDLOG_ARG(@"For book %@", self.currentBookElement);    
+        //PBDLOG_ARG(@"DescriptionHTML %@", string);
     }
     else if ([self.currentElementValue isEqualToString:@"DescriptionLongHTML"]) {
         self.pbookInfo.descriptionLongHTML = string;
-        PBDLOG_ARG(@"For book %@", self.currentBookElement);    
-        PBDLOG_ARG(@"DescriptionLongHTML %@", string);
+        //PBDLOG_ARG(@"For book %@", self.currentBookElement);    
+        //PBDLOG_ARG(@"DescriptionLongHTML %@", string);
     }
     else if ([self.currentElementValue isEqualToString:@"AuthorBioHTML"]) {
         self.pbookAuthor.bioHtml = string;
-        PBDLOG_ARG(@"For author %@", self.currentAuthorElement);    
-        PBDLOG_ARG(@"AuthorBioHTML %@", string);
+        //PBDLOG_ARG(@"For author %@", self.currentAuthorElement);    
+        //PBDLOG_ARG(@"AuthorBioHTML %@", string);
     }
 	
 }
@@ -323,7 +367,11 @@
     else if ([elementName isEqualToString:@"categories"] && ![self.categories containsObject:self.pbookCategory]) {
         [self.categories addObject:self.pbookCategory];
         PBDLOG(@"Category info storred!");
-    }
+    }/*
+    else if ([elementName isEqualToString:@"categorybooks"] && ![self.categoryBookLinks containsObject:self.pbookCategoryBookLink]) {
+        [self.categoryBookLinks addObject:self.pbookCategoryBookLink];
+        PBDLOG(@"Category info storred!");
+    }*/
     else if ([elementName isEqualToString:@"author"]) {
         [self.authors addObject:self.pbookAuthor];
         PBDLOG(@"Author info storred!");

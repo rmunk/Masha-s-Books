@@ -12,6 +12,7 @@
 
 @property (readwrite) NSInteger iD;
 @property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSMutableArray *booksInCategory;
 
 - (PicturebookCategory *)initWithName:(NSString *)name AndID:(NSInteger)tag;
     
