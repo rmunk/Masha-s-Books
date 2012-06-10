@@ -40,7 +40,6 @@
 - (PicturebookShop *)initShop;
 - (void)refreshShop;    
 - (NSOrderedSet *)getBooksForCategory:(PicturebookCategory *)pbCategory;
-- (NSOrderedSet *)getBooksForCategoryName:(PicturebookCategory *)pbCategory;
 
 
 @end

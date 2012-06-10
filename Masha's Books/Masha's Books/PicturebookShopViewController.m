@@ -150,8 +150,11 @@
             
         }
         else if (tableView.tag == COVERS_TABLEVIEW_TAG) {
-            int numOfRows = [self.picturebookShop getBooksForCategory:self.selectedPicturebookCategory].count / NUM_OF_COVERS_IN_ROW_PORTRAIT;
-            if ([self.picturebookShop getBooksForCategory:self.selectedPicturebookCategory].count % NUM_OF_COVERS_IN_ROW_PORTRAIT)
+            NSOrderedSet *bookInCategory = [self.picturebookShop getBooksForCategory:self.selectedPicturebookCategory];
+            // Broj redova u tablici s coverima za neku kategoriju je (broj covera / broj covera u jednom redu) 
+            int numOfRows = bookInCategory.count / NUM_OF_COVERS_IN_ROW_PORTRAIT;
+            // Da li treba dodat jos jedan red ako (broj covera / broj covera u jednom redu) nije cijeli broj?
+            if (bookInCategory.count % NUM_OF_COVERS_IN_ROW_PORTRAIT)
                 numOfRows++;
             PBDLOG_ARG(@"Picture books table number of rows: %i", numOfRows);
             //return self.picturebookShop.books.count;
@@ -170,12 +173,11 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-
-    CoverTableRowCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-	
-	if (tableView.tag == CATEGORY_TABLEVIEW_TAG) {
+    if (tableView.tag == CATEGORY_TABLEVIEW_TAG) {
+        
+        static NSString *CellIdentifier = @"CategoryTableCell";        
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        
         if (cell == nil) 
             cell = [[CoverTableRowCell alloc] initWithFrame:CGRectZero];
         PicturebookCategory *pbCategory = [self.picturebookShop.categories objectAtIndex:indexPath.row];
@@ -184,12 +186,18 @@
         //[cell.textLabel setTextColor:[UIColor lightTextColor]];
         //[cell.textLabel setFont:[UIFont systemFontOfSize:22.0]];
         //cell.backgroundColor = [UIColor clearColor];
+        return cell;
     }
     else if (tableView.tag == COVERS_TABLEVIEW_TAG) {
+        
+        static NSString *CellIdentifier = @"CoverTableCell";        
+        CoverTableRowCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        
         if (cell == nil) {
             NSMutableOrderedSet *rowPbInfos = [[NSMutableOrderedSet alloc] init];
-            for (int i = indexPath.row * NUM_OF_COVERS_IN_ROW_PORTRAIT; (i < (indexPath.row * NUM_OF_COVERS_IN_ROW_PORTRAIT + NUM_OF_COVERS_IN_ROW_PORTRAIT)) && i < [self.picturebookShop getBooksForCategory:self.selectedPicturebookCategory].count; i++) {
-                [rowPbInfos addObject:[[self.picturebookShop getBooksForCategory:self.selectedPicturebookCategory] objectAtIndex:i]];
+            NSOrderedSet *bookInCategory = [self.picturebookShop getBooksForCategory:self.selectedPicturebookCategory];
+            for (int i = indexPath.row * NUM_OF_COVERS_IN_ROW_PORTRAIT; (i < (indexPath.row * NUM_OF_COVERS_IN_ROW_PORTRAIT + NUM_OF_COVERS_IN_ROW_PORTRAIT)) && i < bookInCategory.count; i++) {
+                [rowPbInfos addObject:[bookInCategory objectAtIndex:i]];
             }
                 
             cell = [[CoverTableRowCell alloc] initWithFrame:CGRectZero 
@@ -205,9 +213,13 @@
                 [tableView reloadData];
             }            
         }
+        return cell;
     }	
+    else {
+        return NULL;
+    }
     
-    return cell;
+    
 }
 
 #pragma mark - Table view delegate

@@ -12,11 +12,13 @@
 
 @synthesize iD = _iD;
 @synthesize name = _name;
+@synthesize booksInCategory = _booksInCategory;
 
 - (PicturebookCategory *)initWithName:(NSString *)name AndID:(NSInteger)iD {
     self = [super init];
     self.name = name;
     self.iD = iD;
+    self.booksInCategory = [[NSMutableArray alloc] init];
     return self;
 }
 @end
