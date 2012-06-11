@@ -7,6 +7,7 @@
 //
 
 #import "MyBooksViewController.h"
+#import "Book.h"
 #import "MyLibrary.h"
 
 @interface MyBooksViewController ()<UIScrollViewDelegate>
@@ -14,6 +15,8 @@
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, weak) IBOutlet UIView *scrollViewContainer;
 @property (nonatomic, strong) NSArray *pageImages;
+
+@property (nonatomic, strong) NSArray *myBooks;
 @property (nonatomic, strong) NSMutableArray *pageViews;
 @end
 
@@ -23,7 +26,10 @@
 @synthesize scrollView = _scrollView;
 @synthesize scrollViewContainer = _scrollViewContainer;
 @synthesize pageImages = _pageImages;
+
+@synthesize myBooks = _myBooks;
 @synthesize pageViews = _pageViews;
+@synthesize managedObjectContext = _managedObjectContext;
 
 - (MyLibrary *)modelController
 {
@@ -52,13 +58,13 @@
     for (NSInteger i=firstPage; i<=lastPage; i++) {
         [self loadPage:i];
     }
-    for (NSInteger i=lastPage+1; i<[self.dataSource numberOfBooksInMyLibrary]; i++) {
+    for (NSInteger i=lastPage+1; i<[self.myBooks count]; i++) {
         [self purgePage:i];
     }
 }
 
 - (void)loadPage:(NSInteger)page {
-    if (page < 0 || page >= [self.dataSource numberOfBooksInMyLibrary]) {
+    if (page < 0 || page >= [self.myBooks count]) {
         // If it's outside the range of what we have to display, then do nothing
         return;
     }
@@ -72,7 +78,8 @@
         frame = CGRectInset(frame, 50.0f, 0.0f);
         
 //        UIImageView *newPageView = [[UIImageView alloc] initWithImage:[self.pageImages objectAtIndex:page]];
-        UIImageView *newPageView = [[UIImageView alloc] initWithImage:[self.dataSource BookCoverImageAtIndex:page]];
+//        UIImageView *newPageView = [[UIImageView alloc] initWithImage:[self.dataSource BookCoverImageAtIndex:page]];
+        UIImageView *newPageView = [[UIImageView alloc] initWithImage:[(Book *)[self.myBooks objectAtIndex:page] coverImage]];
         newPageView.contentMode = UIViewContentModeScaleAspectFit;
         newPageView.frame = frame;
         newPageView.tag = page;
@@ -103,7 +110,16 @@
     
     self.title = @"My Books";
     self.dataSource = self.modelController;
+    
 
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
+    request.predicate = [NSPredicate predicateWithFormat:@"downloaded > 0"];
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
+    request.sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    
+    NSError *error;
+    self.myBooks = [self.managedObjectContext executeFetchRequest:request error:&error];
+    
     // Set up the array to hold the views for each page
     NSInteger pageCount = [self.dataSource numberOfBooksInMyLibrary];
     self.pageViews = [[NSMutableArray alloc] init];

@@ -19,5 +19,7 @@
 @end
 
 @interface MyBooksViewController : UIViewController
+@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+
 @property (nonatomic, weak) id <MyBooksViewControllerDataSource> dataSource;
 @end

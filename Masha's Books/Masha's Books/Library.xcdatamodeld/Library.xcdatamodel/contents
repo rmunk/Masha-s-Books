@@ -5,14 +5,12 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="websiteURL" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="books" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Book" inverseName="author" inverseEntity="Book" syncable="YES"/>
-        <relationship name="newRelationship" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Author" inverseName="newRelationship1" inverseEntity="Author" syncable="YES"/>
-        <relationship name="newRelationship1" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Author" inverseName="newRelationship" inverseEntity="Author" syncable="YES"/>
     </entity>
     <entity name="Book" representedClassName="Book" syncable="YES">
         <attribute name="appStoreID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="backgroundMusic" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="coverImage" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="coverThumbnailImage" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="downloadDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="downloaded" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="downloadURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="facebookLikeURL" optional="YES" attributeType="String" syncable="YES"/>
@@ -20,12 +18,17 @@
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="youTubeVideoURL" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="author" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Author" inverseName="books" inverseEntity="Author" syncable="YES"/>
-        <relationship name="category" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Category" inverseName="books" inverseEntity="Category" syncable="YES"/>
+        <relationship name="categories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Category" inverseName="books" inverseEntity="Category" syncable="YES"/>
+        <relationship name="coverImage" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Image" inverseName="book" inverseEntity="Image" syncable="YES"/>
         <relationship name="pages" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Page" inverseName="book" inverseEntity="Page" syncable="YES"/>
     </entity>
     <entity name="Category" representedClassName="Category" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="books" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Book" inverseName="category" inverseEntity="Book" syncable="YES"/>
+        <relationship name="books" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Book" inverseName="categories" inverseEntity="Book" syncable="YES"/>
+    </entity>
+    <entity name="Image" syncable="YES">
+        <attribute name="image" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <relationship name="book" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Book" inverseName="coverImage" inverseEntity="Book" syncable="YES"/>
     </entity>
     <entity name="Page" representedClassName="Page" syncable="YES">
         <attribute name="image" optional="YES" attributeType="Transformable" syncable="YES"/>
@@ -38,8 +41,9 @@
     <fetchRequest name="DownloadedBooks" entity="Book" predicateString="downloaded == 1"/>
     <elements>
         <element name="Author" positionX="-270" positionY="180" width="128" height="105"/>
-        <element name="Book" positionX="-56" positionY="144" width="128" height="240"/>
+        <element name="Book" positionX="-56" positionY="144" width="128" height="255"/>
         <element name="Category" positionX="-270" positionY="333" width="128" height="75"/>
-        <element name="Page" positionX="142" positionY="195" width="128" height="135"/>
+        <element name="Page" positionX="135" positionY="360" width="128" height="135"/>
+        <element name="Image" positionX="133" positionY="249" width="128" height="75"/>
     </elements>
 </model>
