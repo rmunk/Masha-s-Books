@@ -8,38 +8,27 @@
 
 #import "MyBooksViewController.h"
 #import "Book.h"
-#import "MyLibrary.h"
 
 @interface MyBooksViewController ()<UIScrollViewDelegate>
-@property (nonatomic, strong) MyLibrary *modelController;
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, weak) IBOutlet UIView *scrollViewContainer;
-@property (nonatomic, strong) NSArray *pageImages;
 
 @property (nonatomic, strong) NSArray *myBooks;
 @property (nonatomic, strong) NSMutableArray *pageViews;
 @end
 
 @implementation MyBooksViewController
-@synthesize modelController = _modelController;
-@synthesize dataSource = _dataSource;
+@synthesize managedObjectContext = _managedObjectContext;
+
 @synthesize scrollView = _scrollView;
 @synthesize scrollViewContainer = _scrollViewContainer;
-@synthesize pageImages = _pageImages;
 
 @synthesize myBooks = _myBooks;
 @synthesize pageViews = _pageViews;
-@synthesize managedObjectContext = _managedObjectContext;
 
-- (MyLibrary *)modelController
-{
-    if (!_modelController) {
-        _modelController = [[MyLibrary alloc] init];
-    }
-    return _modelController;
-}
-
+#pragma mark - Load Pages
 - (void)loadVisiblePages {
+
     // First, determine which page is currently visible
     CGFloat pageWidth = self.scrollView.frame.size.width;
     NSInteger numbrOfPagesOnScreen = self.scrollViewContainer.frame.size.width / self.scrollView.frame.size.width;
@@ -77,8 +66,6 @@
         frame.origin.y = 0.0f;
         frame = CGRectInset(frame, 50.0f, 0.0f);
         
-//        UIImageView *newPageView = [[UIImageView alloc] initWithImage:[self.pageImages objectAtIndex:page]];
-//        UIImageView *newPageView = [[UIImageView alloc] initWithImage:[self.dataSource BookCoverImageAtIndex:page]];
         UIImageView *newPageView = [[UIImageView alloc] initWithImage:[(Book *)[self.myBooks objectAtIndex:page] coverImage]];
         newPageView.contentMode = UIViewContentModeScaleAspectFit;
         newPageView.frame = frame;
@@ -91,7 +78,7 @@
 }
 
 - (void)purgePage:(NSInteger)page {
-    if (page < 0 || page >= [self.dataSource numberOfBooksInMyLibrary]) {
+    if (page < 0 || page >= [self.myBooks count]) {
         // If it's outside the range of what we have to display, then do nothing
         return;
     }
@@ -104,13 +91,12 @@
     }
 }
 
-- (void)viewDidLoad
+#pragma mark - View lifecycle
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidLoad];
+    [super viewWillAppear:animated];
     
     self.title = @"My Books";
-    self.dataSource = self.modelController;
-    
 
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
     request.predicate = [NSPredicate predicateWithFormat:@"downloaded > 0"];
@@ -121,7 +107,7 @@
     self.myBooks = [self.managedObjectContext executeFetchRequest:request error:&error];
     
     // Set up the array to hold the views for each page
-    NSInteger pageCount = [self.dataSource numberOfBooksInMyLibrary];
+    NSInteger pageCount = [self.myBooks count];
     self.pageViews = [[NSMutableArray alloc] init];
     for (NSInteger i = 0; i < pageCount; ++i) {
         [self.pageViews addObject:[NSNull null]];
@@ -133,43 +119,21 @@
     
     // Set up the content size of the scroll view
     CGSize pagesScrollViewSize = self.scrollView.frame.size;
-    self.scrollView.contentSize = CGSizeMake(pagesScrollViewSize.width * [self.dataSource numberOfBooksInMyLibrary], pagesScrollViewSize.height);
+    self.scrollView.contentSize = CGSizeMake(pagesScrollViewSize.width * [self.myBooks count], pagesScrollViewSize.height);
     
     // Load the initial set of pages that are on screen
     [self loadVisiblePages];
-    
-    
-    
-//    NSInteger pageCount = [self.dataSource numberOfBooks];
-//    
-//    for (NSInteger i = 0; i < pageCount; ++i) {
-//        CGRect frame = CGRectMake(0, 0, self.scrollView2.bounds.size.height * 1.33, self.scrollView2.bounds.size.height);
-//        self.scrollView2.contentSize = CGSizeMake(frame.size.width * pageCount, frame.size.height);
-//        frame.origin.x = frame.size.width * i;
-//        frame.origin.y = 0.0f;
-//        frame = CGRectInset(frame, 10.0f, 0.0f);
-//        
-//        UIImageView *newPageView = [[UIImageView alloc] initWithImage:[self.pageImages objectAtIndex:i]];
-//        //        UIView *newPageView = [[UIView alloc] initWithFrame:frame];
-//        //        [newPageView addSubview:[[UIImageView alloc] initWithImage:[self.pageImages objectAtIndex:i]]];
-//        newPageView.tag = i;
-//        newPageView.contentMode = UIViewContentModeScaleAspectFit;
-//        newPageView.frame = frame;
-//        newPageView.userInteractionEnabled = YES;
-//        [newPageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userTappedImage:)]];
-//        
-//        [self.scrollView2 addSubview:newPageView];
-//    }    
 }
 
 - (void)viewDidUnload {
     [self setScrollView:nil];
     [self setScrollViewContainer:nil];
-    [self setPageImages:nil];
+    [self setMyBooks:nil];
     [self setPageViews:nil];
     [super viewDidUnload];
 }
 
+#pragma mark -
 - (void)userTappedImage:(UITapGestureRecognizer *)sender 
 {
     UIView *page = sender.view;
@@ -189,8 +153,8 @@
 
 #pragma mark - UIScrollViewDelegate
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    // Load the pages which are now on screen
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView 
+{
     [self loadVisiblePages];
 }
 @end

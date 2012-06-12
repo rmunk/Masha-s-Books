@@ -116,7 +116,6 @@
 		C08246E7157673E000054A3A /* Shop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C08246E3157673E000054A3A /* Shop@2x.png */; };
 		C08246ED157680E900054A3A /* Library.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C08246EB157680E900054A3A /* Library.xcdatamodeld */; };
 		C08247201576895D00054A3A /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C082471F1576895D00054A3A /* CoreData.framework */; };
-		C0824723157689FB00054A3A /* MyLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = C0824722157689FB00054A3A /* MyLibrary.m */; };
 		C08247571576DABC00054A3A /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = C08247561576DABC00054A3A /* Category.m */; };
 		C082475A1576DABC00054A3A /* Page.m in Sources */ = {isa = PBXBuildFile; fileRef = C08247591576DABC00054A3A /* Page.m */; };
 		C082475D1576DABC00054A3A /* Author.m in Sources */ = {isa = PBXBuildFile; fileRef = C082475C1576DABC00054A3A /* Author.m */; };
@@ -271,8 +270,6 @@
 		C08246E3157673E000054A3A /* Shop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Shop@2x.png"; sourceTree = "<group>"; };
 		C08246EC157680E900054A3A /* Library.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Library.xcdatamodel; sourceTree = "<group>"; };
 		C082471F1576895D00054A3A /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		C0824721157689FB00054A3A /* MyLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyLibrary.h; sourceTree = "<group>"; };
-		C0824722157689FB00054A3A /* MyLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyLibrary.m; sourceTree = "<group>"; };
 		C08247551576DABC00054A3A /* Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Category.h; sourceTree = "<group>"; };
 		C08247561576DABC00054A3A /* Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Category.m; sourceTree = "<group>"; };
 		C08247581576DABC00054A3A /* Page.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Page.h; sourceTree = "<group>"; };
@@ -561,8 +558,6 @@
 				C09829931575026E004EAA0D /* MashasShopViewController.m */,
 				C098298F157501D1004EAA0D /* MyBooksViewController.h */,
 				C0982990157501D1004EAA0D /* MyBooksViewController.m */,
-				C0824721157689FB00054A3A /* MyLibrary.h */,
-				C0824722157689FB00054A3A /* MyLibrary.m */,
 				C0F3010C157AC0A5000798F7 /* BookDownloader.h */,
 				C0F3010D157AC0A5000798F7 /* BookDownloader.m */,
 				C0B3FF6A15742E41002DF30F /* Supporting Files */,
@@ -819,7 +814,6 @@
 				BA9802741575AFC600EE06BB /* PicturebookShop.m in Sources */,
 				BA9802751575AFC600EE06BB /* PicturebookShopViewController.m in Sources */,
 				C08246ED157680E900054A3A /* Library.xcdatamodeld in Sources */,
-				C0824723157689FB00054A3A /* MyLibrary.m in Sources */,
 				C08247571576DABC00054A3A /* Category.m in Sources */,
 				C082475A1576DABC00054A3A /* Page.m in Sources */,
 				C082475D1576DABC00054A3A /* Author.m in Sources */,

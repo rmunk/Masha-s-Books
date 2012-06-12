@@ -13,7 +13,8 @@
 @implementation MashasBooksAppDelegate
 
 @synthesize window = _window;
-@synthesize managedObjectContext = __managedObjectContext;
+@synthesize myBooksManagedObjectContext = __myBooksManagedObjectContext;
+@synthesize shopManagedObjectContext = __shopManagedObjectContext;
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 
@@ -24,7 +25,9 @@
     MyBooksViewController *myBooksVievController = (MyBooksViewController *)[tabBarController.childViewControllers objectAtIndex:0];
     PicturebookShopViewController *picturebookShopViewController = (PicturebookShopViewController *)[tabBarController.childViewControllers objectAtIndex:1];
     
-    myBooksVievController.managedObjectContext = self.managedObjectContext;
+    myBooksVievController.managedObjectContext = self.myBooksManagedObjectContext;
+    picturebookShopViewController.managedObjectContext = self.shopManagedObjectContext;
+    
     return YES;
 }
 							
@@ -59,7 +62,7 @@
 - (void)saveContext
 {
     NSError *error = nil;
-    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
+    NSManagedObjectContext *managedObjectContext = self.shopManagedObjectContext;
     if (managedObjectContext != nil) {
         if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
@@ -74,18 +77,32 @@
 
 // Returns the managed object context for the application.
 // If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
-- (NSManagedObjectContext *)managedObjectContext
+- (NSManagedObjectContext *)myBooksManagedObjectContext
 {
-    if (__managedObjectContext != nil) {
-        return __managedObjectContext;
+    if (__myBooksManagedObjectContext != nil) {
+        return __myBooksManagedObjectContext;
     }
     
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     if (coordinator != nil) {
-        __managedObjectContext = [[NSManagedObjectContext alloc] init];
-        [__managedObjectContext setPersistentStoreCoordinator:coordinator];
+        __myBooksManagedObjectContext = [[NSManagedObjectContext alloc] init];
+        [__myBooksManagedObjectContext setPersistentStoreCoordinator:coordinator];
     }
-    return __managedObjectContext;
+    return __myBooksManagedObjectContext;
+}
+
+- (NSManagedObjectContext *)shopManagedObjectContext
+{
+    if (__shopManagedObjectContext != nil) {
+        return __shopManagedObjectContext;
+    }
+    
+    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
+    if (coordinator != nil) {
+        __shopManagedObjectContext = [[NSManagedObjectContext alloc] init];
+        [__shopManagedObjectContext setPersistentStoreCoordinator:coordinator];
+    }
+    return __shopManagedObjectContext;
 }
 
 // Returns the managed object model for the application.

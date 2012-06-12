@@ -20,5 +20,6 @@
 @property (weak, nonatomic) IBOutlet UIWebView *shopWebView;
 @property (weak, nonatomic) IBOutlet UIImageView *selectedCoverTumbnailView;
 @property (weak, nonatomic) IBOutlet UIButton *buyButton;
+@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
 @end
