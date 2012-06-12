@@ -116,10 +116,11 @@
 		C08246E7157673E000054A3A /* Shop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C08246E3157673E000054A3A /* Shop@2x.png */; };
 		C08246ED157680E900054A3A /* Library.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C08246EB157680E900054A3A /* Library.xcdatamodeld */; };
 		C08247201576895D00054A3A /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C082471F1576895D00054A3A /* CoreData.framework */; };
-		C08247571576DABC00054A3A /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = C08247561576DABC00054A3A /* Category.m */; };
-		C082475A1576DABC00054A3A /* Page.m in Sources */ = {isa = PBXBuildFile; fileRef = C08247591576DABC00054A3A /* Page.m */; };
-		C082475D1576DABC00054A3A /* Author.m in Sources */ = {isa = PBXBuildFile; fileRef = C082475C1576DABC00054A3A /* Author.m */; };
-		C08247601576DABC00054A3A /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = C082475F1576DABC00054A3A /* Book.m */; };
+		C085FD7A158801160084946E /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = C085FD79158801160084946E /* Book.m */; };
+		C085FD7D158801160084946E /* Author.m in Sources */ = {isa = PBXBuildFile; fileRef = C085FD7C158801160084946E /* Author.m */; };
+		C085FD80158801160084946E /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = C085FD7F158801160084946E /* Category.m */; };
+		C085FD83158801160084946E /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = C085FD82158801160084946E /* Image.m */; };
+		C085FD86158801160084946E /* Page.m in Sources */ = {isa = PBXBuildFile; fileRef = C085FD85158801160084946E /* Page.m */; };
 		C0982991157501D1004EAA0D /* MyBooksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0982990157501D1004EAA0D /* MyBooksViewController.m */; };
 		C09829941575026E004EAA0D /* MashasShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C09829931575026E004EAA0D /* MashasShopViewController.m */; };
 		C0B3FF6415742E41002DF30F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0B3FF6315742E41002DF30F /* UIKit.framework */; };
@@ -270,14 +271,16 @@
 		C08246E3157673E000054A3A /* Shop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Shop@2x.png"; sourceTree = "<group>"; };
 		C08246EC157680E900054A3A /* Library.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Library.xcdatamodel; sourceTree = "<group>"; };
 		C082471F1576895D00054A3A /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		C08247551576DABC00054A3A /* Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Category.h; sourceTree = "<group>"; };
-		C08247561576DABC00054A3A /* Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Category.m; sourceTree = "<group>"; };
-		C08247581576DABC00054A3A /* Page.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Page.h; sourceTree = "<group>"; };
-		C08247591576DABC00054A3A /* Page.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Page.m; sourceTree = "<group>"; };
-		C082475B1576DABC00054A3A /* Author.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Author.h; sourceTree = "<group>"; };
-		C082475C1576DABC00054A3A /* Author.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Author.m; sourceTree = "<group>"; };
-		C082475E1576DABC00054A3A /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Book.h; sourceTree = "<group>"; };
-		C082475F1576DABC00054A3A /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Book.m; sourceTree = "<group>"; };
+		C085FD78158801160084946E /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Book.h; sourceTree = "<group>"; };
+		C085FD79158801160084946E /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Book.m; sourceTree = "<group>"; };
+		C085FD7B158801160084946E /* Author.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Author.h; sourceTree = "<group>"; };
+		C085FD7C158801160084946E /* Author.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Author.m; sourceTree = "<group>"; };
+		C085FD7E158801160084946E /* Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Category.h; sourceTree = "<group>"; };
+		C085FD7F158801160084946E /* Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Category.m; sourceTree = "<group>"; };
+		C085FD81158801160084946E /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Image.h; sourceTree = "<group>"; };
+		C085FD82158801160084946E /* Image.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Image.m; sourceTree = "<group>"; };
+		C085FD84158801160084946E /* Page.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Page.h; sourceTree = "<group>"; };
+		C085FD85158801160084946E /* Page.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Page.m; sourceTree = "<group>"; };
 		C098298F157501D1004EAA0D /* MyBooksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyBooksViewController.h; sourceTree = "<group>"; };
 		C0982990157501D1004EAA0D /* MyBooksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyBooksViewController.m; sourceTree = "<group>"; };
 		C09829921575026E004EAA0D /* MashasShopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MashasShopViewController.h; sourceTree = "<group>"; };
@@ -491,14 +494,16 @@
 			isa = PBXGroup;
 			children = (
 				C08246EB157680E900054A3A /* Library.xcdatamodeld */,
-				C082475B1576DABC00054A3A /* Author.h */,
-				C082475C1576DABC00054A3A /* Author.m */,
-				C082475E1576DABC00054A3A /* Book.h */,
-				C082475F1576DABC00054A3A /* Book.m */,
-				C08247551576DABC00054A3A /* Category.h */,
-				C08247561576DABC00054A3A /* Category.m */,
-				C08247581576DABC00054A3A /* Page.h */,
-				C08247591576DABC00054A3A /* Page.m */,
+				C085FD84158801160084946E /* Page.h */,
+				C085FD85158801160084946E /* Page.m */,
+				C085FD81158801160084946E /* Image.h */,
+				C085FD82158801160084946E /* Image.m */,
+				C085FD7E158801160084946E /* Category.h */,
+				C085FD7F158801160084946E /* Category.m */,
+				C085FD7B158801160084946E /* Author.h */,
+				C085FD7C158801160084946E /* Author.m */,
+				C085FD78158801160084946E /* Book.h */,
+				C085FD79158801160084946E /* Book.m */,
 			);
 			name = LibraryDataModel;
 			sourceTree = "<group>";
@@ -814,15 +819,16 @@
 				BA9802741575AFC600EE06BB /* PicturebookShop.m in Sources */,
 				BA9802751575AFC600EE06BB /* PicturebookShopViewController.m in Sources */,
 				C08246ED157680E900054A3A /* Library.xcdatamodeld in Sources */,
-				C08247571576DABC00054A3A /* Category.m in Sources */,
-				C082475A1576DABC00054A3A /* Page.m in Sources */,
-				C082475D1576DABC00054A3A /* Author.m in Sources */,
-				C08247601576DABC00054A3A /* Book.m in Sources */,
 				C072881B15784A6100B64A68 /* SlikovnicaDataViewController.m in Sources */,
 				C072881C15784A6100B64A68 /* SlikovnicaModelController.m in Sources */,
 				C072881D15784A6100B64A68 /* SlikovnicaNavigationViewController.m in Sources */,
 				C072881E15784A6100B64A68 /* SlikovnicaRootViewController.m in Sources */,
 				C0F3010E157AC0A5000798F7 /* BookDownloader.m in Sources */,
+				C085FD7A158801160084946E /* Book.m in Sources */,
+				C085FD7D158801160084946E /* Author.m in Sources */,
+				C085FD80158801160084946E /* Category.m in Sources */,
+				C085FD83158801160084946E /* Image.m in Sources */,
+				C085FD86158801160084946E /* Page.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,23 +8,24 @@
 
 #import "MyBooksViewController.h"
 #import "Book.h"
+#import "Image.h"
 
 @interface MyBooksViewController ()<UIScrollViewDelegate>
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, weak) IBOutlet UIView *scrollViewContainer;
 
 @property (nonatomic, strong) NSArray *myBooks;
-@property (nonatomic, strong) NSMutableArray *pageViews;
+@property (nonatomic, strong) NSMutableArray *coverViews;
 @end
 
 @implementation MyBooksViewController
-@synthesize managedObjectContext = _managedObjectContext;
+@synthesize library = _library;
 
 @synthesize scrollView = _scrollView;
 @synthesize scrollViewContainer = _scrollViewContainer;
 
 @synthesize myBooks = _myBooks;
-@synthesize pageViews = _pageViews;
+@synthesize coverViews = _coverViews;
 
 #pragma mark - Load Pages
 - (void)loadVisiblePages {
@@ -59,21 +60,22 @@
     }
     
     // Load an individual page, first seeing if we've already loaded it
-    UIView *pageView = [self.pageViews objectAtIndex:page];
-    if ((NSNull*)pageView == [NSNull null]) {
+    UIView *coverView = [self.coverViews objectAtIndex:page];
+    if ((NSNull*)coverView == [NSNull null]) {
         CGRect frame = self.scrollView.bounds;
         frame.origin.x = frame.size.width * page;
         frame.origin.y = 0.0f;
         frame = CGRectInset(frame, 50.0f, 0.0f);
         
-        UIImageView *newPageView = [[UIImageView alloc] initWithImage:[(Book *)[self.myBooks objectAtIndex:page] coverImage]];
-        newPageView.contentMode = UIViewContentModeScaleAspectFit;
-        newPageView.frame = frame;
-        newPageView.tag = page;
-        newPageView.userInteractionEnabled = YES;
-        [newPageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userTappedImage:)]];
-        [self.scrollView addSubview:newPageView];
-        [self.pageViews replaceObjectAtIndex:page withObject:newPageView];
+        Book *book = [self.myBooks objectAtIndex:page];
+        UIImageView *newCoverView = [[UIImageView alloc] initWithImage:book.coverImage.image];
+        newCoverView.contentMode = UIViewContentModeScaleAspectFit;
+        newCoverView.frame = frame;
+        newCoverView.tag = page;
+        newCoverView.userInteractionEnabled = YES;
+        [newCoverView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userTappedImage:)]];
+        [self.scrollView addSubview:newCoverView];
+        [self.coverViews replaceObjectAtIndex:page withObject:newCoverView];
     }
 }
 
@@ -84,10 +86,62 @@
     }
     
     // Remove a page from the scroll view and reset the container array
-    UIView *pageView = [self.pageViews objectAtIndex:page];
-    if ((NSNull*)pageView != [NSNull null]) {
-        [pageView removeFromSuperview];
-        [self.pageViews replaceObjectAtIndex:page withObject:[NSNull null]];
+    UIView *coverView = [self.coverViews objectAtIndex:page];
+    if ((NSNull*)coverView != [NSNull null]) {
+        [coverView removeFromSuperview];
+        [self.coverViews replaceObjectAtIndex:page withObject:[NSNull null]];
+    }
+}
+
+#pragma mark - Setup Database
+- (void)getMyBooks
+{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
+    request.predicate = [NSPredicate predicateWithFormat:@"downloaded > 0"];
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
+    request.sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    
+    NSError *error;
+    self.myBooks = [self.library.managedObjectContext executeFetchRequest:request error:&error];
+    
+    // Set up the array to hold the views for each page
+    NSInteger pageCount = [self.myBooks count];
+    self.coverViews = [[NSMutableArray alloc] init];
+    for (NSInteger i = 0; i < pageCount; ++i) {
+        [self.coverViews addObject:[NSNull null]];
+    }    
+    // Set up the content size of the scroll view
+    CGSize pagesScrollViewSize = self.scrollView.frame.size;
+    self.scrollView.contentSize = CGSizeMake(pagesScrollViewSize.width * [self.myBooks count], pagesScrollViewSize.height);
+    
+    // Load the initial set of pages that are on screen
+    [self loadVisiblePages];
+}
+
+- (void)useDocument
+{
+    if (![[NSFileManager defaultManager] fileExistsAtPath:[self.library.fileURL path]]) {
+        // does not exist on disk, so create it
+        [self.library saveToURL:self.library.fileURL forSaveOperation:UIDocumentSaveForCreating completionHandler:^(BOOL success) {
+        // go to shop
+            
+        }];
+    } else if (self.library.documentState == UIDocumentStateClosed) {
+        // exists on disk, but we need to open it
+        [self.library openWithCompletionHandler:^(BOOL success) {
+            [self getMyBooks];
+        }];
+    } else if (self.library.documentState == UIDocumentStateNormal) {
+        // already open and ready to use
+        [self getMyBooks];
+    }
+}
+
+- (void)setLibrary:(UIManagedDocument *)library
+{
+    if (_library != library) {
+        _library = library;
+        [self useDocument];
     }
 }
 
@@ -98,38 +152,21 @@
     
     self.title = @"My Books";
 
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
-    request.predicate = [NSPredicate predicateWithFormat:@"downloaded > 0"];
-    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
-    request.sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-    
-    NSError *error;
-    self.myBooks = [self.managedObjectContext executeFetchRequest:request error:&error];
-    
-    // Set up the array to hold the views for each page
-    NSInteger pageCount = [self.myBooks count];
-    self.pageViews = [[NSMutableArray alloc] init];
-    for (NSInteger i = 0; i < pageCount; ++i) {
-        [self.pageViews addObject:[NSNull null]];
-    }
+    NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+    url = [url URLByAppendingPathComponent:@"Library"];
+    self.library = [[UIManagedDocument alloc] initWithFileURL:url];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    // Set up the content size of the scroll view
-    CGSize pagesScrollViewSize = self.scrollView.frame.size;
-    self.scrollView.contentSize = CGSizeMake(pagesScrollViewSize.width * [self.myBooks count], pagesScrollViewSize.height);
-    
-    // Load the initial set of pages that are on screen
-    [self loadVisiblePages];
 }
 
 - (void)viewDidUnload {
     [self setScrollView:nil];
     [self setScrollViewContainer:nil];
     [self setMyBooks:nil];
-    [self setPageViews:nil];
+    [self setCoverViews:nil];
     [super viewDidUnload];
 }
 

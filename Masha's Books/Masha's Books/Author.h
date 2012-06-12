@@ -2,7 +2,7 @@
 //  Author.h
 //  Masha's Books
 //
-//  Created by Ranko Munk on 5/31/12.
+//  Created by Ranko Munk on 6/13/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -13,9 +13,9 @@
 
 @interface Author : NSManagedObject
 
+@property (nonatomic, retain) NSString * bioHtml;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * websiteURL;
-@property (nonatomic, retain) NSString * bioHtml;
 @property (nonatomic, retain) NSOrderedSet *books;
 @end
 

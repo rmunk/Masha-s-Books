@@ -2,30 +2,32 @@
 //  Book.m
 //  Masha's Books
 //
-//  Created by Ranko Munk on 5/31/12.
+//  Created by Ranko Munk on 6/13/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
 #import "Book.h"
 #import "Author.h"
 #import "Category.h"
+#import "Image.h"
 #import "Page.h"
 
 
 @implementation Book
 
-@dynamic title;
 @dynamic appStoreID;
-@dynamic publishDate;
+@dynamic backgroundMusic;
+@dynamic coverThumbnailImage;
+@dynamic downloadDate;
+@dynamic downloaded;
 @dynamic downloadURL;
 @dynamic facebookLikeURL;
+@dynamic publishDate;
+@dynamic title;
 @dynamic youTubeVideoURL;
-@dynamic coverImage;
-@dynamic coverThumbnailImage;
-@dynamic backgroundMusic;
-@dynamic downloaded;
 @dynamic author;
-@dynamic category;
+@dynamic categories;
 @dynamic pages;
+@dynamic coverImage;
 
 @end

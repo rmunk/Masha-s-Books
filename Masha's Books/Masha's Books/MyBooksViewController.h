@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface MyBooksViewController : UIViewController
-@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, strong) UIManagedDocument *library;
 @end
