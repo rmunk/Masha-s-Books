@@ -77,9 +77,10 @@
     NSURL *baseURL = [NSURL fileURLWithPath:bundlePath];
     [self.shopWebView loadHTMLString:pbInfo. baseURL:
      */
-    
+    self.selectedPicturebookCategory = [self.picturebookShop.categories objectAtIndex:0];
     [[self getTableViewForTag:COVERS_TABLEVIEW_TAG] reloadData];
     [self.view setNeedsDisplay];
+    
 }
 
 - (void)picturebookShopLoadingError:(NSNotification *) notification {
@@ -103,7 +104,7 @@
 	// Do any additional setup after loading the view, typically from a nib.
     
     // Registering to PicturebookShop notifications (laoding succesful and loading error)
-    self.selectedPicturebookCategory = [[PicturebookCategory alloc] initWithName:@"All" AndID:0];
+    //self.selectedPicturebookCategory = [[PicturebookCategory alloc] initWithName:@"All" AndID:0];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(picturebookShopFinishedLoading:) name:@"PicturebookShopFinishedLoading" object:nil ]; 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(picturebookShopLoadingError:) name:@"PicturebookShopLoadingError" object:nil ];
     self.buyButton.hidden = TRUE;
@@ -187,7 +188,6 @@
     }
 }
     
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView.tag == CATEGORY_TABLEVIEW_TAG) {
