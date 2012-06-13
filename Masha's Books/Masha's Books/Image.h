@@ -1,5 +1,5 @@
 //
-//  Page.h
+//  Image.h
 //  Masha's Books
 //
 //  Created by Ranko Munk on 6/13/12.
@@ -11,13 +11,12 @@
 
 @class Book;
 
-@interface Page : NSManagedObject
+@interface ImageToDataTransformer : NSValueTransformer 
+@end
+
+@interface Image : NSManagedObject
 
 @property (nonatomic, retain) id image;
-@property (nonatomic, retain) NSNumber * pageNumber;
-@property (nonatomic, retain) id sound;
-@property (nonatomic, retain) id text;
-@property (nonatomic, retain) id voiceOver;
 @property (nonatomic, retain) Book *book;
 
 @end

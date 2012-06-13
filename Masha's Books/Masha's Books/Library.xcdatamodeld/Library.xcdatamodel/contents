@@ -19,15 +19,15 @@
         <attribute name="youTubeVideoURL" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="author" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Author" inverseName="books" inverseEntity="Author" syncable="YES"/>
         <relationship name="categories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Category" inverseName="books" inverseEntity="Category" syncable="YES"/>
-        <relationship name="coverImage" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Image" inverseName="book" inverseEntity="Image" syncable="YES"/>
+        <relationship name="coverImage" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Image" inverseName="book" inverseEntity="Image" syncable="YES"/>
         <relationship name="pages" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Page" inverseName="book" inverseEntity="Page" syncable="YES"/>
     </entity>
     <entity name="Category" representedClassName="Category" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="books" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Book" inverseName="categories" inverseEntity="Book" syncable="YES"/>
     </entity>
-    <entity name="Image" syncable="YES">
-        <attribute name="image" optional="YES" attributeType="Transformable" syncable="YES"/>
+    <entity name="Image" representedClassName="Image" syncable="YES">
+        <attribute name="image" optional="YES" attributeType="Transformable" valueTransformerName="ImageToDataTransformer" syncable="YES"/>
         <relationship name="book" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Book" inverseName="coverImage" inverseEntity="Book" syncable="YES"/>
     </entity>
     <entity name="Page" representedClassName="Page" syncable="YES">
@@ -43,7 +43,7 @@
         <element name="Author" positionX="-270" positionY="180" width="128" height="105"/>
         <element name="Book" positionX="-56" positionY="144" width="128" height="255"/>
         <element name="Category" positionX="-270" positionY="333" width="128" height="75"/>
-        <element name="Page" positionX="135" positionY="360" width="128" height="135"/>
         <element name="Image" positionX="133" positionY="249" width="128" height="75"/>
+        <element name="Page" positionX="135" positionY="360" width="128" height="135"/>
     </elements>
 </model>
