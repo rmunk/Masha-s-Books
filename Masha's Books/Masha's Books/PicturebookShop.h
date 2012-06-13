@@ -12,6 +12,9 @@
 #import "PicturebookInfo.h"
 #import "PicturebookCategory.h"
 #import "PicturebookAuthor.h"
+#import "Author.h"
+#import "Book.h"
+#import "Category.h"
 
 #define PICTUREBOOK_SHOP_DEBUG_LOGS 1
 

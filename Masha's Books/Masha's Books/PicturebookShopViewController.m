@@ -90,6 +90,8 @@
 - (IBAction)shopItemTapped:(PicturebookCover *)sender{
     PBDLOG_ARG(@"Shop item tapped: %@", sender.pbInfo.title);
     
+    [sender.pbInfo pickYourCategories:self.picturebookShop.categories];
+    
     [self.shopWebView loadHTMLString:sender.pbInfo.descriptionHTML baseURL:nil];
     PBDLOG_ARG(@"Picturebook descriptionHTML: %@", sender.pbInfo.descriptionHTML);
     self.selectedCoverTumbnailView.image = sender.pbInfo.coverImage;

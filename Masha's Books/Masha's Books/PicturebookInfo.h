@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PicturebookCategory.h"
 
 @interface PicturebookInfo : NSObject
 
@@ -25,5 +26,9 @@
 
 @property (nonatomic, strong) UIImage *coverImage;
 @property (nonatomic, strong) UIImage *coverThumbnailImage;
+
+@property (nonatomic, strong) NSMutableOrderedSet *bookCategories;  //public set of book categories, imutable
+
+- (void)pickYourCategories:(NSOrderedSet *)allCategories;
 
 @end

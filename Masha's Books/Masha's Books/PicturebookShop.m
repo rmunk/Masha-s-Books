@@ -55,6 +55,13 @@
     }
     [self.xmlParser setDelegate:self];
     
+    // Init library database UIManagedDocument
+    if (!self.libraryDatabase) {
+        NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+        url = [url URLByAppendingPathComponent:@"Library"];
+        self.libraryDatabase = [[UIManagedDocument alloc] initWithFileURL:url];
+    }
+    
     self.categories = [[NSMutableOrderedSet alloc] init];
     self.books = [[NSMutableOrderedSet alloc] init];
     self.authors = [[NSMutableOrderedSet alloc] init];
@@ -71,18 +78,23 @@
     return self;
 }
 
+// useDocument method   - if picture-book database does not exist, it creates it
+//                      - if picture-book database exists but it's not open, it opens it
+//                      - if picture-book database is open, use database
 - (void)useDocument
 {
     if (![[NSFileManager defaultManager] fileExistsAtPath:[self.libraryDatabase.fileURL path]]) {
         [self.libraryDatabase saveToURL:self.libraryDatabase.fileURL forSaveOperation:UIDocumentSaveForCreating completionHandler:^(BOOL success){
-            
+            NSLog(@"Database at %@ does not exist. Creating...", self.libraryDatabase.fileURL);
+            [self useDocument];
         }];
     } else if (self.libraryDatabase.documentState == UIDocumentStateClosed) {
         [self.libraryDatabase openWithCompletionHandler:^(BOOL success){
-            
+            NSLog(@"Database at %@ exist. Opening...", self.libraryDatabase.fileURL);
+            [self useDocument];
         }];
     } else if (self.libraryDatabase.documentState == UIDocumentStateNormal) {
-        
+        NSLog(@"Database at %@ is opened and ready for use.", self.libraryDatabase.fileURL);
     }
 }
 
@@ -116,18 +128,33 @@
     
     if (parsingSuccesfulll == YES) 
     {
-        [self populateStoreWithImages];
+        [self populateShopWithImages];
         self.isShopLoaded = YES;
-        [self shopDataLoaded];
-        
+        //[self shopDataLoaded];
+        //samo za testiranje!!!!!!!
+        [self refreshDatabase];
     }
     else {
         [self shopErrorLoading];
     }
 }
 
+- (void)refreshDatabase {
+    [self.libraryDatabase.managedObjectContext performBlock:^{
+        for (PicturebookInfo *pbInfo in self.books) {
+            Book *book = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:self.libraryDatabase.managedObjectContext];
+            book.title = pbInfo.title;
+            //book.author = pbInfo.authorID;
+            book.appStoreID = [[NSNumber alloc]initWithInt:pbInfo.appStoreID];
+            book.coverImage = pbInfo.coverThumbnailImage;
+            NSLog(@"Storing book %@", pbInfo.title);
+            
+        }
+    }];
+}
+
 // Populating PicturebookInfo instances with cover images
-- (void)populateStoreWithImages {
+- (void)populateShopWithImages {
     for (PicturebookInfo *pbInfo in self.books) {
         
         if ([pbInfo isKindOfClass:[PicturebookInfo class]]) { 
@@ -150,10 +177,22 @@
                 });                                                 
                 
             });
-            
+            //[self shopDataLoaded];
             dispatch_release(downloadQueue);
             
         }
+    }    
+}
+
+- (void)putObject:(id)obj inContext:(NSManagedObjectContext *)context {
+    if ([obj isKindOfClass:[PicturebookAuthor class]]) {
+        NSLog(@"Putting author %@ in context", ((PicturebookAuthor *)obj).name);
+    }
+    else if ([obj isKindOfClass:[PicturebookCategory class]]) {
+        NSLog(@"Putting author %@ in context", ((PicturebookCategory *)obj).name);
+    }
+    else if ([obj isKindOfClass:[PicturebookAuthor class]]) {
+        NSLog(@"Putting book %@ in context", ((PicturebookInfo *)obj).title);
     }    
 }
 
@@ -366,6 +405,7 @@
     }
     else if ([elementName isEqualToString:@"categories"] && ![self.categories containsObject:self.pbookCategory]) {
         [self.categories addObject:self.pbookCategory];
+        [self putObject:self.pbookCategory inContext:self.libraryDatabase.managedObjectContext];
         PBDLOG(@"Category info storred!");
     }/*
     else if ([elementName isEqualToString:@"categorybooks"] && ![self.categoryBookLinks containsObject:self.pbookCategoryBookLink]) {
@@ -374,6 +414,7 @@
     }*/
     else if ([elementName isEqualToString:@"author"]) {
         [self.authors addObject:self.pbookAuthor];
+        [self putObject:self.pbookAuthor inContext:self.libraryDatabase.managedObjectContext];
         PBDLOG(@"Author info storred!");
     }
 }
