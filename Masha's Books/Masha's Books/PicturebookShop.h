@@ -15,6 +15,7 @@
 #import "Author.h"
 #import "Book.h"
 #import "Category.h"
+#import "Image.h"
 
 #define PICTUREBOOK_SHOP_DEBUG_LOGS 1
 
@@ -42,6 +43,7 @@
 
 - (PicturebookShop *)initShop;
 - (void)refreshShop;    
+- (void)refreshDatabase; 
 - (NSOrderedSet *)getBooksForCategory:(PicturebookCategory *)pbCategory;
 
 

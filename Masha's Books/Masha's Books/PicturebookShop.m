@@ -106,7 +106,24 @@
     }
 }
 
+//Method for calculation of directory size. No recursion so for now works correctly only if directory does not have any sub directories.
+- (unsigned long long int)directorySizeAtPath:(NSString *)directoryPath {
+    NSError *error = nil;
+    NSArray *filesArray = [[NSFileManager defaultManager] subpathsOfDirectoryAtPath:directoryPath error:nil];
+    NSEnumerator *filesEnumerator = [filesArray objectEnumerator];
+    NSString *fileName;
+    unsigned long long int fileSize = 0;
+    
+    while (fileName = [filesEnumerator nextObject]) {
+        NSDictionary *fileDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:[directoryPath stringByAppendingPathComponent:fileName] error:&error];
+        fileSize += [fileDictionary fileSize];
+    }
+    
+    return fileSize;
+}
+
 - (void)refreshShop {
+    
     PBDLOG_ARG(@"Picturebook shop: Refreshing shop from URL %@", [self.shopURL description]);
     
     [self.categories removeAllObjects];
@@ -132,29 +149,129 @@
         self.isShopLoaded = YES;
         //[self shopDataLoaded];
         //samo za testiranje!!!!!!!
-        [self refreshDatabase];
+        //[self refreshDatabase];
     }
     else {
         [self shopErrorLoading];
     }
+    
+    /*
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"]; 
+    request.predicate = [NSPredicate predicateWithFormat:@"book.title=%@", @"dummy book"];
+    NSSortDescriptor *sortByName = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]; 
+    request.sortDescriptors = [NSArray arrayWithObject:sortByName];
+    NSManagedObjectContext *moc = self.libraryDatabase.managedObjectContext;
+    NSError *error;
+    NSArray *books = [moc executeFetchRequest:request error:&error];
+    for (Book *book in books) {
+        NSLog(@"Book found");
+    }
+    */
 }
 
 - (void)refreshDatabase {
-    [self.libraryDatabase.managedObjectContext performBlock:^{
-        for (PicturebookInfo *pbInfo in self.books) {
-            Book *book = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:self.libraryDatabase.managedObjectContext];
-            book.title = pbInfo.title;
-            //book.author = pbInfo.authorID;
-            book.appStoreID = [[NSNumber alloc]initWithInt:pbInfo.appStoreID];
-            book.coverImage = pbInfo.coverThumbnailImage;
-            NSLog(@"Storing book %@", pbInfo.title);
+    
+    dispatch_queue_t refreshQ = dispatch_queue_create("Database refreshener", NULL);
+    
+    dispatch_async(refreshQ, ^{
+        [self.libraryDatabase.managedObjectContext performBlock:^{
+            for (PicturebookInfo *pbInfo in self.books) {
+               
+                NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"]; 
+                NSSortDescriptor *sortByName = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES]; 
+                request.sortDescriptors = [NSArray arrayWithObject:sortByName];
+                NSManagedObjectContext *moc = self.libraryDatabase.managedObjectContext;
+                NSError *error;
+                NSArray *books = [moc executeFetchRequest:request error:&error];
+                NSLog(@"Number of books : %d", books.count);
+                for (Book *book in books) {
+                    NSLog(@"Book found : %@", book.title);
+                }
+                
+                
+                //kreiraj predikat tako da dohvaca knjige s naslovom "title"
+                request.predicate = [NSPredicate predicateWithFormat:@"title = %@", pbInfo.title];
+                NSArray *booksWithTitle = [moc executeFetchRequest:request error:&error];
+                
+                if (booksWithTitle != NULL) {
+                    for (Book *pbk in booksWithTitle) {
+                        NSLog(@"Book %@ already exists, deleting old entry...", pbk.title);
+                        [self.libraryDatabase.managedObjectContext deleteObject:pbk]; 
+                    }
+                }
+                
             
+                Book *book = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:self.libraryDatabase.managedObjectContext];
+                Image *image = [NSEntityDescription insertNewObjectForEntityForName:@"Image" inManagedObjectContext:self.libraryDatabase.managedObjectContext];
+                Author *author = [NSEntityDescription insertNewObjectForEntityForName:@"Author" inManagedObjectContext:self.libraryDatabase.managedObjectContext];
+                
+                
+                if (book && image && author) {
+                    
+                    image.image = pbInfo.coverImage;
+                    
+                    author.name = @"Unknown book author";
+                    for (PicturebookAuthor *pbAuth in self.authors) {
+                        if (pbAuth.iD == pbInfo.authorID) {
+                            author.name = pbAuth.name;
+                        }
+                    }
+                    NSLog(@"Book author: %@", author.name);
+                    
+                    //category.name = @"Unknown book category";
+                    for (PicturebookCategory *pbCat in pbInfo.bookCategories) {
+                        Category *category = [NSEntityDescription insertNewObjectForEntityForName:@"Category" inManagedObjectContext:self.libraryDatabase.managedObjectContext];
+                        category.name = pbCat.name;
+                        [book addCategoriesObject:category];
+                        NSLog(@"Book category: %@", category.name);                        
+                    }
+                    
+                    
+                    
+                    book.title = pbInfo.title;
+                    book.author = author;
+                    book.appStoreID = [[NSNumber alloc] initWithInt:pbInfo.appStoreID];
+                    book.coverImage = image;
+                    
+                    NSLog(@"Storing book %@", pbInfo.title);
+                    
+                    NSLog(@"Persistent store size: %llu bytes", [self directorySizeAtPath:[self.libraryDatabase.fileURL path]]);
+                }
+                else {
+                    NSLog(@"Error creating library entities.");
+                }               
+            
+            }
+        }];
+    });
+    dispatch_release(refreshQ);
+    
+    [self.libraryDatabase saveToURL:self.libraryDatabase.fileURL forSaveOperation:UIDocumentSaveForOverwriting completionHandler:^(BOOL success) {
+        if (success) {
+            NSLog(@"Library database saved!");
+            /*
+            NSLog(@"Reading database books:");
+            
+            NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"]; 
+            //request.predicate = [NSPredicate predicateWithFormat:@"book.title=%@", @"*"];
+            NSSortDescriptor *sortByName = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES]; 
+            request.sortDescriptors = [NSArray arrayWithObject:sortByName];
+            NSManagedObjectContext *moc = self.libraryDatabase.managedObjectContext;
+            NSError *error;
+            NSArray *books = [moc executeFetchRequest:request error:&error];
+            NSLog(@"Number of books : %d", books.count);
+            for (Book *book in books) {
+                //NSLog(@"Book found : %@", book.title);
+            }
+            */
+
         }
     }];
 }
 
 // Populating PicturebookInfo instances with cover images
 - (void)populateShopWithImages {
+    //NSInteger numOfImageDownloadingThreads = 0;
     for (PicturebookInfo *pbInfo in self.books) {
         
         if ([pbInfo isKindOfClass:[PicturebookInfo class]]) { 
@@ -167,6 +284,7 @@
             // Get an image from the URL below
             dispatch_queue_t downloadQueue = dispatch_queue_create("image download", NULL);
             dispatch_async(downloadQueue, ^{
+                
                 UIImage *coverImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:coverURL]];
                 dispatch_async(dispatch_get_main_queue(), ^{                    
                     if (coverImage) {                                    
@@ -177,7 +295,6 @@
                 });                                                 
                 
             });
-            //[self shopDataLoaded];
             dispatch_release(downloadQueue);
             
         }

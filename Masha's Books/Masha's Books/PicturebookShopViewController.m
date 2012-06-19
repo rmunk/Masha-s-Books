@@ -65,6 +65,7 @@
 
 }
 - (IBAction)buyPictureBook:(UIButton *)sender {
+    [self.picturebookShop refreshDatabase];
 }
 
 - (void)picturebookShopFinishedLoading:(NSNotification *) notification {
@@ -79,6 +80,7 @@
      */
     self.selectedPicturebookCategory = [self.picturebookShop.categories objectAtIndex:0];
     [[self getTableViewForTag:COVERS_TABLEVIEW_TAG] reloadData];
+    
     [self.view setNeedsDisplay];
     
 }
