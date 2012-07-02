@@ -2,7 +2,7 @@
 //  Book.h
 //  Masha's Books
 //
-//  Created by Ranko Munk on 6/13/12.
+//  Created by Ranko Munk on 7/2/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -14,8 +14,8 @@
 @interface Book : NSManagedObject
 
 @property (nonatomic, retain) NSNumber * appStoreID;
-@property (nonatomic, retain) id backgroundMusic;
-@property (nonatomic, retain) id coverThumbnailImage;
+@property (nonatomic, retain) NSData * backgroundMusic;
+@property (nonatomic, retain) UIImage *coverThumbnailImage;
 @property (nonatomic, retain) NSDate * downloadDate;
 @property (nonatomic, retain) NSNumber * downloaded;
 @property (nonatomic, retain) NSString * downloadURL;
@@ -25,8 +25,8 @@
 @property (nonatomic, retain) NSString * youTubeVideoURL;
 @property (nonatomic, retain) Author *author;
 @property (nonatomic, retain) NSSet *categories;
-@property (nonatomic, retain) NSOrderedSet *pages;
 @property (nonatomic, retain) Image *coverImage;
+@property (nonatomic, retain) NSSet *pages;
 @end
 
 @interface Book (CoreDataGeneratedAccessors)

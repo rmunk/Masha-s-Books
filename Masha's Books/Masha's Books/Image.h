@@ -2,7 +2,7 @@
 //  Image.h
 //  Masha's Books
 //
-//  Created by Ranko Munk on 6/13/12.
+//  Created by Ranko Munk on 7/2/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -11,12 +11,9 @@
 
 @class Book;
 
-@interface ImageToDataTransformer : NSValueTransformer 
-@end
-
 @interface Image : NSManagedObject
 
-@property (nonatomic, retain) id image;
+@property (nonatomic, retain) UIImage *image;
 @property (nonatomic, retain) Book *book;
 
 @end

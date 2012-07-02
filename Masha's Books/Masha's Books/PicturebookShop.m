@@ -232,6 +232,7 @@
                     book.author = author;
                     book.appStoreID = [[NSNumber alloc] initWithInt:pbInfo.appStoreID];
                     book.coverImage = image;
+                    book.downloaded = [NSNumber numberWithInt:1] ;
                     
                     NSLog(@"Storing book %@", pbInfo.title);
                     

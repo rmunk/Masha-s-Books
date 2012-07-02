@@ -9,13 +9,16 @@
 #import "MyBooksViewController.h"
 #import "Book.h"
 #import "Image.h"
+#import "BookExtractor.h"
 
-@interface MyBooksViewController ()<UIScrollViewDelegate>
+@interface MyBooksViewController ()<UIScrollViewDelegate, BookExtractorDelegate>
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, weak) IBOutlet UIView *scrollViewContainer;
 
 @property (nonatomic, strong) NSArray *myBooks;
 @property (nonatomic, strong) NSMutableArray *coverViews;
+
+@property (nonatomic, strong) NSManagedObjectContext *context;
 @end
 
 @implementation MyBooksViewController
@@ -26,6 +29,31 @@
 
 @synthesize myBooks = _myBooks;
 @synthesize coverViews = _coverViews;
+
+@synthesize context = _context;
+
+- (IBAction)extractTest:(id)sender 
+{
+    
+    NSString *file = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"izgubljene_papuce.zip"];
+//    NSString *file = [NSHomeDirectory() stringByAppendingPathComponent:@"tmp/izgubljene_papuce.zip"];
+    BookExtractor *bookExtractor = [[BookExtractor alloc] init];
+    bookExtractor.delegate = self;
+    [bookExtractor extractBook:[self.myBooks objectAtIndex:0] FromFile:file];
+}
+
+- (void)bookExtractor:(BookExtractor *)extractor didFinishExtractinWithgSuccess:(BOOL)success
+{
+    if (success) {
+        [self.library savePresentedItemChangesWithCompletionHandler:^(NSError *error) {
+            if (error) {
+                NSLog(@"Error saving database! (%@)", error.description);
+            }
+            NSLog(@"Library database saved!");                
+        }];
+        
+    }
+}
 
 #pragma mark - Load Pages
 - (void)loadVisiblePages {
