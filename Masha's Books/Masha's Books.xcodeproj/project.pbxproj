@@ -585,7 +585,6 @@
 		C0B3FF5415742E41002DF30F = {
 			isa = PBXGroup;
 			children = (
-				C093EB57159E784100035D20 /* libz.dylib */,
 				C0B3FF6915742E41002DF30F /* Masha's Books */,
 				C0B3FF8715742E42002DF30F /* Masha's BooksTests */,
 				C0B3FF6215742E41002DF30F /* Frameworks */,
@@ -605,6 +604,7 @@
 		C0B3FF6215742E41002DF30F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C093EB57159E784100035D20 /* libz.dylib */,
 				C082471F1576895D00054A3A /* CoreData.framework */,
 				C0B3FF98157436CA002DF30F /* AVFoundation.framework */,
 				C0B3FF6315742E41002DF30F /* UIKit.framework */,
