@@ -1,5 +1,5 @@
 //
-//  Category.m
+//  Category+Addon.h
 //  Masha's Books
 //
 //  Created by Luka Miljak on 7/3/12.
@@ -7,13 +7,9 @@
 //
 
 #import "Category.h"
-#import "Book.h"
 
+@interface Category (Addon)
 
-@implementation Category
-
-@dynamic name;
-@dynamic categoryID;
-@dynamic books;
++ (void)categoryWithAttributes:(NSDictionary *)attributes forContext:(NSManagedObjectContext *)context;
 
 @end

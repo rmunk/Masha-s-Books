@@ -16,6 +16,9 @@
 #import "Book.h"
 #import "Category.h"
 #import "Image.h"
+#import "Book+Addon.h"
+#import "Category+Addon.h"
+#import "Author+Addon.h"
 
 #define PICTUREBOOK_SHOP_DEBUG_LOGS 1
 
