@@ -12,31 +12,57 @@
 
 + (Book *)bookWithAttributes:(NSDictionary *)attributes forContext:(NSManagedObjectContext *)context {
     
-    Book *book = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:context];
-    NSDateFormatter *df = [[NSDateFormatter alloc] init];
-    [df setDateFormat:@"dd.mm.yyyy"];
+    //kreiranje fetch requesta
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"]; 
+    //NSSortDescriptor *sortByName = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES]; 
+    //request.sortDescriptors = [NSArray arrayWithObject:sortByName];
+    NSError *error;
     
-    book.bookID = [NSNumber numberWithInt:[[attributes objectForKey:@"ID"] integerValue]];
+    request.predicate = [NSPredicate predicateWithFormat:@"bookID = %d", [[attributes objectForKey:@"ID"] integerValue]];
+    NSArray *booksWithID = [context executeFetchRequest:request error:&error];
     
-    book.type = [NSNumber numberWithInt:[[attributes objectForKey:@"Type"] integerValue]];
+    if ([booksWithID count] == 0) {
+        //ako knjige nema u bazi onda ovo
+        NSLog(@"NEMA JE !!!!!!!!!!!!!!!!!!!!!!");
+        
+        Book *book = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:context];
+        NSDateFormatter *df = [[NSDateFormatter alloc] init];
+        [df setDateFormat:@"dd.mm.yyyy"];
+        
+        book.bookID = [NSNumber numberWithInt:[[attributes objectForKey:@"ID"] integerValue]];
+        
+        book.type = [NSNumber numberWithInt:[[attributes objectForKey:@"Type"] integerValue]];
+        
+        book.title = [attributes objectForKey:@"Title"];
+        
+        book.appStoreID = [NSNumber numberWithInt:[[attributes objectForKey:@"AppleStoreID"] integerValue]];
+        
+        book.authorID = [NSNumber numberWithInt:[[attributes objectForKey:@"AuthorID"] integerValue]];
+        
+        book.publishDate = [df dateFromString:[attributes objectForKey:@"PublishDate"]];
+        
+        book.downloadURL = [attributes objectForKey:@"DownloadURL"];
+        
+        book.facebookLikeURL = [attributes objectForKey:@"FacebookLikeURL"];
+        
+        book.youTubeVideoURL = [attributes objectForKey:@"YouTubeVideoURL"];
+        
+        book.active = [attributes objectForKey:@"Active"];
+        
+        return book;
+    }
+    else if ([booksWithID count] == 1)       
+    {
+         // ovdje treba refreshat postojecu knjigu s novi atributima
+        NSLog(@"IMA JE !!!!!!!!!!!!!!!!!!!!!!");
+        return [booksWithID lastObject];
+    }
+    else {
+        NSLog(@"ERROR: More than one book with ID $d exists in database!");
+        return nil;
+    }
+
     
-    book.title = [attributes objectForKey:@"Title"];
-    
-    book.appStoreID = [NSNumber numberWithInt:[[attributes objectForKey:@"AppleStoreID"] integerValue]];
-    
-    book.authorID = [NSNumber numberWithInt:[[attributes objectForKey:@"AuthorID"] integerValue]];
-    
-    book.publishDate = [df dateFromString:[attributes objectForKey:@"PublishDate"]];
-    
-    book.downloadURL = [attributes objectForKey:@"DownloadURL"];
-    
-    book.facebookLikeURL = [attributes objectForKey:@"FacebookLikeURL"];
-    
-    book.youTubeVideoURL = [attributes objectForKey:@"YouTubeVideoURL"];
-    
-    book.active = [attributes objectForKey:@"Active"];
-    
-    return book;
 
 }
 
