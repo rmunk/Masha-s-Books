@@ -17,8 +17,8 @@
 @property (nonatomic, strong) PicturebookAuthor *pbookAuthor;
 @property (nonatomic, strong) NSDateFormatter *df;
 @property (nonatomic, strong) NSString *currentElementValue;
-@property (nonatomic, strong) NSString *currentBookElement;
-@property (nonatomic, strong) NSString *currentAuthorElement;
+@property (nonatomic, weak) Book *currentBook;
+@property (nonatomic, weak) Author *currentAuthor;
 
 @end
 
@@ -38,8 +38,8 @@
 @synthesize pbookAuthor = _pbookAuthor;
 @synthesize df = _df;
 @synthesize currentElementValue = _currentElementValue;
-@synthesize currentBookElement = _currentBookElement;
-@synthesize currentAuthorElement = _currentAuthorElement;
+@synthesize currentBook = _currentBook;
+@synthesize currentAuthor = _currentAuthor;
 
 @synthesize isShopLoaded = _isShopLoaded;
 
@@ -67,8 +67,8 @@
     self.authors = [[NSMutableOrderedSet alloc] init];
     
     self.currentElementValue = [[NSString alloc] init];
-    self.currentBookElement = [[NSString alloc] init];
-    self.currentAuthorElement = [[NSString alloc] init];
+    //self.currentBookElement = [[NSString alloc] init];
+    //self.currentAuthorElement = [[NSString alloc] init];
     
     self.df = [[NSDateFormatter alloc] init];
     [self.df setDateFormat:@"dd.mm.yyyy"]; 
@@ -365,8 +365,11 @@
 	}
     else if([elementName isEqualToString:@"categories"]) {
                     
+        [Category categoryWithAttributes:attributeDict forContext:self.libraryDatabase.managedObjectContext];
         PBDLOG(@"\n");
         PBDLOG(@"New book category found!");
+        
+        
         
         //Extract category attributes from XML
         NSInteger pbID = [[attributeDict objectForKey:@"ID"] integerValue];
@@ -427,41 +430,62 @@
 	else if([elementName isEqualToString:@"book"]) {       
         
         //Initialize new picture book
+        //self.currentBookElement = [[attributeDict objectForKey:@"ID"] integerValue]; // currectBookElement 
         self.pbookInfo = [[PicturebookInfo alloc] init];
+        self.currentBook = [Book bookWithAttributes:attributeDict forContext:self.libraryDatabase.managedObjectContext];
+        
+        //TU TREBA DODAT ISPITIVANJE JELI VEC POSTOJI U KONTEKSTU BOOK S TIM ID. AKO GA NEMA ZVAT OVU GORE METODU,
+        // A AKO GA IMA ZVAT METODU TIPA UPDATE BOOK U KOJOJ SE MOGU SAD PROMJENIT ATRIBUTI BOOKA
+        // NA ISTU SHEMU TREBA IC I CATEGORY I AUTHOR
+        
         PBDLOG(@"\n");
         PBDLOG(@"New book found!");
 		
 		//Extract the picture book attributes from XML
-        self.pbookInfo.catID = [[attributeDict objectForKey:@"catID"] integerValue];
-        PBDLOG_ARG(@"Category ID: %i", self.pbookInfo.catID);
         
         self.pbookInfo.iD = [[attributeDict objectForKey:@"ID"] integerValue];
+        //book.bookID = [NSNumber numberWithInt:[[attributeDict objectForKey:@"ID"] integerValue]];
         PBDLOG_ARG(@"Book ID: %i", self.pbookInfo.iD);
         
+        //book.type = [NSNumber numberWithInt:[[attributeDict objectForKey:@"Type"] integerValue]];
+        //PBDLOG_ARG(@"Book type: %i", [book.type intValue]);
+        
         self.pbookInfo.title = [attributeDict objectForKey:@"Title"];
-        self.currentBookElement = self.pbookInfo.title;
+        //book.title = [attributeDict objectForKey:@"Title"];
         PBDLOG_ARG(@"Book title: %@", self.pbookInfo.title);
         
         self.pbookInfo.appStoreID = [[attributeDict objectForKey:@"AppleStoreID"] integerValue];
+        //book.appStoreID = [NSNumber numberWithInt:[[attributeDict objectForKey:@"AppleStoreID"] integerValue]];
         PBDLOG_ARG(@"Applestore ID:%i", self.pbookInfo.appStoreID);
         
         self.pbookInfo.authorID = [[attributeDict objectForKey:@"AuthorID"] integerValue];
+        //book.authorID = [NSNumber numberWithInt:[[attributeDict objectForKey:@"AuthorID"] integerValue]];
         PBDLOG_ARG(@"Author ID:%i", self.pbookInfo.authorID);
         
         self.pbookInfo.publishDate = [self.df dateFromString:[attributeDict objectForKey:@"PublishDate"]];
+        //book.publishDate = [self.df dateFromString:[attributeDict objectForKey:@"PublishDate"]];
         PBDLOG_ARG(@"Publish date:%@", self.pbookInfo.publishDate.description);
         
         self.pbookInfo.downloadUrl = [NSURL URLWithString:[attributeDict objectForKey:@"DownloadURL"]];
+        //book.downloadURL = [attributeDict objectForKey:@"DownloadURL"];
         PBDLOG_ARG(@"Download URL:%@", self.pbookInfo.downloadUrl.description);
         
         self.pbookInfo.facebookLikeUrl = [NSURL URLWithString:[attributeDict objectForKey:@"FacebookLikeURL"]];
+        //book.facebookLikeURL = [attributeDict objectForKey:@"FacebookLikeURL"];
         PBDLOG_ARG(@"Facebook URL:%@", self.pbookInfo.facebookLikeUrl.description);
         
         self.pbookInfo.youTubeVideoUrl = [NSURL URLWithString:[attributeDict objectForKey:@"YouTubeVideoURL"]];
+        //book.youTubeVideoURL = [attributeDict objectForKey:@"YouTubeVideoURL"];
         PBDLOG_ARG(@"YouTube video URL:%@", self.pbookInfo.youTubeVideoUrl.description);
+        
+        //book.active = [attributeDict objectForKey:@"Active"];
+        //PBDLOG_ARG(@"Book active: %@", book.active);
+
         
 	}
     else if([elementName isEqualToString:@"author"]) {
+        
+        self.currentAuthor = [Author authorWithAttributes:attributeDict forContext:self.libraryDatabase.managedObjectContext];
         
         //Initialize new author
         self.pbookAuthor = [[PicturebookAuthor alloc] init];
@@ -473,9 +497,9 @@
         PBDLOG_ARG(@"Author ID: %i", self.pbookInfo.iD);
         
         self.pbookAuthor.name = [attributeDict objectForKey:@"Name"];
-        self.currentAuthorElement = self.pbookAuthor.name;
+        //self.currentAuthorElement = self.pbookAuthor.name;
         PBDLOG_ARG(@"Author name: %@", self.pbookAuthor.name);
-                
+        
         self.pbookAuthor.websiteUrl = [NSURL URLWithString:[attributeDict objectForKey:@"AuthorWebsiteURL"]];
         PBDLOG_ARG(@"Author website: %@", self.pbookAuthor.websiteUrl.description);
     }    
@@ -495,6 +519,13 @@
 }
 
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string { 
+    
+    // For current XML format, only elements with character body are DescriptionHTML and DescriptionLongHTML
+    // for book parrent and AutorBioHTML for author pattent
+    
+    [Book fillBookElement:self.currentElementValue withDescription:string forBook:self.currentBook];
+    [Author fillAuthorElement:self.currentElementValue withDescription:string forAuthor:self.currentAuthor];
+    
     
     if ([self.currentElementValue isEqualToString:@"DescriptionHTML"]) {
         self.pbookInfo.descriptionHTML = string;
@@ -518,22 +549,26 @@
   namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName {
     
     if ([elementName isEqualToString:@"book"] && ![self.books containsObject:self.pbookInfo]) {
-        [self.books addObject:self.pbookInfo];
+        [self.books addObject:self.pbookInfo];        
         PBDLOG(@"Book info storred!");
+        
+        self.currentBook = nil;
     }
     else if ([elementName isEqualToString:@"categories"] && ![self.categories containsObject:self.pbookCategory]) {
         [self.categories addObject:self.pbookCategory];
         [self putObject:self.pbookCategory inContext:self.libraryDatabase.managedObjectContext];
         PBDLOG(@"Category info storred!");
     }/*
-    else if ([elementName isEqualToString:@"categorybooks"] && ![self.categoryBookLinks containsObject:self.pbookCategoryBookLink]) {
-        [self.categoryBookLinks addObject:self.pbookCategoryBookLink];
-        PBDLOG(@"Category info storred!");
-    }*/
+      else if ([elementName isEqualToString:@"categorybooks"] && ![self.categoryBookLinks containsObject:self.pbookCategoryBookLink]) {
+      [self.categoryBookLinks addObject:self.pbookCategoryBookLink];
+      PBDLOG(@"Category info storred!");
+      }*/
     else if ([elementName isEqualToString:@"author"]) {
         [self.authors addObject:self.pbookAuthor];
         [self putObject:self.pbookAuthor inContext:self.libraryDatabase.managedObjectContext];
         PBDLOG(@"Author info storred!");
+        
+        self.currentAuthor = nil;
     }
 }
 
