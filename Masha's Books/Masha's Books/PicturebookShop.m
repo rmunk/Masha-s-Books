@@ -365,7 +365,7 @@
 	}
     else if([elementName isEqualToString:@"categories"]) {
                     
-        [Category categoryWithAttributes:attributeDict forContext:self.libraryDatabase.managedObjectContext];
+//        [Category categoryWithAttributes:attributeDict forContext:self.libraryDatabase.managedObjectContext];
         PBDLOG(@"\n");
         PBDLOG(@"New book category found!");
         
@@ -432,7 +432,7 @@
         //Initialize new picture book
         //self.currentBookElement = [[attributeDict objectForKey:@"ID"] integerValue]; // currectBookElement 
         self.pbookInfo = [[PicturebookInfo alloc] init];
-        self.currentBook = [Book bookWithAttributes:attributeDict forContext:self.libraryDatabase.managedObjectContext];
+//        self.currentBook = [Book bookWithAttributes:attributeDict forContext:self.libraryDatabase.managedObjectContext];
         
         //TU TREBA DODAT ISPITIVANJE JELI VEC POSTOJI U KONTEKSTU BOOK S TIM ID. AKO GA NEMA ZVAT OVU GORE METODU,
         // A AKO GA IMA ZVAT METODU TIPA UPDATE BOOK U KOJOJ SE MOGU SAD PROMJENIT ATRIBUTI BOOKA
@@ -485,7 +485,7 @@
 	}
     else if([elementName isEqualToString:@"author"]) {
         
-        self.currentAuthor = [Author authorWithAttributes:attributeDict forContext:self.libraryDatabase.managedObjectContext];
+//        self.currentAuthor = [Author authorWithAttributes:attributeDict forContext:self.libraryDatabase.managedObjectContext];
         
         //Initialize new author
         self.pbookAuthor = [[PicturebookAuthor alloc] init];

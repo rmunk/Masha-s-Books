@@ -2,7 +2,7 @@
 //  Category.h
 //  Masha's Books
 //
-//  Created by Luka Miljak on 7/3/12.
+//  Created by Ranko Munk on 7/4/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -13,8 +13,8 @@
 
 @interface Category : NSManagedObject
 
-@property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSNumber * categoryID;
+@property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSOrderedSet *books;
 @end
 

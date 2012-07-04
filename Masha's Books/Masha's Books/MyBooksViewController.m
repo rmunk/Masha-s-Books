@@ -39,7 +39,8 @@
 //    NSString *file = [NSHomeDirectory() stringByAppendingPathComponent:@"tmp/izgubljene_papuce.zip"];
     BookExtractor *bookExtractor = [[BookExtractor alloc] init];
     bookExtractor.delegate = self;
-    [bookExtractor extractBook:[self.myBooks objectAtIndex:0] FromFile:file];
+    bookExtractor.book = [self.myBooks objectAtIndex:0];
+    [bookExtractor extractBookFromFile:file];
 }
 
 - (void)bookExtractor:(BookExtractor *)extractor didFinishExtractinWithgSuccess:(BOOL)success

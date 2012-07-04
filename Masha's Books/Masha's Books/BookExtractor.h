@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "SSZipArchive.h"
-#import "Book.h"
+#import "Book+XcodeBugFix.h"
 #import "Page.h"
 #import "Image.h"
 #import <CoreData/CoreData.h>
@@ -21,9 +21,9 @@
 
 @interface BookExtractor : NSObject
 
-@property Book *book;
-@property id<BookExtractorDelegate> delegate;
+@property (nonatomic, strong) Book *book;
+@property (nonatomic, strong) id<BookExtractorDelegate> delegate;
 
-- (void)extractBook:(Book *)book FromFile:(NSString *)zipFile;
+- (void)extractBookFromFile:(NSString *)zipFile;
 
 @end
