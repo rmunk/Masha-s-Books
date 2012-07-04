@@ -8,12 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "SlikovnicaModelController.h"
+#import "Page.h"
 
 @interface SlikovnicaDataViewController : UIViewController
-
-@property (strong, nonatomic) id dataObject;
-@property (readonly, nonatomic) SlikovnicaPage *page;
-@property (nonatomic) NSUInteger pageNumber;
-
-
+@property (nonatomic, strong) Page *page;
 @end

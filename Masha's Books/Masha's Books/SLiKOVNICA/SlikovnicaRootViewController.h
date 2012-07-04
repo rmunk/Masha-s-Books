@@ -12,5 +12,6 @@
 @interface SlikovnicaRootViewController : UIViewController <UIPageViewControllerDelegate>
 
 @property (strong, nonatomic) UIPageViewController *pageViewController;
+@property (readonly, strong, nonatomic) SlikovnicaModelController *modelController;
 
 @end

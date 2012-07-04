@@ -12,7 +12,6 @@
 #import <AVFoundation/AVFoundation.h>
 
 @interface SlikovnicaRootViewController ()<AVAudioPlayerDelegate, SlikovnicaNavigationViewControllerDelegate>
-@property (readonly, strong, nonatomic) SlikovnicaModelController *modelController;
 @property (strong, nonatomic) SlikovnicaNavigationViewController *slikovnicaNavigationViewController;
 @property (strong, nonatomic) AVAudioPlayer *audioPlayer;
 @property (strong, nonatomic) IBOutlet UIView *navigationRequestView;
@@ -25,6 +24,10 @@
 @synthesize audioPlayer = _audioPlayer;
 @synthesize navigationRequestView = _navigationRequestView;
 @synthesize slikovnicaNavigationViewController = _slikovnicaNavigationViewController;
+
+- (AVAudioPlayer *)audioPlayer{
+    return nil;
+}
 
 - (void)viewDidLoad
 {
@@ -51,9 +54,8 @@
     [self.pageViewController didMoveToParentViewController:self];
     
     // Start sound on first page
-    NSURL *soundURL = [[NSURL alloc] initFileURLWithPath:startingViewController.page.sound];
     NSError *error;
-    self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundURL error:&error];
+    self.audioPlayer = [[AVAudioPlayer alloc] initWithData:startingViewController.page.sound error:&error];
     if(error) self.audioPlayer = nil;
     self.audioPlayer.delegate = self;
     [self.audioPlayer prepareToPlay];
@@ -82,8 +84,9 @@
         SlikovnicaDataViewController *nextViewController = [self.modelController viewControllerAtIndex:(page) storyboard:self.storyboard];
         NSArray *viewControllers = [NSArray arrayWithObject:nextViewController];
         
-        NSURL *soundURL = [[NSURL alloc] initFileURLWithPath:nextViewController.page.sound];
-        self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundURL error:nil];
+        NSError *error;
+        self.audioPlayer = [[AVAudioPlayer alloc] initWithData:nextViewController.page.sound error:&error];
+        if(error) self.audioPlayer = nil;
         self.audioPlayer.delegate = self;
         [self.audioPlayer prepareToPlay];
         
@@ -109,7 +112,7 @@
 {
     [self.audioPlayer pause];
     SlikovnicaDataViewController *currentViewController = [self.pageViewController.viewControllers objectAtIndex:0];
-    self.slikovnicaNavigationViewController.currentPage = currentViewController.pageNumber;
+    self.slikovnicaNavigationViewController.currentPage = currentViewController.page.pageNumber;
     [self.view bringSubviewToFront:self.slikovnicaNavigationViewController.view];
     self.view.gestureRecognizers = NULL;
 }
@@ -144,9 +147,7 @@
     {
         SlikovnicaDataViewController *currentViewController = [self.pageViewController.viewControllers objectAtIndex:0];
         NSLog(@"Flip: %@", currentViewController.description);
-        
-        NSURL *soundURL = [[NSURL alloc] initFileURLWithPath:currentViewController.page.sound];
-        self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundURL error:nil];
+        self.audioPlayer = [[AVAudioPlayer alloc] initWithData:currentViewController.page.sound error:nil];
         self.audioPlayer.delegate = self;
         [self.audioPlayer play];
     }
@@ -171,30 +172,31 @@
 		NSLog(@"Playback finished unsuccessfully");
     else 
     {
-        SlikovnicaDataViewController *currentViewController = [self.pageViewController.viewControllers objectAtIndex:0];
-        
-        if (currentViewController.pageNumber < [self.modelController numberOfPages] - 1) {
-            SlikovnicaDataViewController *nextViewController = [self.modelController viewControllerAtIndex:(currentViewController.pageNumber + 1) storyboard:self.storyboard];
-            NSArray *viewControllers = [NSArray arrayWithObject:nextViewController];
-            
-            NSURL *soundURL = [[NSURL alloc] initFileURLWithPath:nextViewController.page.sound];
-            self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundURL error:nil];
-            self.audioPlayer.delegate = self;
-            [self.audioPlayer prepareToPlay];
-            
-            void(^playSoundWhenPageIsTurned)(BOOL);
-            
-            playSoundWhenPageIsTurned = ^(BOOL finished)
-            {
-                if (finished)
-                {
-                    [self.audioPlayer play];
-                }
-            };
-            
-            [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:playSoundWhenPageIsTurned];
-        }
-        else [self.audioPlayer play];
+//        SlikovnicaDataViewController *currentViewController = [self.pageViewController.viewControllers objectAtIndex:0];
+//        int *numPages = (int)self.modelController.book.pages.count;
+//        
+//        if (currentViewController.page.pageNumber < self.modelController.book.pages.count - 1) {
+//            SlikovnicaDataViewController *nextViewController = [self.modelController viewControllerAtIndex:(currentViewController.page.pageNumber + 1) storyboard:self.storyboard];
+//            NSArray *viewControllers = [NSArray arrayWithObject:nextViewController];
+//            
+//            NSURL *soundURL = [[NSURL alloc] initFileURLWithPath:nextViewController.page.sound];
+//            self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundURL error:nil];
+//            self.audioPlayer.delegate = self;
+//            [self.audioPlayer prepareToPlay];
+//            
+//            void(^playSoundWhenPageIsTurned)(BOOL);
+//            
+//            playSoundWhenPageIsTurned = ^(BOOL finished)
+//            {
+//                if (finished)
+//                {
+//                    [self.audioPlayer play];
+//                }
+//            };
+//            
+//            [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:playSoundWhenPageIsTurned];
+//        }
+//        else [self.audioPlayer play];
     }
 }
 

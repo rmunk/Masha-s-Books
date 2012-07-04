@@ -15,28 +15,18 @@
 @end
 
 @implementation SlikovnicaDataViewController
+@synthesize page = _page;
 @synthesize dataImage = _dataImage;
-@synthesize dataObject = _dataObject;
-@synthesize pageNumber = _pageNumber;
-
-- (SlikovnicaPage *)page
-{
-    if([self.dataObject isKindOfClass:[SlikovnicaPage class]])
-    {
-        return self.dataObject;
-    }
-    else return nil;
-}
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"Page %d", self.pageNumber];
+    return [NSString stringWithFormat:@"Page %d", self.page.pageNumber];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSLog(@"%@", self.description);
+    NSLog(self.description);
 }
 
 - (void)viewDidUnload
@@ -50,7 +40,7 @@
     [super viewWillAppear:animated];
     if(self.page)
     {
-        self.dataImage.image = [UIImage imageWithContentsOfFile:self.page.image];
+        self.dataImage.image = self.page.image;
     }
 }
 

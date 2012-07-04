@@ -10,6 +10,7 @@
 #import "Book.h"
 #import "Image.h"
 #import "BookExtractor.h"
+#import "SlikovnicaRootViewController.h"
 
 @interface MyBooksViewController ()<UIScrollViewDelegate, BookExtractorDelegate>
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
@@ -206,7 +207,8 @@
     NSLog(@"Page: %d", page.tag);
     
     UIStoryboard *settingsStoryboard = [UIStoryboard storyboardWithName:@"SlikovnicaStoryboard" bundle:nil];
-    UIViewController *initialSettingsVC = [settingsStoryboard instantiateInitialViewController];
+    SlikovnicaRootViewController *initialSettingsVC = [settingsStoryboard instantiateInitialViewController];
+    initialSettingsVC.modelController.book = [self.myBooks objectAtIndex:0];
     initialSettingsVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self presentModalViewController:initialSettingsVC animated:YES];
 }

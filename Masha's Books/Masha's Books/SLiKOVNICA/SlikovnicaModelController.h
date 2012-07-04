@@ -7,21 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Book.h"
 
 @class SlikovnicaDataViewController;
 
 @interface SlikovnicaModelController : NSObject <UIPageViewControllerDataSource>
 
+@property Book *book;
+
 - (SlikovnicaDataViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard;
 - (NSUInteger)indexOfViewController:(SlikovnicaDataViewController *)viewController;
-- (NSUInteger)numberOfPages;
+- (NSNumber *)numberOfPages;
 - (NSArray *)getPageThumbnails;
 
-@end
-
-@interface SlikovnicaPage : NSObject
-@property (nonatomic) NSString *pageNumber;
-@property (nonatomic) NSString *image;
-@property (nonatomic) NSString *sound;
 @end
 

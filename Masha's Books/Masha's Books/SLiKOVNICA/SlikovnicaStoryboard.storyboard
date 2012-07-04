@@ -69,7 +69,7 @@
                             <view contentMode="scaleToFill" id="XBn-Gs-k0D">
                                 <rect key="frame" x="125" y="74" width="233" height="52"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="7Xt-0f-bla" appends="YES" id="N2Z-Pt-404"/>

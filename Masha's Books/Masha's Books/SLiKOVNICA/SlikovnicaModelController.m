@@ -16,47 +16,14 @@
  There is no need to actually create view controllers for each page in advance -- indeed doing so incurs unnecessary overhead. Given the data model, these methods create, configure, and return a new view controller on demand.
  */
 
-@implementation SlikovnicaPage
-
-@synthesize pageNumber = _pageNumber;
-@synthesize image = _image;
-@synthesize sound = _sound;
-
-@end
-
-@interface SlikovnicaModelController()
-@property (readonly, strong, nonatomic) NSMutableArray *pageData;
-@end
-
 @implementation SlikovnicaModelController
 
-@synthesize pageData = _pageData;
-
--(NSMutableArray *)pageData
-{
-    if(!_pageData) _pageData = [[NSMutableArray alloc] init];
-    return _pageData;
-}
+@synthesize book = _book;
 
 - (id)init
 {
     self = [super init];
     if (self) {
-        
-        // Create the data model.
-        NSArray *images = [[NSBundle mainBundle] pathsForResourcesOfType:@"jpg" inDirectory:nil];
-        int pageNumber = 0;
-        for (int i=0; i<images.count; i++) {
-            NSString *imageName = [[[images objectAtIndex:i] lastPathComponent] stringByDeletingPathExtension];
-            if (![imageName hasSuffix:@"@2x"] && ![imageName hasSuffix:@"c"])
-            {
-                SlikovnicaPage *page = [[SlikovnicaPage alloc] init];
-                page.pageNumber = [NSString stringWithFormat:@"%d", pageNumber++];
-                page.image = [images objectAtIndex:i];
-                page.sound = [[NSBundle mainBundle] pathForResource:imageName ofType:@"m4a"];
-                [self.pageData addObject:page];
-            }
-        }
     }
     return self;
 }
@@ -64,14 +31,13 @@
 - (SlikovnicaDataViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard
 {   
     // Return the data view controller for the given index.
-    if (([self.pageData count] == 0) || (index >= [self.pageData count])) {
+    if (([self.book.pages count] == 0) || (index >= [self.book.pages count])) {
         return nil;
     }
     
     // Create a new view controller and pass suitable data.
     SlikovnicaDataViewController *dataViewController = [storyboard instantiateViewControllerWithIdentifier:@"SlikovnicaDataViewController"];
-    dataViewController.dataObject = [self.pageData objectAtIndex:index];
-    dataViewController.pageNumber = index;
+    dataViewController.page = [self.book.pages objectAtIndex:index];
     
     return dataViewController;
 }
@@ -80,24 +46,21 @@
 {   
      // Return the index of the given data view controller.
      // For simplicity, this implementation uses a static array of model objects and the view controller stores the model object; you can therefore use the model object to identify the index.
-    return [self.pageData indexOfObject:viewController.dataObject];
+    return [self.book.pages indexOfObject:viewController.page];
 }
 
-- (NSUInteger)numberOfPages
+- (NSNumber *)numberOfPages
 {
-    return self.pageData.count;
+    return [NSNumber numberWithInt:self.book.pages.count];
 }
 
 - (NSArray *)getPageThumbnails
 {
     NSMutableArray *thumbnails = [[NSMutableArray alloc] init];
     
-    for (SlikovnicaPage *page in self.pageData) {
-        UIImage *thumbnail = [UIImage imageWithContentsOfFile:page.image];
-  //      CGImageRef image = CGImageRetain(thumbnail.CGImage);
-        
+    for (Page *page in self.book.pages) {
+        UIImage *thumbnail = page.image;
         [thumbnails addObject:thumbnail];
-
     }
     return thumbnails;
 }
@@ -123,7 +86,7 @@
     }
     
     index++;
-    if (index == [self.pageData count]) {
+    if (index == [self.book.pages count]) {
         return nil;
     }
     return [self viewControllerAtIndex:index storyboard:viewController.storyboard];
