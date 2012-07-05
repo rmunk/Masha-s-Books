@@ -148,7 +148,7 @@
     
     if (parsingSuccesfulll == YES) 
     {
-        [self populateShopWithImages];
+        //[self populateShopWithImages];
         self.isShopLoaded = YES;
         //[self shopDataLoaded];
         //samo za testiranje!!!!!!!

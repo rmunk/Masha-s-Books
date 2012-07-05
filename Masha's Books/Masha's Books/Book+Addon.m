@@ -14,8 +14,6 @@
     
     //kreiranje fetch requesta
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"]; 
-    //NSSortDescriptor *sortByName = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES]; 
-    //request.sortDescriptors = [NSArray arrayWithObject:sortByName];
     NSError *error;
     
     request.predicate = [NSPredicate predicateWithFormat:@"bookID = %d", [[attributes objectForKey:@"ID"] integerValue]];
@@ -49,19 +47,23 @@
         
         book.active = [attributes objectForKey:@"Active"];
         
+        //book.downloaded = [NSNumber numberWithInt:1];
+        
         return book;
     }
     else if ([booksWithID count] == 1)       
     {
+        Book *book = [booksWithID lastObject];
          // ovdje treba refreshat postojecu knjigu s novi atributima
-        NSLog(@"IMA JE !!!!!!!!!!!!!!!!!!!!!!");
-        return [booksWithID lastObject];
+        NSLog(@"Book with ID=%d already exists in database. Updating...", [book.bookID intValue]);
+        [Book updateBook:book withAttributes:attributes];
+        
+        return book;
     }
     else {
         NSLog(@"ERROR: More than one book with ID $d exists in database!");
         return nil;
     }   
-
 }
 
 + (void)pickBookCategoriesFromLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context forBook:(Book *)book {
@@ -130,11 +132,11 @@
         
             NSURL *coverURL = [[NSURL alloc] initWithString:
                                [NSString stringWithFormat:@"%@%d%@", 
-                                coverUrlString, book.bookID, @".jpg"]]; 
+                                coverUrlString, [book.bookID intValue], @".jpg"]]; 
         
             NSURL *coverThumbnailURL = [[NSURL alloc] initWithString:
                                         [NSString stringWithFormat:@"%@%d%@", 
-                                         coverUrlString, book.bookID, @"_t.jpg"]];
+                                         coverUrlString, [book.bookID intValue], @"_t.jpg"]];
         
             NSLog(@"Downloading cover images for book %@", book.title);
             
@@ -164,7 +166,56 @@
     } 
 }
 
-
++ (void)updateBook:(Book *)book withAttributes:(NSDictionary *)attributes {
+    
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    [df setDateFormat:@"dd.mm.yyyy"];
+    
+    if (book.type != [NSNumber numberWithInt:[[attributes objectForKey:@"Type"] integerValue]]) {
+        book.type = [NSNumber numberWithInt:[[attributes objectForKey:@"Type"] integerValue]];
+        NSLog(@"New value for book %@ attribute book.type", book.title);
+    }
+    
+    if (book.title != [attributes objectForKey:@"Title"]) {
+        book.title = [attributes objectForKey:@"Title"];
+        NSLog(@"New value for book %@ attribute book.title", book.title);
+    }
+    
+    if (book.appStoreID != [NSNumber numberWithInt:[[attributes objectForKey:@"AppleStoreID"] integerValue]]) {
+        book.appStoreID = [NSNumber numberWithInt:[[attributes objectForKey:@"AppleStoreID"] integerValue]];
+        NSLog(@"New value for book %@ attribute book.appstoreID", book.title);
+    }
+    
+    if (book.authorID != [NSNumber numberWithInt:[[attributes objectForKey:@"AuthorID"] integerValue]]) {
+        book.authorID = [NSNumber numberWithInt:[[attributes objectForKey:@"AuthorID"] integerValue]];
+        NSLog(@"New value for book %@ attribute book.authorID", book.title);
+    }  
+    
+    if (book.publishDate != [df dateFromString:[attributes objectForKey:@"PublishDate"]]) {
+        book.publishDate = [df dateFromString:[attributes objectForKey:@"PublishDate"]];
+        NSLog(@"New value for book %@ attribute book.publishDate", book.title);
+    } 
+    
+    if (book.downloadURL != [attributes objectForKey:@"DownloadURL"]) {
+        book.downloadURL = [attributes objectForKey:@"DownloadURL"];
+        NSLog(@"New value for book %@ attribute book.downloadURL", book.title);
+    } 
+    
+    if (book.facebookLikeURL != [attributes objectForKey:@"FacebookLikeURL"]) {
+        book.facebookLikeURL = [attributes objectForKey:@"FacebookLikeURL"];
+        NSLog(@"New value for book %@ attribute book.facebookLikeURL", book.title);
+    }
+    
+    if (book.youTubeVideoURL != [attributes objectForKey:@"YouTubeVideoURL"]) {
+        book.youTubeVideoURL = [attributes objectForKey:@"YouTubeVideoURL"];
+        NSLog(@"New value for book %@ attribute book.youTubeVideoURL", book.title);
+    }
+    
+    if (book.active != [attributes objectForKey:@"Active"]) {
+        book.active = [attributes objectForKey:@"Active"];
+        NSLog(@"New value for book %@ attribute book.active", book.title);
+    }    
+}
 
 - (void)fillBookElement:(NSString *)element withDescription:(NSString *)description {
     if ([element isEqualToString:@"DescriptionHTML"]) {

@@ -19,6 +19,7 @@
 + (void)linkBooksToCategoriesWithLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context;
 + (void)linkBooksToAuthorsInContext:(NSManagedObjectContext *)context;
 + (void)loadCoversFromURL:(NSString *)coverUrlString forBooksInContext:(NSManagedObjectContext *)context;
++ (void)updateBook:(Book *)book withAttributes:(NSDictionary *)attributes;
 
 - (void)fillBookElement:(NSString *)element withDescription:(NSString *)description;
 - (Book *)refreshBook:(Book *)book withNewAttributes:(NSDictionary *)attributes inContext:(NSManagedObjectContext *)context;
