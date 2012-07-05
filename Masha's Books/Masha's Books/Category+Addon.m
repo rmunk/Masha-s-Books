@@ -20,4 +20,8 @@
 
 }
 
+- (void)pickYourBooksFromLinkerObject:(CategoryToBookMap *)categoryToBookMap {
+    
+}
+
 @end
