@@ -279,7 +279,7 @@
             
             NSURL *coverURL = [[NSURL alloc] initWithString:
                                [NSString stringWithFormat:@"%@%d%@", 
-                                @"http://www.mashasbooks.com/covers/", pbInfo.iD, @"_t.jpg"]]; 
+                                @"http://www.mashasbooks.com/covers/", pbInfo.iD, @".jpg"]]; 
             PBDLOG_ARG(@"Downloading cover image for book %@", pbInfo.title);
             
             // Get an image from the URL below

@@ -44,7 +44,7 @@
     [bookExtractor extractBookFromFile:file];
 }
 
-- (void)bookExtractor:(BookExtractor *)extractor didFinishExtractinWithgSuccess:(BOOL)success
+- (void)bookExtractor:(BookExtractor *)extractor didFinishExtractingWithgSuccess:(BOOL)success
 {
     if (success) {
         [self.library savePresentedItemChangesWithCompletionHandler:^(NSError *error) {
@@ -53,7 +53,6 @@
             }
             NSLog(@"Library database saved!");                
         }];
-        
     }
 }
 
@@ -139,7 +138,9 @@
     self.coverViews = [[NSMutableArray alloc] init];
     for (NSInteger i = 0; i < pageCount; ++i) {
         [self.coverViews addObject:[NSNull null]];
-    }    
+    } 
+    // Clear scrollview
+    [self.scrollView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     // Set up the content size of the scroll view
     CGSize pagesScrollViewSize = self.scrollView.frame.size;
     self.scrollView.contentSize = CGSizeMake(pagesScrollViewSize.width * [self.myBooks count], pagesScrollViewSize.height);
@@ -206,11 +207,11 @@
     UIView *page = sender.view;
     NSLog(@"Page: %d", page.tag);
     
-    UIStoryboard *settingsStoryboard = [UIStoryboard storyboardWithName:@"SlikovnicaStoryboard" bundle:nil];
-    SlikovnicaRootViewController *initialSettingsVC = [settingsStoryboard instantiateInitialViewController];
-    initialSettingsVC.modelController.book = [self.myBooks objectAtIndex:0];
-    initialSettingsVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    [self presentModalViewController:initialSettingsVC animated:YES];
+    UIStoryboard *slikovnicaStoryboard = [UIStoryboard storyboardWithName:@"SlikovnicaStoryboard" bundle:nil];
+    SlikovnicaRootViewController *initialVC = [slikovnicaStoryboard instantiateInitialViewController];
+    initialVC.modelController.book = [self.myBooks objectAtIndex:0];
+    initialVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self presentModalViewController:initialVC animated:YES];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

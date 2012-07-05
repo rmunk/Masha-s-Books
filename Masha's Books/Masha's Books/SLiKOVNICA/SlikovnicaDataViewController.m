@@ -20,7 +20,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"Page %d", self.page.pageNumber];
+    return [NSString stringWithFormat:@"Page %d", [self.page.pageNumber intValue]];
 }
 
 - (void)viewDidLoad

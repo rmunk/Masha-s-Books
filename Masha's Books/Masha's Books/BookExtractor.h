@@ -16,7 +16,7 @@
 @class BookExtractor;
 
 @protocol BookExtractorDelegate
-- (void)bookExtractor:(BookExtractor *)extractor didFinishExtractinWithgSuccess:(BOOL)success;
+- (void)bookExtractor:(BookExtractor *)extractor didFinishExtractingWithgSuccess:(BOOL)success;
 @end
 
 @interface BookExtractor : NSObject

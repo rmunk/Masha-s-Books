@@ -36,48 +36,94 @@
 
     dispatch_queue_t zipQueue = dispatch_queue_create("zipQueue", NULL);
     dispatch_async(zipQueue, ^{
+        
+        NSMutableArray *pages = [[NSMutableArray alloc] init];
+        NSMutableIndexSet *pagesIndexSet = [[NSMutableIndexSet alloc] init];
+        
+        // Extract zip file to tmp folder
         NSLog(@"Extracting %@ Started...", zipFile.lastPathComponent);
         NSError *error;
         self.success = [SSZipArchive unzipFileAtPath:zipFile toDestination:newDir error:&error delegate:self];
         if (error) {
             NSLog(@"Error extracting %@ (%@)!", zipFile.lastPathComponent, error.description);
             self.success = FALSE;
-            return;
         }
-        NSLog(@"Extracting %@ Done!", zipFile.lastPathComponent);
+        else 
+        {
+            NSLog(@"Extracting %@ Done!", zipFile.lastPathComponent);
+            
+            // Fill database with extracted data
+            NSString *unzippedPath = newDir;
+            NSFileManager *fileManager = [NSFileManager defaultManager];
+            
+            NSArray *dirContents = [fileManager contentsOfDirectoryAtPath:unzippedPath error:&error];       
+            if (error) {
+                NSLog(@"Error reading %@ (%@)!", unzippedPath.lastPathComponent, error.description);
+                self.success = FALSE;
+            }
+            else
+            {
+                NSPredicate *flter = [NSPredicate predicateWithFormat:@"self BEGINSWITH 'page'"];        
+                NSArray *pageFiles = [[dirContents filteredArrayUsingPredicate:flter] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+                
+                self.book.coverImage.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingString:@"/title.jpg"]];
+                self.book.downloadDate = [NSDate date]; 
+                int pageNumber = 1;
+                for (NSString *pageFile in pageFiles) {
+                    NSManagedObjectContext *context = [self.book managedObjectContext];
+                    Page *page = [NSEntityDescription insertNewObjectForEntityForName:@"Page" inManagedObjectContext:context];
+                    page.pageNumber = [NSNumber numberWithInt:pageNumber];
+                    page.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingPathComponent:pageFile]];
+                    page.text = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/text%03d.png",pageNumber]];
+                    page.voiceOver = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/voice%03d.m4a",pageNumber]];
+                    page.sound = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/sound%03d.m4a",pageNumber]];
+                    
+                    [pages addObject:page];
+                    [pagesIndexSet addIndex:pageNumber-1];
+//                    [self.book insertObject:page inPagesAtIndex:pageNumber-1];
+                    pageNumber++;
+                }      
+            }
+        }
+//        dispatch_async(dispatch_get_main_queue(), ^{
+            if (self.success)
+                [self.book insertPages:pages atIndexes:pagesIndexSet];
+            [self.delegate bookExtractor:self didFinishExtractingWithgSuccess:self.success];
+//        });
+     
     });
     dispatch_release(zipQueue);
 }
 
 - (void)zipArchiveDidUnzipArchiveAtPath:(NSString *)path zipInfo:(unz_global_info)zipInfo unzippedPath:(NSString *)unzippedPath
 {
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSError *error;
-    NSArray *dirContents = [fileManager contentsOfDirectoryAtPath:unzippedPath error:&error];       
-    if (error) {
-        NSLog(@"Error reading %@ (%@)!", unzippedPath.lastPathComponent, error.description);
-        self.success = FALSE;
-        return;
-    }
-    
-    NSPredicate *flter = [NSPredicate predicateWithFormat:@"self BEGINSWITH 'page'"];        
-    NSArray *pageFiles = [[dirContents filteredArrayUsingPredicate:flter] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-    
-    self.book.coverImage.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingString:@"/title.jpg"]];
-
-    int pageNumber = 1;
-    for (NSString *pageFile in pageFiles) {
-        NSManagedObjectContext *context = [self.book managedObjectContext];
-        Page *page = [NSEntityDescription insertNewObjectForEntityForName:@"Page" inManagedObjectContext:context];
-        page.pageNumber = [NSNumber numberWithInt:pageNumber];
-        page.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingPathComponent:pageFile]];
-        page.text = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/text%03d.png",pageNumber]];
-        page.voiceOver = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/voice%03d.m4a",pageNumber]];
-        page.sound = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/sound%03d.m4a",pageNumber]];
-        [self.book insertObject:page inPagesAtIndex:pageNumber-1];
-        pageNumber++;
-    }
-    [self.delegate bookExtractor:self didFinishExtractinWithgSuccess:self.success];
+    NSLog(@"Zip delegate");
+//    NSFileManager *fileManager = [NSFileManager defaultManager];
+//    NSError *error;
+//    NSArray *dirContents = [fileManager contentsOfDirectoryAtPath:unzippedPath error:&error];       
+//    if (error) {
+//        NSLog(@"Error reading %@ (%@)!", unzippedPath.lastPathComponent, error.description);
+//        self.success = FALSE;
+//        return;
+//    }
+//    
+//    NSPredicate *flter = [NSPredicate predicateWithFormat:@"self BEGINSWITH 'page'"];        
+//    NSArray *pageFiles = [[dirContents filteredArrayUsingPredicate:flter] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+//    
+//    self.book.coverImage.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingString:@"/title.jpg"]];
+//
+//    int pageNumber = 1;
+//    for (NSString *pageFile in pageFiles) {
+//        NSManagedObjectContext *context = [self.book managedObjectContext];
+//        Page *page = [NSEntityDescription insertNewObjectForEntityForName:@"Page" inManagedObjectContext:context];
+//        page.pageNumber = [NSNumber numberWithInt:pageNumber];
+//        page.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingPathComponent:pageFile]];
+//        page.text = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/text%03d.png",pageNumber]];
+//        page.voiceOver = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/voice%03d.m4a",pageNumber]];
+//        page.sound = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/sound%03d.m4a",pageNumber]];
+//        [self.book insertObject:page inPagesAtIndex:pageNumber-1];
+//        pageNumber++;
+//    }
 //    NSOrderedSet *bla = self.book.pages;
 //    ;
 }

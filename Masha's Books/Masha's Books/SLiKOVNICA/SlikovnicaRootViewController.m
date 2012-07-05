@@ -112,7 +112,7 @@
 {
     [self.audioPlayer pause];
     SlikovnicaDataViewController *currentViewController = [self.pageViewController.viewControllers objectAtIndex:0];
-    self.slikovnicaNavigationViewController.currentPage = currentViewController.page.pageNumber;
+    self.slikovnicaNavigationViewController.currentPage = [currentViewController.page.pageNumber intValue];
     [self.view bringSubviewToFront:self.slikovnicaNavigationViewController.view];
     self.view.gestureRecognizers = NULL;
 }
