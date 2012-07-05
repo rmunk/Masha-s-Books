@@ -591,8 +591,11 @@
         [Book linkBooksToCategoriesWithLinker:self.categoryToBookMap inContext:self.libraryDatabase.managedObjectContext];
         [Book linkBooksToAuthorsInContext:self.libraryDatabase.managedObjectContext];
         // fillBookWithCovers
+        [Book loadCoversFromURL:@"http://www.mashasbooks.com/covers/" forBooksInContext:self.libraryDatabase.managedObjectContext];
+        NSLog(@"Books covers downloaded!");
         
-        // linkCategoryToBooks
+        // cini se da je vec linkano???
+        //[Category linkCategoriesToBooksWithLinker:self.categoryToBookMap inContext:self.libraryDatabase.managedObjectContext];
         // linkAuthorsToBooks
         
         // refresh databas se sad moze ovdje pozvat

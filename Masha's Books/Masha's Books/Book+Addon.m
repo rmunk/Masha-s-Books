@@ -120,7 +120,48 @@
             NSLog(@"ERROR: No authors for book %@ in database!", book.title);
         }
     }
-    
+}
+
++ (void)loadCoversFromURL:(NSString *)coverUrlString forBooksInContext:(NSManagedObjectContext *)context {
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"]; 
+    NSError *error;
+    NSArray *books = [context executeFetchRequest:request error:&error];
+    for (Book *book in books) {
+        
+            NSURL *coverURL = [[NSURL alloc] initWithString:
+                               [NSString stringWithFormat:@"%@%d%@", 
+                                coverUrlString, book.bookID, @".jpg"]]; 
+        
+            NSURL *coverThumbnailURL = [[NSURL alloc] initWithString:
+                                        [NSString stringWithFormat:@"%@%d%@", 
+                                         coverUrlString, book.bookID, @"_t.jpg"]];
+        
+            NSLog(@"Downloading cover images for book %@", book.title);
+            
+            // Get an image from the URL below
+            dispatch_queue_t downloadQueue = dispatch_queue_create("image download", NULL);
+            dispatch_async(downloadQueue, ^{
+                
+                UIImage *coverUImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:coverURL]];
+                UIImage *coverThumbnailUImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:coverThumbnailURL]];
+                
+                Image *coverImage = [NSEntityDescription insertNewObjectForEntityForName:@"Image" inManagedObjectContext:context];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{                    
+                    if (coverImage && coverThumbnailUImage) {                                    
+                        coverImage.image = coverUImage;                        
+                        book.coverThumbnailImage = coverThumbnailUImage;
+                        book.coverImage = coverImage;
+                    
+                        //[self shopDataLoaded];
+                        NSLog(@"Images downloaded!!!!!!!!!!!!!!!!!!!!!!!");
+                    }
+                });                                                 
+                
+            });
+            dispatch_release(downloadQueue);
+        
+    } 
 }
 
 
@@ -172,9 +213,6 @@
     #warning Implement!    
 }
 
-- (void)pickYourAuthorFromContext:(NSManagedObjectContext *)contect {
-    #warning Implement!    
-}
 
 
 
