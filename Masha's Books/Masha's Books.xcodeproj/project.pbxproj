@@ -10,6 +10,7 @@
 		BA8B446C15A387650098F063 /* Author+Addon.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8B446715A387650098F063 /* Author+Addon.m */; };
 		BA8B446D15A387650098F063 /* Book+Addon.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8B446915A387650098F063 /* Book+Addon.m */; };
 		BA8B446E15A387650098F063 /* Category+Addon.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8B446B15A387650098F063 /* Category+Addon.m */; };
+		BA8B449115A4D5BD0098F063 /* CategoryToBookMap.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8B449015A4D5BD0098F063 /* CategoryToBookMap.m */; };
 		BA98026F1575AFC600EE06BB /* CoverTableRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9802621575AFC600EE06BB /* CoverTableRowCell.m */; };
 		BA9802701575AFC600EE06BB /* PicturebookAuthor.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9802641575AFC600EE06BB /* PicturebookAuthor.m */; };
 		BA9802711575AFC600EE06BB /* PicturebookCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9802661575AFC600EE06BB /* PicturebookCategory.m */; };
@@ -171,6 +172,8 @@
 		BA8B446915A387650098F063 /* Book+Addon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Book+Addon.m"; sourceTree = "<group>"; };
 		BA8B446A15A387650098F063 /* Category+Addon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Category+Addon.h"; sourceTree = "<group>"; };
 		BA8B446B15A387650098F063 /* Category+Addon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Category+Addon.m"; sourceTree = "<group>"; };
+		BA8B448F15A4D5BD0098F063 /* CategoryToBookMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryToBookMap.h; sourceTree = "<group>"; };
+		BA8B449015A4D5BD0098F063 /* CategoryToBookMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryToBookMap.m; sourceTree = "<group>"; };
 		BA9802611575AFC600EE06BB /* CoverTableRowCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoverTableRowCell.h; sourceTree = "<group>"; };
 		BA9802621575AFC600EE06BB /* CoverTableRowCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoverTableRowCell.m; sourceTree = "<group>"; };
 		BA9802631575AFC600EE06BB /* PicturebookAuthor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PicturebookAuthor.h; sourceTree = "<group>"; };
@@ -341,7 +344,7 @@
 		C0E5CE4E15A3B1C30049978B /* Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Category.m; sourceTree = "<group>"; };
 		C0E5CE5615A3CCA80049978B /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Book.h; sourceTree = "<group>"; };
 		C0E5CE5715A3CCA90049978B /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Book.m; sourceTree = "<group>"; };
-		C0E5CE5C15A3D02B0049978B /* Book+XcodeBugFix.h */ = {isa = PBXFileReference; fileEncoding = 4; path = "Book+XcodeBugFix.h"; sourceTree = "<group>"; };
+		C0E5CE5C15A3D02B0049978B /* Book+XcodeBugFix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Book+XcodeBugFix.h"; sourceTree = "<group>"; };
 		C0E5CE5D15A3D02B0049978B /* Book+XcodeBugFix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Book+XcodeBugFix.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -389,6 +392,8 @@
 				BA98026C1575AFC600EE06BB /* PicturebookShop.m */,
 				BA98026D1575AFC600EE06BB /* PicturebookShopViewController.h */,
 				BA98026E1575AFC600EE06BB /* PicturebookShopViewController.m */,
+				BA8B448F15A4D5BD0098F063 /* CategoryToBookMap.h */,
+				BA8B449015A4D5BD0098F063 /* CategoryToBookMap.m */,
 			);
 			name = PicturebookShop;
 			sourceTree = "<group>";
@@ -920,6 +925,7 @@
 				C0E5CE4F15A3B1C30049978B /* Category.m in Sources */,
 				C0E5CE5815A3CCA90049978B /* Book.m in Sources */,
 				C0E5CE5E15A3D02B0049978B /* Book+XcodeBugFix.m in Sources */,
+				BA8B449115A4D5BD0098F063 /* CategoryToBookMap.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -60,28 +60,122 @@
     else {
         NSLog(@"ERROR: More than one book with ID $d exists in database!");
         return nil;
-    }
-
-    
+    }   
 
 }
 
-+ (void)fillBookElement:(NSString *)element withDescription:(NSString *)description forBook:(Book *)book {
++ (void)pickBookCategoriesFromLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context forBook:(Book *)book {
+    
+    //kreiranje fetch requesta
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Category"]; 
+    NSError *error;
+    NSArray *categoriesForBook = [categoryToBookMap getCategoryIdentifiersForBookIdentifier:[book.bookID intValue]];
+    
+    for (NSNumber *catID in categoriesForBook) {        
+        request.predicate = [NSPredicate predicateWithFormat:@"categoryID = %d", [catID intValue]];
+        NSArray *categoriesWithID = [context executeFetchRequest:request error:&error];
+        if (categoriesWithID.count == 1) {
+            [book addCategoriesObject:(Category *)[categoriesWithID lastObject]];
+            NSLog(@"Dodajem kategoriju %@ u knjigu %@", ((Category *)[categoriesWithID lastObject]).name, book.title);
+        }
+        else if (categoriesWithID.count > 1) {
+            NSLog(@"ERROR: Multiple entries for category ID = %d in database!", [catID intValue]);
+        }
+        else {
+            NSLog(@"ERROR: No entries for category ID = %d in database! Linker error.", [catID intValue]);
+        }                  
+    }
+}
+
++ (void)linkBooksToCategoriesWithLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context {
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"]; 
+    NSError *error;
+    NSArray *books = [context executeFetchRequest:request error:&error];
+    
+    for (Book *book in books) 
+        [self pickBookCategoriesFromLinker:categoryToBookMap inContext:context forBook:book];
+
+}
+
++ (void)linkBooksToAuthorsInContext:(NSManagedObjectContext *)context {
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"]; 
+    NSError *error;
+    NSArray *books = [context executeFetchRequest:request error:&error];
+    
+    for (Book *book in books) {
+        request = [NSFetchRequest fetchRequestWithEntityName:@"Author"]; 
+        request.predicate = [NSPredicate predicateWithFormat:@"authorID = %d", [book.authorID intValue]];
+        NSArray *author = [context executeFetchRequest:request error:&error];
+        
+        if (author.count == 1) {
+            book.author = [author lastObject];
+            NSLog(@"Found autor %@ for book %@ in database!", ((Author *)[author lastObject]).name, book.title);
+        }
+        else if (author.count > 1)
+        {
+            NSLog(@"ERROR: Multiple autors for book %@ in database!", book.title);
+        }
+        else {
+            NSLog(@"ERROR: No authors for book %@ in database!", book.title);
+        }
+    }
+    
+}
+
+
+
+- (void)fillBookElement:(NSString *)element withDescription:(NSString *)description {
     if ([element isEqualToString:@"DescriptionHTML"]) {
-        book.descriptionHTML = description;
+        self.descriptionHTML = description;
     }
     else if ([element isEqualToString:@"DescriptionLongHTML"]) {
-        book.descriptionLongHTML = description;
+        self.descriptionLongHTML = description;
     }
 }
 
-+ (Book *)refreshBook:(Book *)book withNewAttributes:(NSDictionary *)attributes inContext:(NSManagedObjectContext *)context {
+- (Book *)refreshBook:(Book *)book withNewAttributes:(NSDictionary *)attributes inContext:(NSManagedObjectContext *)context {
     return book;
     #warning Implement!
     
 }
-+ (void)refreshBook:(Book *)book withNewDescription:(NSString *)description forElement:(NSString *)element {
+- (void)refreshBook:(Book *)book withNewDescription:(NSString *)description forElement:(NSString *)element {
     #warning Implement!
 }
+
+- (void)pickYourCategoriesFromLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context {
+    
+    //kreiranje fetch requesta
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Category"]; 
+    NSError *error;
+    NSArray *categoriesForBook = [categoryToBookMap getCategoryIdentifiersForBookIdentifier:[self.bookID intValue]];
+    
+    for (NSNumber *catID in categoriesForBook) {        
+        request.predicate = [NSPredicate predicateWithFormat:@"categoryID = %d", [catID intValue]];
+        NSArray *categoriesWithID = [context executeFetchRequest:request error:&error];
+        if (categoriesWithID.count == 1) {
+            [self addCategoriesObject:(Category *)[categoriesWithID lastObject]];
+            NSLog(@"Dodajem kategoriju %@ u knjigu %@", ((Category *)[categoriesWithID lastObject]).name, self.title);
+        }
+        else if (categoriesWithID.count > 1) {
+            NSLog(@"ERROR: Multiple entries for category ID = %d in database!", [catID intValue]);
+        }
+        else {
+            NSLog(@"ERROR: No entries for category ID = %d in database! Linker error.", [catID intValue]);
+        }                  
+    }
+}
+
+
+
+- (void)pickYourCoversFromURL:(NSURL *)coverUrl; {
+    #warning Implement!    
+}
+
+- (void)pickYourAuthorFromContext:(NSManagedObjectContext *)contect {
+    #warning Implement!    
+}
+
+
 
 @end

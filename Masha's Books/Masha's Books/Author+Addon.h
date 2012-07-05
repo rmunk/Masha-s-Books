@@ -11,6 +11,7 @@
 @interface Author (Addon)
 
 + (Author *)authorWithAttributes:(NSDictionary *)attributes forContext:(NSManagedObjectContext *)context;
-+ (void)fillAuthorElement:(NSString *)element withDescription:(NSString *)description forAuthor:(Author *)author;
+
+- (void)fillAuthorElement:(NSString *)element withDescription:(NSString *)description;
 
 @end

@@ -19,6 +19,7 @@
 #import "Book+Addon.h"
 #import "Category+Addon.h"
 #import "Author+Addon.h"
+#import "CategoryToBookMap.h"
 
 #define PICTUREBOOK_SHOP_DEBUG_LOGS 1
 

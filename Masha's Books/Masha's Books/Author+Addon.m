@@ -26,9 +26,9 @@
     
 }
 
-+ (void)fillAuthorElement:(NSString *)element withDescription:(NSString *)description forAuthor:(Author *)author {
+- (void)fillAuthorElement:(NSString *)element withDescription:(NSString *)description {
     if ([element isEqualToString:@"AuthorBioHTML"]) {
-        author.bioHtml = description;
+        self.bioHtml = description;
     }
 }
 

@@ -19,6 +19,7 @@
 @property (nonatomic, strong) NSString *currentElementValue;
 @property (nonatomic, weak) Book *currentBook;
 @property (nonatomic, weak) Author *currentAuthor;
+@property (nonatomic, strong) CategoryToBookMap *categoryToBookMap;
 
 @end
 
@@ -40,6 +41,7 @@
 @synthesize currentElementValue = _currentElementValue;
 @synthesize currentBook = _currentBook;
 @synthesize currentAuthor = _currentAuthor;
+@synthesize categoryToBookMap = _categoryToBookMap;
 
 @synthesize isShopLoaded = _isShopLoaded;
 
@@ -69,6 +71,7 @@
     self.currentElementValue = [[NSString alloc] init];
     //self.currentBookElement = [[NSString alloc] init];
     //self.currentAuthorElement = [[NSString alloc] init];
+    self.categoryToBookMap = [[CategoryToBookMap alloc] init];
     
     self.df = [[NSDateFormatter alloc] init];
     [self.df setDateFormat:@"dd.mm.yyyy"]; 
@@ -172,6 +175,14 @@
 - (void)refreshDatabase {
     
     dispatch_queue_t refreshQ = dispatch_queue_create("Database refreshener", NULL);
+    
+    NSLog(@"Category to book pairs:");
+    
+    NSArray *array = [self.categoryToBookMap getCategoryBookPairsArray];
+    
+    for (NSArray *catToBookPair in array) {
+        NSLog(@"    [%d, %d]", [[catToBookPair objectAtIndex:0] intValue], [[catToBookPair objectAtIndex:1] intValue]);
+    }
     
     dispatch_async(refreshQ, ^{
         [self.libraryDatabase.managedObjectContext performBlock:^{
@@ -365,7 +376,7 @@
 	}
     else if([elementName isEqualToString:@"categories"]) {
                     
-//        [Category categoryWithAttributes:attributeDict forContext:self.libraryDatabase.managedObjectContext];
+        [Category categoryWithAttributes:attributeDict forContext:self.libraryDatabase.managedObjectContext];
         PBDLOG(@"\n");
         PBDLOG(@"New book category found!");
         
@@ -394,6 +405,8 @@
         
         bookID = [[attributeDict objectForKey:@"bookID"] integerValue];
         PBDLOG_ARG(@"Book ID: %i", bookID);
+        
+        [self.categoryToBookMap pairCategory:catID withBook:bookID];
         
         /*
         for (int i = 0; i < self.categories.count; i++) {
@@ -432,7 +445,7 @@
         //Initialize new picture book
         //self.currentBookElement = [[attributeDict objectForKey:@"ID"] integerValue]; // currectBookElement 
         self.pbookInfo = [[PicturebookInfo alloc] init];
-//        self.currentBook = [Book bookWithAttributes:attributeDict forContext:self.libraryDatabase.managedObjectContext];
+        self.currentBook = [Book bookWithAttributes:attributeDict forContext:self.libraryDatabase.managedObjectContext];
         
         //TU TREBA DODAT ISPITIVANJE JELI VEC POSTOJI U KONTEKSTU BOOK S TIM ID. AKO GA NEMA ZVAT OVU GORE METODU,
         // A AKO GA IMA ZVAT METODU TIPA UPDATE BOOK U KOJOJ SE MOGU SAD PROMJENIT ATRIBUTI BOOKA
@@ -485,7 +498,7 @@
 	}
     else if([elementName isEqualToString:@"author"]) {
         
-//        self.currentAuthor = [Author authorWithAttributes:attributeDict forContext:self.libraryDatabase.managedObjectContext];
+        self.currentAuthor = [Author authorWithAttributes:attributeDict forContext:self.libraryDatabase.managedObjectContext];
         
         //Initialize new author
         self.pbookAuthor = [[PicturebookAuthor alloc] init];
@@ -523,8 +536,8 @@
     // For current XML format, only elements with character body are DescriptionHTML and DescriptionLongHTML
     // for book parrent and AutorBioHTML for author pattent
     
-    [Book fillBookElement:self.currentElementValue withDescription:string forBook:self.currentBook];
-    [Author fillAuthorElement:self.currentElementValue withDescription:string forAuthor:self.currentAuthor];
+    [self.currentBook fillBookElement:self.currentElementValue withDescription:string];
+    [self.currentAuthor fillAuthorElement:self.currentElementValue withDescription:string];
     
     
     if ([self.currentElementValue isEqualToString:@"DescriptionHTML"]) {
@@ -569,6 +582,15 @@
         PBDLOG(@"Author info storred!");
         
         self.currentAuthor = nil;
+    }
+    else if ([elementName isEqualToString:@"bookstore"]) {
+       
+        NSLog(@"PARSING FINISHED!!!!!!!!!!!!");
+        // ovdi pozvat funkcije za likanje knjiga i kategorija, knjiga i autora
+        [Book linkBooksToCategoriesWithLinker:self.categoryToBookMap inContext:self.libraryDatabase.managedObjectContext];
+        [Book linkBooksToAuthorsInContext:self.libraryDatabase.managedObjectContext];
+        
+        
     }
 }
 
