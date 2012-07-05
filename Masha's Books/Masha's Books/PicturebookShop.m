@@ -372,6 +372,7 @@
     self.currentElementValue = elementName;
     
     if([elementName isEqualToString:@"bookstore"]) {
+        NSLog(@"PARSING STARTED");
 		return;		
 	}
     else if([elementName isEqualToString:@"categories"]) {
@@ -585,10 +586,17 @@
     }
     else if ([elementName isEqualToString:@"bookstore"]) {
        
-        NSLog(@"PARSING FINISHED!!!!!!!!!!!!");
+        NSLog(@"PARSING FINISHED");
         // ovdi pozvat funkcije za likanje knjiga i kategorija, knjiga i autora
         [Book linkBooksToCategoriesWithLinker:self.categoryToBookMap inContext:self.libraryDatabase.managedObjectContext];
         [Book linkBooksToAuthorsInContext:self.libraryDatabase.managedObjectContext];
+        // fillBookWithCovers
+        
+        // linkCategoryToBooks
+        // linkAuthorsToBooks
+        
+        // refresh databas se sad moze ovdje pozvat
+        
         
         
     }

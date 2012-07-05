@@ -64,6 +64,7 @@
     self.navigationItem.rightBarButtonItem = activityItem;*/
 
 }
+
 - (IBAction)buyPictureBook:(UIButton *)sender {
     [self.picturebookShop refreshDatabase];
 }
