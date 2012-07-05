@@ -12,11 +12,35 @@
 
 + (void)categoryWithAttributes:(NSDictionary *)attributes forContext:(NSManagedObjectContext *)context {
     
-    Category *category = [NSEntityDescription insertNewObjectForEntityForName:@"Category" inManagedObjectContext:context];
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Category"]; 
+    NSError *error;
     
-    category.categoryID = [NSNumber numberWithInt:[[attributes objectForKey:@"ID"] integerValue]];
+    request.predicate = [NSPredicate predicateWithFormat:@"categoryID = %d", [[attributes objectForKey:@"ID"] integerValue]];
+    NSArray *categoryWithID = [context executeFetchRequest:request error:&error];
     
-    category.name = [attributes objectForKey:@"Name"];
+    if (categoryWithID.count == 0) {
+        Category *category = [NSEntityDescription insertNewObjectForEntityForName:@"Category" inManagedObjectContext:context];
+        
+        category.categoryID = [NSNumber numberWithInt:[[attributes objectForKey:@"ID"] integerValue]];
+        
+        category.name = [attributes objectForKey:@"Name"];
+    }
+    else if (categoryWithID.count == 1) {
+        Category *category = [categoryWithID lastObject];
+        
+        if (category.categoryID != [NSNumber numberWithInt:[[attributes objectForKey:@"ID"] integerValue]]) {
+            category.categoryID = [NSNumber numberWithInt:[[attributes objectForKey:@"ID"] integerValue]];
+        }
+        
+        if (category.name != [attributes objectForKey:@"Name"]) {
+            category.name = [attributes objectForKey:@"Name"];
+        }
+    }
+    else {
+         NSLog(@"ERROR: Database inconsisctency: To many categories with sam ID in database!");
+    }
+    
+    
 
 }
 
