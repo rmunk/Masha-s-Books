@@ -20,6 +20,7 @@
 @property (nonatomic, weak) Book *currentBook;
 @property (nonatomic, weak) Author *currentAuthor;
 @property (nonatomic, strong) CategoryToBookMap *categoryToBookMap;
+@property (readwrite) Category *selectedCategory; //currently browsed book category in shop
 
 @end
 
@@ -42,6 +43,7 @@
 @synthesize currentBook = _currentBook;
 @synthesize currentAuthor = _currentAuthor;
 @synthesize categoryToBookMap = _categoryToBookMap;
+@synthesize selectedCategory = _selectedCategory;
 
 @synthesize isShopLoaded = _isShopLoaded;
 
@@ -148,7 +150,7 @@
     
     if (parsingSuccesfulll == YES) 
     {
-        //[self populateShopWithImages];
+        [self populateShopWithImages];
         self.isShopLoaded = YES;
         //[self shopDataLoaded];
         //samo za testiranje!!!!!!!
@@ -354,6 +356,48 @@
             }            
         }
         return [booksForCategory copy];
+    }
+}
+
+
+/*
+- (NSOrderedSet *)getBooksCoversForSelectedCategory {
+    
+    NSMutableOrderedSet *booksCoversForCategory = [[NSMutableOrderedSet alloc] init];
+    
+    NSLog(@"Books in category:");
+    for (NSNumber *num in pbCategory.booksInCategory) {
+        NSLog(@"bookID = %d", [num intValue]);
+    }
+    
+    if (pbCategory.name == @"All") {    
+        return [self.books copy];   // Adding new category "All"
+    }
+    else {  // Populate categories other version
+        for (NSNumber *pbID in pbCategory.booksInCategory) {
+            for (PicturebookInfo *pbInfo in self.books) {
+                if (pbInfo.iD == [pbID intValue]) {
+                    [booksForCategory addObject:pbInfo];    
+                }
+            }            
+        }
+        return [booksForCategory copy];
+    }
+} */
+
+- (void)userSelectsCategoryAtIndex:(NSUInteger)index {
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Category"]; 
+    NSSortDescriptor *sortByName = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]; 
+    request.sortDescriptors = [NSArray arrayWithObject:sortByName];
+    NSError *error;
+    NSArray *categories = [self.libraryDatabase.managedObjectContext executeFetchRequest:request error:&error];
+    NSLog(@"Number of categories is %d", categories.count);
+    if (categories.count && index < categories.count) {
+        self.selectedCategory = [categories objectAtIndex:index];
+        NSLog(@"User selects category %@", self.selectedCategory.name);
+    } 
+    else {
+        NSLog(@"ERROR: Index %d out of bounds for user selected category!", index);
     }
 }
 

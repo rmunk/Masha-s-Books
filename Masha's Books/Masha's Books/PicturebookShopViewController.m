@@ -233,7 +233,27 @@
             if (tableView.rowHeight != cell.cellHeight) {
                 tableView.rowHeight = cell.cellHeight;
                 [tableView reloadData];
-            }            
+            }      
+            
+            /*
+            NSMutableOrderedSet *rowCovers = [[NSMutableOrderedSet alloc] init];
+            NSOrderedSet *bookCoversInCategory = [self.picturebookShop getBooksCoversForCategory:self.selectedPicturebookCategory];
+            for (int i = indexPath.row * NUM_OF_COVERS_IN_ROW_PORTRAIT; (i < (indexPath.row * NUM_OF_COVERS_IN_ROW_PORTRAIT + NUM_OF_COVERS_IN_ROW_PORTRAIT)) && i < bookCoversInCategory.count; i++) {
+                [rowCovers addObject:[bookCoversInCategory objectAtIndex:i]];
+            }
+            
+            cell = [[CoverTableRowCell alloc] initWithFrame:CGRectZero 
+                                    withNumberOfCoversInRow:NUM_OF_COVERS_IN_ROW_PORTRAIT
+                                                withWidthOf:tableView.bounds.size.width 
+                               desiredDistanceBetweenCovers:20 
+                                       andPictureBookCovers:rowCovers 
+                                                 withTarget:self 
+                                                 withAction:@selector(shopItemTapped:)];
+            
+            if (tableView.rowHeight != cell.cellHeight) {
+                tableView.rowHeight = cell.cellHeight;
+                [tableView reloadData];
+            }*/
         }
         return cell;
     }	
@@ -251,6 +271,7 @@
     if (tableView.tag == CATEGORY_TABLEVIEW_TAG) {
         PicturebookCategory *pbCategory = [self.picturebookShop.categories objectAtIndex:indexPath.row];
         self.selectedPicturebookCategory = pbCategory;
+        [self.picturebookShop userSelectsCategoryAtIndex:indexPath.row];
         [[self getTableViewForTag:COVERS_TABLEVIEW_TAG] reloadData];
     }
 }

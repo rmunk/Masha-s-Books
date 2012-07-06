@@ -11,6 +11,8 @@
 @implementation PicturebookCover
 
 @synthesize pbInfo = _pbInfo;
+@synthesize bookID = _bookID;
+@synthesize bookCoverThumbnail = _bookCoverThumbnail;
 
 - (id)initWithFrame:(CGRect)frame AndPicturebookInfo:(PicturebookInfo *)info
 {
@@ -19,6 +21,16 @@
     if (self) {
 
         _pbInfo = info;
+    }
+    return self;
+}
+
+- (id)initWithFrame:(CGRect)frame bookID:(NSNumber *)pbID andBookCoverThumbnail:(UIImage *)pbCoverThumbnail {
+
+    self = [super initWithFrame:frame];
+    if (self) {
+        _bookID = [NSNumber numberWithInt:[pbID intValue]];
+        _bookCoverThumbnail = [pbCoverThumbnail copy];
     }
     return self;
 }

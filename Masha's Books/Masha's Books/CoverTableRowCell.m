@@ -31,7 +31,8 @@ andPictureBookCovers:(NSArray *)pbCovers withTarget:(id)target withAction:(SEL)a
             CGRect frame = CGRectMake(((distance + ld) * i + distance), distance, ld, ld);
             PicturebookInfo *pbInfo = [[PicturebookInfo alloc] init];
             pbInfo = [pbCovers objectAtIndex:i];
-            PicturebookCover *pbCover = [[PicturebookCover alloc] initWithFrame:frame AndPicturebookInfo:pbInfo];
+            //PicturebookCover *pbCover = [[PicturebookCover alloc] initWithFrame:frame AndPicturebookInfo:pbInfo];
+            PicturebookCover *pbCover = [[PicturebookCover alloc] initWithFrame:frame bookID:[NSNumber numberWithInt:pbInfo.iD] andBookCoverThumbnail:pbInfo.coverThumbnailImage];
             [pbCover setImage:pbInfo.coverImage forState:UIControlStateNormal];
             [pbCover addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
             //iView1.titleLabel.text = pbInfo.title;
