@@ -47,13 +47,19 @@
 - (void)bookExtractor:(BookExtractor *)extractor didFinishExtractingWithgSuccess:(BOOL)success
 {
     if (success) {
-        [self.library savePresentedItemChangesWithCompletionHandler:^(NSError *error) {
-            if (error) {
-                NSLog(@"Error saving database! (%@)", error.description);
-            }
-            NSLog(@"Library database saved!");                
-        }];
+//        NSError *error;
+//        BOOL eh = [self.library.managedObjectContext save:&error]; // savePresentedItemChangesWithCompletionHandler:^(NSError *error) {
+//            if (error) {
+//                NSLog(@"Error saving database! (%@)", error.description);
+//            }
+            NSLog(@"Library database saved!");
+//        }];
     }
+}
+- (void)addControllerContextDidSave:(NSNotification*)saveNotification 
+{
+	[self.library.managedObjectContext mergeChangesFromContextDidSaveNotification:saveNotification];	
+//    [self getMyBooks];
 }
 
 #pragma mark - Load Pages
@@ -132,7 +138,7 @@
     
     NSError *error;
     self.myBooks = [self.library.managedObjectContext executeFetchRequest:request error:&error];
-    
+
     // Set up the array to hold the views for each page
     NSInteger pageCount = [self.myBooks count];
     self.coverViews = [[NSMutableArray alloc] init];
@@ -205,11 +211,17 @@
 - (void)userTappedImage:(UITapGestureRecognizer *)sender 
 {
     UIView *page = sender.view;
-    NSLog(@"Page: %d", page.tag);
+    Book *selectedBook = [self.myBooks objectAtIndex:page.tag];
+    NSLog(@"User selected book %@.", selectedBook.title);
+        
+    if (selectedBook.pages.count <= 0) {
+        NSLog(@"No pages in book!");
+        return;
+    }
     
     UIStoryboard *slikovnicaStoryboard = [UIStoryboard storyboardWithName:@"SlikovnicaStoryboard" bundle:nil];
     SlikovnicaRootViewController *initialVC = [slikovnicaStoryboard instantiateInitialViewController];
-    initialVC.modelController.book = [self.myBooks objectAtIndex:0];
+    initialVC.modelController.book = selectedBook;
     initialVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self presentModalViewController:initialVC animated:YES];
 }

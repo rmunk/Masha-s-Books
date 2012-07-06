@@ -31,14 +31,12 @@
     {
         NSLog(@"Failed to create directory");
         self.success = FALSE;
+        [self.delegate bookExtractor:self didFinishExtractingWithgSuccess:self.success];
         return;
     }
 
     dispatch_queue_t zipQueue = dispatch_queue_create("zipQueue", NULL);
     dispatch_async(zipQueue, ^{
-        
-        NSMutableArray *pages = [[NSMutableArray alloc] init];
-        NSMutableIndexSet *pagesIndexSet = [[NSMutableIndexSet alloc] init];
         
         // Extract zip file to tmp folder
         NSLog(@"Extracting %@ Started...", zipFile.lastPathComponent);
@@ -52,10 +50,27 @@
         {
             NSLog(@"Extracting %@ Done!", zipFile.lastPathComponent);
             
+            NSManagedObjectContext *addingContext = [[NSManagedObjectContext alloc] init];
+            [addingContext setPersistentStoreCoordinator:self.book.managedObjectContext.persistentStoreCoordinator];
+
+            NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
+            request.predicate = [NSPredicate predicateWithFormat:@"title = %@", self.book.title];
+            
+            NSError *error;
+            self.book = [[addingContext executeFetchRequest:request error:&error] lastObject];
+            if (error) {
+                NSLog(@"Error loading book (%@)!", error.description);
+                self.success = FALSE;
+            }
+            
+            
             // Fill database with extracted data
+        NSMutableArray *pages = [[NSMutableArray alloc] init];
+        NSMutableIndexSet *pagesIndexSet = [[NSMutableIndexSet alloc] init];
             NSString *unzippedPath = newDir;
             NSFileManager *fileManager = [NSFileManager defaultManager];
             
+//        NSError *error;
             NSArray *dirContents = [fileManager contentsOfDirectoryAtPath:unzippedPath error:&error];       
             if (error) {
                 NSLog(@"Error reading %@ (%@)!", unzippedPath.lastPathComponent, error.description);
@@ -80,16 +95,29 @@
                     
                     [pages addObject:page];
                     [pagesIndexSet addIndex:pageNumber-1];
-//                    [self.book insertObject:page inPagesAtIndex:pageNumber-1];
+                    [self.book insertObject:page inPagesAtIndex:pageNumber-1];
                     pageNumber++;
                 }      
             }
-        }
-//        dispatch_async(dispatch_get_main_queue(), ^{
-            if (self.success)
-                [self.book insertPages:pages atIndexes:pagesIndexSet];
+
+            NSNotificationCenter *dnc = [NSNotificationCenter defaultCenter];
+            [dnc addObserver:self.delegate selector:@selector(addControllerContextDidSave:) name:NSManagedObjectContextDidSaveNotification object:addingContext];
+            
+            [addingContext save:&error];
+            if (error) {
+                NSLog(@"Error saving context (%@)!", error.description);
+                self.success = FALSE;
+                return;
+            }
+            [dnc removeObserver:self.delegate name:NSManagedObjectContextDidSaveNotification object:addingContext];
+
+//            if (self.success)
+//                [self.book insertPages:pages atIndexes:pagesIndexSet];
+
+        dispatch_async(dispatch_get_main_queue(), ^{
             [self.delegate bookExtractor:self didFinishExtractingWithgSuccess:self.success];
-//        });
+        });
+        }
      
     });
     dispatch_release(zipQueue);
