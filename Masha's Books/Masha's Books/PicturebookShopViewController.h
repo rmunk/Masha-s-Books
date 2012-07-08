@@ -8,9 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "PicturebookShop.h"
-#import "PicturebookCategory.h"
-#import "PicturebookInfo.h"
-#import "PicturebookAuthor.h"
 #import "PicturebookCover.h"
 #import "CoverTableRowCell.h"
 #import "Book.h"

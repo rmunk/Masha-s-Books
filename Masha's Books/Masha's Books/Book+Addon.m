@@ -155,6 +155,7 @@
                     else {
                         shop.numberOfBooksWhinchNeedCoversDownloaded = 0;
                         NSLog(@"Images downloaded!!!!!!!!!!!!!!!!!!!!!!!");
+                        [shop coversLoaded];
                     }
                         
                 }

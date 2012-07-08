@@ -14,7 +14,6 @@
 
 @interface PicturebookShopViewController ()
 @property (nonatomic, strong) PicturebookShop *picturebookShop;
-@property (nonatomic, strong) PicturebookCategory *selectedPicturebookCategory;
 @end
 
 @implementation PicturebookShopViewController
@@ -24,7 +23,6 @@
 @synthesize buyButton = _buyButton;
 
 @synthesize picturebookShop = _picturebookShop;
-@synthesize selectedPicturebookCategory = _selectedPicturebookCategory;
 @synthesize managedObjectContext = _managedObjectContext;
 
 - (PicturebookShop *)picturebookShop
@@ -79,7 +77,7 @@
     NSURL *baseURL = [NSURL fileURLWithPath:bundlePath];
     [self.shopWebView loadHTMLString:pbInfo. baseURL:
      */
-    self.selectedPicturebookCategory = [self.picturebookShop.categories objectAtIndex:0];
+    [self.picturebookShop userSelectsCategoryAtIndex:0];
     [[self getTableViewForTag:COVERS_TABLEVIEW_TAG] reloadData];
     
     [self.view setNeedsDisplay];
@@ -93,10 +91,10 @@
 - (IBAction)shopItemTapped:(PicturebookCover *)sender{
     PBDLOG_ARG(@"Shop item tapped: %@", sender.bookForCover.title);
     
-    [sender.pbInfo pickYourCategories:self.picturebookShop.categories];
+   // [sender.pbInfo pickYourCategories:self.picturebookShop.categories];
     
     [self.shopWebView loadHTMLString:sender.bookForCover.descriptionHTML baseURL:nil];
-    PBDLOG_ARG(@"Picturebook descriptionHTML: %@", sender.bookForCover.descriptionHTML);
+
     self.selectedCoverTumbnailView.image = sender.bookForCover.coverThumbnailImage;
     [self.selectedCoverTumbnailView setContentMode:UIViewContentModeScaleAspectFit];
     //[self.shopWebView reload];
@@ -167,10 +165,8 @@
 
     if (self.picturebookShop.isShopLoaded) {
         if (tableView.tag == CATEGORY_TABLEVIEW_TAG) {
-            PBDLOG_ARG(@"Category table number of rows: %i", self.picturebookShop.categories.count);
-            return self.picturebookShop.categories.count;
-            
-            
+            PBDLOG_ARG(@"Category table number of rows: %i", [self.picturebookShop getCategoriesInShop].count);
+            return [self.picturebookShop getCategoriesInShop].count;
         }
         else if (tableView.tag == COVERS_TABLEVIEW_TAG) {
             //NSOrderedSet *bookInCategory = [self.picturebookShop getBooksForCategory:self.selectedPicturebookCategory];
@@ -207,8 +203,8 @@
         
         if (cell == nil) 
             cell = [[CoverTableRowCell alloc] initWithFrame:CGRectZero];
-        PicturebookCategory *pbCategory = [self.picturebookShop.categories objectAtIndex:indexPath.row];
-        cell.textLabel.text = pbCategory.name;
+        Category *category = [[self.picturebookShop getCategoriesInShop] objectAtIndex:indexPath.row];
+        cell.textLabel.text = category.name;
         cell.textLabel.textAlignment = UITextAlignmentCenter;
         //[cell.textLabel setTextColor:[UIColor lightTextColor]];
         //[cell.textLabel setFont:[UIFont systemFontOfSize:22.0]];
@@ -262,8 +258,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {    
     if (tableView.tag == CATEGORY_TABLEVIEW_TAG) {
-        PicturebookCategory *pbCategory = [self.picturebookShop.categories objectAtIndex:indexPath.row];
-        self.selectedPicturebookCategory = pbCategory;
         [self.picturebookShop userSelectsCategoryAtIndex:indexPath.row];
         [[self getTableViewForTag:COVERS_TABLEVIEW_TAG] reloadData];
         

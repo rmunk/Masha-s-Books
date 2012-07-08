@@ -41,9 +41,6 @@
     else {
          NSLog(@"ERROR: Database inconsisctency: To many categories with sam ID in database!");
     }
-    
-    
-
 }
 
 + (void)pickBookFromLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context forCategory:(Category *)category {
@@ -77,6 +74,20 @@
     
     for (Category *category in categories) 
         [self pickBookFromLinker:categoryToBookMap inContext:context forCategory:category];
+    
+}
+
++ (NSOrderedSet *)getAllCategoriesFromContext:(NSManagedObjectContext *)context {
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Category"]; 
+    NSError *error;
+    
+    //request.sortDescriptors = [NSSortDescriptor sortDescriptorWithKey:@"name"
+    //                              ascending:YES
+    //                               selector:@selector(localizedCaseInsensitiveCompare:)];
+    
+    NSArray *authorWithID = [context executeFetchRequest:request error:&error];
+    NSOrderedSet *authorWithIDSet = [[NSOrderedSet alloc] initWithArray:authorWithID];
+    return authorWithIDSet;
     
 }
 
