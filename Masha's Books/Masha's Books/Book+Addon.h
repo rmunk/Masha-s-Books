@@ -11,6 +11,10 @@
 #import "Author.h"
 #import "Image.h"
 #import "CategoryToBookMap.h"
+#import "Author+Addon.h"
+#import "PicturebookShop.h"
+
+@class PicturebookShop;
 
 @interface Book (Addon)
 
@@ -18,8 +22,9 @@
 + (void)pickBookCategoriesFromLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context forBook:(Book *)book;
 + (void)linkBooksToCategoriesWithLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context;
 + (void)linkBooksToAuthorsInContext:(NSManagedObjectContext *)context;
-+ (void)loadCoversFromURL:(NSString *)coverUrlString forBooksInContext:(NSManagedObjectContext *)context;
++ (void)loadCoversFromURL:(NSString *)coverUrlString forShop:(PicturebookShop *)shop;
 + (void)updateBook:(Book *)book withAttributes:(NSDictionary *)attributes;
++ (NSArray *)getAllBooksFromContext:(NSManagedObjectContext *)context;
 
 - (void)fillBookElement:(NSString *)element withDescription:(NSString *)description;
 - (Book *)refreshBook:(Book *)book withNewAttributes:(NSDictionary *)attributes inContext:(NSManagedObjectContext *)context;

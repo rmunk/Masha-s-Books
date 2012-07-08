@@ -28,11 +28,11 @@
     else if (categoryWithID.count == 1) {
         Category *category = [categoryWithID lastObject];
         
-        if (category.categoryID != [NSNumber numberWithInt:[[attributes objectForKey:@"ID"] integerValue]]) {
+        if (![category.categoryID isEqualToNumber:[NSNumber numberWithInt:[[attributes objectForKey:@"ID"] integerValue]]]) {
             category.categoryID = [NSNumber numberWithInt:[[attributes objectForKey:@"ID"] integerValue]];
         }
         
-        if (category.name != [attributes objectForKey:@"Name"]) {
+        if (![category.name isEqualToString:[attributes objectForKey:@"Name"]]) {
             category.name = [attributes objectForKey:@"Name"];
         }
     }

@@ -12,11 +12,7 @@
 
 + (Author *)authorWithAttributes:(NSDictionary *)attributes forContext:(NSManagedObjectContext *)context {
     
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Author"]; 
-    NSError *error;
-    
-    request.predicate = [NSPredicate predicateWithFormat:@"authorID = %d", [[attributes objectForKey:@"ID"] integerValue]];
-    NSArray *authorWithID = [context executeFetchRequest:request error:&error];
+    NSArray *authorWithID = [Author getAuthorWithID:[NSNumber numberWithInt:[[attributes objectForKey:@"ID"] integerValue]] fromContext:context];
     
     if (authorWithID.count == 0) {
         //Initialize new author in context
@@ -34,26 +30,59 @@
     else if (authorWithID.count == 1) {
         Author *author = [authorWithID lastObject];
         
-        if (author.authorID != [NSNumber numberWithInt:[[attributes objectForKey:@"ID"] integerValue]]) {
+        NSLog(@"Author with ID=%d already exists in database. Updating...", [author.authorID intValue]);
+        
+        if (![author.authorID isEqualToNumber:[NSNumber numberWithInt:[[attributes objectForKey:@"ID"] integerValue]]]) {
             author.authorID = [NSNumber numberWithInt:[[attributes objectForKey:@"ID"] integerValue]];
         }
         
-        if (author.name != [attributes objectForKey:@"Name"]) {
+        if (![author.name isEqualToString:[attributes objectForKey:@"Name"]]) {
             author.name = [attributes objectForKey:@"Name"];
         }
         
-        if (author.websiteURL != [attributes objectForKey:@"AuthorWebsiteURL"]) {
+        if (![author.websiteURL isEqualToString:[attributes objectForKey:@"AuthorWebsiteURL"]]) {
             author.websiteURL = [attributes objectForKey:@"AuthorWebsiteURL"];
         }
+                
         
         return author;      
     }
     else {
-        NSLog(@"ERROR: Database inconsisctency: To many authors with sam ID in database!");
+        NSLog(@"ERROR: Database inconsisctency: To many authors with same ID in database!");
         return nil;
     }
        
     
+}
+
++ (NSArray *)getAllAuthorsFromContext:(NSManagedObjectContext *)context {
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Author"]; 
+    NSError *error;
+    
+    NSArray *authors = [context executeFetchRequest:request error:&error];
+    
+    return authors;
+    
+}
+
++ (NSArray *)getAuthorWithID:(NSNumber *)iD fromContext:(NSManagedObjectContext *)context {
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Author"]; 
+    NSError *error;
+    
+    request.predicate = [NSPredicate predicateWithFormat:@"authorID = %d", [iD intValue]];
+    NSArray *authorWithID = [context executeFetchRequest:request error:&error];
+    
+    return authorWithID;
+}
+
++ (NSArray *)getAuthorWithName:(NSString *)name fromContext:(NSManagedObjectContext *)context {
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Author"]; 
+    NSError *error;
+    
+    request.predicate = [NSPredicate predicateWithFormat:@"name = %@", name];
+    NSArray *authorWithName = [context executeFetchRequest:request error:&error];
+    return authorWithName;
 }
 
 - (void)fillAuthorElement:(NSString *)element withDescription:(NSString *)description {

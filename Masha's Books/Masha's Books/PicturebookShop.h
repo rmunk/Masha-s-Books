@@ -42,6 +42,7 @@
 @property (nonatomic, strong) NSMutableOrderedSet *categories;
 @property (nonatomic, strong) NSMutableOrderedSet *authors;
 @property (readwrite) BOOL isShopLoaded;
+@property (readwrite) NSUInteger numberOfBooksWhinchNeedCoversDownloaded;
 
 @property (nonatomic, strong) UIManagedDocument *libraryDatabase;
 

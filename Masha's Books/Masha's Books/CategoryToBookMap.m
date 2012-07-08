@@ -25,12 +25,20 @@
     return _catToBookPairs;
 }
 
+
 - (void)pairCategory:(NSInteger)catID withBook:(NSInteger)bookID {
     NSArray *catBookPair = [[NSArray alloc] initWithObjects:[NSNumber numberWithInt:catID],[NSNumber numberWithInt:bookID], nil];
+    for (NSArray *cbPair in self.catToBookPairs) {
+        if ([catBookPair isEqualToArray:cbPair]) {
+            NSLog(@"Category-book pair [%d, %d] already exists! Breaking.", [[catBookPair objectAtIndex:0] intValue], [[catBookPair objectAtIndex:1] intValue]);
+
+            return;
+        }
+    } 
+    
     [self.catToBookPairs addObject:catBookPair];    
     
     NSLog(@"New category-book pair [%d, %d]", [[catBookPair objectAtIndex:0] intValue], [[catBookPair objectAtIndex:1] intValue]);
-    NSLog(@"New category-book pair [%d, %d]", [[[self.catToBookPairs lastObject] objectAtIndex:0] intValue], [[[self.catToBookPairs lastObject] objectAtIndex:1] intValue]);
 }
 
 - (NSArray *)getCategoryBookPairsArray {
@@ -70,5 +78,6 @@
     else 
         return nil;    
 }
+
 
 @end
