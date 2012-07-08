@@ -7,11 +7,16 @@
 //
 
 #import "Category.h"
+#import "Book.h"
 #import "CategoryToBookMap.h"
 
 @interface Category (Addon)
 
 + (void)categoryWithAttributes:(NSDictionary *)attributes forContext:(NSManagedObjectContext *)context;
+
++ (void)pickBookFromLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context forCategory:(Category *)category;
+
++ (void)linkCategoriesToBooksWithLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context;
 
 - (void)pickYourBooksFromLinkerObject:(CategoryToBookMap *)categoryToBookMap;
 

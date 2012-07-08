@@ -20,6 +20,8 @@
 @property (nonatomic, weak) Book *currentBook;
 @property (nonatomic, weak) Author *currentAuthor;
 @property (nonatomic, strong) CategoryToBookMap *categoryToBookMap;
+@property (nonatomic, strong) Category *selectedCategory; //currently browsed book category in shop
+
 
 @end
 
@@ -42,6 +44,8 @@
 @synthesize currentBook = _currentBook;
 @synthesize currentAuthor = _currentAuthor;
 @synthesize categoryToBookMap = _categoryToBookMap;
+@synthesize selectedCategory = _selectedCategory;
+@synthesize numberOfBooksWhinchNeedCoversDownloaded = _numberOfBooksWhinchNeedCoversDownloaded;
 
 @synthesize isShopLoaded = _isShopLoaded;
 
@@ -72,6 +76,7 @@
     //self.currentBookElement = [[NSString alloc] init];
     //self.currentAuthorElement = [[NSString alloc] init];
     self.categoryToBookMap = [[CategoryToBookMap alloc] init];
+    self.numberOfBooksWhinchNeedCoversDownloaded = 0;
     
     self.df = [[NSDateFormatter alloc] init];
     [self.df setDateFormat:@"dd.mm.yyyy"]; 
@@ -148,7 +153,7 @@
     
     if (parsingSuccesfulll == YES) 
     {
-        [self populateShopWithImages];
+        //[self populateShopWithImages];
         self.isShopLoaded = YES;
         //[self shopDataLoaded];
         //samo za testiranje!!!!!!!
@@ -357,6 +362,52 @@
     }
 }
 
+
+/*
+- (NSOrderedSet *)getBooksCoversForSelectedCategory {
+    
+    NSMutableOrderedSet *booksCoversForCategory = [[NSMutableOrderedSet alloc] init];
+    
+    NSLog(@"Books in category:");
+    for (NSNumber *num in pbCategory.booksInCategory) {
+        NSLog(@"bookID = %d", [num intValue]);
+    }
+    
+    if (pbCategory.name == @"All") {    
+        return [self.books copy];   // Adding new category "All"
+    }
+    else {  // Populate categories other version
+        for (NSNumber *pbID in pbCategory.booksInCategory) {
+            for (PicturebookInfo *pbInfo in self.books) {
+                if (pbInfo.iD == [pbID intValue]) {
+                    [booksForCategory addObject:pbInfo];    
+                }
+            }            
+        }
+        return [booksForCategory copy];
+    }
+} */
+
+- (void)userSelectsCategoryAtIndex:(NSUInteger)index {
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Category"]; 
+    NSSortDescriptor *sortByName = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]; 
+    request.sortDescriptors = [NSArray arrayWithObject:sortByName];
+    NSError *error;
+    NSArray *categories = [self.libraryDatabase.managedObjectContext executeFetchRequest:request error:&error];
+    NSLog(@"Number of categories is %d", categories.count);
+    if (categories.count && index < categories.count) {
+        self.selectedCategory = [categories objectAtIndex:index];
+        NSLog(@"User selects category %@", self.selectedCategory.name);
+    } 
+    else {
+        NSLog(@"ERROR: Index %d out of bounds for user selected category!", index);
+    }
+}
+
+- (NSOrderedSet *)getBooksForSelectedCategory {
+    return [Book getBooksForCategory:self.selectedCategory inContext:self.libraryDatabase.managedObjectContext];
+}
+
 - (void)shopDataLoaded {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"PicturebookShopFinishedLoading" object:nil];
 }
@@ -372,6 +423,7 @@
     self.currentElementValue = elementName;
     
     if([elementName isEqualToString:@"bookstore"]) {
+        NSLog(@"PARSING STARTED");
 		return;		
 	}
     else if([elementName isEqualToString:@"categories"]) {
@@ -444,13 +496,14 @@
         
         //Initialize new picture book
         //self.currentBookElement = [[attributeDict objectForKey:@"ID"] integerValue]; // currectBookElement 
-        self.pbookInfo = [[PicturebookInfo alloc] init];
+        //self.pbookInfo = [[PicturebookInfo alloc] init];
         self.currentBook = [Book bookWithAttributes:attributeDict forContext:self.libraryDatabase.managedObjectContext];
         
         //TU TREBA DODAT ISPITIVANJE JELI VEC POSTOJI U KONTEKSTU BOOK S TIM ID. AKO GA NEMA ZVAT OVU GORE METODU,
         // A AKO GA IMA ZVAT METODU TIPA UPDATE BOOK U KOJOJ SE MOGU SAD PROMJENIT ATRIBUTI BOOKA
         // NA ISTU SHEMU TREBA IC I CATEGORY I AUTHOR
         
+        /*
         PBDLOG(@"\n");
         PBDLOG(@"New book found!");
 		
@@ -492,7 +545,7 @@
         PBDLOG_ARG(@"YouTube video URL:%@", self.pbookInfo.youTubeVideoUrl.description);
         
         //book.active = [attributeDict objectForKey:@"Active"];
-        //PBDLOG_ARG(@"Book active: %@", book.active);
+        //PBDLOG_ARG(@"Book active: %@", book.active);*/
 
         
 	}
@@ -507,7 +560,7 @@
         
         //Extract the author attributes from XML
         self.pbookAuthor.iD = [[attributeDict objectForKey:@"ID"] integerValue];
-        PBDLOG_ARG(@"Author ID: %i", self.pbookInfo.iD);
+        PBDLOG_ARG(@"Author ID: %d", [[attributeDict objectForKey:@"ID"] integerValue]);
         
         self.pbookAuthor.name = [attributeDict objectForKey:@"Name"];
         //self.currentAuthorElement = self.pbookAuthor.name;
@@ -562,7 +615,7 @@
   namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName {
     
     if ([elementName isEqualToString:@"book"] && ![self.books containsObject:self.pbookInfo]) {
-        [self.books addObject:self.pbookInfo];        
+        //[self.books addObject:self.pbookInfo];        
         PBDLOG(@"Book info storred!");
         
         self.currentBook = nil;
@@ -585,10 +638,29 @@
     }
     else if ([elementName isEqualToString:@"bookstore"]) {
        
-        NSLog(@"PARSING FINISHED!!!!!!!!!!!!");
+        NSLog(@"PARSING FINISHED");
         // ovdi pozvat funkcije za likanje knjiga i kategorija, knjiga i autora
         [Book linkBooksToCategoriesWithLinker:self.categoryToBookMap inContext:self.libraryDatabase.managedObjectContext];
         [Book linkBooksToAuthorsInContext:self.libraryDatabase.managedObjectContext];
+        // fillBookWithCovers
+        [Book loadCoversFromURL:@"http://www.mashasbooks.com/covers/" forShop:self];
+        NSLog(@"Books covers downloaded!");
+        
+        // cini se da je vec linkano???
+        //[Category linkCategoriesToBooksWithLinker:self.categoryToBookMap inContext:self.libraryDatabase.managedObjectContext];
+        // linkAuthorsToBooks
+        
+        // save database
+        
+        [self.libraryDatabase saveToURL:self.libraryDatabase.fileURL forSaveOperation:UIDocumentSaveForOverwriting completionHandler:^(BOOL success) {
+            if (success) 
+                NSLog(@"Library database saved!");                
+        }];
+        
+        NSLog(@"Persistent store size: %llu bytes", [self directorySizeAtPath:[self.libraryDatabase.fileURL path]]);
+        
+        
+        
         
         
     }

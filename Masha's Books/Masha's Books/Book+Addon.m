@@ -14,8 +14,6 @@
     
     //kreiranje fetch requesta
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"]; 
-    //NSSortDescriptor *sortByName = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES]; 
-    //request.sortDescriptors = [NSArray arrayWithObject:sortByName];
     NSError *error;
     
     request.predicate = [NSPredicate predicateWithFormat:@"bookID = %d", [[attributes objectForKey:@"ID"] integerValue]];
@@ -49,19 +47,23 @@
         
         book.active = [attributes objectForKey:@"Active"];
         
+        //book.downloaded = [NSNumber numberWithInt:1];
+        
         return book;
     }
     else if ([booksWithID count] == 1)       
     {
+        Book *book = [booksWithID lastObject];
          // ovdje treba refreshat postojecu knjigu s novi atributima
-        NSLog(@"IMA JE !!!!!!!!!!!!!!!!!!!!!!");
-        return [booksWithID lastObject];
+        NSLog(@"Book with ID=%d already exists in database. Updating...", [book.bookID intValue]);
+        [Book updateBook:book withAttributes:attributes];
+        
+        return book;
     }
     else {
         NSLog(@"ERROR: More than one book with ID $d exists in database!");
         return nil;
     }   
-
 }
 
 + (void)pickBookCategoriesFromLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context forBook:(Book *)book {
@@ -99,15 +101,12 @@
 }
 
 + (void)linkBooksToAuthorsInContext:(NSManagedObjectContext *)context {
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"]; 
-    NSError *error;
-    NSArray *books = [context executeFetchRequest:request error:&error];
+    
+    NSArray *books = [Book getAllBooksFromContext:context];
     
     for (Book *book in books) {
-        request = [NSFetchRequest fetchRequestWithEntityName:@"Author"]; 
-        request.predicate = [NSPredicate predicateWithFormat:@"authorID = %d", [book.authorID intValue]];
-        NSArray *author = [context executeFetchRequest:request error:&error];
         
+        NSArray *author = [Author getAuthorWithID:book.authorID fromContext:context];        
         if (author.count == 1) {
             book.author = [author lastObject];
             NSLog(@"Found autor %@ for book %@ in database!", ((Author *)[author lastObject]).name, book.title);
@@ -120,10 +119,132 @@
             NSLog(@"ERROR: No authors for book %@ in database!", book.title);
         }
     }
-    
 }
 
++ (void)loadCoversFromURL:(NSString *)coverUrlString forShop:(PicturebookShop *)shop {
 
+    NSArray *books = [Book getAllBooksFromContext:shop.libraryDatabase.managedObjectContext];
+    
+    shop.numberOfBooksWhinchNeedCoversDownloaded = books.count;
+    
+    for (Book *book in books) {
+        
+        NSURL *coverThumbnailURL = [[NSURL alloc] initWithString:
+                                        [NSString stringWithFormat:@"%@%d%@", 
+                                         coverUrlString, [book.bookID intValue], @"_t.jpg"]];
+        
+        NSLog(@"Downloading cover images for book %@", book.title);
+            
+            // Get an image from the URL below
+        dispatch_queue_t downloadQueue = dispatch_queue_create("image download", NULL);
+        dispatch_async(downloadQueue, ^{
+                
+            UIImage *coverThumbnailUImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:coverThumbnailURL]];
+                
+                 
+            dispatch_async(dispatch_get_main_queue(), ^{                    
+                if (coverThumbnailUImage) {                                    
+                    //coverImage.image = coverUImage;                        
+                    book.coverThumbnailImage = coverThumbnailUImage;
+                    //book.coverImage = coverImage;
+                    
+                    //[self shopDataLoaded];
+                    if (shop.numberOfBooksWhinchNeedCoversDownloaded > 1) {
+                        shop.numberOfBooksWhinchNeedCoversDownloaded = shop.numberOfBooksWhinchNeedCoversDownloaded - 1;
+                    }
+                    else {
+                        shop.numberOfBooksWhinchNeedCoversDownloaded = 0;
+                        NSLog(@"Images downloaded!!!!!!!!!!!!!!!!!!!!!!!");
+                    }
+                        
+                }
+            });   
+                
+        });
+        dispatch_release(downloadQueue);
+        
+    } 
+}
+
++ (void)updateBook:(Book *)book withAttributes:(NSDictionary *)attributes {
+    
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    [df setDateFormat:@"dd.mm.yyyy"];
+    
+    if (![book.type isEqualToNumber:[NSNumber numberWithInt:[[attributes objectForKey:@"Type"] integerValue]]]) {
+        book.type = [NSNumber numberWithInt:[[attributes objectForKey:@"Type"] integerValue]];
+        NSLog(@"New value for book %@ attribute book.type", book.title);
+    }
+    
+    if (![book.title isEqualToString:[attributes objectForKey:@"Title"]]) {
+        book.title = [attributes objectForKey:@"Title"];
+        NSLog(@"New value for book %@ attribute book.title", book.title);
+    }
+    
+    if (![book.appStoreID isEqualToNumber:[NSNumber numberWithInt:[[attributes objectForKey:@"AppleStoreID"] integerValue]]]) {
+        book.appStoreID = [NSNumber numberWithInt:[[attributes objectForKey:@"AppleStoreID"] integerValue]];
+        NSLog(@"New value for book %@ attribute book.appstoreID", book.title);
+    }
+    
+    if (![book.authorID isEqualToNumber:[NSNumber numberWithInt:[[attributes objectForKey:@"AuthorID"] integerValue]]]) {
+        book.authorID = [NSNumber numberWithInt:[[attributes objectForKey:@"AuthorID"] integerValue]];
+        NSLog(@"New value for book %@ attribute book.authorID", book.title);
+    }  
+    
+    if (![book.publishDate isEqualToDate:[df dateFromString:[attributes objectForKey:@"PublishDate"]]]) {
+        book.publishDate = [df dateFromString:[attributes objectForKey:@"PublishDate"]];
+        NSLog(@"New value for book %@ attribute book.publishDate", book.title);
+    } 
+    
+    if (![book.downloadURL isEqualToString:[attributes objectForKey:@"DownloadURL"]]) {
+        book.downloadURL = [attributes objectForKey:@"DownloadURL"];
+        NSLog(@"New value for book %@ attribute book.downloadURL", book.title);
+    } 
+    
+    if (![book.facebookLikeURL isEqualToString:[attributes objectForKey:@"FacebookLikeURL"]]) {
+        book.facebookLikeURL = [attributes objectForKey:@"FacebookLikeURL"];
+        NSLog(@"New value for book %@ attribute book.facebookLikeURL", book.title);
+    }
+    
+    if (![book.youTubeVideoURL isEqualToString:[attributes objectForKey:@"YouTubeVideoURL"]]) {
+        book.youTubeVideoURL = [attributes objectForKey:@"YouTubeVideoURL"];
+        NSLog(@"New value for book %@ attribute book.youTubeVideoURL", book.title);
+    }
+    
+    if (![book.active isEqualToString:[attributes objectForKey:@"Active"]]) {
+        book.active = [attributes objectForKey:@"Active"];
+        NSLog(@"New value for book %@ attribute book.active", book.title);
+    }    
+}
+
++ (NSArray *)getAllBooksFromContext:(NSManagedObjectContext *)context {
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"]; 
+    NSError *error;
+    NSArray *books = [context executeFetchRequest:request error:&error];
+    return books;
+}
+
++ (NSOrderedSet *)getBooksForCategory:(Category *)category inContext:(NSManagedObjectContext *)context {
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"]; 
+    NSError *error;
+    
+    NSArray *books = [context executeFetchRequest:request error:&error];
+    
+    NSMutableOrderedSet *booksInCategory = [[NSMutableOrderedSet alloc] init];
+    
+    for (Book *book in books) {
+        for (Category *cat in book.categories) {
+            if (category.categoryID == cat.categoryID ) {
+                [booksInCategory addObject:book];
+            }
+        }
+    }
+    
+    
+    return [booksInCategory copy];
+    
+}
 
 - (void)fillBookElement:(NSString *)element withDescription:(NSString *)description {
     if ([element isEqualToString:@"DescriptionHTML"]) {
@@ -172,9 +293,6 @@
     #warning Implement!    
 }
 
-- (void)pickYourAuthorFromContext:(NSManagedObjectContext *)contect {
-    #warning Implement!    
-}
 
 
 

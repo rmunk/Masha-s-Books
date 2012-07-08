@@ -11,6 +11,7 @@
 #import "Category.h"
 #import "Image.h"
 #import "Page.h"
+#import "Image.h"
 
 
 @implementation Book
