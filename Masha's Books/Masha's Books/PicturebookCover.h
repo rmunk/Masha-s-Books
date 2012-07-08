@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PicturebookInfo.h"
 #import "Book.h"
 
 @interface PicturebookCover : UIButton

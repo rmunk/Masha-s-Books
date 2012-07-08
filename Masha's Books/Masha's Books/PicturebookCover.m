@@ -8,8 +8,6 @@
 
 #import "PicturebookCover.h"
 
-
-
 @implementation PicturebookCover
 
 @synthesize bookForCover;

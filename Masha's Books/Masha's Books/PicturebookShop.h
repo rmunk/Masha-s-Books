@@ -9,9 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
-#import "PicturebookInfo.h"
-#import "PicturebookCategory.h"
-#import "PicturebookAuthor.h"
+
 #import "Author.h"
 #import "Book.h"
 #import "Category.h"
@@ -38,9 +36,6 @@
 @interface PicturebookShop : NSObject <NSXMLParserDelegate>
 
 @property (nonatomic, strong) NSURL *urlBase;
-@property (nonatomic, strong) NSMutableOrderedSet *books;
-@property (nonatomic, strong) NSMutableOrderedSet *categories;
-@property (nonatomic, strong) NSMutableOrderedSet *authors;
 @property (readwrite) BOOL isShopLoaded;
 @property (readwrite) NSUInteger numberOfBooksWhinchNeedCoversDownloaded;
 
@@ -51,6 +46,7 @@
 - (void)refreshDatabase; 
 - (void)userSelectsCategoryAtIndex:(NSUInteger)index;
 - (NSOrderedSet *)getBooksForSelectedCategory;
+- (NSOrderedSet *)getCategoriesInShop;
 - (void)coversLoaded;
 
 

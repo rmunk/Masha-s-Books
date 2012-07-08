@@ -18,6 +18,8 @@
 
 + (void)linkCategoriesToBooksWithLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context;
 
++ (NSOrderedSet *)getAllCategoriesFromContext:(NSManagedObjectContext *)context;
+
 - (void)pickYourBooksFromLinkerObject:(CategoryToBookMap *)categoryToBookMap;
 
 @end
