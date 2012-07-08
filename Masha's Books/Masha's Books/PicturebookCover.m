@@ -10,13 +10,15 @@
 
 @implementation PicturebookCover
 
-@synthesize bookForCover;
+@synthesize bookForCover = _bookForCover;
 
 - (id)initWithFrame:(CGRect)frame andBook:(Book *)book {
     self = [super initWithFrame:frame];
     if (self) {
-        bookForCover = book;
+        _bookForCover = book;
+        NSLog(@"Cover for book %@ initialized", book.title);
     }
+    
     return self;
 }
 

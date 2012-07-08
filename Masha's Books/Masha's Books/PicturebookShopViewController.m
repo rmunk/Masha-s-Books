@@ -82,8 +82,11 @@
     [self.shopWebView loadHTMLString:pbInfo. baseURL:
      */
     [self.picturebookShop userSelectsCategoryAtIndex:0];
-    [[self getTableViewForTag:COVERS_TABLEVIEW_TAG] reloadData];
+    [[self getTableViewForTag:CATEGORY_TABLEVIEW_TAG] reloadData];
+    [[self getTableViewForTag:CATEGORY_TABLEVIEW_TAG] selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
     
+    [[self getTableViewForTag:COVERS_TABLEVIEW_TAG] reloadData];
+
     [self.view setNeedsDisplay];
     
 }

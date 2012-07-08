@@ -157,13 +157,10 @@
                         NSLog(@"Images downloaded!!!!!!!!!!!!!!!!!!!!!!!");
                         [shop coversLoaded];
                     }
-                        
                 }
             });   
-                
         });
         dispatch_release(downloadQueue);
-        
     } 
 }
 
@@ -256,15 +253,6 @@
     }
 }
 
-- (Book *)refreshBook:(Book *)book withNewAttributes:(NSDictionary *)attributes inContext:(NSManagedObjectContext *)context {
-    return book;
-    #warning Implement!
-    
-}
-- (void)refreshBook:(Book *)book withNewDescription:(NSString *)description forElement:(NSString *)element {
-    #warning Implement!
-}
-
 - (void)pickYourCategoriesFromLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context {
     
     //kreiranje fetch requesta
@@ -287,14 +275,6 @@
         }                  
     }
 }
-
-
-
-- (void)pickYourCoversFromURL:(NSURL *)coverUrl; {
-    #warning Implement!    
-}
-
-
 
 
 @end
