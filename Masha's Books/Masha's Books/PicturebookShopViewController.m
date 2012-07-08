@@ -93,6 +93,8 @@
     
    // [sender.pbInfo pickYourCategories:self.picturebookShop.categories];
     
+    [self.picturebookShop userSelectsBook:sender.bookForCover];
+    
     [self.shopWebView loadHTMLString:sender.bookForCover.descriptionHTML baseURL:nil];
 
     self.selectedCoverTumbnailView.image = sender.bookForCover.coverThumbnailImage;
