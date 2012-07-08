@@ -83,6 +83,7 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
+                        <outlet property="bookNameLabel" destination="X3i-hO-t1g" id="p88-Gr-iU4"/>
                         <outlet property="pageNumberLabel" destination="jAA-5l-m5C" id="Tv2-iq-dMk"/>
                         <outlet property="scrollView" destination="3KK-a9-E8f" id="OSJ-xi-qQp"/>
                     </connections>
@@ -186,33 +187,6 @@
     <resources>
         <image name="00.jpg" width="1024" height="768"/>
     </resources>
-    <classes>
-        <class className="ScrollViewContainer" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ScrollViewContainer.h"/>
-            <relationships>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-            </relationships>
-        </class>
-        <class className="SlikovnicaDataViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SlikovnicaDataViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="dataImage" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="SlikovnicaNavigationViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SlikovnicaNavigationViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="pageNumberLabel" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-            </relationships>
-        </class>
-        <class className="SlikovnicaRootViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SlikovnicaRootViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="navigationRequestView" candidateClass="UIView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <nil key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

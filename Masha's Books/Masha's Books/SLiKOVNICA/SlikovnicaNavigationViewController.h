@@ -17,6 +17,7 @@
 
 @interface SlikovnicaNavigationViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *bookNameLabel;
 @property (nonatomic, copy) NSArray *pageImages;
 @property (nonatomic) NSInteger currentPage;
 @property id<SlikovnicaNavigationViewControllerDelegate> delegate;

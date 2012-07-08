@@ -12,7 +12,7 @@
 #import "BookExtractor.h"
 #import "SlikovnicaRootViewController.h"
 
-@interface MyBooksViewController ()<UIScrollViewDelegate, BookExtractorDelegate>
+@interface MyBooksViewController ()<UIScrollViewDelegate>
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, weak) IBOutlet UIView *scrollViewContainer;
 
@@ -32,35 +32,6 @@
 @synthesize coverViews = _coverViews;
 
 @synthesize context = _context;
-
-- (IBAction)extractTest:(id)sender 
-{
-    
-    NSString *file = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"izgubljene_papuce.zip"];
-//    NSString *file = [NSHomeDirectory() stringByAppendingPathComponent:@"tmp/izgubljene_papuce.zip"];
-    BookExtractor *bookExtractor = [[BookExtractor alloc] init];
-    bookExtractor.delegate = self;
-    bookExtractor.book = [self.myBooks objectAtIndex:0];
-    [bookExtractor extractBookFromFile:file];
-}
-
-- (void)bookExtractor:(BookExtractor *)extractor didFinishExtractingWithgSuccess:(BOOL)success
-{
-    if (success) {
-//        NSError *error;
-//        BOOL eh = [self.library.managedObjectContext save:&error]; // savePresentedItemChangesWithCompletionHandler:^(NSError *error) {
-//            if (error) {
-//                NSLog(@"Error saving database! (%@)", error.description);
-//            }
-            NSLog(@"Library database saved!");
-//        }];
-    }
-}
-- (void)addControllerContextDidSave:(NSNotification*)saveNotification 
-{
-	[self.library.managedObjectContext mergeChangesFromContextDidSaveNotification:saveNotification];	
-//    [self getMyBooks];
-}
 
 #pragma mark - Load Pages
 - (void)loadVisiblePages {
@@ -195,8 +166,8 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
+    [super viewDidAppear:animated];
+    [self getMyBooks];
 }
 
 - (void)viewDidUnload {

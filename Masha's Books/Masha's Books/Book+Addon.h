@@ -32,5 +32,6 @@
 - (void)refreshBook:(Book *)book withNewDescription:(NSString *)description forElement:(NSString *)element;
 - (void)pickYourCategoriesFromLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context;
 - (void)pickYourCoversFromURL:(NSURL *)coverUrl;
+- (void)downloadBookZipFileforShop:(PicturebookShop *)shop;
 
 @end

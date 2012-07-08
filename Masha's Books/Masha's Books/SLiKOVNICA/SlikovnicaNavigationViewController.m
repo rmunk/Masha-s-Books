@@ -17,6 +17,7 @@
 @implementation SlikovnicaNavigationViewController
 @synthesize scrollView = _scrollView;
 @synthesize pageNumberLabel = _pageNumberLabel;
+@synthesize bookNameLabel = _bookNameLabel;
 @synthesize pageImages = _pageImages;
 @synthesize currentPage = _currentPage;
 @synthesize delegate = _delegate;
@@ -69,6 +70,7 @@
 {
     [self setScrollView:nil];
     [self setPageNumberLabel:nil];
+    [self setBookNameLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }

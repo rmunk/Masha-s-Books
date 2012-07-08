@@ -81,7 +81,9 @@
                 NSPredicate *flter = [NSPredicate predicateWithFormat:@"self BEGINSWITH 'page'"];        
                 NSArray *pageFiles = [[dirContents filteredArrayUsingPredicate:flter] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
                 
-                self.book.coverImage.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingString:@"/title.jpg"]];
+                Image *coverImage = [NSEntityDescription insertNewObjectForEntityForName:@"Image" inManagedObjectContext:addingContext];
+                coverImage.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingString:@"/title.jpg"]];
+                self.book.coverImage = coverImage;
                 self.book.downloadDate = [NSDate date]; 
                 int pageNumber = 1;
                 for (NSString *pageFile in pageFiles) {
@@ -101,7 +103,7 @@
             }
 
             NSNotificationCenter *dnc = [NSNotificationCenter defaultCenter];
-            [dnc addObserver:self.delegate selector:@selector(addControllerContextDidSave:) name:NSManagedObjectContextDidSaveNotification object:addingContext];
+            [dnc addObserver:self.delegate selector:@selector(bookExtractorDidAddPagesToBook:) name:NSManagedObjectContextDidSaveNotification object:addingContext];
             
             [addingContext save:&error];
             if (error) {
@@ -115,7 +117,7 @@
 //                [self.book insertPages:pages atIndexes:pagesIndexSet];
 
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.delegate bookExtractor:self didFinishExtractingWithgSuccess:self.success];
+//            [self.delegate bookExtractor:self didFinishExtractingWithgSuccess:self.success];
         });
         }
      
@@ -125,7 +127,7 @@
 
 - (void)zipArchiveDidUnzipArchiveAtPath:(NSString *)path zipInfo:(unz_global_info)zipInfo unzippedPath:(NSString *)unzippedPath
 {
-    NSLog(@"Zip delegate");
+//    NSLog(@"Zip delegate");
 //    NSFileManager *fileManager = [NSFileManager defaultManager];
 //    NSError *error;
 //    NSArray *dirContents = [fileManager contentsOfDirectoryAtPath:unzippedPath error:&error];       

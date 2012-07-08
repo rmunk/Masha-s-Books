@@ -334,6 +334,11 @@
     }
 }
 
+- (void)bookExtractorDidAddPagesToBook:(NSNotification*)pagesAddedNotification 
+{
+	[self.libraryDatabase.managedObjectContext mergeChangesFromContextDidSaveNotification:pagesAddedNotification];	
+}
+
 
 @end
 

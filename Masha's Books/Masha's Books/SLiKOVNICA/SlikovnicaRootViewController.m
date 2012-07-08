@@ -70,6 +70,7 @@
     self.slikovnicaNavigationViewController.view.frame = self.view.bounds;
     self.slikovnicaNavigationViewController.pageImages = [self.modelController getPageThumbnails];
     self.slikovnicaNavigationViewController.delegate = self;
+    self.slikovnicaNavigationViewController.bookNameLabel.title = self.modelController.book.title;
     
     [self addChildViewController:self.slikovnicaNavigationViewController];
     [self.view insertSubview:self.slikovnicaNavigationViewController.view atIndex:0];
