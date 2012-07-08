@@ -19,6 +19,7 @@
 @property (nonatomic, weak) Author *currentAuthor;
 @property (nonatomic, strong) CategoryToBookMap *categoryToBookMap;
 @property (nonatomic, strong) Category *selectedCategory; //currently browsed book category in shop
+@property (nonatomic, strong) Book *selectedBook;
 
 
 @end
@@ -39,6 +40,7 @@
 @synthesize currentAuthor = _currentAuthor;
 @synthesize categoryToBookMap = _categoryToBookMap;
 @synthesize selectedCategory = _selectedCategory;
+@synthesize selectedBook = _selectedBook;
 @synthesize numberOfBooksWhinchNeedCoversDownloaded = _numberOfBooksWhinchNeedCoversDownloaded;
 
 @synthesize isShopLoaded = _isShopLoaded;
@@ -63,8 +65,6 @@
     }
     
     self.currentElementValue = [[NSString alloc] init];
-    //self.currentBookElement = [[NSString alloc] init];
-    //self.currentAuthorElement = [[NSString alloc] init];
     self.categoryToBookMap = [[CategoryToBookMap alloc] init];
     self.numberOfBooksWhinchNeedCoversDownloaded = 0;
     
@@ -74,6 +74,10 @@
     self.isShopLoaded = NO;
     
     return self;
+}
+
+- (void)loadShopFromDatabase {
+    self.isShopLoaded = YES;
 }
 
 // useDocument method   - if picture-book database does not exist, it creates it
@@ -93,6 +97,7 @@
         }];
     } else if (self.libraryDatabase.documentState == UIDocumentStateNormal) {
         NSLog(@"Database at %@ is opened and ready for use.", self.libraryDatabase.fileURL);
+        [self loadShopFromDatabase];
     }
 }
 
@@ -180,6 +185,16 @@
         NSLog(@"ERROR: Index %d out of bounds for user selected category!", index);
     }
 }
+
+- (void)userSelectsBook:(Book *)book {
+    self.selectedBook = book;
+}
+
+- (Book *)getSelectedBook {
+    return self.selectedBook;
+    
+}
+ 
 
 - (NSOrderedSet *)getBooksForSelectedCategory {
     return [Book getBooksForCategory:self.selectedCategory inContext:self.libraryDatabase.managedObjectContext];

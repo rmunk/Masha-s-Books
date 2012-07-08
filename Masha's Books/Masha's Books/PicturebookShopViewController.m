@@ -65,6 +65,10 @@
 
 - (IBAction)buyPictureBook:(UIButton *)sender {
     //[self.picturebookShop refreshDatabase];
+    Book *bookJustBought = [self.picturebookShop getSelectedBook];
+    PBDLOG_ARG(@"Picture book %@ bought!", bookJustBought.title);
+    bookJustBought.downloaded = [NSNumber numberWithInt:1];
+    
 }
 
 - (void)picturebookShopFinishedLoading:(NSNotification *) notification {
@@ -92,6 +96,8 @@
     PBDLOG_ARG(@"Shop item tapped: %@", sender.bookForCover.title);
     
    // [sender.pbInfo pickYourCategories:self.picturebookShop.categories];
+    
+    [self.picturebookShop userSelectsBook:sender.bookForCover];
     
     [self.shopWebView loadHTMLString:sender.bookForCover.descriptionHTML baseURL:nil];
 

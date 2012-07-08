@@ -45,9 +45,12 @@
 - (void)refreshShop;    
 - (void)refreshDatabase; 
 - (void)userSelectsCategoryAtIndex:(NSUInteger)index;
+- (void)userSelectsBook:(Book *)book;
+- (Book *)getSelectedBook;
 - (NSOrderedSet *)getBooksForSelectedCategory;
 - (NSOrderedSet *)getCategoriesInShop;
 - (void)coversLoaded;
+- (void)loadShopFromDatabase;
 
 
 @end
