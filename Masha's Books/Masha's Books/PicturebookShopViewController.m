@@ -65,6 +65,10 @@
 
 - (IBAction)buyPictureBook:(UIButton *)sender {
     //[self.picturebookShop refreshDatabase];
+    Book *bookJustBought = [self.picturebookShop getSelectedBook];
+    PBDLOG_ARG(@"Picture book %@ bought!", bookJustBought.title);
+    bookJustBought.downloaded = [NSNumber numberWithInt:1];
+    
 }
 
 - (void)picturebookShopFinishedLoading:(NSNotification *) notification {
