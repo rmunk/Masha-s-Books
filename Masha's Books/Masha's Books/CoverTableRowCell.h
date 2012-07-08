@@ -15,9 +15,6 @@
 @property (readonly) CGFloat cellHeight;
 
 - (id)initWithFrame:(CGRect)frame withNumberOfCoversInRow:(NSInteger)numOfCovers withWidthOf:(NSInteger)width desiredDistanceBetweenCovers:(NSInteger)distance 
-andPictureBookCovers:(NSOrderedSet *)pbCovers withTarget:(id)target withAction:(SEL)action;
-
-- (id)initWithFrame:(CGRect)frame withNumberOfCoversInRow:(NSInteger)numOfCovers withWidthOf:(NSInteger)width desiredDistanceBetweenCovers:(NSInteger)distance 
 forBooks:(NSOrderedSet *)books withTarget:(id)target withAction:(SEL)action;
 
 @end

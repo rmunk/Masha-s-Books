@@ -80,6 +80,7 @@
     [self.shopWebView loadHTMLString:pbInfo. baseURL:
      */
     self.selectedPicturebookCategory = [self.picturebookShop.categories objectAtIndex:0];
+    [self.picturebookShop userSelectsCategoryAtIndex:0];
     [[self getTableViewForTag:COVERS_TABLEVIEW_TAG] reloadData];
     
     [self.view setNeedsDisplay];
@@ -93,10 +94,10 @@
 - (IBAction)shopItemTapped:(PicturebookCover *)sender{
     PBDLOG_ARG(@"Shop item tapped: %@", sender.bookForCover.title);
     
-    [sender.pbInfo pickYourCategories:self.picturebookShop.categories];
+   // [sender.pbInfo pickYourCategories:self.picturebookShop.categories];
     
     [self.shopWebView loadHTMLString:sender.bookForCover.descriptionHTML baseURL:nil];
-    PBDLOG_ARG(@"Picturebook descriptionHTML: %@", sender.bookForCover.descriptionHTML);
+
     self.selectedCoverTumbnailView.image = sender.bookForCover.coverThumbnailImage;
     [self.selectedCoverTumbnailView setContentMode:UIViewContentModeScaleAspectFit];
     //[self.shopWebView reload];
@@ -262,8 +263,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {    
     if (tableView.tag == CATEGORY_TABLEVIEW_TAG) {
-        PicturebookCategory *pbCategory = [self.picturebookShop.categories objectAtIndex:indexPath.row];
-        self.selectedPicturebookCategory = pbCategory;
+        self.selectedPicturebookCategory = [self.picturebookShop.categories objectAtIndex:indexPath.row];
         [self.picturebookShop userSelectsCategoryAtIndex:indexPath.row];
         [[self getTableViewForTag:COVERS_TABLEVIEW_TAG] reloadData];
         

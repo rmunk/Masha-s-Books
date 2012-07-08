@@ -152,29 +152,10 @@
     BOOL parsingSuccesfulll = [self.xmlParser parse];
     
     if (parsingSuccesfulll == YES) 
-    {
-        //[self populateShopWithImages];
         self.isShopLoaded = YES;
-        //[self shopDataLoaded];
-        //samo za testiranje!!!!!!!
-        //[self refreshDatabase];
-    }
-    else {
+    else 
         [self shopErrorLoading];
-    }
-    
-    /*
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"]; 
-    request.predicate = [NSPredicate predicateWithFormat:@"book.title=%@", @"dummy book"];
-    NSSortDescriptor *sortByName = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]; 
-    request.sortDescriptors = [NSArray arrayWithObject:sortByName];
-    NSManagedObjectContext *moc = self.libraryDatabase.managedObjectContext;
-    NSError *error;
-    NSArray *books = [moc executeFetchRequest:request error:&error];
-    for (Book *book in books) {
-        NSLog(@"Book found");
-    }
-    */
+
 }
 
 - (void)refreshDatabase {
@@ -241,8 +222,6 @@
                         [book addCategoriesObject:category];
                         NSLog(@"Book category: %@", category.name);                        
                     }
-                    
-                    
                     
                     book.title = pbInfo.title;
                     book.author = author;
@@ -330,64 +309,6 @@
     }    
 }
 
-- (NSOrderedSet *)getBooksForCategory:(PicturebookCategory *)pbCategory {
-    
-    NSMutableOrderedSet *booksForCategory = [[NSMutableOrderedSet alloc] init];
-    
-    NSLog(@"Books in category:");
-    for (NSNumber *num in pbCategory.booksInCategory) {
-        NSLog(@"bookID = %d", [num intValue]);
-    }
-    
-    if (pbCategory.name == @"All") {    
-        return [self.books copy];   // Adding new category "All"
-    }/*
-    else {  // Populate c
-        for (PicturebookInfo *pbInfo in self.books) {
-            if (pbInfo.catID == pbCategory.iD) {
-                [booksForCategory addObject:pbInfo];    
-            }
-        }
-        return [booksForCategory copy];
-    }*/
-    else {  // Populate categories other version
-        for (NSNumber *pbID in pbCategory.booksInCategory) {
-            for (PicturebookInfo *pbInfo in self.books) {
-                if (pbInfo.iD == [pbID intValue]) {
-                    [booksForCategory addObject:pbInfo];    
-                }
-            }            
-        }
-        return [booksForCategory copy];
-    }
-}
-
-
-/*
-- (NSOrderedSet *)getBooksCoversForSelectedCategory {
-    
-    NSMutableOrderedSet *booksCoversForCategory = [[NSMutableOrderedSet alloc] init];
-    
-    NSLog(@"Books in category:");
-    for (NSNumber *num in pbCategory.booksInCategory) {
-        NSLog(@"bookID = %d", [num intValue]);
-    }
-    
-    if (pbCategory.name == @"All") {    
-        return [self.books copy];   // Adding new category "All"
-    }
-    else {  // Populate categories other version
-        for (NSNumber *pbID in pbCategory.booksInCategory) {
-            for (PicturebookInfo *pbInfo in self.books) {
-                if (pbInfo.iD == [pbID intValue]) {
-                    [booksForCategory addObject:pbInfo];    
-                }
-            }            
-        }
-        return [booksForCategory copy];
-    }
-} */
-
 - (void)userSelectsCategoryAtIndex:(NSUInteger)index {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Category"]; 
     NSSortDescriptor *sortByName = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]; 
@@ -406,6 +327,10 @@
 
 - (NSOrderedSet *)getBooksForSelectedCategory {
     return [Book getBooksForCategory:self.selectedCategory inContext:self.libraryDatabase.managedObjectContext];
+}
+
+- (void)coversLoaded {
+    [self shopDataLoaded];
 }
 
 - (void)shopDataLoaded {
@@ -460,92 +385,15 @@
         
         [self.categoryToBookMap pairCategory:catID withBook:bookID];
         
-        /*
-        for (int i = 0; i < self.categories.count; i++) {
-            if (((PicturebookCategory *)[self.categories objectAtIndex:i]).iD == catID) {
-                [((PicturebookCategory *)[self.categories objectAtIndex:i]).booksInCategory addObject:[NSNumber numberWithInt:bookID]];
-                NSLog(@"Matching category found: catID = %i, bookID = %i", catID, bookID);
-            }
-        }*/
-        
-        for (PicturebookCategory *cat in self.categories) {
-            if (cat.iD == catID) {
-                NSNumber *pbID = [NSNumber numberWithInt:bookID];
-                [cat.booksInCategory addObject:pbID];
-                NSLog(@"Books in category: %i", cat.booksInCategory.count);
-                NSLog(@"Matching category found: catID = %i, bookID = %i", cat.iD, [[cat.booksInCategory lastObject] intValue]);
-            }
-            else {
-                //PBDLOG_ARG(@"No matching category found for bookID: %i", bookID);
-            }
-        }
+
                
-        //Initialize new category-book link
-        /*
-        self.pbookCategoryBookLink = [[PicturebookCategorybooks alloc] init];
-        PBDLOG(@"\n");
-        PBDLOG(@"New category-book link found!");
-        
-        self.pbookCategoryBookLink.catID = [[attributeDict objectForKey:@"catID"] integerValue];
-        PBDLOG_ARG(@"Category ID: %i", self.pbookCategoryBookLink.catID);
-        
-        self.pbookCategoryBookLink.bookID = [[attributeDict objectForKey:@"bookID"] integerValue];
-        PBDLOG_ARG(@"Book ID: %i", self.pbookCategoryBookLink.);*/
     }
 	else if([elementName isEqualToString:@"book"]) {       
         
         //Initialize new picture book
-        //self.currentBookElement = [[attributeDict objectForKey:@"ID"] integerValue]; // currectBookElement 
-        //self.pbookInfo = [[PicturebookInfo alloc] init];
         self.currentBook = [Book bookWithAttributes:attributeDict forContext:self.libraryDatabase.managedObjectContext];
         
-        //TU TREBA DODAT ISPITIVANJE JELI VEC POSTOJI U KONTEKSTU BOOK S TIM ID. AKO GA NEMA ZVAT OVU GORE METODU,
-        // A AKO GA IMA ZVAT METODU TIPA UPDATE BOOK U KOJOJ SE MOGU SAD PROMJENIT ATRIBUTI BOOKA
-        // NA ISTU SHEMU TREBA IC I CATEGORY I AUTHOR
         
-        /*
-        PBDLOG(@"\n");
-        PBDLOG(@"New book found!");
-		
-		//Extract the picture book attributes from XML
-        
-        self.pbookInfo.iD = [[attributeDict objectForKey:@"ID"] integerValue];
-        //book.bookID = [NSNumber numberWithInt:[[attributeDict objectForKey:@"ID"] integerValue]];
-        PBDLOG_ARG(@"Book ID: %i", self.pbookInfo.iD);
-        
-        //book.type = [NSNumber numberWithInt:[[attributeDict objectForKey:@"Type"] integerValue]];
-        //PBDLOG_ARG(@"Book type: %i", [book.type intValue]);
-        
-        self.pbookInfo.title = [attributeDict objectForKey:@"Title"];
-        //book.title = [attributeDict objectForKey:@"Title"];
-        PBDLOG_ARG(@"Book title: %@", self.pbookInfo.title);
-        
-        self.pbookInfo.appStoreID = [[attributeDict objectForKey:@"AppleStoreID"] integerValue];
-        //book.appStoreID = [NSNumber numberWithInt:[[attributeDict objectForKey:@"AppleStoreID"] integerValue]];
-        PBDLOG_ARG(@"Applestore ID:%i", self.pbookInfo.appStoreID);
-        
-        self.pbookInfo.authorID = [[attributeDict objectForKey:@"AuthorID"] integerValue];
-        //book.authorID = [NSNumber numberWithInt:[[attributeDict objectForKey:@"AuthorID"] integerValue]];
-        PBDLOG_ARG(@"Author ID:%i", self.pbookInfo.authorID);
-        
-        self.pbookInfo.publishDate = [self.df dateFromString:[attributeDict objectForKey:@"PublishDate"]];
-        //book.publishDate = [self.df dateFromString:[attributeDict objectForKey:@"PublishDate"]];
-        PBDLOG_ARG(@"Publish date:%@", self.pbookInfo.publishDate.description);
-        
-        self.pbookInfo.downloadUrl = [NSURL URLWithString:[attributeDict objectForKey:@"DownloadURL"]];
-        //book.downloadURL = [attributeDict objectForKey:@"DownloadURL"];
-        PBDLOG_ARG(@"Download URL:%@", self.pbookInfo.downloadUrl.description);
-        
-        self.pbookInfo.facebookLikeUrl = [NSURL URLWithString:[attributeDict objectForKey:@"FacebookLikeURL"]];
-        //book.facebookLikeURL = [attributeDict objectForKey:@"FacebookLikeURL"];
-        PBDLOG_ARG(@"Facebook URL:%@", self.pbookInfo.facebookLikeUrl.description);
-        
-        self.pbookInfo.youTubeVideoUrl = [NSURL URLWithString:[attributeDict objectForKey:@"YouTubeVideoURL"]];
-        //book.youTubeVideoURL = [attributeDict objectForKey:@"YouTubeVideoURL"];
-        PBDLOG_ARG(@"YouTube video URL:%@", self.pbookInfo.youTubeVideoUrl.description);
-        
-        //book.active = [attributeDict objectForKey:@"Active"];
-        //PBDLOG_ARG(@"Book active: %@", book.active);*/
 
         
 	}
@@ -591,23 +439,6 @@
     
     [self.currentBook fillBookElement:self.currentElementValue withDescription:string];
     [self.currentAuthor fillAuthorElement:self.currentElementValue withDescription:string];
-    
-    
-    if ([self.currentElementValue isEqualToString:@"DescriptionHTML"]) {
-        self.pbookInfo.descriptionHTML = string;
-        //PBDLOG_ARG(@"For book %@", self.currentBookElement);    
-        //PBDLOG_ARG(@"DescriptionHTML %@", string);
-    }
-    else if ([self.currentElementValue isEqualToString:@"DescriptionLongHTML"]) {
-        self.pbookInfo.descriptionLongHTML = string;
-        //PBDLOG_ARG(@"For book %@", self.currentBookElement);    
-        //PBDLOG_ARG(@"DescriptionLongHTML %@", string);
-    }
-    else if ([self.currentElementValue isEqualToString:@"AuthorBioHTML"]) {
-        self.pbookAuthor.bioHtml = string;
-        //PBDLOG_ARG(@"For author %@", self.currentAuthorElement);    
-        //PBDLOG_ARG(@"AuthorBioHTML %@", string);
-    }
 	
 }
 
@@ -624,11 +455,7 @@
         [self.categories addObject:self.pbookCategory];
         [self putObject:self.pbookCategory inContext:self.libraryDatabase.managedObjectContext];
         PBDLOG(@"Category info storred!");
-    }/*
-      else if ([elementName isEqualToString:@"categorybooks"] && ![self.categoryBookLinks containsObject:self.pbookCategoryBookLink]) {
-      [self.categoryBookLinks addObject:self.pbookCategoryBookLink];
-      PBDLOG(@"Category info storred!");
-      }*/
+    }
     else if ([elementName isEqualToString:@"author"]) {
         [self.authors addObject:self.pbookAuthor];
         [self putObject:self.pbookAuthor inContext:self.libraryDatabase.managedObjectContext];
@@ -645,10 +472,6 @@
         // fillBookWithCovers
         [Book loadCoversFromURL:@"http://www.mashasbooks.com/covers/" forShop:self];
         NSLog(@"Books covers downloaded!");
-        
-        // cini se da je vec linkano???
-        //[Category linkCategoriesToBooksWithLinker:self.categoryToBookMap inContext:self.libraryDatabase.managedObjectContext];
-        // linkAuthorsToBooks
         
         // save database
         

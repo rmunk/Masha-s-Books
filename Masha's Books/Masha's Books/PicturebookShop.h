@@ -49,10 +49,9 @@
 - (PicturebookShop *)initShop;
 - (void)refreshShop;    
 - (void)refreshDatabase; 
-- (NSOrderedSet *)getBooksForCategory:(PicturebookCategory *)pbCategory;
-- (NSOrderedSet *)getBooksCoversForCategory:(PicturebookCategory *)pbCategory;
 - (void)userSelectsCategoryAtIndex:(NSUInteger)index;
 - (NSOrderedSet *)getBooksForSelectedCategory;
+- (void)coversLoaded;
 
 
 @end
