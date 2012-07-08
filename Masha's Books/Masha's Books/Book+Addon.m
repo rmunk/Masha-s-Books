@@ -224,6 +224,28 @@
     return books;
 }
 
++ (NSOrderedSet *)getBooksForCategory:(Category *)category inContext:(NSManagedObjectContext *)context {
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"]; 
+    NSError *error;
+    
+    NSArray *books = [context executeFetchRequest:request error:&error];
+    
+    NSMutableOrderedSet *booksInCategory = [[NSMutableOrderedSet alloc] init];
+    
+    for (Book *book in books) {
+        for (Category *cat in book.categories) {
+            if (category.categoryID == cat.categoryID ) {
+                [booksInCategory addObject:book];
+            }
+        }
+    }
+    
+    
+    return [booksInCategory copy];
+    
+}
+
 - (void)fillBookElement:(NSString *)element withDescription:(NSString *)description {
     if ([element isEqualToString:@"DescriptionHTML"]) {
         self.descriptionHTML = description;

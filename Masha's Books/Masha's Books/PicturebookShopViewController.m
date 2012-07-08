@@ -91,13 +91,13 @@
 }
 
 - (IBAction)shopItemTapped:(PicturebookCover *)sender{
-    PBDLOG_ARG(@"Shop item tapped: %@", sender.pbInfo.title);
+    PBDLOG_ARG(@"Shop item tapped: %@", sender.bookForCover.title);
     
     [sender.pbInfo pickYourCategories:self.picturebookShop.categories];
     
-    [self.shopWebView loadHTMLString:sender.pbInfo.descriptionHTML baseURL:nil];
-    PBDLOG_ARG(@"Picturebook descriptionHTML: %@", sender.pbInfo.descriptionHTML);
-    self.selectedCoverTumbnailView.image = sender.pbInfo.coverImage;
+    [self.shopWebView loadHTMLString:sender.bookForCover.descriptionHTML baseURL:nil];
+    PBDLOG_ARG(@"Picturebook descriptionHTML: %@", sender.bookForCover.descriptionHTML);
+    self.selectedCoverTumbnailView.image = sender.bookForCover.coverThumbnailImage;
     [self.selectedCoverTumbnailView setContentMode:UIViewContentModeScaleAspectFit];
     //[self.shopWebView reload];
     self.buyButton.hidden = FALSE;
@@ -173,11 +173,16 @@
             
         }
         else if (tableView.tag == COVERS_TABLEVIEW_TAG) {
-            NSOrderedSet *bookInCategory = [self.picturebookShop getBooksForCategory:self.selectedPicturebookCategory];
+            //NSOrderedSet *bookInCategory = [self.picturebookShop getBooksForCategory:self.selectedPicturebookCategory];
+            
+
+            NSOrderedSet *booksInCat = [self.picturebookShop getBooksForSelectedCategory];
+            
+                
             // Broj redova u tablici s coverima za neku kategoriju je (broj covera / broj covera u jednom redu) 
-            int numOfRows = bookInCategory.count / NUM_OF_COVERS_IN_ROW_PORTRAIT;
+            int numOfRows = booksInCat.count / NUM_OF_COVERS_IN_ROW_PORTRAIT;
             // Da li treba dodat jos jedan red ako (broj covera / broj covera u jednom redu) nije cijeli broj?
-            if (bookInCategory.count % NUM_OF_COVERS_IN_ROW_PORTRAIT)
+            if (booksInCat.count % NUM_OF_COVERS_IN_ROW_PORTRAIT)
                 numOfRows++;
             PBDLOG_ARG(@"Picture books table number of rows: %i", numOfRows);
             //return self.picturebookShop.books.count;
@@ -216,44 +221,32 @@
         CoverTableRowCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         
         if (cell == nil) {
-            NSMutableOrderedSet *rowPbInfos = [[NSMutableOrderedSet alloc] init];
-            NSOrderedSet *bookInCategory = [self.picturebookShop getBooksForCategory:self.selectedPicturebookCategory];
-            for (int i = indexPath.row * NUM_OF_COVERS_IN_ROW_PORTRAIT; (i < (indexPath.row * NUM_OF_COVERS_IN_ROW_PORTRAIT + NUM_OF_COVERS_IN_ROW_PORTRAIT)) && i < bookInCategory.count; i++) {
-                [rowPbInfos addObject:[bookInCategory objectAtIndex:i]];
+                        
+            NSOrderedSet *booksInCat = [self.picturebookShop getBooksForSelectedCategory];
+            
+            NSLog(@"Books in selected category:");
+            for (Book *book in booksInCat) {
+                NSLog(@"Book title = %@", book.title);
             }
-                
-            cell = [[CoverTableRowCell alloc] initWithFrame:CGRectZero 
-                                    withNumberOfCoversInRow:NUM_OF_COVERS_IN_ROW_PORTRAIT
-                                                withWidthOf:tableView.bounds.size.width 
-                               desiredDistanceBetweenCovers:20 
-                                       andPictureBookCovers:rowPbInfos 
-                                                 withTarget:self 
-                                                 withAction:@selector(shopItemTapped:)];
             
-            if (tableView.rowHeight != cell.cellHeight) {
-                tableView.rowHeight = cell.cellHeight;
-                [tableView reloadData];
-            }      
-            
-            /*
-            NSMutableOrderedSet *rowCovers = [[NSMutableOrderedSet alloc] init];
-            NSOrderedSet *bookCoversInCategory = [self.picturebookShop getBooksCoversForCategory:self.selectedPicturebookCategory];
-            for (int i = indexPath.row * NUM_OF_COVERS_IN_ROW_PORTRAIT; (i < (indexPath.row * NUM_OF_COVERS_IN_ROW_PORTRAIT + NUM_OF_COVERS_IN_ROW_PORTRAIT)) && i < bookCoversInCategory.count; i++) {
-                [rowCovers addObject:[bookCoversInCategory objectAtIndex:i]];
+            NSMutableOrderedSet *booksInRow = [[NSMutableOrderedSet alloc] init];
+           
+            for (int i = indexPath.row * NUM_OF_COVERS_IN_ROW_PORTRAIT; (i < (indexPath.row * NUM_OF_COVERS_IN_ROW_PORTRAIT + NUM_OF_COVERS_IN_ROW_PORTRAIT)) && i < booksInCat.count; i++) {
+                [booksInRow addObject:[booksInCat objectAtIndex:i]];
             }
             
             cell = [[CoverTableRowCell alloc] initWithFrame:CGRectZero 
                                     withNumberOfCoversInRow:NUM_OF_COVERS_IN_ROW_PORTRAIT
                                                 withWidthOf:tableView.bounds.size.width 
                                desiredDistanceBetweenCovers:20 
-                                       andPictureBookCovers:rowCovers 
+                                                   forBooks:booksInRow 
                                                  withTarget:self 
                                                  withAction:@selector(shopItemTapped:)];
             
             if (tableView.rowHeight != cell.cellHeight) {
                 tableView.rowHeight = cell.cellHeight;
                 [tableView reloadData];
-            }*/
+            }
         }
         return cell;
     }	

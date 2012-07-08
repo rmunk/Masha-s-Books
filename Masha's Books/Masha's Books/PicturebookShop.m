@@ -404,6 +404,10 @@
     }
 }
 
+- (NSOrderedSet *)getBooksForSelectedCategory {
+    return [Book getBooksForCategory:self.selectedCategory inContext:self.libraryDatabase.managedObjectContext];
+}
+
 - (void)shopDataLoaded {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"PicturebookShopFinishedLoading" object:nil];
 }

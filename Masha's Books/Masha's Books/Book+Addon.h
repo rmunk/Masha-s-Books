@@ -25,6 +25,7 @@
 + (void)loadCoversFromURL:(NSString *)coverUrlString forShop:(PicturebookShop *)shop;
 + (void)updateBook:(Book *)book withAttributes:(NSDictionary *)attributes;
 + (NSArray *)getAllBooksFromContext:(NSManagedObjectContext *)context;
++ (NSOrderedSet *)getBooksForCategory:(Category *)category inContext:(NSManagedObjectContext *)context;
 
 - (void)fillBookElement:(NSString *)element withDescription:(NSString *)description;
 - (Book *)refreshBook:(Book *)book withNewAttributes:(NSDictionary *)attributes inContext:(NSManagedObjectContext *)context;

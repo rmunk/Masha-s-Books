@@ -13,6 +13,7 @@
 #import "PicturebookAuthor.h"
 #import "PicturebookCover.h"
 #import "CoverTableRowCell.h"
+#import "Book.h"
 
 
 @interface PicturebookShopViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>

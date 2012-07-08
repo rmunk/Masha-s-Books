@@ -27,6 +27,8 @@
     }
     else if (categoryWithID.count == 1) {
         Category *category = [categoryWithID lastObject];
+        NSLog(@"Category with ID=%d already exists in database. Updating...", [category.categoryID intValue]);
+
         
         if (![category.categoryID isEqualToNumber:[NSNumber numberWithInt:[[attributes objectForKey:@"ID"] integerValue]]]) {
             category.categoryID = [NSNumber numberWithInt:[[attributes objectForKey:@"ID"] integerValue]];

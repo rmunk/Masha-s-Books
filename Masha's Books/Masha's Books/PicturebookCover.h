@@ -8,14 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "PicturebookInfo.h"
+#import "Book.h"
 
 @interface PicturebookCover : UIButton
 
 @property (nonatomic, strong) PicturebookInfo *pbInfo;
 @property (nonatomic, strong) NSNumber *bookID;
 @property (nonatomic, strong) UIImage *bookCoverThumbnail;
+@property (nonatomic, weak) Book *bookForCover;
 
 - (id)initWithFrame:(CGRect)frame AndPicturebookInfo:(PicturebookInfo *)info;
+- (id)initWithFrame:(CGRect)frame andBook:(Book *)book;
 - (id)initWithFrame:(CGRect)frame bookID:(NSNumber *)pbID andBookCoverThumbnail:(UIImage *)pbCoverThumbnail;
 
 @end

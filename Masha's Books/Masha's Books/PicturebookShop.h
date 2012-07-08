@@ -52,6 +52,7 @@
 - (NSOrderedSet *)getBooksForCategory:(PicturebookCategory *)pbCategory;
 - (NSOrderedSet *)getBooksCoversForCategory:(PicturebookCategory *)pbCategory;
 - (void)userSelectsCategoryAtIndex:(NSUInteger)index;
+- (NSOrderedSet *)getBooksForSelectedCategory;
 
 
 @end
