@@ -113,49 +113,13 @@
             }
             [dnc removeObserver:self.delegate name:NSManagedObjectContextDidSaveNotification object:addingContext];
 
-//            if (self.success)
-//                [self.book insertPages:pages atIndexes:pagesIndexSet];
-
         dispatch_async(dispatch_get_main_queue(), ^{
-//            [self.delegate bookExtractor:self didFinishExtractingWithgSuccess:self.success];
+            [self.delegate bookExtractor:self didFinishExtractingWithgSuccess:self.success];
         });
         }
      
     });
     dispatch_release(zipQueue);
-}
-
-- (void)zipArchiveDidUnzipArchiveAtPath:(NSString *)path zipInfo:(unz_global_info)zipInfo unzippedPath:(NSString *)unzippedPath
-{
-//    NSLog(@"Zip delegate");
-//    NSFileManager *fileManager = [NSFileManager defaultManager];
-//    NSError *error;
-//    NSArray *dirContents = [fileManager contentsOfDirectoryAtPath:unzippedPath error:&error];       
-//    if (error) {
-//        NSLog(@"Error reading %@ (%@)!", unzippedPath.lastPathComponent, error.description);
-//        self.success = FALSE;
-//        return;
-//    }
-//    
-//    NSPredicate *flter = [NSPredicate predicateWithFormat:@"self BEGINSWITH 'page'"];        
-//    NSArray *pageFiles = [[dirContents filteredArrayUsingPredicate:flter] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-//    
-//    self.book.coverImage.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingString:@"/title.jpg"]];
-//
-//    int pageNumber = 1;
-//    for (NSString *pageFile in pageFiles) {
-//        NSManagedObjectContext *context = [self.book managedObjectContext];
-//        Page *page = [NSEntityDescription insertNewObjectForEntityForName:@"Page" inManagedObjectContext:context];
-//        page.pageNumber = [NSNumber numberWithInt:pageNumber];
-//        page.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingPathComponent:pageFile]];
-//        page.text = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/text%03d.png",pageNumber]];
-//        page.voiceOver = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/voice%03d.m4a",pageNumber]];
-//        page.sound = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/sound%03d.m4a",pageNumber]];
-//        [self.book insertObject:page inPagesAtIndex:pageNumber-1];
-//        pageNumber++;
-//    }
-//    NSOrderedSet *bla = self.book.pages;
-//    ;
 }
 
 @end

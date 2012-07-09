@@ -337,6 +337,5 @@
 	[self.libraryDatabase.managedObjectContext mergeChangesFromContextDidSaveNotification:pagesAddedNotification];	
 }
 
-
 @end
 

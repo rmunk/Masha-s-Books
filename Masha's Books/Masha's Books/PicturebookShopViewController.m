@@ -7,7 +7,6 @@
 //
 
 #import "PicturebookShopViewController.h"
-#import "BookExtractor.h"
 #define CATEGORY_TABLEVIEW_TAG 1
 #define COVERS_TABLEVIEW_TAG 2
 #define NUM_OF_COVERS_IN_ROW_PORTRAIT 4
@@ -274,6 +273,5 @@
         
     }
 }
-
 
 @end

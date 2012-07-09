@@ -29,7 +29,5 @@
 
 - (void)fillBookElement:(NSString *)element withDescription:(NSString *)description;
 - (void)pickYourCategoriesFromLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context;
-- (void)pickYourCoversFromURL:(NSURL *)coverUrl;
 - (void)downloadBookZipFileforShop:(PicturebookShop *)shop;
-
 @end

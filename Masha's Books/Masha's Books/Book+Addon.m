@@ -145,9 +145,9 @@
                  
             dispatch_async(dispatch_get_main_queue(), ^{                    
                 if (coverThumbnailUImage) {                                    
-//                    coverImage.image = coverUImage;                        
+                    //coverImage.image = coverUImage;                        
                     book.coverThumbnailImage = coverThumbnailUImage;
-//                    book.coverImage = coverImage;
+                    //book.coverImage = coverImage;
                     
                     //[self shopDataLoaded];
                     if (shop.numberOfBooksWhinchNeedCoversDownloaded > 1) {
@@ -275,12 +275,6 @@
             NSLog(@"ERROR: No entries for category ID = %d in database! Linker error.", [catID intValue]);
         }                  
     }
-}
-
-
-
-- (void)pickYourCoversFromURL:(NSURL *)coverUrl; {
-    #warning Implement!    
 }
 
 - (void)downloadBookZipFileforShop:(PicturebookShop *)shop

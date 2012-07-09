@@ -18,6 +18,7 @@
 #import "Category+Addon.h"
 #import "Author+Addon.h"
 #import "CategoryToBookMap.h"
+#import "BookExtractor.h"
 
 #define PICTUREBOOK_SHOP_DEBUG_LOGS 1
 
@@ -33,7 +34,7 @@
 
 #endif
 
-@interface PicturebookShop : NSObject <NSXMLParserDelegate>
+@interface PicturebookShop : NSObject <NSXMLParserDelegate, BookExtractorDelegate>
 
 @property (nonatomic, strong) NSURL *urlBase;
 @property (readwrite) BOOL isShopLoaded;
