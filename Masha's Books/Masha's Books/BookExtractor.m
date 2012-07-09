@@ -65,12 +65,9 @@
             
             
             // Fill database with extracted data
-        NSMutableArray *pages = [[NSMutableArray alloc] init];
-        NSMutableIndexSet *pagesIndexSet = [[NSMutableIndexSet alloc] init];
             NSString *unzippedPath = newDir;
             NSFileManager *fileManager = [NSFileManager defaultManager];
             
-//        NSError *error;
             NSArray *dirContents = [fileManager contentsOfDirectoryAtPath:unzippedPath error:&error];       
             if (error) {
                 NSLog(@"Error reading %@ (%@)!", unzippedPath.lastPathComponent, error.description);
@@ -95,8 +92,6 @@
                     page.voiceOver = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/voice%03d.m4a",pageNumber]];
                     page.sound = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/sound%03d.m4a",pageNumber]];
                     
-                    [pages addObject:page];
-                    [pagesIndexSet addIndex:pageNumber-1];
                     [self.book insertObject:page inPagesAtIndex:pageNumber-1];
                     pageNumber++;
                 }      
@@ -113,11 +108,11 @@
             }
             [dnc removeObserver:self.delegate name:NSManagedObjectContextDidSaveNotification object:addingContext];
 
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.delegate bookExtractor:self didFinishExtractingWithgSuccess:self.success];
-        });
-        }
-     
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if ([self.delegate respondsToSelector:@selector(bookExtractor:didFinishExtractingWithgSuccess:)])
+                    [self.delegate bookExtractor:self didFinishExtractingWithgSuccess:self.success];
+            });
+        }     
     });
     dispatch_release(zipQueue);
 }

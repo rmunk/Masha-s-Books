@@ -15,7 +15,8 @@
 
 @class BookExtractor;
 
-@protocol BookExtractorDelegate
+@protocol BookExtractorDelegate <NSObject>
+@optional
 - (void)bookExtractor:(BookExtractor *)extractor didFinishExtractingWithgSuccess:(BOOL)success;
 @end
 
@@ -23,7 +24,6 @@
 
 @property (nonatomic, strong) Book *book;
 @property (nonatomic, strong) id<BookExtractorDelegate> delegate;
-
 - (void)extractBookFromFile:(NSString *)zipFile;
 
 @end
