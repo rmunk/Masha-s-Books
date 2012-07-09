@@ -11,7 +11,7 @@
 
 @interface PicturebookCover : UIButton
 
-@property (nonatomic, weak) Book *bookForCover;
+@property (nonatomic, strong) Book *bookForCover;
 
 - (id)initWithFrame:(CGRect)frame andBook:(Book *)book;
 

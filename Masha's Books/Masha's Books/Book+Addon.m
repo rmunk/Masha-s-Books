@@ -158,13 +158,10 @@
                         NSLog(@"Images downloaded!!!!!!!!!!!!!!!!!!!!!!!");
                         [shop coversLoaded];
                     }
-                        
                 }
             });   
-                
         });
         dispatch_release(downloadQueue);
-        
     } 
 }
 
@@ -255,15 +252,6 @@
     else if ([element isEqualToString:@"DescriptionLongHTML"]) {
         self.descriptionLongHTML = description;
     }
-}
-
-- (Book *)refreshBook:(Book *)book withNewAttributes:(NSDictionary *)attributes inContext:(NSManagedObjectContext *)context {
-    return book;
-    #warning Implement!
-    
-}
-- (void)refreshBook:(Book *)book withNewDescription:(NSString *)description forElement:(NSString *)element {
-    #warning Implement!
 }
 
 - (void)pickYourCategoriesFromLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context {

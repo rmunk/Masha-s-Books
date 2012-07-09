@@ -51,12 +51,6 @@
     self.shopURL = [[NSURL alloc] initWithString:@"http://www.mashasbooks.com/storeops/bookstore-xml.aspx"];
     //_shopURL = [[NSURL alloc] initWithString:@"http://dl.dropbox.com/u/286270/PicturebookShop.xml"];
     
-    self.xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:self.shopURL];
-    if (self.xmlParser) {
-        PBDLOG_ARG(@"Picturebook shop found at %@", self.shopURL.description);
-    }
-    [self.xmlParser setDelegate:self];
-    
     // Init library database UIManagedDocument
     if (!self.libraryDatabase) {
         NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
@@ -66,6 +60,7 @@
     
     self.currentElementValue = [[NSString alloc] init];
     self.categoryToBookMap = [[CategoryToBookMap alloc] init];
+    self.selectedBook = nil;
     self.numberOfBooksWhinchNeedCoversDownloaded = 0;
     
     self.df = [[NSDateFormatter alloc] init];
@@ -97,7 +92,9 @@
         }];
     } else if (self.libraryDatabase.documentState == UIDocumentStateNormal) {
         NSLog(@"Database at %@ is opened and ready for use.", self.libraryDatabase.fileURL);
-        [self loadShopFromDatabase];
+        //[self loadShopFromDatabase];
+        self.isShopLoaded = YES;
+        [self shopDataLoaded];
     }
 }
 
@@ -139,9 +136,9 @@
     }
     [self.xmlParser setDelegate:self];
     
-    BOOL parsingSuccesfulll = [self.xmlParser parse];
+    BOOL parsingSuccesfull = [self.xmlParser parse];
     
-    if (parsingSuccesfulll == YES) 
+    if (parsingSuccesfull == YES) 
         self.isShopLoaded = YES;
     else 
         [self shopErrorLoading];
@@ -210,6 +207,7 @@
 }
 
 - (void)shopDataLoaded {
+    NSLog(@"Persistent store size: %llu bytes", [self directorySizeAtPath:[self.libraryDatabase.fileURL path]]);
     [[NSNotificationCenter defaultCenter] postNotificationName:@"PicturebookShopFinishedLoading" object:nil];
 }
 
@@ -325,7 +323,7 @@
                 NSLog(@"Library database saved!");                
         }];
         
-        NSLog(@"Persistent store size: %llu bytes", [self directorySizeAtPath:[self.libraryDatabase.fileURL path]]);
+        //NSLog(@"Persistent store size: %llu bytes", [self directorySizeAtPath:[self.libraryDatabase.fileURL path]]);
         
         
         
