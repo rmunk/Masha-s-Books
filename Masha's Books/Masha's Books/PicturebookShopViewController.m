@@ -67,7 +67,7 @@
     //[self.picturebookShop refreshDatabase];
     Book *bookJustBought = [self.picturebookShop getSelectedBook];
     [bookJustBought downloadBookZipFileforShop:self.picturebookShop];
-    PBDLOG_ARG(@"Picture book %@ bought!", bookJustBought.title);
+//    PBDLOG_ARG(@"Picture book %@ bought!", bookJustBought.title);
     bookJustBought.downloaded = [NSNumber numberWithInt:1];
     
 }

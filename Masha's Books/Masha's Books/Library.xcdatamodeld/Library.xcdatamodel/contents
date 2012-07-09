@@ -37,7 +37,7 @@
     </entity>
     <entity name="Image" representedClassName="Image" syncable="YES">
         <attribute name="image" optional="YES" attributeType="Transformable" valueTransformerName="UIImageToDataTransformer" syncable="YES"/>
-        <relationship name="book" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Book" inverseName="coverImage" inverseEntity="Book" syncable="YES"/>
+        <relationship name="book" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Book" inverseName="coverImage" inverseEntity="Book" syncable="YES"/>
     </entity>
     <entity name="Page" representedClassName="Page" syncable="YES">
         <attribute name="image" optional="YES" attributeType="Transformable" valueTransformerName="UIImageToDataTransformer" syncable="YES"/>
@@ -45,7 +45,7 @@
         <attribute name="sound" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="text" optional="YES" attributeType="Transformable" valueTransformerName="UIImageToDataTransformer" syncable="YES"/>
         <attribute name="voiceOver" optional="YES" attributeType="Binary" syncable="YES"/>
-        <relationship name="book" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Book" inverseName="pages" inverseEntity="Book" syncable="YES"/>
+        <relationship name="book" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Book" inverseName="pages" inverseEntity="Book" syncable="YES"/>
     </entity>
     <fetchRequest name="DownloadedBooks" entity="Book" predicateString="downloaded == 1"/>
     <elements>

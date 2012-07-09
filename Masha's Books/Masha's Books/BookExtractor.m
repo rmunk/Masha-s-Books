@@ -75,13 +75,21 @@
             }
             else
             {
+                for (Page *pageToDelete in self.book.pages)
+                    [addingContext deleteObject:pageToDelete];
+                
                 NSPredicate *flter = [NSPredicate predicateWithFormat:@"self BEGINSWITH 'page'"];        
                 NSArray *pageFiles = [[dirContents filteredArrayUsingPredicate:flter] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
                 
-                Image *coverImage = [NSEntityDescription insertNewObjectForEntityForName:@"Image" inManagedObjectContext:addingContext];
-                coverImage.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingString:@"/title.jpg"]];
-                self.book.coverImage = coverImage;
-                self.book.downloadDate = [NSDate date]; 
+                if (!self.book.coverImage){
+                    Image *coverImage = [NSEntityDescription insertNewObjectForEntityForName:@"Image" inManagedObjectContext:addingContext];
+                    coverImage.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingString:@"/title.jpg"]];
+                    self.book.coverImage = coverImage;
+                }
+                else 
+                    self.book.coverImage.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingString:@"/title.jpg"]];
+                self.book.downloadDate = [NSDate date];
+                self.book.downloaded = [NSNumber numberWithInt:1];
                 int pageNumber = 1;
                 for (NSString *pageFile in pageFiles) {
                     NSManagedObjectContext *context = [self.book managedObjectContext];

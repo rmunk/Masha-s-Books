@@ -48,7 +48,7 @@
         
         book.active = [attributes objectForKey:@"Active"];
         
-        //book.downloaded = [NSNumber numberWithInt:1];
+        book.downloaded = [NSNumber numberWithInt:0];
         
         return book;
     }

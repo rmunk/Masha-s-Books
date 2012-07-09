@@ -335,6 +335,7 @@
 - (void)bookExtractorDidAddPagesToBook:(NSNotification*)pagesAddedNotification 
 {
 	[self.libraryDatabase.managedObjectContext mergeChangesFromContextDidSaveNotification:pagesAddedNotification];	
+    NSLog(@"Extracted book pages saved to database.");
 }
 
 @end
