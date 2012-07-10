@@ -190,7 +190,7 @@
         return;
     }
     
-    UIStoryboard *slikovnicaStoryboard = [UIStoryboard storyboardWithName:@"SlikovnicaStoryboard" bundle:nil];
+    UIStoryboard *slikovnicaStoryboard = [UIStoryboard storyboardWithName:@"PicturebookStoryboard" bundle:nil];
     SlikovnicaRootViewController *initialVC = [slikovnicaStoryboard instantiateInitialViewController];
     initialVC.modelController.book = selectedBook;
     initialVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;

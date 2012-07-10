@@ -13,7 +13,8 @@
 
 @interface SlikovnicaModelController : NSObject <UIPageViewControllerDataSource>
 
-@property Book *book;
+@property (strong, nonatomic) Book *book;
+@property (nonatomic) BOOL textVisibility;
 
 - (SlikovnicaDataViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard;
 - (NSUInteger)indexOfViewController:(SlikovnicaDataViewController *)viewController;
