@@ -19,6 +19,7 @@
 @implementation SlikovnicaModelController
 
 @synthesize book = _book;
+@synthesize textVisibility = _textVisibility;
 
 - (id)init
 {
@@ -38,7 +39,7 @@
     // Create a new view controller and pass suitable data.
     SlikovnicaDataViewController *dataViewController = [storyboard instantiateViewControllerWithIdentifier:@"SlikovnicaDataViewController"];
     dataViewController.page = [self.book.pages objectAtIndex:index];
-    
+    dataViewController.textVisibility = self.textVisibility;
     return dataViewController;
 }
 

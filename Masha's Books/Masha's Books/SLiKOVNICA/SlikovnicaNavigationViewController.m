@@ -21,6 +21,8 @@
 @synthesize pageImages = _pageImages;
 @synthesize currentPage = _currentPage;
 @synthesize delegate = _delegate;
+@synthesize textVisibility = _textVisibility;
+@synthesize voiceOverPlay = _voiceOverPlay;
 
 - (void)setCurrentPage:(NSInteger)currentPage
 {
@@ -37,6 +39,38 @@
     [self presentModalViewController:initialSettingsVC animated:YES];
 }
 
+- (IBAction)turnVoiceOnOff:(UIBarButtonItem *)sender 
+{
+    if (self.voiceOverPlay) {
+        self.voiceOverPlay = FALSE;
+        sender.style = UIBarButtonItemStyleBordered;
+        sender.title = @"Voice OFF";
+    }
+    else {
+        self.voiceOverPlay = TRUE;
+        sender.style = UIBarButtonItemStyleDone;
+        sender.title = @"Voice ON";
+    }
+    if ([self.delegate respondsToSelector:@selector(navigationController:SetVoiceoverPlay:)])
+        [self.delegate navigationController:self SetVoiceoverPlay:self.voiceOverPlay];
+}
+
+- (IBAction)turnTextOnOff:(UIBarButtonItem *)sender 
+{
+    if (self.textVisibility) {
+        self.textVisibility = FALSE;
+        sender.style = UIBarButtonItemStyleBordered;
+        sender.title = @"Text OFF";
+    }
+    else {
+        self.textVisibility = TRUE;
+        sender.style = UIBarButtonItemStyleDone;
+        sender.title = @"Text ON";
+    }
+    if ([self.delegate respondsToSelector:@selector(navigationController:SetTextVisibility:)])
+        [self.delegate navigationController:self SetTextVisibility:self.textVisibility];
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -44,11 +78,11 @@
     NSInteger pageCount = self.pageImages.count;
     
     for (NSInteger i = 0; i < pageCount; ++i) {
-        CGRect frame = CGRectMake(0, 0, self.scrollView.bounds.size.height * 1.33, self.scrollView.bounds.size.height);
+        CGRect frame = CGRectMake(0, 0, self.scrollView.bounds.size.height * 1.2, self.scrollView.bounds.size.height);
         self.scrollView.contentSize = CGSizeMake(frame.size.width * pageCount, frame.size.height);
         frame.origin.x = frame.size.width * i;
         frame.origin.y = 0.0f;
-        frame = CGRectInset(frame, 10.0f, 10.0f);
+        frame = CGRectInset(frame, 0.0f, 10.0f);
         
         UIImageView *newPageView = [[UIImageView alloc] initWithImage:[self.pageImages objectAtIndex:i]];
         newPageView.tag = i;
@@ -56,14 +90,19 @@
         newPageView.frame = frame;
         newPageView.userInteractionEnabled = YES;
         newPageView.alpha = 1;
+        newPageView.opaque = TRUE;
         [newPageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userTappedImage:)]];
-        
+        if (i == self.currentPage)
+        {
+            // Dodaj okvir oko te slike
+        }
         [self.scrollView addSubview:newPageView];
     }        
 }
+
 - (IBAction)tapReturn:(UITapGestureRecognizer *)sender 
 {
-    [self.delegate NavigationController:self DidChoosePage:-1];
+    [self.delegate navigationController:self DidChoosePage:-1];
 }
 
 - (void)viewDidUnload
@@ -79,7 +118,7 @@
 {
     UIView *page = sender.view;
     NSLog(@"Skip to Page %d", page.tag);
-    [self.delegate NavigationController:self DidChoosePage:page.tag];
+    [self.delegate navigationController:self DidChoosePage:page.tag];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

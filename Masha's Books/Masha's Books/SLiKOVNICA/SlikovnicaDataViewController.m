@@ -11,27 +11,31 @@
 #import "SlikovnicaModelController.h"
 
 @interface SlikovnicaDataViewController () <AVAudioPlayerDelegate>
-@property (strong, nonatomic) IBOutlet UIImageView *dataImage;
+@property (strong, nonatomic) IBOutlet UIImageView *pageImage;
+@property (weak, nonatomic) IBOutlet UIImageView *textImage;
 @end
 
 @implementation SlikovnicaDataViewController
 @synthesize page = _page;
-@synthesize dataImage = _dataImage;
+@synthesize textVisibility = _textVisibility;
+@synthesize pageImage = _pageImage;
+@synthesize textImage = _textImage;
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"Page %d", [self.page.pageNumber intValue]];
+    return [NSString stringWithFormat:@"Page %@", self.page.pageNumber];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSLog(self.description);
+    NSLog(@"%@", self.description);
 }
 
 - (void)viewDidUnload
 {
-    [self setDataImage:nil];
+    [self setPageImage:nil];
+    [self setTextImage:nil];
     [super viewDidUnload];
 }
 
@@ -40,7 +44,9 @@
     [super viewWillAppear:animated];
     if(self.page)
     {
-        self.dataImage.image = self.page.image;
+        self.pageImage.image = self.page.image;
+        if (self.textVisibility)
+            self.textImage.image = self.page.text;
     }
 }
 

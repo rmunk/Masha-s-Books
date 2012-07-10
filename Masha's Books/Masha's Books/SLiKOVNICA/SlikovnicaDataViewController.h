@@ -12,4 +12,5 @@
 
 @interface SlikovnicaDataViewController : UIViewController
 @property (nonatomic, strong) Page *page;
+@property (nonatomic) BOOL textVisibility;
 @end

@@ -8,10 +8,15 @@
 
 #import <UIKit/UIKit.h>
 @class SlikovnicaNavigationViewController;
+@class SlikovnicaModelController;
 
 @protocol SlikovnicaNavigationViewControllerDelegate <NSObject>
 
-- (void)NavigationController:(SlikovnicaNavigationViewController *)sender DidChoosePage:(NSInteger)page;
+- (void)navigationController:(SlikovnicaNavigationViewController *)sender DidChoosePage:(NSInteger)page;
+
+@optional
+- (void)navigationController:(SlikovnicaNavigationViewController *)sender SetTextVisibility:(BOOL)textVisibility;
+- (void)navigationController:(SlikovnicaNavigationViewController *)sender SetVoiceoverPlay:(BOOL)voiceOverPlay;
 
 @end
 
@@ -20,6 +25,8 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *bookNameLabel;
 @property (nonatomic, copy) NSArray *pageImages;
 @property (nonatomic) NSInteger currentPage;
+@property (nonatomic) BOOL textVisibility;
+@property (nonatomic) BOOL voiceOverPlay;
 @property id<SlikovnicaNavigationViewControllerDelegate> delegate;
 
 @end

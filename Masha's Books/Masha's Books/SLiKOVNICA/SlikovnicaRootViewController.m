@@ -79,7 +79,7 @@
     [self.audioPlayer play];
 }
 
-- (void)NavigationController:(SlikovnicaNavigationViewController *)sender DidChoosePage:(NSInteger)page
+- (void)navigationController:(SlikovnicaNavigationViewController *)sender DidChoosePage:(NSInteger)page
 {
     if (page >= 0) {
         SlikovnicaDataViewController *nextViewController = [self.modelController viewControllerAtIndex:(page) storyboard:self.storyboard];
@@ -109,11 +109,20 @@
     self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
 }
 
+- (void)navigationController:(SlikovnicaNavigationViewController *)sender SetTextVisibility:(BOOL)textVisibility
+{
+    self.modelController.textVisibility = textVisibility;
+    SlikovnicaDataViewController *currentViewController = [self.pageViewController.viewControllers objectAtIndex:0];
+    [self.pageViewController setViewControllers:[NSArray arrayWithObject:[self.modelController viewControllerAtIndex:currentViewController.page.pageNumber.intValue - 1 storyboard:currentViewController.storyboard]] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+}
+
 - (IBAction)userTappedForNavigation:(UITapGestureRecognizer *)sender 
 {
     [self.audioPlayer pause];
     SlikovnicaDataViewController *currentViewController = [self.pageViewController.viewControllers objectAtIndex:0];
     self.slikovnicaNavigationViewController.currentPage = [currentViewController.page.pageNumber intValue];
+    self.slikovnicaNavigationViewController.bookNameLabel.title = self.modelController.book.title;
+    self.slikovnicaNavigationViewController.textVisibility = self.modelController.textVisibility;
     [self.view bringSubviewToFront:self.slikovnicaNavigationViewController.view];
     self.view.gestureRecognizers = NULL;
 }
