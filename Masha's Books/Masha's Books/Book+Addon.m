@@ -282,18 +282,21 @@
     NSURL *zipURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.mashasbooks.com%@",self.downloadURL]];
     NSString *file = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"tmp/%@",self.downloadURL.lastPathComponent]];
     
+    BookExtractor *bookExtractor = [[BookExtractor alloc] initExtractorWithUrl:zipURL];
         
     NSLog(@"Downloading zip file for book %@.", self.title);
 
     dispatch_queue_t downloadZipQueue = dispatch_queue_create("zip download", NULL);
     dispatch_async(downloadZipQueue, ^{
         
+        [bookExtractor downloadBookZipFile];
+       
         NSData *zipFile = [NSData dataWithContentsOfURL:zipURL];
         [zipFile writeToFile:file atomically:YES];       
         NSLog(@"Downloading file completed.");
         
         dispatch_async(dispatch_get_main_queue(), ^{                    
-            BookExtractor *bookExtractor = [[BookExtractor alloc] init];
+            
             bookExtractor.delegate = shop;
             bookExtractor.book = self;
             [bookExtractor extractBookFromFile:file];
@@ -303,5 +306,14 @@
     dispatch_release(downloadZipQueue);
 }
 
+/*
+-(void) connection:(NSURLConnection *)connection didReceiveData:(NSData *)data forFile:(NSData *)zipFile {
+    
+    float recievedData = [self.downloaded floatValue];
+    self.downloaded = [NSNumber numberWithFloat:((float)recievedData / (float) expectedTotalSize)];
+    recievedData += data.length;
+
+}
+*/
 
 @end

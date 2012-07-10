@@ -20,18 +20,28 @@
         _bookForCover = book;
         
         CGRect progFrame = CGRectMake(0, frame.size.height * 0.9, frame.size.width, 10);
-        CGRect statusImageFrame = CGRectMake(frame.size.height * 0.9, frame.size.height * 0.1, 20, 20);
+        
         NSString *imageName = [[NSBundle mainBundle] pathForResource:@"green_check" ofType:@"png"];
         UIImage *imageObj = [[UIImage alloc] initWithContentsOfFile:imageName];
         _taskProgress = [[UIProgressView alloc] initWithFrame:progFrame];
-        _bookStatus = [[UIImageView alloc] initWithFrame:statusImageFrame];
-        _bookStatus.image = imageObj;
-        _bookStatus.alpha = 0;
+        
+        
+        
         _taskProgress.alpha = 0;
         [self addSubview:_taskProgress];
-        [self addSubview:_bookStatus];
-        NSLog(@"Cover for book %@ initialized", book.title);
         
+        
+        NSLog(@"Book %@.downloaded = %d", book.title, [book.downloaded intValue]);
+        if ([book.downloaded isEqualToNumber:[NSNumber numberWithInt:1]]) {
+
+            CGRect statusImageFrame = CGRectMake(frame.size.height * 0.9, frame.size.height * 0.1, 20, 20);
+            _bookStatus = [[UIImageView alloc] initWithFrame:statusImageFrame];
+            _bookStatus.image = imageObj;
+            _bookStatus.alpha = 1;
+            [self addSubview:_bookStatus];
+             
+        }
+       
     }
     
     return self;

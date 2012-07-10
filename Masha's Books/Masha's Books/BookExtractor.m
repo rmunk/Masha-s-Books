@@ -10,15 +10,37 @@
 
 @interface BookExtractor()<SSZipArchiveDelegate>
 @property BOOL success;
+@property (nonatomic, strong) NSURLRequest *downloadRequest;
+@property (nonatomic, strong) NSURLConnection *downloadConnection;
 @end
 
 @implementation BookExtractor
 @synthesize delegate = _delegate;
 @synthesize book = _book;
 @synthesize success = _success;
+@synthesize downloadRequest = _downloadRequest;
+@synthesize downloadConnection = _downloadConnection;
+
+@synthesize expectedZipSize = _expectedZipSize;
+@synthesize downloadedZipData = _downloadedZipData;
+
+- (BookExtractor *)initExtractorWithUrl:(NSURL *)zipURL {
+    self = [super init];
+    if (self) {
+        self.downloadRequest = [[NSURLRequest alloc] initWithURL:zipURL cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10];
+        self.downloadConnection = [[NSURLConnection alloc] initWithRequest:self.downloadRequest delegate:self];
+    }
+    return self;
+}
+
 
 - (void)populateBookWithPages
 {
+}
+
+- (void)downloadBookZipFile {
+    [self.downloadConnection start];
+   // NSLog(@"Expected size %lld", self.downloadConnection.);
 }
 
 - (void)extractBookFromFile:(NSString *)zipFile
@@ -123,6 +145,16 @@
         }     
     });
     dispatch_release(zipQueue);
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    [self.downloadedZipData appendData:data];
+    
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+    self.expectedZipSize = [response expectedContentLength];
+ //   NSLog(@"Expected size %lld", self.expectedZipSize);
 }
 
 @end

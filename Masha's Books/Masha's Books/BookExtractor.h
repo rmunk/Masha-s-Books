@@ -20,10 +20,14 @@
 - (void)bookExtractor:(BookExtractor *)extractor didFinishExtractingWithgSuccess:(BOOL)success;
 @end
 
-@interface BookExtractor : NSObject
+@interface BookExtractor : NSObject <NSURLConnectionDataDelegate>
 
 @property (nonatomic, strong) Book *book;
 @property (nonatomic, strong) id<BookExtractorDelegate> delegate;
+@property long long expectedZipSize;
+@property (nonatomic, strong) NSMutableData *downloadedZipData;
+- (BookExtractor *)initExtractorWithUrl:(NSURL *)zipURL;
 - (void)extractBookFromFile:(NSString *)zipFile;
+- (void)downloadBookZipFile;
 
 @end
