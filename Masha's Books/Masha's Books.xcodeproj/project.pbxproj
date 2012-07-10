@@ -846,6 +846,7 @@
 				C072881A15784A6100B64A68 /* Title@2x.png in Resources */,
 				C093EB5A159E87CA00035D20 /* LICENSE in Resources */,
 				C090C3FD15A13146001246FF /* izgubljene_papuce.zip in Resources */,
+				C0BE86CA15AB837200D03B80 /* PicturebookStoryboard.storyboard in Resources */,
 				BAC1FD5B15AB898B00F97489 /* green_check.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
