@@ -31,16 +31,14 @@
         for (int i = 0; i < numOfExistingCovers; i++) {
             CGRect frame = CGRectMake(((distance + ld) * i + distance), distance, ld, ld);
             
-            //NSNumber *bookID = ((Book *)[books objectAtIndex:i]).bookID;
             UIImage *bookCoverImage = ((Book *)[books objectAtIndex:i]).coverThumbnailImage;
     
-            //PicturebookCover *pbCover = [[PicturebookCover alloc] initWithFrame:frame AndPicturebookInfo:pbInfo];
             PicturebookCover *pbCover = [[PicturebookCover alloc] initWithFrame:frame 
                                                                         andBook:[books objectAtIndex:i]];
                                          
             [pbCover setImage:bookCoverImage forState:UIControlStateNormal];
             [pbCover addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
-            //iView1.titleLabel.text = pbInfo.title;
+            
             [self.contentView addSubview:pbCover];
             pbCover.contentMode = UIViewContentModeScaleAspectFit;
             

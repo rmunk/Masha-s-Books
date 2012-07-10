@@ -109,6 +109,9 @@
     [self.selectedCoverTumbnailView setContentMode:UIViewContentModeScaleAspectFit];
     //[self.shopWebView reload];
     self.buyButton.hidden = FALSE;
+    sender.taskProgress.alpha = 1;
+    sender.taskProgress.progress = 0.3;
+    sender.bookStatus.alpha = 1;
 }
 
 - (void)viewDidLoad
