@@ -24,25 +24,27 @@
         
         NSString *imageName = [[NSBundle mainBundle] pathForResource:@"green_check" ofType:@"png"];
         UIImage *imageObj = [[UIImage alloc] initWithContentsOfFile:imageName];
+        
+        CGRect statusImageFrame = CGRectMake(frame.size.height * 0.9, frame.size.height * 0.1, 20, 20);
+        _bookStatus = [[UIImageView alloc] initWithFrame:statusImageFrame];
+        
         _taskProgress = [[UIProgressView alloc] initWithFrame:progFrame];
      //   _bookExtractionActivityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:frame];
         _taskProgress.progress = 0;
-        _taskProgress.alpha = 0;
-        _bookStatus.alpha = 0;
+        _taskProgress.alpha = 0;        
         [self addSubview:_taskProgress];
+        
+        
+        _bookStatus.image = imageObj;        
+        _bookStatus.alpha = 0;
+        [self addSubview:_bookStatus];
       //  [self addSubview:_bookExtractionActivityIndicator];
         //[_bookExtractionActivityIndicator startAnimating];
         
         
         NSLog(@"Book %@.downloaded = %d", book.title, [book.downloaded intValue]);
         if ([book.downloaded isEqualToNumber:[NSNumber numberWithInt:1]]) {
-
-            CGRect statusImageFrame = CGRectMake(frame.size.height * 0.9, frame.size.height * 0.1, 20, 20);
-            _bookStatus = [[UIImageView alloc] initWithFrame:statusImageFrame];
-            _bookStatus.image = imageObj;
-            _bookStatus.alpha = 1;
-            [self addSubview:_bookStatus];
-             
+            _bookStatus.alpha = 1;            
         }
        
     }
