@@ -16,8 +16,10 @@
 @class BookExtractor;
 
 @protocol BookExtractorDelegate <NSObject>
+- (void)extractorBook:(Book *)book receivedNewPercentage:(float)percentage;
 @optional
-- (void)bookExtractor:(BookExtractor *)extractor didFinishExtractingWithgSuccess:(BOOL)success;
+- (void)extractorForBook:(Book *)book didFinishExtractingWithSuccess:(BOOL)success;
+
 @end
 
 @interface BookExtractor : NSObject <NSURLConnectionDataDelegate>
@@ -26,8 +28,11 @@
 @property (nonatomic, strong) id<BookExtractorDelegate> delegate;
 @property long long expectedZipSize;
 @property (nonatomic, strong) NSMutableData *downloadedZipData;
+@property BOOL downloading;
 - (BookExtractor *)initExtractorWithUrl:(NSURL *)zipURL;
 - (void)extractBookFromFile:(NSString *)zipFile;
 - (void)downloadBookZipFile;
+- (BOOL)isDownloading;
+- (NSData *)getDownloadedData;
 
 @end

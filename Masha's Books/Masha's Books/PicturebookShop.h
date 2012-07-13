@@ -19,6 +19,7 @@
 #import "Author+Addon.h"
 #import "CategoryToBookMap.h"
 #import "BookExtractor.h"
+#import "PicturebookCover.h"
 
 #define PICTUREBOOK_SHOP_DEBUG_LOGS 1
 
@@ -52,6 +53,8 @@
 - (NSOrderedSet *)getCategoriesInShop;
 - (void)coversLoaded;
 - (void)loadShopFromDatabase;
+- (void)refreshCovers:(NSArray *)covers;
+
 
 
 @end

@@ -7,19 +7,25 @@
 //
 
 #import "CoverTableRowCell.h"
+@interface CoverTableRowCell()
+@property (nonatomic, strong) NSMutableArray *coversInRowMutable;
+@end
 
 
 @implementation CoverTableRowCell
 
 
 @synthesize cellHeight = _cellHeight;
+@synthesize coversInRow = _coversInRow;
+@synthesize coversInRowMutable = _coversInRowMutable;
+
 
 - (id)initWithFrame:(CGRect)frame withNumberOfCoversInRow:(NSInteger)numOfCovers withWidthOf:(NSInteger)width desiredDistanceBetweenCovers:(NSInteger)distance 
            forBooks:(NSOrderedSet *)books withTarget:(id)target withAction:(SEL)action {
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        
+        self.coversInRowMutable = [[NSMutableArray alloc] init];
         //ld - cover image width and height
         CGFloat ld = 0.;
         
@@ -42,7 +48,12 @@
             [self.contentView addSubview:pbCover];
             pbCover.contentMode = UIViewContentModeScaleAspectFit;
             
-        }    
+            
+            [self.coversInRowMutable addObject:pbCover];
+            
+        }   
+        
+        self.coversInRow = [[NSArray alloc] initWithArray:[self.coversInRowMutable copy]];
         
     }
     return self;
@@ -55,5 +66,7 @@
 
     // Configure the view for the selected state
 }
+
+
 
 @end

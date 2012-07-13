@@ -13,6 +13,8 @@
 @interface CoverTableRowCell : UITableViewCell
 
 @property (readonly) CGFloat cellHeight;
+@property (nonatomic, strong) NSArray *coversInRow;
+
 
 - (id)initWithFrame:(CGRect)frame withNumberOfCoversInRow:(NSInteger)numOfCovers withWidthOf:(NSInteger)width desiredDistanceBetweenCovers:(NSInteger)distance 
            forBooks:(NSOrderedSet *)books withTarget:(id)target withAction:(SEL)action;

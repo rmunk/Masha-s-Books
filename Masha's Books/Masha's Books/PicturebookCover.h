@@ -14,6 +14,7 @@
 @property (nonatomic, strong) Book *bookForCover;
 @property (nonatomic, strong) UIProgressView *taskProgress;
 @property (nonatomic, strong) UIImageView *bookStatus;
+//@property (nonatomic, strong) UIActivityIndicatorView *bookExtractionActivityIndicator;
 
 - (id)initWithFrame:(CGRect)frame andBook:(Book *)book;
 

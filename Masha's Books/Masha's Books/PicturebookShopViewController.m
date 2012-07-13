@@ -14,13 +14,15 @@
 
 @interface PicturebookShopViewController ()
 @property (nonatomic, strong) PicturebookShop *picturebookShop;
+@property (nonatomic, strong) NSMutableArray *allPicturebookCovers;
 @end
 
 @implementation PicturebookShopViewController
 @synthesize shopRefreshButton = _shopRefreshButton;
 @synthesize shopWebView = _shopWebView;
-@synthesize selectedCoverTumbnailView = _selectedCoverTumbnailView;
+//@synthesize selectedCoverTumbnailView = _selectedCoverTumbnailView;
 @synthesize buyButton = _buyButton;
+@synthesize allPicturebookCovers = _allPicturebookCovers;
 
 @synthesize picturebookShop = _picturebookShop;
 @synthesize managedObjectContext = _managedObjectContext;
@@ -96,6 +98,10 @@
     PBDLOG(@"ERROR: Picture book shop reports loading error!");
 }
 
+- (void)getMyCoversStatus:(NSNotification *) notification {
+    [self.picturebookShop refreshCovers:self.allPicturebookCovers];
+}
+
 - (IBAction)shopItemTapped:(PicturebookCover *)sender{
     PBDLOG_ARG(@"Shop item tapped: %@", sender.bookForCover.title);
     
@@ -105,24 +111,32 @@
     
     [self.shopWebView loadHTMLString:sender.bookForCover.descriptionHTML baseURL:nil];
 
-    self.selectedCoverTumbnailView.image = sender.bookForCover.coverThumbnailImage;
-    [self.selectedCoverTumbnailView setContentMode:UIViewContentModeScaleAspectFit];
+//    self.selectedCoverTumbnailView.image = sender.bookForCover.coverThumbnailImage;
+ //   [self.selectedCoverTumbnailView setContentMode:UIViewContentModeScaleAspectFit];
     //[self.shopWebView reload];
-    self.buyButton.hidden = FALSE;
-    sender.taskProgress.alpha = 1;
-    sender.taskProgress.progress = 0.3;
-    sender.bookStatus.alpha = 1;
+    if (sender.bookStatus.alpha > 0) {
+        self.buyButton.hidden = TRUE;
+    }
+    else {
+        self.buyButton.hidden = FALSE;
+    }
+
+    //sender.taskProgress.alpha = 1;
+    //sender.taskProgress.progress = 0.3;
+    //sender.bookStatus.alpha = 1;
+    
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    
+    self.allPicturebookCovers = [[NSMutableArray alloc] init];
     // Registering to PicturebookShop notifications (laoding succesful and loading error)
     //self.selectedPicturebookCategory = [[PicturebookCategory alloc] initWithName:@"All" AndID:0];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(picturebookShopFinishedLoading:) name:@"PicturebookShopFinishedLoading" object:nil ]; 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(picturebookShopLoadingError:) name:@"PicturebookShopLoadingError" object:nil ];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getMyCoversStatus:) name:@"ShopReceivedZipData" object:nil ];
     self.buyButton.hidden = TRUE;
     
 }
@@ -147,7 +161,7 @@
 {
     [self setShopRefreshButton:nil];
     [self setShopWebView:nil];
-    [self setSelectedCoverTumbnailView:nil];
+//    [self setSelectedCoverTumbnailView:nil];
     [self setBuyButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
@@ -237,8 +251,10 @@
             for (Book *book in booksInCat) {
                 NSLog(@"Book title = %@", book.title);
             }
+
             
             NSMutableOrderedSet *booksInRow = [[NSMutableOrderedSet alloc] init];
+    
            
             for (int i = indexPath.row * NUM_OF_COVERS_IN_ROW_PORTRAIT; (i < (indexPath.row * NUM_OF_COVERS_IN_ROW_PORTRAIT + NUM_OF_COVERS_IN_ROW_PORTRAIT)) && i < booksInCat.count; i++) {
                 [booksInRow addObject:[booksInCat objectAtIndex:i]];
@@ -251,10 +267,16 @@
                                                    forBooks:booksInRow 
                                                  withTarget:self 
                                                  withAction:@selector(shopItemTapped:)];
+            [self.allPicturebookCovers addObjectsFromArray:cell.coversInRow];
+            
+            NSLog(@"Book covers in cell");
+            for (PicturebookCover *pbCover in self.allPicturebookCovers) {
+                NSLog(@"    %@", pbCover.bookForCover.title);
+            }
             
             if (tableView.rowHeight != cell.cellHeight) {
                 tableView.rowHeight = cell.cellHeight;
-                [tableView reloadData];
+               // [tableView reloadData];
             }
         }
         return cell;
@@ -271,8 +293,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {    
     if (tableView.tag == CATEGORY_TABLEVIEW_TAG) {
+        [self.allPicturebookCovers removeAllObjects];
         [self.picturebookShop userSelectsCategoryAtIndex:indexPath.row];
         [[self getTableViewForTag:COVERS_TABLEVIEW_TAG] reloadData];
+        
         
     }
 }

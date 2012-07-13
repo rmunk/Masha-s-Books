@@ -13,6 +13,7 @@
 @synthesize bookForCover = _bookForCover;
 @synthesize taskProgress = _taskProgress;
 @synthesize bookStatus = _bookStatus;
+//@synthesize bookExtractionActivityIndicator = _bookExtractionActivityIndicator;
 
 - (id)initWithFrame:(CGRect)frame andBook:(Book *)book {
     self = [super initWithFrame:frame];
@@ -24,11 +25,13 @@
         NSString *imageName = [[NSBundle mainBundle] pathForResource:@"green_check" ofType:@"png"];
         UIImage *imageObj = [[UIImage alloc] initWithContentsOfFile:imageName];
         _taskProgress = [[UIProgressView alloc] initWithFrame:progFrame];
-        
-        
-        
+     //   _bookExtractionActivityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:frame];
+        _taskProgress.progress = 0;
         _taskProgress.alpha = 0;
+        _bookStatus.alpha = 0;
         [self addSubview:_taskProgress];
+      //  [self addSubview:_bookExtractionActivityIndicator];
+        //[_bookExtractionActivityIndicator startAnimating];
         
         
         NSLog(@"Book %@.downloaded = %d", book.title, [book.downloaded intValue]);

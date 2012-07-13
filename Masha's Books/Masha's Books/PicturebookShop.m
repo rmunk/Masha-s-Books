@@ -21,6 +21,9 @@
 @property (nonatomic, strong) Category *selectedCategory; //currently browsed book category in shop
 @property (nonatomic, strong) Book *selectedBook;
 
+@property (nonatomic, strong) Book *bookWithLastReportedPercentage;
+@property float lastPercentage;
+
 
 @end
 
@@ -42,6 +45,8 @@
 @synthesize selectedCategory = _selectedCategory;
 @synthesize selectedBook = _selectedBook;
 @synthesize numberOfBooksWhinchNeedCoversDownloaded = _numberOfBooksWhinchNeedCoversDownloaded;
+@synthesize bookWithLastReportedPercentage = _bookWithLastReportedPercentage;
+@synthesize lastPercentage;
 
 @synthesize isShopLoaded = _isShopLoaded;
 
@@ -336,6 +341,42 @@
 {
 	[self.libraryDatabase.managedObjectContext mergeChangesFromContextDidSaveNotification:pagesAddedNotification];	
     NSLog(@"Extracted book pages saved to database.");
+}
+
+
+
+- (void)extractorBook:(Book *)book receivedNewPercentage:(float)percentage {
+    self.bookWithLastReportedPercentage = book;
+    self.lastPercentage = percentage;
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ShopReceivedZipData" object:nil];
+    
+}
+
+- (void)extractorForBook:(Book *)book didFinishExtractingWithSuccess:(BOOL)success {
+    if (success == TRUE) {
+        NSLog(@"Shop: Book %@ extracted", book.title);
+    } else {
+        NSLog(@"Shop: Book %@ extracting error", book.title);
+    }
+}
+
+- (void)refreshCovers:(NSArray *)covers {
+    for (PicturebookCover *cover in covers) {
+        if (cover.bookForCover.bookID != nil && self.bookWithLastReportedPercentage.bookID != nil) {
+            if ([cover.bookForCover.bookID isEqualToNumber:self.bookWithLastReportedPercentage.bookID]) {
+                if (cover.taskProgress.progress == 0) {
+                    cover.taskProgress.alpha = 1;
+                    cover.bookStatus.alpha = 0;
+                
+                }
+                else if (cover.taskProgress.progress == 1) {
+                    cover.taskProgress.alpha = 0;
+                    cover.bookStatus.alpha = 1;
+                }
+                cover.taskProgress.progress = lastPercentage;
+            }
+        }
+    }
 }
 
 @end

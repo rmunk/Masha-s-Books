@@ -283,6 +283,8 @@
     NSString *file = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"tmp/%@",self.downloadURL.lastPathComponent]];
     
     BookExtractor *bookExtractor = [[BookExtractor alloc] initExtractorWithUrl:zipURL];
+    bookExtractor.delegate = shop;
+    bookExtractor.book = self;
         
     NSLog(@"Downloading zip file for book %@.", self.title);
 
@@ -290,15 +292,18 @@
     dispatch_async(downloadZipQueue, ^{
         
         [bookExtractor downloadBookZipFile];
-       
-        NSData *zipFile = [NSData dataWithContentsOfURL:zipURL];
+        
+        while ([bookExtractor isDownloading] == YES);
+        
+        
+        NSData *zipFile = [NSData dataWithData:[bookExtractor getDownloadedData]];
+        //NSData *zipFile = [NSData dataWithContentsOfURL:zipURL];
         [zipFile writeToFile:file atomically:YES];       
         NSLog(@"Downloading file completed.");
         
         dispatch_async(dispatch_get_main_queue(), ^{                    
             
-            bookExtractor.delegate = shop;
-            bookExtractor.book = self;
+            
             [bookExtractor extractBookFromFile:file];
         });   
         
