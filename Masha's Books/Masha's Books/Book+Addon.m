@@ -291,13 +291,13 @@
     dispatch_queue_t downloadZipQueue = dispatch_queue_create("zip download", NULL);
     dispatch_async(downloadZipQueue, ^{
         
-        [bookExtractor downloadBookZipFile];
-        
-        while ([bookExtractor isDownloading] == YES);
-        
-        
-        NSData *zipFile = [NSData dataWithData:[bookExtractor getDownloadedData]];
-        //NSData *zipFile = [NSData dataWithContentsOfURL:zipURL];
+//        [bookExtractor downloadBookZipFile];
+//        
+//        while ([bookExtractor isDownloading] == YES);
+//        
+//        
+//        NSData *zipFile = [NSData dataWithData:[bookExtractor getDownloadedData]];
+        NSData *zipFile = [NSData dataWithContentsOfURL:zipURL];
         [zipFile writeToFile:file atomically:YES];       
         NSLog(@"Downloading file completed.");
         
