@@ -7,19 +7,25 @@
 //
 
 #import "CoverTableRowCell.h"
+@interface CoverTableRowCell()
+@property (nonatomic, strong) NSMutableArray *coversInRowMutable;
+@end
 
 
 @implementation CoverTableRowCell
 
 
 @synthesize cellHeight = _cellHeight;
+@synthesize coversInRow = _coversInRow;
+@synthesize coversInRowMutable = _coversInRowMutable;
+
 
 - (id)initWithFrame:(CGRect)frame withNumberOfCoversInRow:(NSInteger)numOfCovers withWidthOf:(NSInteger)width desiredDistanceBetweenCovers:(NSInteger)distance 
            forBooks:(NSOrderedSet *)books withTarget:(id)target withAction:(SEL)action {
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        
+        self.coversInRowMutable = [[NSMutableArray alloc] init];
         //ld - cover image width and height
         CGFloat ld = 0.;
         
@@ -31,20 +37,23 @@
         for (int i = 0; i < numOfExistingCovers; i++) {
             CGRect frame = CGRectMake(((distance + ld) * i + distance), distance, ld, ld);
             
-            //NSNumber *bookID = ((Book *)[books objectAtIndex:i]).bookID;
             UIImage *bookCoverImage = ((Book *)[books objectAtIndex:i]).coverThumbnailImage;
     
-            //PicturebookCover *pbCover = [[PicturebookCover alloc] initWithFrame:frame AndPicturebookInfo:pbInfo];
             PicturebookCover *pbCover = [[PicturebookCover alloc] initWithFrame:frame 
                                                                         andBook:[books objectAtIndex:i]];
                                          
             [pbCover setImage:bookCoverImage forState:UIControlStateNormal];
             [pbCover addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
-            //iView1.titleLabel.text = pbInfo.title;
+            
             [self.contentView addSubview:pbCover];
             pbCover.contentMode = UIViewContentModeScaleAspectFit;
             
-        }    
+            
+            [self.coversInRowMutable addObject:pbCover];
+            
+        }   
+        
+        self.coversInRow = [[NSArray alloc] initWithArray:[self.coversInRowMutable copy]];
         
     }
     return self;
@@ -57,5 +66,7 @@
 
     // Configure the view for the selected state
 }
+
+
 
 @end

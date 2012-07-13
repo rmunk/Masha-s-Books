@@ -10,15 +10,42 @@
 
 @interface BookExtractor()<SSZipArchiveDelegate>
 @property BOOL success;
+@property (nonatomic, strong) NSURLRequest *downloadRequest;
+@property (nonatomic, strong) NSURLConnection *downloadConnection;
 @end
 
 @implementation BookExtractor
 @synthesize delegate = _delegate;
 @synthesize book = _book;
 @synthesize success = _success;
+@synthesize downloadRequest = _downloadRequest;
+@synthesize downloadConnection = _downloadConnection;
+
+@synthesize downloading = _downloading;
+
+@synthesize expectedZipSize = _expectedZipSize;
+@synthesize downloadedZipData = _downloadedZipData;
+
+- (BookExtractor *)initExtractorWithUrl:(NSURL *)zipURL {
+    self = [super init];
+    if (self) {
+        self.downloadedZipData = [[NSMutableData alloc] init];
+        self.downloadRequest = [[NSURLRequest alloc] initWithURL:zipURL cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10];
+        self.downloadConnection = [[NSURLConnection alloc] initWithRequest:self.downloadRequest delegate:self];
+        self.downloading = NO;
+    }
+    return self;
+}
+
 
 - (void)populateBookWithPages
 {
+}
+
+- (void)downloadBookZipFile {
+    self.downloading = YES;
+    [self.downloadConnection start];
+   // NSLog(@"Expected size %lld", self.downloadConnection.);
 }
 
 - (void)extractBookFromFile:(NSString *)zipFile
@@ -31,7 +58,7 @@
     {
         NSLog(@"Failed to create directory");
         self.success = FALSE;
-        [self.delegate bookExtractor:self didFinishExtractingWithgSuccess:self.success];
+        [self.delegate extractorForBook:self.book didFinishExtractingWithSuccess:self.success];
         return;
     }
 
@@ -121,12 +148,41 @@
             [dnc removeObserver:self.delegate name:NSManagedObjectContextDidSaveNotification object:addingContext];
 
             dispatch_async(dispatch_get_main_queue(), ^{
-                if ([self.delegate respondsToSelector:@selector(bookExtractor:didFinishExtractingWithgSuccess:)])
-                    [self.delegate bookExtractor:self didFinishExtractingWithgSuccess:self.success];
+                if ([self.delegate respondsToSelector:@selector(extractorForBook:didFinishExtractingWithSuccess:)])
+                    [self.delegate extractorForBook:self.book didFinishExtractingWithSuccess:self.success];
             });
         }     
     });
     dispatch_release(zipQueue);
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    [self.downloadedZipData appendData:data];
+    if (self.expectedZipSize != 0) {
+        float percentage = (float)[self.downloadedZipData length]/(float)self.expectedZipSize;
+        //NSLog(@"Downloading %@", self.book.title);
+       // NSLog(@"Downloaded data size = %u, Expected data size = %llu, Download percentage = %f", [self.downloadedZipData length], self.expectedZipSize, percentage);
+        [self.delegate extractorBook:self.book receivedNewPercentage:percentage];
+    }
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+    self.expectedZipSize = [response expectedContentLength];
+ //   NSLog(@"Expected size %lld", self.expectedZipSize);
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    [self.delegate extractorBook:self.book receivedNewPercentage:1];
+    NSLog(@"Data download finished for book %@", self.book.title);
+    self.downloading = NO;
+}
+
+- (BOOL)isDownloading {
+    return self.downloading;
+}
+
+- (NSData *)getDownloadedData {
+    return [self.downloadedZipData copy];
 }
 
 @end
