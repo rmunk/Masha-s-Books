@@ -20,11 +20,15 @@
 
 @synthesize book = _book;
 @synthesize textVisibility = _textVisibility;
+@synthesize voiceOverPlay = _voiceOverPlay;
 
 - (id)init
 {
     self = [super init];
-    if (self) {
+    if (self) 
+    {
+        self.textVisibility = TRUE;
+        self.voiceOverPlay = TRUE;
     }
     return self;
 }
@@ -39,7 +43,10 @@
     // Create a new view controller and pass suitable data.
     SlikovnicaDataViewController *dataViewController = [storyboard instantiateViewControllerWithIdentifier:@"SlikovnicaDataViewController"];
     dataViewController.page = [self.book.pages objectAtIndex:index];
+//    if (!self.textVisibility)
+//        dataViewController.page.text = nil;
     dataViewController.textVisibility = self.textVisibility;
+    dataViewController.voiceOverPlay = self.voiceOverPlay;
     return dataViewController;
 }
 

@@ -15,6 +15,7 @@
 
 @property (strong, nonatomic) Book *book;
 @property (nonatomic) BOOL textVisibility;
+@property (nonatomic) BOOL voiceOverPlay;
 
 - (SlikovnicaDataViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard;
 - (NSUInteger)indexOfViewController:(SlikovnicaDataViewController *)viewController;

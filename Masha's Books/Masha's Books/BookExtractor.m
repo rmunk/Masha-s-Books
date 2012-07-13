@@ -89,7 +89,8 @@
                 else 
                     self.book.coverImage.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingString:@"/title.jpg"]];
                 self.book.downloadDate = [NSDate date];
-                self.book.downloaded = [NSNumber numberWithInt:1];
+                self.book.downloaded = [NSNumber numberWithBool:TRUE];
+                self.book.backgroundMusic = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingPathComponent:@"music.m4a"]];
                 int pageNumber = 1;
                 for (NSString *pageFile in pageFiles) {
                     NSManagedObjectContext *context = [self.book managedObjectContext];
@@ -99,7 +100,10 @@
                     page.text = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/text%03d.png",pageNumber]];
                     page.voiceOver = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/voice%03d.m4a",pageNumber]];
                     page.sound = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/sound%03d.m4a",pageNumber]];
-                    
+                    if(!page.sound){
+                        page.sound = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/sound%03d_L.m4a",pageNumber]];
+                        if(page.sound) page.soundLoop = [NSNumber numberWithBool:TRUE];
+                    }
                     [self.book insertObject:page inPagesAtIndex:pageNumber-1];
                     pageNumber++;
                 }      
@@ -107,7 +111,7 @@
 
             NSNotificationCenter *dnc = [NSNotificationCenter defaultCenter];
             [dnc addObserver:self.delegate selector:@selector(bookExtractorDidAddPagesToBook:) name:NSManagedObjectContextDidSaveNotification object:addingContext];
-            
+
             [addingContext save:&error];
             if (error) {
                 NSLog(@"Error saving context (%@)!", error.description);

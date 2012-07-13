@@ -13,21 +13,17 @@
 
 @interface SlikovnicaRootViewController ()<AVAudioPlayerDelegate, SlikovnicaNavigationViewControllerDelegate>
 @property (strong, nonatomic) SlikovnicaNavigationViewController *slikovnicaNavigationViewController;
-@property (strong, nonatomic) AVAudioPlayer *audioPlayer;
 @property (strong, nonatomic) IBOutlet UIView *navigationRequestView;
+@property (strong, nonatomic) AVAudioPlayer *audioPlayerMusic;
 @end
 
 @implementation SlikovnicaRootViewController
 
 @synthesize pageViewController = _pageViewController;
 @synthesize modelController = _modelController;
-@synthesize audioPlayer = _audioPlayer;
 @synthesize navigationRequestView = _navigationRequestView;
 @synthesize slikovnicaNavigationViewController = _slikovnicaNavigationViewController;
-
-- (AVAudioPlayer *)audioPlayer{
-    return nil;
-}
+@synthesize audioPlayerMusic = _audioPlayerMusic;
 
 - (void)viewDidLoad
 {
@@ -36,7 +32,7 @@
     // Configure the page view controller and add it as a child view controller.
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     self.pageViewController.delegate = self;
-    
+        
     SlikovnicaDataViewController *startingViewController = [self.modelController viewControllerAtIndex:0 storyboard:self.storyboard];
     NSArray *viewControllers = [NSArray arrayWithObject:startingViewController];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:NULL];
@@ -53,15 +49,21 @@
     
     [self.pageViewController didMoveToParentViewController:self];
     
-    // Start sound on first page
+    // Start background music
     NSError *error;
-    self.audioPlayer = [[AVAudioPlayer alloc] initWithData:startingViewController.page.sound error:&error];
-    if(error) self.audioPlayer = nil;
-    self.audioPlayer.delegate = self;
-    [self.audioPlayer prepareToPlay];
+    self.audioPlayerMusic = [[AVAudioPlayer alloc] initWithData:self.modelController.book.backgroundMusic error:&error];
+    if(error) self.audioPlayerMusic = nil;
+    self.audioPlayerMusic.delegate = self;
+    self.audioPlayerMusic.volume = 0.5;
+    self.audioPlayerMusic.numberOfLoops = -1;
+    [self.audioPlayerMusic prepareToPlay];
     
     // Add the page view controller's gesture recognizers to the book view controller's view so that the gestures are started more easily.
     self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(pageVoiceOverDidFinishPlaying:)
+                                                 name:@"pageVoiceOverDidFinishPlaying" object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -75,8 +77,9 @@
     [self addChildViewController:self.slikovnicaNavigationViewController];
     [self.view insertSubview:self.slikovnicaNavigationViewController.view atIndex:0];
     [self.slikovnicaNavigationViewController didMoveToParentViewController:self];
-
-    [self.audioPlayer play];
+    [self.audioPlayerMusic play];
+    SlikovnicaDataViewController *currentViewController = [self.pageViewController.viewControllers objectAtIndex:0];
+    [currentViewController playAudio];
 }
 
 - (void)navigationController:(SlikovnicaNavigationViewController *)sender DidChoosePage:(NSInteger)page
@@ -85,53 +88,53 @@
         SlikovnicaDataViewController *nextViewController = [self.modelController viewControllerAtIndex:(page) storyboard:self.storyboard];
         NSArray *viewControllers = [NSArray arrayWithObject:nextViewController];
         
-        NSError *error;
-        self.audioPlayer = [[AVAudioPlayer alloc] initWithData:nextViewController.page.sound error:&error];
-        if(error) self.audioPlayer = nil;
-        self.audioPlayer.delegate = self;
-        [self.audioPlayer prepareToPlay];
-        
-        void(^playSoundWhenPageIsTurned)(BOOL);
-        
-        playSoundWhenPageIsTurned = ^(BOOL finished)
-        {
-            if (finished)
-            {
-                [self.audioPlayer play];
-            }
-        };
-        
-        [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:playSoundWhenPageIsTurned];        
+        [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:^(BOOL finished){if (finished) [nextViewController playAudio];}];        
     }
-    else [self.audioPlayer play];
+    else {
+        SlikovnicaDataViewController *currentViewController = [self.pageViewController.viewControllers objectAtIndex:0];
+        [currentViewController playAudio];
+    }
 
     [self.view sendSubviewToBack:self.slikovnicaNavigationViewController.view];
     self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
+    [self.audioPlayerMusic play];
 }
 
 - (void)navigationController:(SlikovnicaNavigationViewController *)sender SetTextVisibility:(BOOL)textVisibility
 {
     self.modelController.textVisibility = textVisibility;
     SlikovnicaDataViewController *currentViewController = [self.pageViewController.viewControllers objectAtIndex:0];
-    [self.pageViewController setViewControllers:[NSArray arrayWithObject:[self.modelController viewControllerAtIndex:currentViewController.page.pageNumber.intValue - 1 storyboard:currentViewController.storyboard]] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    [self.pageViewController setViewControllers:[NSArray arrayWithObject:[self.modelController viewControllerAtIndex:[self.modelController indexOfViewController:currentViewController] storyboard:currentViewController.storyboard]] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+}
+
+- (void)navigationController:(SlikovnicaNavigationViewController *)sender SetVoiceoverPlay:(BOOL)voiceOverPlay
+{
+    self.modelController.voiceOverPlay = voiceOverPlay;
+    SlikovnicaDataViewController *currentViewController = [self.pageViewController.viewControllers objectAtIndex:0];
+    [self.pageViewController setViewControllers:[NSArray arrayWithObject:[self.modelController viewControllerAtIndex:[self.modelController indexOfViewController:currentViewController] storyboard:currentViewController.storyboard]] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
 }
 
 - (IBAction)userTappedForNavigation:(UITapGestureRecognizer *)sender 
 {
-    [self.audioPlayer pause];
     SlikovnicaDataViewController *currentViewController = [self.pageViewController.viewControllers objectAtIndex:0];
+
+    [currentViewController pauseAudio];
+    [self.audioPlayerMusic pause];
+
     self.slikovnicaNavigationViewController.currentPage = [currentViewController.page.pageNumber intValue];
     self.slikovnicaNavigationViewController.bookNameLabel.title = self.modelController.book.title;
     self.slikovnicaNavigationViewController.textVisibility = self.modelController.textVisibility;
-    [self.view bringSubviewToFront:self.slikovnicaNavigationViewController.view];
+    self.slikovnicaNavigationViewController.voiceOverPlay = self.modelController.voiceOverPlay;
     self.view.gestureRecognizers = NULL;
+    
+    [self.view bringSubviewToFront:self.slikovnicaNavigationViewController.view];
 }
 
 - (void)viewDidUnload
 {
     [self setNavigationRequestView:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -141,8 +144,6 @@
 
 - (SlikovnicaModelController *)modelController
 {
-    // Return the model controller object, creating it if necessary.
-    // In more complex implementations, the model controller may be passed to the view controller.
     if (!_modelController) {
         _modelController = [[SlikovnicaModelController alloc] init];
     }
@@ -156,10 +157,8 @@
     if (completed) 
     {
         SlikovnicaDataViewController *currentViewController = [self.pageViewController.viewControllers objectAtIndex:0];
+        [currentViewController playAudio];
         NSLog(@"Flip: %@", currentViewController.description);
-        self.audioPlayer = [[AVAudioPlayer alloc] initWithData:currentViewController.page.sound error:nil];
-        self.audioPlayer.delegate = self;
-        [self.audioPlayer play];
     }
 }
 
@@ -174,39 +173,16 @@
     return UIPageViewControllerSpineLocationMin;
 }
 
-#pragma mark AVAudioPlayer delegate methods
-
-- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)p successfully:(BOOL)flag
+- (void)pageVoiceOverDidFinishPlaying:(NSNotification *) notification
 {
-	if (flag == NO)
-		NSLog(@"Playback finished unsuccessfully");
-    else 
-    {
-//        SlikovnicaDataViewController *currentViewController = [self.pageViewController.viewControllers objectAtIndex:0];
-//        int *numPages = (int)self.modelController.book.pages.count;
-//        
-//        if (currentViewController.page.pageNumber < self.modelController.book.pages.count - 1) {
-//            SlikovnicaDataViewController *nextViewController = [self.modelController viewControllerAtIndex:(currentViewController.page.pageNumber + 1) storyboard:self.storyboard];
-//            NSArray *viewControllers = [NSArray arrayWithObject:nextViewController];
-//            
-//            NSURL *soundURL = [[NSURL alloc] initFileURLWithPath:nextViewController.page.sound];
-//            self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundURL error:nil];
-//            self.audioPlayer.delegate = self;
-//            [self.audioPlayer prepareToPlay];
-//            
-//            void(^playSoundWhenPageIsTurned)(BOOL);
-//            
-//            playSoundWhenPageIsTurned = ^(BOOL finished)
-//            {
-//                if (finished)
-//                {
-//                    [self.audioPlayer play];
-//                }
-//            };
-//            
-//            [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:playSoundWhenPageIsTurned];
-//        }
-//        else [self.audioPlayer play];
+    SlikovnicaDataViewController *currentViewController = [self.pageViewController.viewControllers objectAtIndex:0];
+    int currentPage = [self.modelController indexOfViewController:currentViewController];
+    int numPages = (int)self.modelController.book.pages.count;
+    
+    if (currentPage < numPages - 1) {
+        SlikovnicaDataViewController *nextViewController = [self.modelController viewControllerAtIndex:(currentPage + 1) storyboard:self.storyboard];
+        NSArray *viewControllers = [NSArray arrayWithObject:nextViewController];
+        [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:^(BOOL finished){if (finished) [nextViewController playAudio];}];        
     }
 }
 
