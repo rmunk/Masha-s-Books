@@ -8,6 +8,7 @@
 
 #import "SlikovnicaModelController.h"
 #import "SlikovnicaDataViewController.h"
+#import "Image.h"
 
 /* 
  The controller serves as the data source for the page view controller; it therefore implements pageViewController:viewControllerBeforeViewController: and pageViewController:viewControllerAfterViewController:.
@@ -95,7 +96,9 @@
     
     index++;
     if (index == [self.book.pages count]) {
-        return nil;
+        SlikovnicaDataViewController *dataViewController = [viewController.storyboard instantiateViewControllerWithIdentifier:@"SlikovnicaDataViewController"];
+        return dataViewController;
+//        return nil;
     }
     return [self viewControllerAtIndex:index storyboard:viewController.storyboard];
 }

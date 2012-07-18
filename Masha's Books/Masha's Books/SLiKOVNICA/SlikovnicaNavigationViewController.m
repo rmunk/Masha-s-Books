@@ -33,10 +33,11 @@
 
 - (IBAction)goBackToLibrary:(UIBarButtonItem *)sender 
 {
-    UIStoryboard *settingsStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    UIViewController *initialSettingsVC = [settingsStoryboard instantiateInitialViewController];
-    initialSettingsVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    [self presentModalViewController:initialSettingsVC animated:YES];
+//    UIStoryboard *settingsStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+//    UIViewController *initialSettingsVC = [settingsStoryboard instantiateInitialViewController];
+//    initialSettingsVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+//    [self presentModalViewController:initialSettingsVC animated:YES];
+    [self.delegate navigationControllerClosedBook:self];
 }
 
 - (IBAction)turnVoiceOnOff:(UIBarButtonItem *)sender 
@@ -52,7 +53,7 @@
         sender.title = @"Voice ON";
     }
     if ([self.delegate respondsToSelector:@selector(navigationController:SetVoiceoverPlay:)])
-        [self.delegate navigationController:self SetVoiceoverPlay:self.voiceOverPlay];
+        [self.delegate navigationController:self setVoiceoverPlay:self.voiceOverPlay];
 }
 
 - (IBAction)turnTextOnOff:(UIBarButtonItem *)sender 
@@ -68,7 +69,7 @@
         sender.title = @"Text ON";
     }
     if ([self.delegate respondsToSelector:@selector(navigationController:SetTextVisibility:)])
-        [self.delegate navigationController:self SetTextVisibility:self.textVisibility];
+        [self.delegate navigationController:self setTextVisibility:self.textVisibility];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -102,7 +103,7 @@
 
 - (IBAction)tapReturn:(UITapGestureRecognizer *)sender 
 {
-    [self.delegate navigationController:self DidChoosePage:-1];
+    [self.delegate navigationController:self didChoosePage:-1];
 }
 
 - (void)viewDidUnload
@@ -118,7 +119,7 @@
 {
     UIView *page = sender.view;
     NSLog(@"Skip to Page %d", page.tag);
-    [self.delegate navigationController:self DidChoosePage:page.tag];
+    [self.delegate navigationController:self didChoosePage:page.tag];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

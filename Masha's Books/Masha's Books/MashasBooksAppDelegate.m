@@ -45,4 +45,9 @@
 #warning Tu bi trebalo snimit bazu nekako
 }
 
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
+{
+#warning Implementirati memory warning protection
+}
+
 @end

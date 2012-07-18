@@ -14,6 +14,7 @@
 @property (nonatomic, strong) Page *page;
 @property (nonatomic) BOOL textVisibility;
 @property (nonatomic) BOOL voiceOverPlay;
+@property (strong, nonatomic) IBOutlet UIImageView *pageImage;
 
 - (void)playAudio;
 - (void)pauseAudio;

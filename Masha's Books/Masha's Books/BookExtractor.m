@@ -118,9 +118,16 @@
                 self.book.downloadDate = [NSDate date];
                 self.book.downloaded = [NSNumber numberWithBool:TRUE];
                 self.book.backgroundMusic = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingPathComponent:@"music.m4a"]];
+
+                // Insert title page first
+                NSManagedObjectContext *context = [self.book managedObjectContext];
+                Page *page = [NSEntityDescription insertNewObjectForEntityForName:@"Page" inManagedObjectContext:context];
+                page.pageNumber = [NSNumber numberWithInt:0];
+                page.image = self.book.coverImage.image;
+                [self.book insertObject:page inPagesAtIndex:0];
+                
                 int pageNumber = 1;
                 for (NSString *pageFile in pageFiles) {
-                    NSManagedObjectContext *context = [self.book managedObjectContext];
                     Page *page = [NSEntityDescription insertNewObjectForEntityForName:@"Page" inManagedObjectContext:context];
                     page.pageNumber = [NSNumber numberWithInt:pageNumber];
                     page.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingPathComponent:pageFile]];
@@ -131,7 +138,7 @@
                         page.sound = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/sound%03d_L.m4a",pageNumber]];
                         if(page.sound) page.soundLoop = [NSNumber numberWithBool:TRUE];
                     }
-                    [self.book insertObject:page inPagesAtIndex:pageNumber-1];
+                    [self.book insertObject:page inPagesAtIndex:pageNumber];
                     pageNumber++;
                 }      
             }

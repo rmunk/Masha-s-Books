@@ -9,9 +9,9 @@
 #import <AVFoundation/AVFoundation.h>
 #import "SlikovnicaDataViewController.h"
 #import "SlikovnicaModelController.h"
+#define HACKINTOSH
 
 @interface SlikovnicaDataViewController () <AVAudioPlayerDelegate>
-@property (strong, nonatomic) IBOutlet UIImageView *pageImage;
 @property (weak, nonatomic) IBOutlet UIImageView *textImage;
 @property (strong, nonatomic) AVAudioPlayer *audioPlayerVoiceOver;
 @property (strong, nonatomic) AVAudioPlayer *audioPlayerSound;
@@ -26,6 +26,7 @@
 @synthesize textVisibility = _textVisibility;
 @synthesize voiceOverPlay = _voiceOverPlay;
 
+#ifndef HACKINTOSH
 - (AVAudioPlayer *)audioPlayerVoiceOver
 {
     if (self.voiceOverPlay)
@@ -33,6 +34,21 @@
     else
         return nil;
 }
+#endif
+
+#ifdef HACKINTOSH
+- (AVAudioPlayer *)audioPlayerVoiceOver{return nil;}
+- (AVAudioPlayer *)audioPlayerSound {return nil;}
+#endif
+
+- (IBAction)goBackToLibrary:(UIBarButtonItem *)sender 
+{
+    UIStoryboard *settingsStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    UIViewController *initialSettingsVC = [settingsStoryboard instantiateInitialViewController];
+    initialSettingsVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self presentModalViewController:initialSettingsVC animated:YES];
+}
+
 
 - (NSString *)description
 {

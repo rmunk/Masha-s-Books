@@ -12,7 +12,7 @@
 #import "BookExtractor.h"
 #import "SlikovnicaRootViewController.h"
 
-@interface MyBooksViewController ()<UIScrollViewDelegate>
+@interface MyBooksViewController ()<UIScrollViewDelegate, SlikovnicaRootViewControllerDelegate>
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, weak) IBOutlet UIView *scrollViewContainer;
 
@@ -178,7 +178,12 @@
     [super viewDidUnload];
 }
 
-#pragma mark -
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return (interfaceOrientation != UIInterfaceOrientationPortrait && interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+}
+
+#pragma mark - Read Book
 - (void)userTappedImage:(UITapGestureRecognizer *)sender 
 {
     UIView *page = sender.view;
@@ -192,19 +197,18 @@
     
     UIStoryboard *slikovnicaStoryboard = [UIStoryboard storyboardWithName:@"PicturebookStoryboard" bundle:nil];
     SlikovnicaRootViewController *initialVC = [slikovnicaStoryboard instantiateInitialViewController];
+    initialVC.delegate = self;
     initialVC.modelController.book = selectedBook;
     initialVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self presentModalViewController:initialVC animated:YES];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+- (void)slikovnicaRootViewController:(SlikovnicaRootViewController *)sender closedPictureBook:(Book *)book
 {
-    return (interfaceOrientation != UIInterfaceOrientationPortrait && interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+    [self dismissModalViewControllerAnimated:YES];
 }
 
-
 #pragma mark - UIScrollViewDelegate
-
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView 
 {
     [self loadVisiblePages];

@@ -12,11 +12,12 @@
 
 @protocol SlikovnicaNavigationViewControllerDelegate <NSObject>
 
-- (void)navigationController:(SlikovnicaNavigationViewController *)sender DidChoosePage:(NSInteger)page;
+- (void)navigationController:(SlikovnicaNavigationViewController *)sender didChoosePage:(NSInteger)page;
+- (void)navigationControllerClosedBook:(SlikovnicaNavigationViewController *)sender;
 
 @optional
-- (void)navigationController:(SlikovnicaNavigationViewController *)sender SetTextVisibility:(BOOL)textVisibility;
-- (void)navigationController:(SlikovnicaNavigationViewController *)sender SetVoiceoverPlay:(BOOL)voiceOverPlay;
+- (void)navigationController:(SlikovnicaNavigationViewController *)sender setTextVisibility:(BOOL)textVisibility;
+- (void)navigationController:(SlikovnicaNavigationViewController *)sender setVoiceoverPlay:(BOOL)voiceOverPlay;
 
 @end
 
@@ -27,6 +28,6 @@
 @property (nonatomic) NSInteger currentPage;
 @property (nonatomic) BOOL textVisibility;
 @property (nonatomic) BOOL voiceOverPlay;
-@property id<SlikovnicaNavigationViewControllerDelegate> delegate;
+@property (nonatomic, assign) id<SlikovnicaNavigationViewControllerDelegate> delegate;
 
 @end
