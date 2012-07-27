@@ -348,6 +348,7 @@
 - (void)extractorBook:(Book *)book receivedNewPercentage:(float)percentage {
     self.bookWithLastReportedPercentage = book;
     self.lastPercentage = percentage;
+//    NSLog(@"Shop: Book %f", percentage);
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ShopReceivedZipData" object:nil];
     
 }
@@ -367,7 +368,7 @@
                 
                 cover.taskProgress.alpha = 1;
                 cover.taskProgress.progress = lastPercentage;
-                NSLog(@"Shop: Book %f", lastPercentage);
+                //NSLog(@"Shop: Book %f", lastPercentage);
                 if (cover.taskProgress.progress == 0) {
                     cover.taskProgress.alpha = 1;
                     cover.bookStatus.alpha = 0;
@@ -377,7 +378,6 @@
                     cover.taskProgress.alpha = 0;
                     cover.bookStatus.alpha = 1;
                 }
-                
             }
         }
     }

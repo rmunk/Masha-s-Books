@@ -11,7 +11,7 @@
 #import "PicturebookCover.h"
 #import "CoverTableRowCell.h"
 #import "Book.h"
-
+#import "BookExtractor.h"
 
 @interface PicturebookShopViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shopRefreshButton;

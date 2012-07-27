@@ -11,9 +11,10 @@
 #import "Book+XcodeBugFix.h"
 #import "Page.h"
 #import "Image.h"
+//#import "PicturebookShop.h"
 #import <CoreData/CoreData.h>
 
-@class BookExtractor;
+
 
 @protocol BookExtractorDelegate <NSObject>
 - (void)extractorBook:(Book *)book receivedNewPercentage:(float)percentage;
@@ -21,6 +22,11 @@
 - (void)extractorForBook:(Book *)book didFinishExtractingWithSuccess:(BOOL)success;
 
 @end
+
+@class BookExtractor;
+@class PicturebookShop;
+
+
 
 @interface BookExtractor : NSObject <NSURLConnectionDataDelegate>
 
@@ -30,9 +36,11 @@
 @property (nonatomic, strong) NSMutableData *downloadedZipData;
 @property BOOL downloading;
 - (BookExtractor *)initExtractorWithUrl:(NSURL *)zipURL;
+- (BookExtractor *)initExtractorWithShop:(id)shop andContext:(NSManagedObjectContext *)context;
 - (void)extractBookFromFile:(NSString *)zipFile;
 - (void)downloadBookZipFile;
 - (BOOL)isDownloading;
 - (NSData *)getDownloadedData;
+- (void)addBookToQue:(Book *)book;
 
 @end

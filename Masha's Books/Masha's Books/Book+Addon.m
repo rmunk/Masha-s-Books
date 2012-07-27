@@ -279,7 +279,7 @@
 
 - (void)downloadBookZipFileforShop:(PicturebookShop *)shop
 {
-    NSURL *zipURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.mashasbooks.com%@",self.downloadURL]];
+  /*  NSURL *zipURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.mashasbooks.com%@",self.downloadURL]];
     NSString *file = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"tmp/%@",self.downloadURL.lastPathComponent]];
     
     BookExtractor *bookExtractor = [[BookExtractor alloc] initExtractorWithUrl:zipURL];
@@ -291,13 +291,13 @@
     dispatch_queue_t downloadZipQueue = dispatch_queue_create("zip download", NULL);
     dispatch_async(downloadZipQueue, ^{
         
-//        [bookExtractor downloadBookZipFile];
-//        
-//        while ([bookExtractor isDownloading] == YES);
-//        
-//        
-//        NSData *zipFile = [NSData dataWithData:[bookExtractor getDownloadedData]];
-        NSData *zipFile = [NSData dataWithContentsOfURL:zipURL];
+        [bookExtractor downloadBookZipFile];
+        
+        //while ([bookExtractor isDownloading] == YES);
+        
+        
+        NSData *zipFile = [NSData dataWithData:[bookExtractor getDownloadedData]];
+        //NSData *zipFile = [NSData dataWithContentsOfURL:zipURL];
         [zipFile writeToFile:file atomically:YES];       
         NSLog(@"Downloading file completed.");
         
@@ -308,7 +308,7 @@
         });   
         
     });
-    dispatch_release(downloadZipQueue);
+    dispatch_release(downloadZipQueue);*/
 }
 
 /*

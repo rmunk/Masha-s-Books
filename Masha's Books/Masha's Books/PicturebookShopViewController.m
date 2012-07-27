@@ -15,6 +15,7 @@
 @interface PicturebookShopViewController ()
 @property (nonatomic, strong) PicturebookShop *picturebookShop;
 @property (nonatomic, strong) NSMutableArray *allPicturebookCovers;
+@property (nonatomic, strong) BookExtractor *bookExtractor;
 @end
 
 @implementation PicturebookShopViewController
@@ -23,14 +24,17 @@
 //@synthesize selectedCoverTumbnailView = _selectedCoverTumbnailView;
 @synthesize buyButton = _buyButton;
 @synthesize allPicturebookCovers = _allPicturebookCovers;
+@synthesize bookExtractor = _bookExtractor;
 
 @synthesize picturebookShop = _picturebookShop;
 @synthesize managedObjectContext = _managedObjectContext;
 
 - (PicturebookShop *)picturebookShop
 {
-    if (!_picturebookShop) 
+    if (!_picturebookShop) {
         _picturebookShop = [[PicturebookShop alloc] initShop];
+        _bookExtractor = [[BookExtractor alloc] initExtractorWithShop:_picturebookShop andContext:self.picturebookShop.libraryDatabase.managedObjectContext];
+    }
     return _picturebookShop;
 }
 
@@ -67,8 +71,9 @@
 
 - (IBAction)buyPictureBook:(UIButton *)sender {
     //[self.picturebookShop refreshDatabase];
-    Book *bookJustBought = [self.picturebookShop getSelectedBook];
-    [bookJustBought downloadBookZipFileforShop:self.picturebookShop];
+    Book *bookJustBought = [self.picturebookShop getSelectedBook]; 
+ //   [bookJustBought downloadBookZipFileforShop:self.picturebookShop];
+    [self.bookExtractor addBookToQue:bookJustBought];
 //    PBDLOG_ARG(@"Picture book %@ bought!", bookJustBought.title);
     //bookJustBought.downloaded = [NSNumber numberWithInt:1];
     
