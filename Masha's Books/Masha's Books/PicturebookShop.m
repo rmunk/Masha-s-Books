@@ -357,6 +357,7 @@
 - (void)extractorForBook:(Book *)book didFinishExtractingWithSuccess:(BOOL)success {
     if (success == TRUE) {
         NSLog(@"Shop: Book %@ extracted", book.title);
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"BookExtracted" object:nil];
     } else {
         NSLog(@"Shop: Book %@ extracting error", book.title);
     }

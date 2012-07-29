@@ -13,38 +13,55 @@
 @synthesize bookForCover = _bookForCover;
 @synthesize taskProgress = _taskProgress;
 @synthesize bookStatus = _bookStatus;
-//@synthesize bookExtractionActivityIndicator = _bookExtractionActivityIndicator;
+@synthesize bookQuedIndicator = _bookQuedIndicator;
 
-- (id)initWithFrame:(CGRect)frame andBook:(Book *)book {
+- (id)initWithFrame:(CGRect)frame andBook:(Book *)book withTarget:(id)target withAction:(SEL)action {
     self = [super initWithFrame:frame];
     if (self) {
-        _bookForCover = book;
+        self.bookForCover = book;
         
+        // initialize book cover button
+        [self setImage:book.coverThumbnailImage forState:UIControlStateNormal];
+        self.contentMode = UIViewContentModeScaleAspectFit;
+        [self addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+        
+        
+        // initialize status image
+        NSString *imageName = [[NSBundle mainBundle] pathForResource:@"green_check" ofType:@"png"];
+        UIImage *imageObj = [[UIImage alloc] initWithContentsOfFile:imageName];        
+        CGRect statusImageFrame = CGRectMake(frame.size.height * 0.9, frame.size.height * 0.1, 20, 20);
+        
+        self.bookStatus = [[UIImageView alloc] initWithFrame:statusImageFrame];
+        self.bookStatus.image = imageObj;        
+        self.bookStatus.alpha = 0;
+        
+        [self addSubview:self.bookStatus];
+        
+        
+        // initialize cover progress bar
         CGRect progFrame = CGRectMake(0, frame.size.height * 0.9, frame.size.width, 10);
         
-        NSString *imageName = [[NSBundle mainBundle] pathForResource:@"green_check" ofType:@"png"];
-        UIImage *imageObj = [[UIImage alloc] initWithContentsOfFile:imageName];
+        self.taskProgress = [[UIProgressView alloc] initWithFrame:progFrame];
+        self.taskProgress.progress = 0;
+        self.taskProgress.alpha = 0;        
         
-        CGRect statusImageFrame = CGRectMake(frame.size.height * 0.9, frame.size.height * 0.1, 20, 20);
-        _bookStatus = [[UIImageView alloc] initWithFrame:statusImageFrame];
-        
-        _taskProgress = [[UIProgressView alloc] initWithFrame:progFrame];
-     //   _bookExtractionActivityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:frame];
-        _taskProgress.progress = 0;
-        _taskProgress.alpha = 0;        
-        [self addSubview:_taskProgress];
+        [self addSubview:self.taskProgress];
         
         
-        _bookStatus.image = imageObj;        
-        _bookStatus.alpha = 0;
-        [self addSubview:_bookStatus];
-      //  [self addSubview:_bookExtractionActivityIndicator];
-        //[_bookExtractionActivityIndicator startAnimating];
+        // initialize qued activity indicator
+        CGRect activityFrame = CGRectMake(frame.size.height * 0.4, frame.size.height * 0.4, frame.size.height * 0.2, frame.size.height * 0.2);
         
+        self.bookQuedIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        [self.bookQuedIndicator setFrame:activityFrame];
+        [self addSubview:self.bookQuedIndicator];
         
-        NSLog(@"Book %@.downloaded = %d", book.title, [book.downloaded intValue]);
+                
         if ([book.downloaded isEqualToNumber:[NSNumber numberWithInt:1]]) {
-            _bookStatus.alpha = 1;            
+            self.bookStatus.alpha = 1;            
+        }
+        else if ([book.status isEqualToString:@"qued"]) {
+            self.imageView.alpha = 0.4;
+            [self.bookQuedIndicator startAnimating];
         }
        
     }

@@ -50,6 +50,11 @@
         
         book.downloaded = [NSNumber numberWithInt:0];
         
+        /* ovde se treba provjerit jeli knjiga vec kupljena, ako je drugaciji botun treba bit za nju u shopu
+         i za knjigu treba postavit status bought */
+        
+        book.status = [NSString stringWithString:@"available"];
+        
         return book;
     }
     else if ([booksWithID count] == 1)       

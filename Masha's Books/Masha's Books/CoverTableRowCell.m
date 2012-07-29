@@ -37,16 +37,18 @@
         for (int i = 0; i < numOfExistingCovers; i++) {
             CGRect frame = CGRectMake(((distance + ld) * i + distance), distance, ld, ld);
             
-            UIImage *bookCoverImage = ((Book *)[books objectAtIndex:i]).coverThumbnailImage;
+         //   UIImage *bookCoverImage = ((Book *)[books objectAtIndex:i]).coverThumbnailImage;
     
             PicturebookCover *pbCover = [[PicturebookCover alloc] initWithFrame:frame 
-                                                                        andBook:[books objectAtIndex:i]];
+                                                                        andBook:[books objectAtIndex:i]
+                                                                     withTarget:target
+                                                                     withAction:action];
                                          
-            [pbCover setImage:bookCoverImage forState:UIControlStateNormal];
-            [pbCover addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+ //           [pbCover setImage:bookCoverImage forState:UIControlStateNormal];
+        //    [pbCover addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
             
             [self.contentView addSubview:pbCover];
-            pbCover.contentMode = UIViewContentModeScaleAspectFit;
+   //         pbCover.contentMode = UIViewContentModeScaleAspectFit;
             
             
             [self.coversInRowMutable addObject:pbCover];

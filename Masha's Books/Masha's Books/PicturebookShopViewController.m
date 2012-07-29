@@ -76,6 +76,7 @@
     [self.bookExtractor addBookToQue:bookJustBought];
 //    PBDLOG_ARG(@"Picture book %@ bought!", bookJustBought.title);
     //bookJustBought.downloaded = [NSNumber numberWithInt:1];
+    [[self getTableViewForTag:COVERS_TABLEVIEW_TAG] reloadData];
     
 }
 
@@ -105,6 +106,11 @@
 
 - (void)getMyCoversStatus:(NSNotification *) notification {
     [self.picturebookShop refreshCovers:self.allPicturebookCovers];
+
+}
+
+- (void)refreshCoversTable:(NSNotification *) notification {
+    [[self getTableViewForTag:COVERS_TABLEVIEW_TAG] reloadData];    
 }
 
 - (IBAction)shopItemTapped:(PicturebookCover *)sender{
@@ -119,12 +125,13 @@
 //    self.selectedCoverTumbnailView.image = sender.bookForCover.coverThumbnailImage;
  //   [self.selectedCoverTumbnailView setContentMode:UIViewContentModeScaleAspectFit];
     //[self.shopWebView reload];
-    if (sender.bookStatus.alpha > 0) {
-        self.buyButton.hidden = TRUE;
-    }
-    else {
+    if ([sender.bookForCover.status isEqualToString:@"available"]) {
         self.buyButton.hidden = FALSE;
     }
+    else {
+        self.buyButton.hidden = TRUE;
+    }
+    [[self getTableViewForTag:COVERS_TABLEVIEW_TAG] reloadData];
 
     //sender.taskProgress.alpha = 1;
     //sender.taskProgress.progress = 0.3;
@@ -142,6 +149,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(picturebookShopFinishedLoading:) name:@"PicturebookShopFinishedLoading" object:nil ]; 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(picturebookShopLoadingError:) name:@"PicturebookShopLoadingError" object:nil ];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getMyCoversStatus:) name:@"ShopReceivedZipData" object:nil ];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshCoversTable:) name:@"BookExtracted" object:nil ];
     self.buyButton.hidden = TRUE;
     
 }

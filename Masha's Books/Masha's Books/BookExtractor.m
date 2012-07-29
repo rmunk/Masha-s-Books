@@ -147,20 +147,19 @@
                     else 
                         self.activeBook.coverImage.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingString:@"/title.jpg"]];
                     
-                    self.activeBook.downloadDate = [NSDate date];
-                    self.activeBook.downloaded = [NSNumber numberWithInt:1];
+                    
                     self.activeBook.backgroundMusic = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingPathComponent:@"music.m4a"]];
 
                     // Insert title page first
-                    NSManagedObjectContext *context = [self.activeBook managedObjectContext];
-                    Page *page = [NSEntityDescription insertNewObjectForEntityForName:@"Page" inManagedObjectContext:context];
+                   // NSManagedObjectContext *context = [self.activeBook managedObjectContext];
+                    Page *page = [NSEntityDescription insertNewObjectForEntityForName:@"Page" inManagedObjectContext:self.context];
                     page.pageNumber = [NSNumber numberWithInt:0];
                     page.image = self.activeBook.coverImage.image;
                     [self.activeBook insertObject:page inPagesAtIndex:0];
                     
                     int pageNumber = 1;
                     for (NSString *pageFile in pageFiles) {
-                        Page *page = [NSEntityDescription insertNewObjectForEntityForName:@"Page" inManagedObjectContext:context];
+                        Page *page = [NSEntityDescription insertNewObjectForEntityForName:@"Page" inManagedObjectContext:self.context];
                         page.pageNumber = [NSNumber numberWithInt:pageNumber];
                         page.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingPathComponent:pageFile]];
                         page.text = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/text%03d.png",pageNumber]];
@@ -173,6 +172,10 @@
                         [self.activeBook insertObject:page inPagesAtIndex:pageNumber];
                         pageNumber++;
                     }      
+                    
+                    self.activeBook.downloadDate = [NSDate date];
+                    self.activeBook.downloaded = [NSNumber numberWithInt:1];
+                    self.activeBook.status = [NSString stringWithString:@"ready"];
                 }
 
                 NSNotificationCenter *dnc = [NSNotificationCenter defaultCenter];
@@ -252,6 +255,7 @@
     NSLog(@"Saving zip file...");
     NSData *zipFile = [NSData dataWithData:self.downloadedZipData];
     [zipFile writeToFile:self.file atomically:YES];
+    self.activeBook.status = [NSString stringWithString:@"extracting"];
     [self extractBookFromFile:self.file];
 }
 
@@ -264,32 +268,30 @@
 }
 
 - (void)processBook:(Book *)book {
+    book.status = [NSString stringWithString:@"downloading"];
     [self downloadZipFileForBook:book];
     
 }
 
+// State machine processQue
 - (void)processQue {
-    NSLog(@"Processing que...");
+    
     // remove processed books
     Book *bookToDelete;
     int flag = 1;
     while (1) {
-        NSLog(@"While...");
         if (!flag)
             break;
         
         flag = 0;
         
         for (Book *book in self.bookQue) {
-            NSLog(@"Book %@ is downloaded %d", book.title, [book.downloaded intValue]);
             if ([book.downloaded intValue] == 1) {
-                NSLog(@"Naslo knjigu");
                 bookToDelete = book;
                 flag = 1;
             }     
         }
         if(flag) {
-            NSLog(@"Removing %@ from que.", bookToDelete.title);
             [self.bookQue removeObject:bookToDelete];  
             self.activeBook = nil;
         }
@@ -298,9 +300,7 @@
     // if there is more books in que, process the first one
     if ([self.bookQue count] > 0) {
         for (Book *book in self.bookQue) {
-            NSLog(@"Bk %@ is downloaded %d", book.title, [book.downloaded intValue]);
             if (self.activeBook == nil) {
-                NSLog(@"Processing book %@.", book.title);
                 self.activeBook = book;
                 self.downloadedZipData = [[NSMutableData alloc] init]; 
                 [self processBook:self.activeBook];
@@ -316,6 +316,7 @@
 - (void)addBookToQue:(Book *)book {
     NSLog(@"Book added to que");
     [self.bookQue addObject:book];
+    book.status = [NSString stringWithString:@"qued"];
     [self processQue];  
 }
 
