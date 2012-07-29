@@ -2,7 +2,7 @@
 //  Book.m
 //  Masha's Books
 //
-//  Created by Ranko Munk on 7/4/12.
+//  Created by Luka Miljak on 7/29/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -11,7 +11,6 @@
 #import "Category.h"
 #import "Image.h"
 #import "Page.h"
-#import "Image.h"
 
 
 @implementation Book
@@ -32,6 +31,7 @@
 @dynamic title;
 @dynamic type;
 @dynamic youTubeVideoURL;
+@dynamic status;
 @dynamic author;
 @dynamic categories;
 @dynamic coverImage;
