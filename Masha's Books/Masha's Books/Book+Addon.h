@@ -26,6 +26,7 @@
 + (void)updateBook:(Book *)book withAttributes:(NSDictionary *)attributes;
 + (NSArray *)getAllBooksFromContext:(NSManagedObjectContext *)context;
 + (NSOrderedSet *)getBooksForCategory:(Category *)category inContext:(NSManagedObjectContext *)context;
++ (Book *)getBookWithId:(NSNumber *)bookID inContext:(NSManagedObjectContext *)context withErrorHandler:(NSError *)error;
 
 - (void)fillBookElement:(NSString *)element withDescription:(NSString *)description;
 - (void)pickYourCategoriesFromLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context;

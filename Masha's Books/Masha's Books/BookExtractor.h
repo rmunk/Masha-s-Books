@@ -11,6 +11,8 @@
 #import "Book+XcodeBugFix.h"
 #import "Page.h"
 #import "Image.h"
+#import "Book.h"
+#import "Book+Addon.h"
 //#import "PicturebookShop.h"
 #import <CoreData/CoreData.h>
 

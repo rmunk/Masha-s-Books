@@ -277,6 +277,32 @@
     }
 }
 
++ (Book *)getBookWithId:(NSNumber *)bookID inContext:(NSManagedObjectContext *)context withErrorHandler:(NSError *)error {
+    
+    //kreiranje fetch requesta
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"]; 
+    NSMutableDictionary *errorDetails = [NSMutableDictionary dictionary];
+    
+    request.predicate = [NSPredicate predicateWithFormat:@"bookID = %d", [bookID integerValue]];
+    NSArray *booksWithID = [context executeFetchRequest:request error:&error];
+    
+    if ([booksWithID count] == 0) {
+        //ako knjige nema u bazi onda ovo
+        NSLog(@"ERROR: Requested book not gound in database!");        
+        return nil;
+    }
+    else if ([booksWithID count] == 1)       
+    {
+        return (Book *)([booksWithID lastObject]);
+    }
+    else {
+        NSLog(@"ERROR: More than one book with ID $d exists in database!");
+        [errorDetails setValue:@"ERROR: More than one book with ID $d exists in database!" forKey:NSLocalizedDescriptionKey];
+        error = [NSError errorWithDomain:@"database" code:200 userInfo:errorDetails];
+        return nil;
+    }
+}
+
 - (void)downloadBookZipFileforShop:(PicturebookShop *)shop
 {
   /*  NSURL *zipURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.mashasbooks.com%@",self.downloadURL]];

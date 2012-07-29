@@ -35,7 +35,7 @@
 
 #endif
 
-@interface PicturebookShop : NSObject <NSXMLParserDelegate, BookExtractorDelegate>
+@interface PicturebookShop : NSObject <NSXMLParserDelegate>
 
 @property (nonatomic, strong) NSURL *urlBase;
 @property (readwrite) BOOL isShopLoaded;
