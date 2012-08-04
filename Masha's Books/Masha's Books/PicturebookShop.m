@@ -19,8 +19,7 @@
 @property (nonatomic, weak) Book *currentBook;
 @property (nonatomic, weak) Author *currentAuthor;
 @property (nonatomic, strong) CategoryToBookMap *categoryToBookMap;
-@property (nonatomic, strong) Category *selectedCategory; //currently browsed book category in shop
-@property (nonatomic, strong) Book *selectedBook;
+
 
 @property (nonatomic, strong) Book *bookWithLastReportedPercentage;
 @property float lastPercentage;
@@ -47,7 +46,7 @@
 @synthesize selectedBook = _selectedBook;
 @synthesize numberOfBooksWhinchNeedCoversDownloaded = _numberOfBooksWhinchNeedCoversDownloaded;
 @synthesize bookWithLastReportedPercentage = _bookWithLastReportedPercentage;
-@synthesize lastPercentage;
+@synthesize lastPercentage = _lastPercentage;
 
 @synthesize isShopLoaded = _isShopLoaded;
 
@@ -144,7 +143,7 @@
     
     BOOL parsingSuccesfull = [self.xmlParser parse];
     
-    if (parsingSuccesfull == YES) 
+    if (parsingSuccesfull == YES)
         self.isShopLoaded = YES;
     else 
         [self shopErrorLoading];
@@ -195,7 +194,10 @@
 
 - (Book *)getSelectedBook {
     return self.selectedBook;
-    
+}
+
+- (Category *)getSelectedCategory {
+    return  self.selectedCategory;
 }
  
 
@@ -369,7 +371,7 @@
             if ([cover.bookForCover.bookID isEqualToNumber:self.bookWithLastReportedPercentage.bookID]) {
                 
                 cover.taskProgress.alpha = 1;
-                cover.taskProgress.progress = lastPercentage;
+                cover.taskProgress.progress = self.lastPercentage;
                 //NSLog(@"Shop: Book %f", lastPercentage);
                 if (cover.taskProgress.progress == 0) {
                     cover.taskProgress.alpha = 1;

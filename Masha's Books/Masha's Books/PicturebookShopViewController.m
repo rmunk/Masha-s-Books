@@ -49,23 +49,14 @@
 - (IBAction)refreshPicturebookShop:(UIBarButtonItem *)sender {
     
     PBDLOG(@"PicturebookShopViewController: Calling refreshShop."); 
-    
+
     self.shopRefreshButton.style = UIBarButtonSystemItemRedo;
-    //[self.shopRefreshButton setStyle:UIBarButtonSystemItemCamera];
     [self.picturebookShop refreshShop];
     
     [[self getTableViewForTag:CATEGORY_TABLEVIEW_TAG] reloadData];
     [[self getTableViewForTag:COVERS_TABLEVIEW_TAG] reloadData];
     
     [self.view setNeedsDisplay];
-    
-    /*
-    UIActivityIndicatorView *activityIndicator =
-    [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
-    [activityIndicator startAnimating];
-    UIBarButtonItem *activityItem =
-    [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
-    self.navigationItem.rightBarButtonItem = activityItem;*/
 
 }
 
@@ -83,13 +74,6 @@
 - (void)picturebookShopFinishedLoading:(NSNotification *) notification {
     PBDLOG(@"Picture book shop reports loading finished!");
     
-    
-    /* Za testiranje kad bude implementiran description html
-    PicturebookInfo *pbInfo = [[self.picturebookShop getBooksForCategory:self.selectedPicturebookCategory] objectAtIndex:0];
-    NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
-    NSURL *baseURL = [NSURL fileURLWithPath:bundlePath];
-    [self.shopWebView loadHTMLString:pbInfo. baseURL:
-     */
     [self.picturebookShop userSelectsCategoryAtIndex:0];
     [[self getTableViewForTag:CATEGORY_TABLEVIEW_TAG] reloadData];
     [[self getTableViewForTag:CATEGORY_TABLEVIEW_TAG] selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
@@ -120,7 +104,7 @@
     
     [self.picturebookShop userSelectsBook:sender.bookForCover];
     
-    [self.shopWebView loadHTMLString:sender.bookForCover.descriptionHTML baseURL:nil];
+    [self.shopWebView loadHTMLString:sender.bookForCover.descriptionLongHTML baseURL:nil];
 
 //    self.selectedCoverTumbnailView.image = sender.bookForCover.coverThumbnailImage;
  //   [self.selectedCoverTumbnailView setContentMode:UIViewContentModeScaleAspectFit];

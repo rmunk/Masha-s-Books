@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
+#import <StoreKit/StoreKit.h>
 
 #import "Author.h"
 #import "Book.h"
@@ -40,6 +41,8 @@
 @property (nonatomic, strong) NSURL *urlBase;
 @property (readwrite) BOOL isShopLoaded;
 @property (readwrite) NSUInteger numberOfBooksWhinchNeedCoversDownloaded;
+@property (nonatomic, strong) Category *selectedCategory; //currently browsed book category in shop
+@property (nonatomic, strong) Book *selectedBook;
 
 @property (nonatomic, strong) UIManagedDocument *libraryDatabase;
 
@@ -49,6 +52,7 @@
 - (void)userSelectsCategoryAtIndex:(NSUInteger)index;
 - (void)userSelectsBook:(Book *)book;
 - (Book *)getSelectedBook;
+- (Category *)getSelectedCategory;
 - (NSOrderedSet *)getBooksForSelectedCategory;
 - (NSOrderedSet *)getCategoriesInShop;
 - (void)coversLoaded;
