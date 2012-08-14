@@ -37,6 +37,10 @@
 		C08246E7157673E000054A3A /* Shop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C08246E3157673E000054A3A /* Shop@2x.png */; };
 		C08246ED157680E900054A3A /* Library.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C08246EB157680E900054A3A /* Library.xcdatamodeld */; };
 		C08247201576895D00054A3A /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C082471F1576895D00054A3A /* CoreData.framework */; };
+		C084558715DB03300080732F /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = C084558615DB03300080732F /* Default-Landscape~ipad.png */; };
+		C084558A15DB03840080732F /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = C084558915DB03840080732F /* Default-Landscape@2x~ipad.png */; };
+		C084558C15DB04090080732F /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C084558B15DB04090080732F /* icon@2x.png */; };
+		C084558E15DB040C0080732F /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C084558D15DB040C0080732F /* icon.png */; };
 		C090C3CF15A10A5A001246FF /* UIImageToDataTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = C090C3CE15A10A59001246FF /* UIImageToDataTransformer.m */; };
 		C090C3D015A10A5A001246FF /* UIImageToDataTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = C090C3CE15A10A59001246FF /* UIImageToDataTransformer.m */; };
 		C093EB23159E63F800035D20 /* BookExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = C093EB22159E63F800035D20 /* BookExtractor.m */; };
@@ -54,7 +58,6 @@
 		C09EB5D115D9BD45003FEBB0 /* box_norm.png in Resources */ = {isa = PBXBuildFile; fileRef = C09EB5CD15D9BD45003FEBB0 /* box_norm.png */; };
 		C09EB5D215D9BD45003FEBB0 /* masha.png in Resources */ = {isa = PBXBuildFile; fileRef = C09EB5CE15D9BD45003FEBB0 /* masha.png */; };
 		C09EB5D315D9BD45003FEBB0 /* mybooks_norm.png in Resources */ = {isa = PBXBuildFile; fileRef = C09EB5CF15D9BD45003FEBB0 /* mybooks_norm.png */; };
-		C09EB5D515D9BD5C003FEBB0 /* mybooks setup.png in Resources */ = {isa = PBXBuildFile; fileRef = C09EB5D415D9BD5C003FEBB0 /* mybooks setup.png */; };
 		C09EB5D715D9D7E8003FEBB0 /* tab-books copy.png in Resources */ = {isa = PBXBuildFile; fileRef = C09EB5D615D9D7E8003FEBB0 /* tab-books copy.png */; };
 		C0B3FF6415742E41002DF30F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0B3FF6315742E41002DF30F /* UIKit.framework */; };
 		C0B3FF6615742E41002DF30F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0B3FF6515742E41002DF30F /* Foundation.framework */; };
@@ -135,6 +138,10 @@
 		C08246E3157673E000054A3A /* Shop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Shop@2x.png"; sourceTree = "<group>"; };
 		C08246EC157680E900054A3A /* Library.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Library.xcdatamodel; sourceTree = "<group>"; };
 		C082471F1576895D00054A3A /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		C084558615DB03300080732F /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape~ipad.png"; path = "../Default-Landscape~ipad.png"; sourceTree = "<group>"; };
+		C084558915DB03840080732F /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape@2x~ipad.png"; path = "../Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
+		C084558B15DB04090080732F /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "../icon@2x.png"; sourceTree = "<group>"; };
+		C084558D15DB040C0080732F /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../icon.png; sourceTree = "<group>"; };
 		C090C3CD15A10A59001246FF /* UIImageToDataTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageToDataTransformer.h; sourceTree = "<group>"; };
 		C090C3CE15A10A59001246FF /* UIImageToDataTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageToDataTransformer.m; sourceTree = "<group>"; };
 		C093EB21159E63F800035D20 /* BookExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookExtractor.h; sourceTree = "<group>"; };
@@ -160,7 +167,6 @@
 		C09EB5CD15D9BD45003FEBB0 /* box_norm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box_norm.png; sourceTree = "<group>"; };
 		C09EB5CE15D9BD45003FEBB0 /* masha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = masha.png; sourceTree = "<group>"; };
 		C09EB5CF15D9BD45003FEBB0 /* mybooks_norm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mybooks_norm.png; sourceTree = "<group>"; };
-		C09EB5D415D9BD5C003FEBB0 /* mybooks setup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mybooks setup.png"; sourceTree = "<group>"; };
 		C09EB5D615D9D7E8003FEBB0 /* tab-books copy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-books copy.png"; sourceTree = "<group>"; };
 		C0B3FF5F15742E41002DF30F /* Masha's Books.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Masha's Books.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0B3FF6315742E41002DF30F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -319,6 +325,10 @@
 			isa = PBXGroup;
 			children = (
 				C09EB5CA15D9BD10003FEBB0 /* My Books */,
+				C084558D15DB040C0080732F /* icon.png */,
+				C084558B15DB04090080732F /* icon@2x.png */,
+				C084558915DB03840080732F /* Default-Landscape@2x~ipad.png */,
+				C084558615DB03300080732F /* Default-Landscape~ipad.png */,
 				BAE41B7715CC622C00731C71 /* facebook.png */,
 				C09EB5D615D9D7E8003FEBB0 /* tab-books copy.png */,
 				BAE41B7815CC622C00731C71 /* twitter-bird-light-bgs.png */,
@@ -336,7 +346,6 @@
 		C09EB5CA15D9BD10003FEBB0 /* My Books */ = {
 			isa = PBXGroup;
 			children = (
-				C09EB5D415D9BD5C003FEBB0 /* mybooks setup.png */,
 				C09EB5CC15D9BD45003FEBB0 /* box_arrow.png */,
 				C09EB5CD15D9BD45003FEBB0 /* box_norm.png */,
 				C09EB5CE15D9BD45003FEBB0 /* masha.png */,
@@ -521,8 +530,11 @@
 				C09EB5D115D9BD45003FEBB0 /* box_norm.png in Resources */,
 				C09EB5D215D9BD45003FEBB0 /* masha.png in Resources */,
 				C09EB5D315D9BD45003FEBB0 /* mybooks_norm.png in Resources */,
-				C09EB5D515D9BD5C003FEBB0 /* mybooks setup.png in Resources */,
 				C09EB5D715D9D7E8003FEBB0 /* tab-books copy.png in Resources */,
+				C084558715DB03300080732F /* Default-Landscape~ipad.png in Resources */,
+				C084558A15DB03840080732F /* Default-Landscape@2x~ipad.png in Resources */,
+				C084558C15DB04090080732F /* icon@2x.png in Resources */,
+				C084558E15DB040C0080732F /* icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
