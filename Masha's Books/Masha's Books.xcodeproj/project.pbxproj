@@ -41,6 +41,14 @@
 		C084558A15DB03840080732F /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = C084558915DB03840080732F /* Default-Landscape@2x~ipad.png */; };
 		C084558C15DB04090080732F /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C084558B15DB04090080732F /* icon@2x.png */; };
 		C084558E15DB040C0080732F /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C084558D15DB040C0080732F /* icon.png */; };
+		C084559315DB08D20080732F /* box_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C084558F15DB08D20080732F /* box_arrow@2x.png */; };
+		C084559415DB08D20080732F /* box_norm@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C084559015DB08D20080732F /* box_norm@2x.png */; };
+		C084559515DB08D20080732F /* masha@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C084559115DB08D20080732F /* masha@2x.png */; };
+		C084559615DB08D20080732F /* mybooks_norm@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C084559215DB08D20080732F /* mybooks_norm@2x.png */; };
+		C084559B15DB093F0080732F /* box_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = C084559715DB093F0080732F /* box_arrow.png */; };
+		C084559C15DB093F0080732F /* box_norm.png in Resources */ = {isa = PBXBuildFile; fileRef = C084559815DB093F0080732F /* box_norm.png */; };
+		C084559D15DB093F0080732F /* masha.png in Resources */ = {isa = PBXBuildFile; fileRef = C084559915DB093F0080732F /* masha.png */; };
+		C084559E15DB093F0080732F /* mybooks_norm.png in Resources */ = {isa = PBXBuildFile; fileRef = C084559A15DB093F0080732F /* mybooks_norm.png */; };
 		C090C3CF15A10A5A001246FF /* UIImageToDataTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = C090C3CE15A10A59001246FF /* UIImageToDataTransformer.m */; };
 		C090C3D015A10A5A001246FF /* UIImageToDataTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = C090C3CE15A10A59001246FF /* UIImageToDataTransformer.m */; };
 		C093EB23159E63F800035D20 /* BookExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = C093EB22159E63F800035D20 /* BookExtractor.m */; };
@@ -54,10 +62,6 @@
 		C093EB5A159E87CA00035D20 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = C093EB59159E87CA00035D20 /* LICENSE */; };
 		C0982991157501D1004EAA0D /* MyBooksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0982990157501D1004EAA0D /* MyBooksViewController.m */; };
 		C09829941575026E004EAA0D /* MashasShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C09829931575026E004EAA0D /* MashasShopViewController.m */; };
-		C09EB5D015D9BD45003FEBB0 /* box_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = C09EB5CC15D9BD45003FEBB0 /* box_arrow.png */; };
-		C09EB5D115D9BD45003FEBB0 /* box_norm.png in Resources */ = {isa = PBXBuildFile; fileRef = C09EB5CD15D9BD45003FEBB0 /* box_norm.png */; };
-		C09EB5D215D9BD45003FEBB0 /* masha.png in Resources */ = {isa = PBXBuildFile; fileRef = C09EB5CE15D9BD45003FEBB0 /* masha.png */; };
-		C09EB5D315D9BD45003FEBB0 /* mybooks_norm.png in Resources */ = {isa = PBXBuildFile; fileRef = C09EB5CF15D9BD45003FEBB0 /* mybooks_norm.png */; };
 		C09EB5D715D9D7E8003FEBB0 /* tab-books copy.png in Resources */ = {isa = PBXBuildFile; fileRef = C09EB5D615D9D7E8003FEBB0 /* tab-books copy.png */; };
 		C0B3FF6415742E41002DF30F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0B3FF6315742E41002DF30F /* UIKit.framework */; };
 		C0B3FF6615742E41002DF30F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0B3FF6515742E41002DF30F /* Foundation.framework */; };
@@ -142,6 +146,14 @@
 		C084558915DB03840080732F /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape@2x~ipad.png"; path = "../Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
 		C084558B15DB04090080732F /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "../icon@2x.png"; sourceTree = "<group>"; };
 		C084558D15DB040C0080732F /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../icon.png; sourceTree = "<group>"; };
+		C084558F15DB08D20080732F /* box_arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "box_arrow@2x.png"; path = "../../Grafika/full/box_arrow@2x.png"; sourceTree = "<group>"; };
+		C084559015DB08D20080732F /* box_norm@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "box_norm@2x.png"; path = "../../Grafika/full/box_norm@2x.png"; sourceTree = "<group>"; };
+		C084559115DB08D20080732F /* masha@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "masha@2x.png"; path = "../../Grafika/full/masha@2x.png"; sourceTree = "<group>"; };
+		C084559215DB08D20080732F /* mybooks_norm@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "mybooks_norm@2x.png"; path = "../../Grafika/full/mybooks_norm@2x.png"; sourceTree = "<group>"; };
+		C084559715DB093F0080732F /* box_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = box_arrow.png; path = ../../Grafika/norm/box_arrow.png; sourceTree = "<group>"; };
+		C084559815DB093F0080732F /* box_norm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = box_norm.png; path = ../../Grafika/norm/box_norm.png; sourceTree = "<group>"; };
+		C084559915DB093F0080732F /* masha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = masha.png; path = ../../Grafika/norm/masha.png; sourceTree = "<group>"; };
+		C084559A15DB093F0080732F /* mybooks_norm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mybooks_norm.png; path = ../../Grafika/norm/mybooks_norm.png; sourceTree = "<group>"; };
 		C090C3CD15A10A59001246FF /* UIImageToDataTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageToDataTransformer.h; sourceTree = "<group>"; };
 		C090C3CE15A10A59001246FF /* UIImageToDataTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageToDataTransformer.m; sourceTree = "<group>"; };
 		C093EB21159E63F800035D20 /* BookExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookExtractor.h; sourceTree = "<group>"; };
@@ -163,10 +175,6 @@
 		C0982990157501D1004EAA0D /* MyBooksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyBooksViewController.m; sourceTree = "<group>"; };
 		C09829921575026E004EAA0D /* MashasShopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MashasShopViewController.h; sourceTree = "<group>"; };
 		C09829931575026E004EAA0D /* MashasShopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MashasShopViewController.m; sourceTree = "<group>"; };
-		C09EB5CC15D9BD45003FEBB0 /* box_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box_arrow.png; sourceTree = "<group>"; };
-		C09EB5CD15D9BD45003FEBB0 /* box_norm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box_norm.png; sourceTree = "<group>"; };
-		C09EB5CE15D9BD45003FEBB0 /* masha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = masha.png; sourceTree = "<group>"; };
-		C09EB5CF15D9BD45003FEBB0 /* mybooks_norm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mybooks_norm.png; sourceTree = "<group>"; };
 		C09EB5D615D9D7E8003FEBB0 /* tab-books copy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-books copy.png"; sourceTree = "<group>"; };
 		C0B3FF5F15742E41002DF30F /* Masha's Books.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Masha's Books.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0B3FF6315742E41002DF30F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -346,10 +354,14 @@
 		C09EB5CA15D9BD10003FEBB0 /* My Books */ = {
 			isa = PBXGroup;
 			children = (
-				C09EB5CC15D9BD45003FEBB0 /* box_arrow.png */,
-				C09EB5CD15D9BD45003FEBB0 /* box_norm.png */,
-				C09EB5CE15D9BD45003FEBB0 /* masha.png */,
-				C09EB5CF15D9BD45003FEBB0 /* mybooks_norm.png */,
+				C084559715DB093F0080732F /* box_arrow.png */,
+				C084558F15DB08D20080732F /* box_arrow@2x.png */,
+				C084559815DB093F0080732F /* box_norm.png */,
+				C084559015DB08D20080732F /* box_norm@2x.png */,
+				C084559915DB093F0080732F /* masha.png */,
+				C084559115DB08D20080732F /* masha@2x.png */,
+				C084559A15DB093F0080732F /* mybooks_norm.png */,
+				C084559215DB08D20080732F /* mybooks_norm@2x.png */,
 			);
 			name = "My Books";
 			sourceTree = "<group>";
@@ -526,15 +538,19 @@
 				BAE41B7A15CC622C00731C71 /* facebook.png in Resources */,
 				BAE41B7B15CC622C00731C71 /* twitter-bird-light-bgs.png in Resources */,
 				BAE41B7C15CC622C00731C71 /* Youtube_256x256.png in Resources */,
-				C09EB5D015D9BD45003FEBB0 /* box_arrow.png in Resources */,
-				C09EB5D115D9BD45003FEBB0 /* box_norm.png in Resources */,
-				C09EB5D215D9BD45003FEBB0 /* masha.png in Resources */,
-				C09EB5D315D9BD45003FEBB0 /* mybooks_norm.png in Resources */,
 				C09EB5D715D9D7E8003FEBB0 /* tab-books copy.png in Resources */,
 				C084558715DB03300080732F /* Default-Landscape~ipad.png in Resources */,
 				C084558A15DB03840080732F /* Default-Landscape@2x~ipad.png in Resources */,
 				C084558C15DB04090080732F /* icon@2x.png in Resources */,
 				C084558E15DB040C0080732F /* icon.png in Resources */,
+				C084559315DB08D20080732F /* box_arrow@2x.png in Resources */,
+				C084559415DB08D20080732F /* box_norm@2x.png in Resources */,
+				C084559515DB08D20080732F /* masha@2x.png in Resources */,
+				C084559615DB08D20080732F /* mybooks_norm@2x.png in Resources */,
+				C084559B15DB093F0080732F /* box_arrow.png in Resources */,
+				C084559C15DB093F0080732F /* box_norm.png in Resources */,
+				C084559D15DB093F0080732F /* masha.png in Resources */,
+				C084559E15DB093F0080732F /* mybooks_norm.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
