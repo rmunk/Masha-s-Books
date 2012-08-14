@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="Vx0-Iu-9ec">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11E53" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="Vx0-Iu-9ec">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
         <development defaultVersion="4200" identifier="xcode"/>
@@ -12,11 +12,11 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d2s-Tk-IWN" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="xHD-JE-7WU" customClass="PicturebookShopViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Nkw-7L-aac">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="719"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView tag="1" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="80" sectionHeaderHeight="22" sectionFooterHeight="22" id="r1X-TC-HH7">
-                                <rect key="frame" x="0.0" y="44" width="296" height="518"/>
+                                <rect key="frame" x="0.0" y="44" width="296" height="567"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -26,7 +26,7 @@
                                 </connections>
                             </tableView>
                             <tableView clipsSubviews="YES" tag="2" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="180" sectionHeaderHeight="22" sectionFooterHeight="22" id="PLS-8e-7AK">
-                                <rect key="frame" x="298" y="44" width="726" height="518"/>
+                                <rect key="frame" x="298" y="44" width="726" height="567"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -82,7 +82,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="-517" y="-706"/>
+            <point key="canvasLocation" x="1595" y="-778"/>
         </scene>
         <!--Settings View Controller - Settings-->
         <scene sceneID="0Fx-IG-xQZ">
@@ -94,34 +94,34 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="dZY-qB-msZ">
-                                <rect key="frame" x="0.0" y="44" width="379" height="612"/>
+                                <rect key="frame" x="0.0" y="44" width="380" height="611"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="NQE-2N-ueX">
-                                        <rect key="frame" x="0.0" y="22" width="379" height="44"/>
+                                        <rect key="frame" x="0.0" y="22" width="380" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="379" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="380" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="OKY-IH-NIE">
-                                        <rect key="frame" x="0.0" y="66" width="379" height="44"/>
+                                        <rect key="frame" x="0.0" y="66" width="380" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="379" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="380" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Vw5-rG-JlC">
-                                        <rect key="frame" x="0.0" y="110" width="379" height="44"/>
+                                        <rect key="frame" x="0.0" y="110" width="380" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="379" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="380" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -129,7 +129,7 @@
                                 </prototypes>
                             </tableView>
                             <view opaque="NO" contentMode="scaleToFill" id="Yqr-eZ-PAB">
-                                <rect key="frame" x="382" y="44" width="642" height="675"/>
+                                <rect key="frame" x="382" y="44" width="644" height="675"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
@@ -165,92 +165,6 @@
             </objects>
             <point key="canvasLocation" x="-517" y="178"/>
         </scene>
-        <!--Mashas Shop View Controller - Mashas Shop-->
-        <scene sceneID="enu-2I-eXJ">
-            <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="wuP-s6-Ygc" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="jag-f8-AEm" customClass="MashasShopViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="NSR-PE-tog">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="blackTranslucent" id="ZXr-3y-dg4">
-                                <rect key="frame" x="0.0" y="0.0" width="1024" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <items>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="rNw-1P-RZn"/>
-                                    <barButtonItem title="My Books" id="GVj-kz-hOG">
-                                        <connections>
-                                            <segue destination="3w0-9z-30H" kind="modal" modalTransitionStyle="flipHorizontal" id="q49-ZX-Jij"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem title="Masha's Shop" id="xKH-o5-eTL"/>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="CAu-q4-4C6"/>
-                                </items>
-                            </toolbar>
-                        </subviews>
-                        <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
-                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Mashas Shop" image="Shop.png" id="6mA-EY-eq2"/>
-                    <navigationItem key="navigationItem" id="NMk-Dx-Gsc"/>
-                </viewController>
-            </objects>
-            <point key="canvasLocation" x="-1757" y="1346"/>
-        </scene>
-        <!--My Books View Controller-->
-        <scene sceneID="Wck-Jl-O2X">
-            <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="IT5-pa-Wqu" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="3w0-9z-30H" customClass="MyBooksViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="FTN-ZK-vaL">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" id="KmF-wD-yrh" customClass="ScrollViewContainer">
-                                <rect key="frame" x="0.0" y="44" width="1024" height="724"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <subviews>
-                                    <scrollView opaque="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="Sa6-T2-e8W">
-                                        <rect key="frame" x="187" y="72" width="651" height="580"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="3w0-9z-30H" id="wJT-JH-sBv"/>
-                                        </connections>
-                                    </scrollView>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="scrollView" destination="Sa6-T2-e8W" id="tgU-Sr-F2w"/>
-                                </connections>
-                            </view>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="blackTranslucent" id="e8E-rL-FFc">
-                                <rect key="frame" x="0.0" y="0.0" width="1024" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <items>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="XbP-zh-rdq"/>
-                                    <barButtonItem title="My Books" id="P4M-ZG-QKE"/>
-                                    <barButtonItem title="Masha's Shop" id="EKY-he-7xi">
-                                        <connections>
-                                            <segue destination="jag-f8-AEm" kind="modal" modalTransitionStyle="flipHorizontal" id="Evh-BY-xjD"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="maZ-i6-Ebf"/>
-                                </items>
-                            </toolbar>
-                        </subviews>
-                        <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
-                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
-                    </view>
-                    <connections>
-                        <outlet property="scrollView" destination="Sa6-T2-e8W" id="I6Q-kw-DBe"/>
-                        <outlet property="scrollViewContainer" destination="KmF-wD-yrh" id="nFl-gi-9Mo"/>
-                    </connections>
-                </viewController>
-            </objects>
-            <point key="canvasLocation" x="-1757" y="347"/>
-        </scene>
         <!--My Books View Controller - My Books-->
         <scene sceneID="9NB-gE-jkU">
             <objects>
@@ -260,18 +174,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="719"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="mybooks_norm.png" id="SxL-kz-zDU">
+                                <rect key="frame" x="0.0" y="-24" width="1024" height="768"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </imageView>
                             <view contentMode="scaleToFill" id="lfJ-I4-Nyn" customClass="ScrollViewContainer">
-                                <rect key="frame" x="0.0" y="0.0" width="1024" height="719"/>
+                                <rect key="frame" x="6" y="-5" width="1024" height="719"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <scrollView opaque="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="Kdk-AG-gvB">
-                                        <rect key="frame" x="184" y="36" width="657" height="647"/>
+                                        <rect key="frame" x="74" y="202" width="897" height="371"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <outlet property="delegate" destination="i4c-PB-hBI" id="7vU-cM-S0p"/>
                                         </connections>
                                     </scrollView>
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="masha.png" id="EOM-rI-369">
+                                        <rect key="frame" x="506" y="-19" width="512" height="768"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -467,7 +389,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="939" y="-1166"/>
+            <point key="canvasLocation" x="-517" y="-762"/>
         </scene>
         <!--Table View Controller-->
         <scene sceneID="XAO-Wi-sC3">
@@ -499,7 +421,7 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="2305" y="-1610"/>
+            <point key="canvasLocation" x="697" y="-694"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="I8b-r3-gmp">
@@ -515,9 +437,8 @@
                     </tabBar>
                     <connections>
                         <segue destination="i4c-PB-hBI" kind="relationship" relationship="viewControllers" id="pul-tk-AYM"/>
-                        <segue destination="xHD-JE-7WU" kind="relationship" relationship="viewControllers" id="IRJ-s0-pV9"/>
-                        <segue destination="4VB-yG-v2V" kind="relationship" relationship="viewControllers" id="zJU-0Z-7mh"/>
                         <segue destination="qfq-Kt-d9p" kind="relationship" relationship="viewControllers" id="yFj-yF-39l"/>
+                        <segue destination="4VB-yG-v2V" kind="relationship" relationship="viewControllers" id="zJU-0Z-7mh"/>
                     </connections>
                 </tabBarController>
             </objects>
@@ -529,8 +450,54 @@
         <image name="Shop.png" width="30" height="30"/>
         <image name="Youtube_256x256.png" width="256" height="256"/>
         <image name="facebook.png" width="60" height="60"/>
+        <image name="masha.png" width="512" height="768"/>
+        <image name="mybooks_norm.png" width="1024" height="768"/>
         <image name="twitter-bird-light-bgs.png" width="300" height="300"/>
     </resources>
+    <classes>
+        <class className="MyBooksViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MyBooksViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="scrollViewContainer" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="PicturebookShopViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PicturebookShopViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="buyButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="shopRefreshButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="shopWebView" candidateClass="UIWebView"/>
+            </relationships>
+        </class>
+        <class className="ScrollViewContainer" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ScrollViewContainer.h"/>
+            <relationships>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+            </relationships>
+        </class>
+        <class className="SettingsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="restoreButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="ShopViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ShopViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="bookWebView" candidateClass="UIWebView"/>
+                <relationship kind="outlet" name="booksTableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="buyButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="categoryButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="downloadProgressView" candidateClass="UIProgressView"/>
+                <relationship kind="outlet" name="facebookButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="priceLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="thumbImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="twitterButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="youtubeButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <nil key="statusBar"/>
         <simulatedOrientationMetrics key="orientation" orientation="landscapeRight"/>

@@ -71,15 +71,22 @@
         CGRect frame = self.scrollView.bounds;
         frame.origin.x = frame.size.width * page;
         frame.origin.y = 0.0f;
-        frame = CGRectInset(frame, 50.0f, 0.0f);
         
-        Book *book = [self.myBooks objectAtIndex:page];
-        UIImageView *newCoverView = [[UIImageView alloc] initWithImage:book.coverImage.image];
-        newCoverView.contentMode = UIViewContentModeScaleAspectFit;
+        UIImageView *newCoverView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"box_arrow.png"]];
+        newCoverView.contentMode = UIViewContentModeTopLeft;
         newCoverView.frame = frame;
         newCoverView.tag = page;
         newCoverView.userInteractionEnabled = YES;
         [newCoverView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userTappedImage:)]];
+ 
+        Book *book = [self.myBooks objectAtIndex:page];
+        UIImageView *bookCover = [[UIImageView alloc] initWithImage:book.coverImage.image];
+        bookCover.contentMode = UIViewContentModeScaleToFill;
+        frame = CGRectMake(newCoverView.bounds.origin.x, newCoverView.bounds.origin.y, newCoverView.image.size.width - 35, newCoverView.bounds.size.height);
+        frame = CGRectInset(frame, 30.0f, 30.0f);
+        bookCover.frame = frame;
+        [newCoverView insertSubview:bookCover atIndex:0];
+
         [self.scrollView addSubview:newCoverView];
         [self.coverViews replaceObjectAtIndex:page withObject:newCoverView];
     }
@@ -163,11 +170,11 @@
     NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
     url = [url URLByAppendingPathComponent:@"Library"];
     self.library = [[UIManagedDocument alloc] initWithFileURL:url];
+    [self getMyBooks];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self getMyBooks];
 }
 
 - (void)viewDidUnload {
