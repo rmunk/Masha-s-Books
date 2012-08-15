@@ -53,7 +53,7 @@
 
 - (PicturebookShop *)initShop {
     self = [super init];
-    self.shopURL = [[NSURL alloc] initWithString:@"http://www.mashasbooks.com/storeops/bookstore-xml.aspx"];
+    self.shopURL = [[NSURL alloc] initWithString:@"http://www.mashasbookstore.com/storeops/bookstore-xml.aspx"];
     //_shopURL = [[NSURL alloc] initWithString:@"http://dl.dropbox.com/u/286270/PicturebookShop.xml"];
     
     // Init library database UIManagedDocument
