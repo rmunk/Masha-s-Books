@@ -321,7 +321,7 @@
         [Book linkBooksToCategoriesWithLinker:self.categoryToBookMap inContext:self.libraryDatabase.managedObjectContext];
         [Book linkBooksToAuthorsInContext:self.libraryDatabase.managedObjectContext];
         // fillBookWithCovers
-        [Book loadCoversFromURL:@"http://www.mashasbooks.com/covers/" forShop:self];
+        [Book loadCoversFromURL:@"http://www.mashasbookstore.com/covers/" forShop:self];
         NSLog(@"Books covers downloaded!");
         
         // save database
@@ -342,7 +342,7 @@
 
 - (void)bookExtractorDidAddPagesToBook:(NSNotification*)pagesAddedNotification 
 {
-	[self.libraryDatabase.managedObjectContext mergeChangesFromContextDidSaveNotification:pagesAddedNotification];	
+	[self.libraryDatabase.managedObjectContext mergeChangesFromContextDidSaveNotification:pagesAddedNotification];
     NSLog(@"Extracted book pages saved to database.");
 }
 
@@ -362,6 +362,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"BookExtracted" object:nil];
     } else {
         NSLog(@"Shop: Book %@ extracting error", book.title);
+        [[[UIAlertView alloc] initWithTitle:@"Download Error" message:@"There was an error downloading book. Please try again." delegate:nil cancelButtonTitle:@"OK"otherButtonTitles:nil] show];
     }
 }
 

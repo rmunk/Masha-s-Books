@@ -12,6 +12,9 @@
 @interface BooksTableCell : UITableViewCell
 
 @property (readonly) CGFloat cellHeight;
+@property (weak, nonatomic) IBOutlet UIImageView *coverImage;
+@property (weak, nonatomic) IBOutlet UILabel *bookTitle;
+@property (weak, nonatomic) IBOutlet UITextView *shortDescription;
 
 - (id)initWithFrame:(CGRect)frame forBook:(Book *)book;
 

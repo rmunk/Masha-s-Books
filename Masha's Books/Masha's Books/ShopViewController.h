@@ -13,7 +13,7 @@
 #import "BookExtractor.h"
 #import "BooksTableCell.h"
 
-#define BOOKCELL_HEIGHT 150
+#define BOOKCELL_HEIGHT 200
 
 
 @interface ShopViewController : UIViewController

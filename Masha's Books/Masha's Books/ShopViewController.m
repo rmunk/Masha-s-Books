@@ -165,14 +165,33 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {  
     static NSString *CellIdentifier = @"BooksTableCell";        
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        
-    CGRect bookCellFrame = CGRectMake(0, 0, tableView.bounds.size.width, BOOKCELL_HEIGHT);
-    
+    BooksTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (!cell) {
+        cell = [[BooksTableCell alloc] initWithStyle:UITableViewCellStyleSubtitle
+                                      reuseIdentifier:CellIdentifier];
+    }
     Book *book = [[self.picturebookShop getBooksForSelectedCategory] objectAtIndex:indexPath.row];
-    if (cell == nil) 
-        cell = [[BooksTableCell alloc] initWithFrame:bookCellFrame forBook:book];
-  
+    cell.coverImage.image = book.coverThumbnailImage;
+    cell.bookTitle.text = book.title;
+    cell.shortDescription.text = book.descriptionHTML;
+    
+    //        self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"box.png"]];
+    //        self.backgroundView.contentMode = UIViewContentModeTopLeft;
+    //        self.selectedBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"box_sel"]];
+    //        self.selectedBackgroundView.contentMode = UIViewContentModeTopLeft;
+//    cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"box.png"]];
+//    cell.backgroundView.contentMode = UIViewContentModeTopLeft;
+//    cell.selectedBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"box_sel.png"]];
+//    cell.selectedBackgroundView.contentMode = UIViewContentModeTopLeft;
+//    
+    return cell;
+    
+//    CGRect bookCellFrame = CGRectMake(0, 0, tableView.bounds.size.width, BOOKCELL_HEIGHT);
+//    
+//    Book *book = [[self.picturebookShop getBooksForSelectedCategory] objectAtIndex:indexPath.row];
+//    if (cell == nil) 
+//        cell = [[BooksTableCell alloc] initWithFrame:bookCellFrame forBook:book];
+//  
     return cell;
     
        

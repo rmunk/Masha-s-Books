@@ -310,7 +310,7 @@
 
 - (void)downloadBookZipFileforShop:(PicturebookShop *)shop
 {
-  /*  NSURL *zipURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.mashasbooks.com%@",self.downloadURL]];
+  /*  NSURL *zipURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.mashasbookstore.com%@",self.downloadURL]];
     NSString *file = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"tmp/%@",self.downloadURL.lastPathComponent]];
     
     BookExtractor *bookExtractor = [[BookExtractor alloc] initExtractorWithUrl:zipURL];

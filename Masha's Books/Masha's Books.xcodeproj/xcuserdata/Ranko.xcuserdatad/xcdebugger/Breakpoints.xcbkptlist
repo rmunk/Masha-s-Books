@@ -46,19 +46,6 @@
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Masha&apos;s Books/BookExtractor.m"
-         timestampString = "364076181.485832"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "123"
-         endingLineNumber = "123"
-         landmarkName = "-extractBookFromFile:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
          filePath = "Masha&apos;s Books/SLiKOVNICA/SlikovnicaRootViewController.m"
          timestampString = "364347078.056443"
          startingColumnNumber = "9223372036854775807"
@@ -79,6 +66,19 @@
          startingLineNumber = "197"
          endingLineNumber = "197"
          landmarkName = "-userTappedImage:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Masha&apos;s Books/BooksTableCell.m"
+         timestampString = "366768358.156785"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "53"
+         endingLineNumber = "53"
+         landmarkName = "-initWithFrame:forBook:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
