@@ -60,7 +60,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Masha&apos;s Books/MyBooksViewController.m"
-         timestampString = "366681654.665333"
+         timestampString = "366850635.921577"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "197"
@@ -79,6 +79,19 @@
          startingLineNumber = "53"
          endingLineNumber = "53"
          landmarkName = "-initWithFrame:forBook:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Masha&apos;s Books/MyBooksViewController.m"
+         timestampString = "366850635.921577"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "226"
+         endingLineNumber = "226"
+         landmarkName = "-scrollViewDidEndDecelerating:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

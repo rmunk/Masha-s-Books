@@ -82,6 +82,12 @@
 		C08EB23915DB1D3D002FFD82 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C08EB23815DB1D3D002FFD82 /* MessageUI.framework */; };
 		C090C3CF15A10A5A001246FF /* UIImageToDataTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = C090C3CE15A10A59001246FF /* UIImageToDataTransformer.m */; };
 		C090C3D015A10A5A001246FF /* UIImageToDataTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = C090C3CE15A10A59001246FF /* UIImageToDataTransformer.m */; };
+		C090CA5115DD83D900949A4D /* tab-mybooks.png in Resources */ = {isa = PBXBuildFile; fileRef = C090CA4B15DD83D900949A4D /* tab-mybooks.png */; };
+		C090CA5215DD83D900949A4D /* tab-mybooks@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C090CA4C15DD83D900949A4D /* tab-mybooks@2x.png */; };
+		C090CA5315DD83D900949A4D /* tab-settings.png in Resources */ = {isa = PBXBuildFile; fileRef = C090CA4D15DD83D900949A4D /* tab-settings.png */; };
+		C090CA5415DD83D900949A4D /* tab-settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C090CA4E15DD83D900949A4D /* tab-settings@2x.png */; };
+		C090CA5515DD83D900949A4D /* tab-store.png in Resources */ = {isa = PBXBuildFile; fileRef = C090CA4F15DD83D900949A4D /* tab-store.png */; };
+		C090CA5615DD83D900949A4D /* tab-store@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C090CA5015DD83D900949A4D /* tab-store@2x.png */; };
 		C093EB23159E63F800035D20 /* BookExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = C093EB22159E63F800035D20 /* BookExtractor.m */; };
 		C093EB24159E63F800035D20 /* BookExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = C093EB22159E63F800035D20 /* BookExtractor.m */; };
 		C093EB52159E775C00035D20 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = C093EB48159E775C00035D20 /* ioapi.c */; };
@@ -218,6 +224,12 @@
 		C08EB23815DB1D3D002FFD82 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		C090C3CD15A10A59001246FF /* UIImageToDataTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageToDataTransformer.h; sourceTree = "<group>"; };
 		C090C3CE15A10A59001246FF /* UIImageToDataTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageToDataTransformer.m; sourceTree = "<group>"; };
+		C090CA4B15DD83D900949A4D /* tab-mybooks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tab-mybooks.png"; path = "../../Grafika/tab-mybooks.png"; sourceTree = "<group>"; };
+		C090CA4C15DD83D900949A4D /* tab-mybooks@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tab-mybooks@2x.png"; path = "../../Grafika/tab-mybooks@2x.png"; sourceTree = "<group>"; };
+		C090CA4D15DD83D900949A4D /* tab-settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tab-settings.png"; path = "../../Grafika/tab-settings.png"; sourceTree = "<group>"; };
+		C090CA4E15DD83D900949A4D /* tab-settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tab-settings@2x.png"; path = "../../Grafika/tab-settings@2x.png"; sourceTree = "<group>"; };
+		C090CA4F15DD83D900949A4D /* tab-store.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tab-store.png"; path = "../../Grafika/tab-store.png"; sourceTree = "<group>"; };
+		C090CA5015DD83D900949A4D /* tab-store@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tab-store@2x.png"; path = "../../Grafika/tab-store@2x.png"; sourceTree = "<group>"; };
 		C093EB21159E63F800035D20 /* BookExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookExtractor.h; sourceTree = "<group>"; };
 		C093EB22159E63F800035D20 /* BookExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BookExtractor.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		C093EB47159E775C00035D20 /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
@@ -451,6 +463,12 @@
 				C084558B15DB04090080732F /* icon@2x.png */,
 				C08EB22915DB1394002FFD82 /* mail.png */,
 				C08EB23115DB13A5002FFD82 /* mail@2x.png */,
+				C090CA4B15DD83D900949A4D /* tab-mybooks.png */,
+				C090CA4C15DD83D900949A4D /* tab-mybooks@2x.png */,
+				C090CA4D15DD83D900949A4D /* tab-settings.png */,
+				C090CA4E15DD83D900949A4D /* tab-settings@2x.png */,
+				C090CA4F15DD83D900949A4D /* tab-store.png */,
+				C090CA5015DD83D900949A4D /* tab-store@2x.png */,
 				C08EB22A15DB1394002FFD82 /* twitter1.png */,
 				C08EB23215DB13A5002FFD82 /* twitter1@2x.png */,
 				C08EB22B15DB1394002FFD82 /* web.png */,
@@ -691,6 +709,12 @@
 				C0899EC615DBCDDF0007FE8E /* store_back@2x.png in Resources */,
 				C0899EC715DBCDDF0007FE8E /* tweet@2x.png in Resources */,
 				C0899EC915DBCE570007FE8E /* store setup.png in Resources */,
+				C090CA5115DD83D900949A4D /* tab-mybooks.png in Resources */,
+				C090CA5215DD83D900949A4D /* tab-mybooks@2x.png in Resources */,
+				C090CA5315DD83D900949A4D /* tab-settings.png in Resources */,
+				C090CA5415DD83D900949A4D /* tab-settings@2x.png in Resources */,
+				C090CA5515DD83D900949A4D /* tab-store.png in Resources */,
+				C090CA5615DD83D900949A4D /* tab-store@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

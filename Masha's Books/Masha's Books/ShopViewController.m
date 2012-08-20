@@ -26,6 +26,7 @@
 @synthesize twitterButton = _twitterButton;
 @synthesize youtubeButton = _youtubeButton;
 @synthesize downloadProgressView = _downloadProgressView;
+@synthesize bookTitleLabel = _bookTitleLabel;
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize picturebookShop = _picturebookShop;
 @synthesize bookExtractor = _bookExtractor;
@@ -89,6 +90,7 @@
     [self setYoutubeButton:nil];
     [self setDownloadProgressView:nil];
     [self setBooksTableView:nil];
+    [self setBookTitleLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -207,6 +209,8 @@
     //[self.picturebookShop userSelectsCategoryAtIndex:indexPath.row];
     Book *book = [[self.picturebookShop getBooksForSelectedCategory] objectAtIndex:indexPath.row];
     self.thumbImageView.image = book.coverThumbnailImage;
+    self.bookTitleLabel.text = book.title;
+//    self.priceLabel.text = book.price;
     [self.bookWebView loadHTMLString:book.descriptionLongHTML baseURL:nil];
     
 }

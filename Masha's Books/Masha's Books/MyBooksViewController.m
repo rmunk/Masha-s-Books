@@ -84,7 +84,7 @@
         UIImageView *bookCover = [[UIImageView alloc] initWithImage:book.coverImage.image];
         bookCover.contentMode = UIViewContentModeScaleToFill;
         frame = CGRectMake(newCoverView.bounds.origin.x, newCoverView.bounds.origin.y, newCoverView.image.size.width - 35, newCoverView.bounds.size.height);
-        frame = CGRectInset(frame, 30.0f, 30.0f);
+        frame = CGRectInset(frame, 50.0f, 32.0f);
         bookCover.frame = frame;
         [newCoverView insertSubview:bookCover atIndex:0];
 
@@ -220,6 +220,11 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView 
 {
     [self loadVisiblePages];
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    
 }
 
 #pragma mark - Top Buttons

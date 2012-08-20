@@ -27,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *twitterButton;
 @property (weak, nonatomic) IBOutlet UIButton *youtubeButton;
 @property (weak, nonatomic) IBOutlet UIProgressView *downloadProgressView;
+@property (weak, nonatomic) IBOutlet UILabel *bookTitleLabel;
 
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
