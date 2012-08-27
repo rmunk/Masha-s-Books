@@ -365,7 +365,7 @@
                                 </state>
                                 <connections>
                                     <action selector="categorySelection:" destination="qfq-Kt-d9p" eventType="touchUpInside" id="qO5-H6-NDe"/>
-                                    <segue destination="oOe-2c-AvR" kind="popover" popoverAnchorView="a5l-9e-Uj7" id="TFc-Sl-feU">
+                                    <segue destination="oOe-2c-AvR" kind="popover" identifier="segueToCategoryTable" popoverAnchorView="a5l-9e-Uj7" id="TFc-Sl-feU">
                                         <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                                     </segue>
                                 </connections>

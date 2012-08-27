@@ -12,6 +12,7 @@
 #import "Category.h"
 #import "BookExtractor.h"
 #import "BooksTableCell.h"
+#import "CategoryTableViewController.h"
 
 #define BOOKCELL_HEIGHT 200
 

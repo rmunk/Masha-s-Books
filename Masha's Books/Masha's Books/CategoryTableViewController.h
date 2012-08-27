@@ -15,5 +15,6 @@
 
 @property (nonatomic, strong) PicturebookShop *shop;
 @property (nonatomic, strong) UIManagedDocument *libraryDatabase;
+@property (nonatomic, strong) NSOrderedSet *categories;
 
 @end

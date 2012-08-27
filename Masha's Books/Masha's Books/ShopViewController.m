@@ -231,6 +231,14 @@
     
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"segueToCategoryTable"]) {
+        CategoryTableViewController *controller = (CategoryTableViewController *)segue.destinationViewController;
+        controller.categories = [Category getAllCategoriesFromContext:self.managedObjectContext];
+    }
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     if (interfaceOrientation == UIInterfaceOrientationLandscapeLeft || interfaceOrientation == UIInterfaceOrientationLandscapeRight) {

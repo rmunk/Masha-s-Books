@@ -16,12 +16,13 @@
 
 @synthesize shop = _shop;
 @synthesize libraryDatabase = _libraryDatabase;
+@synthesize categories = _categories;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
+    
     }
     return self;
 }
@@ -68,9 +69,8 @@
 {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    NSOrderedSet *categories = [Category getAllCategoriesFromContext:self.libraryDatabase.managedObjectContext];
-    NSLog(@"Number of categories is %d", categories.count);
-    return categories.count;
+    
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
