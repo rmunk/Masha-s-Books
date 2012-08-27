@@ -31,10 +31,6 @@
 {
     [super viewDidLoad];
     
-    NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-    url = [url URLByAppendingPathComponent:@"Library"];
-    self.libraryDatabase = [[UIManagedDocument alloc] initWithFileURL:url];
-    
     NSLog(@"Opening category table...");
 
     // Uncomment the following line to preserve selection between presentations.
@@ -69,21 +65,21 @@
 {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
+    NSLog(@"Number of categories passed: %d", self.categories.count);
     
-    return 0;
+    return self.categories.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    NSOrderedSet *categories = [Category getAllCategoriesFromContext:self.libraryDatabase.managedObjectContext];
     
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
                                      reuseIdentifier:CellIdentifier];
     }
-    Category *category = [categories objectAtIndex:indexPath.row];
+    Category *category = [self.categories objectAtIndex:indexPath.row];
     cell.textLabel.text = category.name;
     NSLog(@"Category in table: %@", category.name);
     
@@ -136,13 +132,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    Category *category = [self.categories objectAtIndex:indexPath.row];
+    NSLog(@"Category %@ tapped", category.name);
+    [self.navigationController popViewControllerAnimated:YES];
+    
 }
 
 @end

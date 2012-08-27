@@ -235,7 +235,9 @@
 {
     if ([segue.identifier isEqualToString:@"segueToCategoryTable"]) {
         CategoryTableViewController *controller = (CategoryTableViewController *)segue.destinationViewController;
-        controller.categories = [Category getAllCategoriesFromContext:self.managedObjectContext];
+        controller.categories = [Category getAllCategoriesFromContext:self.picturebookShop.libraryDatabase.managedObjectContext];
+        NSLog(@"Number of categories passed: %d", controller.categories.count);
+        
     }
 }
 
