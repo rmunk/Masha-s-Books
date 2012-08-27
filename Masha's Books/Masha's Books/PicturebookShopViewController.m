@@ -104,7 +104,7 @@
     
     [self.picturebookShop userSelectsBook:sender.bookForCover];
     
-    [self.shopWebView loadHTMLString:sender.bookForCover.descriptionLongHTML baseURL:nil];
+    [self.shopWebView loadHTMLString:sender.bookForCover.descriptionString baseURL:nil];
 
 //    self.selectedCoverTumbnailView.image = sender.bookForCover.coverThumbnailImage;
  //   [self.selectedCoverTumbnailView setContentMode:UIViewContentModeScaleAspectFit];

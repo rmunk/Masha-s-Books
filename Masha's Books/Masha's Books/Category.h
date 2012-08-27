@@ -2,7 +2,7 @@
 //  Category.h
 //  Masha's Books
 //
-//  Created by Ranko Munk on 7/4/12.
+//  Created by Luka Miljak on 8/23/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -15,6 +15,8 @@
 
 @property (nonatomic, retain) NSNumber * categoryID;
 @property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSString * bgImageURL;
+@property (nonatomic, retain) id bgImage;
 @property (nonatomic, retain) NSOrderedSet *books;
 @end
 

@@ -137,7 +137,11 @@
         
         NSURL *coverThumbnailURL = [[NSURL alloc] initWithString:
                                         [NSString stringWithFormat:@"%@%d%@", 
-                                         coverUrlString, [book.bookID intValue], @"_t.jpg"]];
+                                         coverUrlString, [book.bookID intValue], @"_s.jpg"]];
+        
+        NSURL *coverThumbnailMediumURL = [[NSURL alloc] initWithString:
+                                    [NSString stringWithFormat:@"%@%d%@", 
+                                     coverUrlString, [book.bookID intValue], @"_m.jpg"]];
         
         NSLog(@"Downloading cover images for book %@", book.title);
             
@@ -145,13 +149,15 @@
         dispatch_queue_t downloadQueue = dispatch_queue_create("image download", NULL);
         dispatch_async(downloadQueue, ^{
                 
-            UIImage *coverThumbnailUImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:coverThumbnailURL]];
+            UIImage *coverThumbnailImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:coverThumbnailURL]];
+            UIImage *coverThumbnailUImageMedium = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:coverThumbnailMediumURL]];
                 
                  
             dispatch_async(dispatch_get_main_queue(), ^{                    
-                if (coverThumbnailUImage) {                                    
+                if (coverThumbnailImage && coverThumbnailUImageMedium) {                                    
                     //coverImage.image = coverUImage;                        
-                    book.coverThumbnailImage = coverThumbnailUImage;
+                    book.coverThumbnailImage = coverThumbnailImage;
+                    book.coverThumbnailImageMedium = coverThumbnailUImageMedium;
                     //book.coverImage = coverImage;
                     
                     //[self shopDataLoaded];
@@ -251,12 +257,8 @@
 }
 
 - (void)fillBookElement:(NSString *)element withDescription:(NSString *)description {
-    if ([element isEqualToString:@"DescriptionHTML"]) {
-        self.descriptionHTML = description;
-    }
-    else if ([element isEqualToString:@"DescriptionLongHTML"]) {
-        self.descriptionLongHTML = description;
-    }
+    if ([element isEqualToString:@"Description"]) 
+        self.descriptionString = description;
 }
 
 - (void)pickYourCategoriesFromLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context {

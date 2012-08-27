@@ -52,7 +52,6 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
 	[super viewDidLoad];
 
     self.allPicturebookCovers = [[NSMutableArray alloc] init];
@@ -98,8 +97,9 @@
 }
 - (IBAction)bookBought:(UIButton *)sender {
   
-    //Book *bookJustBought = [self.picturebookShop getSelectedBook]; 
-    //[self.bookExtractor addBookToQue:bookJustBought];
+    Book *bookJustBought = [self.picturebookShop getSelectedBook]; 
+    NSLog(@"Buying book %@", bookJustBought.title);
+    [self.bookExtractor addBookToQue:bookJustBought];
     //[self.booksTableView reloadData];
 }
 - (IBAction)goToFacebookPage:(UIButton *)sender {
@@ -175,7 +175,7 @@
     Book *book = [[self.picturebookShop getBooksForSelectedCategory] objectAtIndex:indexPath.row];
     cell.coverImage.image = book.coverThumbnailImage;
     cell.bookTitle.text = book.title;
-    cell.shortDescription.text = book.descriptionHTML;
+    cell.shortDescription.text = book.descriptionString;
     
     //        self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"box.png"]];
     //        self.backgroundView.contentMode = UIViewContentModeTopLeft;
@@ -186,7 +186,6 @@
 //    cell.selectedBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"box_sel.png"]];
 //    cell.selectedBackgroundView.contentMode = UIViewContentModeTopLeft;
 //    
-    return cell;
     
 //    CGRect bookCellFrame = CGRectMake(0, 0, tableView.bounds.size.width, BOOKCELL_HEIGHT);
 //    
@@ -208,10 +207,27 @@
     [self.allPicturebookCovers removeAllObjects];
     //[self.picturebookShop userSelectsCategoryAtIndex:indexPath.row];
     Book *book = [[self.picturebookShop getBooksForSelectedCategory] objectAtIndex:indexPath.row];
-    self.thumbImageView.image = book.coverThumbnailImage;
+    
+    [self.picturebookShop userSelectsBook:book];
+    
+    self.thumbImageView.image = book.coverThumbnailImageMedium;
     self.bookTitleLabel.text = book.title;
+    
+    NSString *siteURL = @"http://www.mashasbookstore.com/storeops/story-long-description.aspx?id=";
+    NSString *urlAddress = [siteURL stringByAppendingString:[NSString stringWithFormat:@"%d", [book.bookID intValue]]];
+    
+    
+    
+    //Create a URL object.
+    NSURL *url = [NSURL URLWithString:urlAddress];
+    
+    //URL Requst Object
+    NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
+    
+    //Load the request in the UIWebView.
+    [self.bookWebView loadRequest:requestObj];
 //    self.priceLabel.text = book.price;
-    [self.bookWebView loadHTMLString:book.descriptionLongHTML baseURL:nil];
+//    [self.bookWebView loadHTMLString:book.descriptionLongHTML baseURL:nil];
     
 }
 

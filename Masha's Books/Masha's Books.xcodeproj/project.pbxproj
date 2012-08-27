@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BA05ED4615EAAF5F00B0220E /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = BA05ED4515EAAF5F00B0220E /* Book.m */; };
+		BA0E4E1115EBFF3700012F17 /* CategoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0E4E1015EBFF3700012F17 /* CategoryTableViewController.m */; };
+		BA523BB615E6D1B4008617AB /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = BA523BB515E6D1B4008617AB /* Category.m */; };
+		BA523BBA15E6D1CD008617AB /* Info.m in Sources */ = {isa = PBXBuildFile; fileRef = BA523BB915E6D1CD008617AB /* Info.m */; };
+		BA523BBD15E6D1CD008617AB /* Design.m in Sources */ = {isa = PBXBuildFile; fileRef = BA523BBC15E6D1CD008617AB /* Design.m */; };
 		BA8B446C15A387650098F063 /* Author+Addon.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8B446715A387650098F063 /* Author+Addon.m */; };
 		BA8B446D15A387650098F063 /* Book+Addon.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8B446915A387650098F063 /* Book+Addon.m */; };
 		BA8B446E15A387650098F063 /* Category+Addon.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8B446B15A387650098F063 /* Category+Addon.m */; };
@@ -21,7 +26,6 @@
 		BAE41B7A15CC622C00731C71 /* facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = BAE41B7715CC622C00731C71 /* facebook.png */; };
 		BAE41B7B15CC622C00731C71 /* twitter-bird-light-bgs.png in Resources */ = {isa = PBXBuildFile; fileRef = BAE41B7815CC622C00731C71 /* twitter-bird-light-bgs.png */; };
 		BAE41B7C15CC622C00731C71 /* Youtube_256x256.png in Resources */ = {isa = PBXBuildFile; fileRef = BAE41B7915CC622C00731C71 /* Youtube_256x256.png */; };
-		BAF45EA815C5663900A461FC /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF45EA715C5663900A461FC /* Book.m */; };
 		BAF45EAB15C5F20C00A461FC /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAF45EAA15C5F20C00A461FC /* StoreKit.framework */; };
 		BAF45EAE15C725DB00A461FC /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF45EAD15C725DB00A461FC /* SettingsViewController.m */; };
 		C00383721575510F00999A19 /* ScrollViewContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = C00383711575510F00999A19 /* ScrollViewContainer.m */; };
@@ -118,7 +122,6 @@
 		C0D7109D15AF8E96008A39EF /* Page.m in Sources */ = {isa = PBXBuildFile; fileRef = C0D7109C15AF8E96008A39EF /* Page.m */; };
 		C0E5CE4615A3B1C20049978B /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = C0E5CE4515A3B1C20049978B /* Image.m */; };
 		C0E5CE4915A3B1C30049978B /* Author.m in Sources */ = {isa = PBXBuildFile; fileRef = C0E5CE4815A3B1C30049978B /* Author.m */; };
-		C0E5CE4F15A3B1C30049978B /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = C0E5CE4E15A3B1C30049978B /* Category.m */; };
 		C0E5CE5E15A3D02B0049978B /* Book+XcodeBugFix.m in Sources */ = {isa = PBXBuildFile; fileRef = C0E5CE5D15A3D02B0049978B /* Book+XcodeBugFix.m */; };
 /* End PBXBuildFile section */
 
@@ -133,6 +136,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BA05ED4415EAAF5F00B0220E /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Book.h; sourceTree = "<group>"; };
+		BA05ED4515EAAF5F00B0220E /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Book.m; sourceTree = "<group>"; };
+		BA0E4E0F15EBFF3700012F17 /* CategoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryTableViewController.h; sourceTree = "<group>"; };
+		BA0E4E1015EBFF3700012F17 /* CategoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryTableViewController.m; sourceTree = "<group>"; };
+		BA523BB415E6D1B4008617AB /* Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Category.h; sourceTree = "<group>"; };
+		BA523BB515E6D1B4008617AB /* Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Category.m; sourceTree = "<group>"; };
+		BA523BB815E6D1CD008617AB /* Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Info.h; path = ../Info.h; sourceTree = "<group>"; };
+		BA523BB915E6D1CD008617AB /* Info.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Info.m; path = ../Info.m; sourceTree = "<group>"; };
+		BA523BBB15E6D1CD008617AB /* Design.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Design.h; path = ../Design.h; sourceTree = "<group>"; };
+		BA523BBC15E6D1CD008617AB /* Design.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Design.m; path = ../Design.m; sourceTree = "<group>"; };
 		BA8B446615A387650098F063 /* Author+Addon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Author+Addon.h"; sourceTree = "<group>"; };
 		BA8B446715A387650098F063 /* Author+Addon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Author+Addon.m"; sourceTree = "<group>"; };
 		BA8B446815A387650098F063 /* Book+Addon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Book+Addon.h"; sourceTree = "<group>"; };
@@ -157,8 +170,6 @@
 		BAE41B7715CC622C00731C71 /* facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook.png; sourceTree = "<group>"; };
 		BAE41B7815CC622C00731C71 /* twitter-bird-light-bgs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "twitter-bird-light-bgs.png"; sourceTree = "<group>"; };
 		BAE41B7915CC622C00731C71 /* Youtube_256x256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Youtube_256x256.png; sourceTree = "<group>"; };
-		BAF45EA615C5663900A461FC /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Book.h; sourceTree = "<group>"; };
-		BAF45EA715C5663900A461FC /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Book.m; sourceTree = "<group>"; };
 		BAF45EAA15C5F20C00A461FC /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		BAF45EAC15C725DB00A461FC /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		BAF45EAD15C725DB00A461FC /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
@@ -275,8 +286,6 @@
 		C0E5CE4515A3B1C20049978B /* Image.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Image.m; sourceTree = "<group>"; };
 		C0E5CE4715A3B1C20049978B /* Author.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Author.h; sourceTree = "<group>"; };
 		C0E5CE4815A3B1C30049978B /* Author.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Author.m; sourceTree = "<group>"; };
-		C0E5CE4D15A3B1C30049978B /* Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Category.h; sourceTree = "<group>"; };
-		C0E5CE4E15A3B1C30049978B /* Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Category.m; sourceTree = "<group>"; };
 		C0E5CE5C15A3D02B0049978B /* Book+XcodeBugFix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Book+XcodeBugFix.h"; sourceTree = "<group>"; };
 		C0E5CE5D15A3D02B0049978B /* Book+XcodeBugFix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Book+XcodeBugFix.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -329,6 +338,8 @@
 				BAE41B7515CB218200731C71 /* ShopViewController.m */,
 				BA8C843F15CC862000461861 /* BooksTableCell.h */,
 				BA8C844015CC862000461861 /* BooksTableCell.m */,
+				BA0E4E0F15EBFF3700012F17 /* CategoryTableViewController.h */,
+				BA0E4E1015EBFF3700012F17 /* CategoryTableViewController.m */,
 			);
 			name = PicturebookShop;
 			sourceTree = "<group>";
@@ -352,15 +363,19 @@
 		C08247061576870C00054A3A /* LibraryDataModel */ = {
 			isa = PBXGroup;
 			children = (
-				C0E5CE4D15A3B1C30049978B /* Category.h */,
-				C0E5CE4E15A3B1C30049978B /* Category.m */,
+				BA523BBB15E6D1CD008617AB /* Design.h */,
+				BA523BBC15E6D1CD008617AB /* Design.m */,
+				BA523BB815E6D1CD008617AB /* Info.h */,
+				BA523BB915E6D1CD008617AB /* Info.m */,
 				C0E5CE4715A3B1C20049978B /* Author.h */,
 				C0E5CE4815A3B1C30049978B /* Author.m */,
 				C0E5CE4415A3B1C20049978B /* Image.h */,
 				C0E5CE4515A3B1C20049978B /* Image.m */,
+				BA05ED4415EAAF5F00B0220E /* Book.h */,
+				BA05ED4515EAAF5F00B0220E /* Book.m */,
 				C08246EB157680E900054A3A /* Library.xcdatamodeld */,
-				BAF45EA615C5663900A461FC /* Book.h */,
-				BAF45EA715C5663900A461FC /* Book.m */,
+				BA523BB415E6D1B4008617AB /* Category.h */,
+				BA523BB515E6D1B4008617AB /* Category.m */,
 				C0D7109B15AF8E96008A39EF /* Page.h */,
 				C0D7109C15AF8E96008A39EF /* Page.m */,
 				BA8B446615A387650098F063 /* Author+Addon.h */,
@@ -776,14 +791,17 @@
 				BA8B446E15A387650098F063 /* Category+Addon.m in Sources */,
 				C0E5CE4615A3B1C20049978B /* Image.m in Sources */,
 				C0E5CE4915A3B1C30049978B /* Author.m in Sources */,
-				C0E5CE4F15A3B1C30049978B /* Category.m in Sources */,
 				C0E5CE5E15A3D02B0049978B /* Book+XcodeBugFix.m in Sources */,
 				BA8B449115A4D5BD0098F063 /* CategoryToBookMap.m in Sources */,
 				C0D7109D15AF8E96008A39EF /* Page.m in Sources */,
-				BAF45EA815C5663900A461FC /* Book.m in Sources */,
 				BAF45EAE15C725DB00A461FC /* SettingsViewController.m in Sources */,
 				BAE41B7615CB218200731C71 /* ShopViewController.m in Sources */,
 				BA8C844115CC862000461861 /* BooksTableCell.m in Sources */,
+				BA523BB615E6D1B4008617AB /* Category.m in Sources */,
+				BA523BBA15E6D1CD008617AB /* Info.m in Sources */,
+				BA523BBD15E6D1CD008617AB /* Design.m in Sources */,
+				BA05ED4615EAAF5F00B0220E /* Book.m in Sources */,
+				BA0E4E1115EBFF3700012F17 /* CategoryTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

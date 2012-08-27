@@ -2,7 +2,7 @@
 //  Book.h
 //  Masha's Books
 //
-//  Created by Luka Miljak on 7/29/12.
+//  Created by Luka Miljak on 8/26/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -19,17 +19,20 @@
 @property (nonatomic, retain) NSData * backgroundMusic;
 @property (nonatomic, retain) NSNumber * bookID;
 @property (nonatomic, retain) UIImage *coverThumbnailImage;
-@property (nonatomic, retain) NSString * descriptionHTML;
-@property (nonatomic, retain) NSString * descriptionLongHTML;
+@property (nonatomic, retain) NSString * descriptionString;
 @property (nonatomic, retain) NSDate * downloadDate;
 @property (nonatomic, retain) NSNumber * downloaded;
 @property (nonatomic, retain) NSString * downloadURL;
 @property (nonatomic, retain) NSString * facebookLikeURL;
+@property (nonatomic, retain) NSDecimalNumber * price;
 @property (nonatomic, retain) NSDate * publishDate;
+@property (nonatomic, retain) NSNumber * rate;
+@property (nonatomic, retain) NSString * status;
+@property (nonatomic, retain) NSNumber * tag;
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSNumber * type;
 @property (nonatomic, retain) NSString * youTubeVideoURL;
-@property (nonatomic, retain) NSString * status;
+@property (nonatomic, retain) UIImage *coverThumbnailImageMedium;
 @property (nonatomic, retain) Author *author;
 @property (nonatomic, retain) NSSet *categories;
 @property (nonatomic, retain) Image *coverImage;

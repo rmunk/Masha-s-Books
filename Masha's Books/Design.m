@@ -1,21 +1,19 @@
 //
-//  Category.m
+//  Design.m
 //  Masha's Books
 //
 //  Created by Luka Miljak on 8/23/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "Category.h"
-#import "Book.h"
+#import "Design.h"
 
 
-@implementation Category
+@implementation Design
 
-@dynamic categoryID;
-@dynamic name;
 @dynamic bgImageURL;
+@dynamic bgMashaURL;
 @dynamic bgImage;
-@dynamic books;
+@dynamic bgMasha;
 
 @end

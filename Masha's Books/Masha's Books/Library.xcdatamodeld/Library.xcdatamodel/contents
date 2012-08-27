@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1487" systemVersion="12A269" minimumToolsVersion="Xcode 4.1" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1171" systemVersion="11D50" minimumToolsVersion="Xcode 4.1" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Author" representedClassName="Author" syncable="YES">
         <attribute name="authorID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="bioHtml" optional="YES" attributeType="String" syncable="YES"/>
@@ -15,14 +15,17 @@
         <attribute name="backgroundMusic" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="bookID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="coverThumbnailImage" optional="YES" attributeType="Transformable" valueTransformerName="UIImageToDataTransformer" syncable="YES"/>
-        <attribute name="descriptionHTML" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="descriptionLongHTML" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="coverThumbnailImageMedium" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="descriptionString" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="downloadDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="downloaded" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="downloadURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="facebookLikeURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="price" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="publishDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="rate" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tag" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="youTubeVideoURL" optional="YES" attributeType="String" syncable="YES"/>
@@ -32,13 +35,29 @@
         <relationship name="pages" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Page" inverseName="book" inverseEntity="Page" syncable="YES"/>
     </entity>
     <entity name="Category" representedClassName="Category" syncable="YES">
+        <attribute name="bgImage" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="bgImageURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="categoryID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="books" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Book" inverseName="categories" inverseEntity="Book" syncable="YES"/>
     </entity>
+    <entity name="Design" representedClassName="Design" syncable="YES">
+        <attribute name="bgImage" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="bgImageURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bgMasha" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="bgMashaURL" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Image" representedClassName="Image" syncable="YES">
         <attribute name="image" optional="YES" attributeType="Transformable" valueTransformerName="UIImageToDataTransformer" syncable="YES"/>
         <relationship name="book" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Book" inverseName="coverImage" inverseEntity="Book" syncable="YES"/>
+    </entity>
+    <entity name="Info" representedClassName="Info" syncable="YES">
+        <attribute name="appStoreURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="appVer" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="contactURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="facebookURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="twitterURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="websiteURL" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Page" representedClassName="Page" syncable="YES">
         <attribute name="image" optional="YES" attributeType="Transformable" valueTransformerName="UIImageToDataTransformer" syncable="YES"/>
@@ -52,9 +71,11 @@
     <fetchRequest name="DownloadedBooks" entity="Book" predicateString="downloaded == 1"/>
     <elements>
         <element name="Author" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Book" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Book" positionX="0" positionY="0" width="0" height="405"/>
         <element name="Category" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Design" positionX="160" positionY="192" width="128" height="105"/>
         <element name="Image" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Info" positionX="160" positionY="192" width="128" height="135"/>
         <element name="Page" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

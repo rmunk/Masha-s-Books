@@ -237,8 +237,7 @@
                     
         [Category categoryWithAttributes:attributeDict forContext:self.libraryDatabase.managedObjectContext];
         PBDLOG(@"\n");
-        PBDLOG(@"New book category found!");
-        
+        PBDLOG(@"New book category found!");       
         
         
         //Extract category attributes from XML
@@ -274,13 +273,7 @@
         self.currentAuthor = [Author authorWithAttributes:attributeDict forContext:self.libraryDatabase.managedObjectContext];
         
     }    
-    else if([elementName isEqualToString:@"DescriptionHTML"]) {
-        return;
-    }
-    else if([elementName isEqualToString:@"DescriptionLongHTML"]) {
-        return;
-    }
-    else if([elementName isEqualToString:@"AuthorBioHTML"]) {
+    else if([elementName isEqualToString:@"Description"]) {
         return;
     }
     else {

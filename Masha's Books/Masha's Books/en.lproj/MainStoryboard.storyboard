@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2549" systemVersion="12A269" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="Vx0-Iu-9ec">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="Vx0-Iu-9ec">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1498"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
     </dependencies>
     <scenes>
         <!--Picturebook Shop View Controller - Mashas Shop Old-->
@@ -540,11 +540,11 @@
             </objects>
             <point key="canvasLocation" x="-517" y="-762"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Category Table View Controller-->
         <scene sceneID="y7E-q2-OpF">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DAa-Oh-KWg" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tableViewController id="oOe-2c-AvR" sceneMemberID="viewController">
+                <tableViewController id="oOe-2c-AvR" customClass="CategoryTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Qwq-E3-fn2">
                         <rect key="frame" x="0.0" y="0.0" width="287" height="400"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -577,7 +577,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G9T-9i-TNR" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tabBarController definesPresentationContext="YES" id="Vx0-Iu-9ec" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="8Ta-5e-Rxt"/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="T6z-NY-daQ">
                         <rect key="frame" x="129" y="330" width="163" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -617,72 +617,6 @@
         <image name="twitter1.png" width="42" height="40"/>
         <image name="web.png" width="42" height="40"/>
     </resources>
-    <classes>
-        <class className="BooksTableCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BooksTableCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="bookTitle" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="coverImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="shortDescription" candidateClass="UITextView"/>
-            </relationships>
-        </class>
-        <class className="MyBooksViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MyBooksViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="goToFacebook:" candidateClass="UIButton"/>
-                <relationship kind="action" name="goToWebSite:" candidateClass="UIButton"/>
-                <relationship kind="action" name="sendMail:" candidateClass="UIButton"/>
-                <relationship kind="action" name="tweet:" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="scrollViewContainer" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="PicturebookShopViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PicturebookShopViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="buyPictureBook:" candidateClass="UIButton"/>
-                <relationship kind="action" name="refreshPicturebookShop:" candidateClass="UIBarButtonItem"/>
-                <relationship kind="action" name="shopItemTapped:" candidateClass="PicturebookCover"/>
-                <relationship kind="outlet" name="buyButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="shopRefreshButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="shopWebView" candidateClass="UIWebView"/>
-            </relationships>
-        </class>
-        <class className="ScrollViewContainer" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ScrollViewContainer.h"/>
-            <relationships>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-            </relationships>
-        </class>
-        <class className="SettingsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="restoreButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="ShopViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ShopViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="bookBought:" candidateClass="UIButton"/>
-                <relationship kind="action" name="categorySelection:" candidateClass="UIButton"/>
-                <relationship kind="action" name="goToFacebookPage:" candidateClass="UIButton"/>
-                <relationship kind="action" name="goToTwitterPage:" candidateClass="UIButton"/>
-                <relationship kind="action" name="goToYoutubePage:" candidateClass="UIButton"/>
-                <relationship kind="action" name="shopRefresh:" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="bookTitleLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="bookWebView" candidateClass="UIWebView"/>
-                <relationship kind="outlet" name="booksTableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="buyButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="categoryButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="downloadProgressView" candidateClass="UIProgressView"/>
-                <relationship kind="outlet" name="facebookButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="priceLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="thumbImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="twitterButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="youtubeButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <nil key="statusBar"/>
         <simulatedOrientationMetrics key="orientation" orientation="landscapeRight"/>
