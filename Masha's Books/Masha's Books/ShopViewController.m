@@ -44,7 +44,9 @@
 - (void)categoryPicked:(Category *)category inController:(CategoryTableViewController *)controller {
     [self.picturebookShop userSelectsCategory:category];
     [controller dismissViewControllerAnimated:YES completion:nil];
+    self.categoryButton.titleLabel.text = category.name;
     [self.booksTableView reloadData];
+    [self bookSelectedAtIndex:0];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -145,6 +147,39 @@
     
 }
 
+- (void)bookSelectedAtIndex:(NSInteger)index {
+    NSOrderedSet *books = [self.picturebookShop getBooksForSelectedCategory];
+    if (books.count > 0) {
+        
+    
+        Book *book = [[self.picturebookShop getBooksForSelectedCategory] objectAtIndex:index];
+    
+        [self.picturebookShop userSelectsBook:book];
+    
+        self.thumbImageView.image = book.coverThumbnailImageMedium;
+        self.bookTitleLabel.text = book.title;
+    
+        NSString *siteURL = @"http://www.mashasbookstore.com/storeops/story-long-description.aspx?id=";
+        NSString *urlAddress = [siteURL stringByAppendingString:[NSString stringWithFormat:@"%d", [book.bookID intValue]]];
+    
+    
+    
+        //Create a URL object.
+        NSURL *url = [NSURL URLWithString:urlAddress];
+    
+        //URL Requst Object
+        NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
+    
+        //Load the request in the UIWebView.
+        [self.bookWebView loadRequest:requestObj];
+        //    self.priceLabel.text = book.price;
+        //    [self.bookWebView loadHTMLString:book.descriptionLongHTML baseURL:nil];
+    }
+    else {
+        NSLog(@"No books in category");
+    }
+}
+
 - (void)refreshCoversTable:(NSNotification *) notification {
         
 }
@@ -183,6 +218,8 @@
     cell.bookTitle.text = book.title;
     cell.shortDescription.text = book.descriptionString;
     
+    [self bookSelectedAtIndex:0];
+    
     //        self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"box.png"]];
     //        self.backgroundView.contentMode = UIViewContentModeTopLeft;
     //        self.selectedBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"box_sel"]];
@@ -211,29 +248,7 @@
 {    
  
     [self.allPicturebookCovers removeAllObjects];
-    //[self.picturebookShop userSelectsCategoryAtIndex:indexPath.row];
-    Book *book = [[self.picturebookShop getBooksForSelectedCategory] objectAtIndex:indexPath.row];
-    
-    [self.picturebookShop userSelectsBook:book];
-    
-    self.thumbImageView.image = book.coverThumbnailImageMedium;
-    self.bookTitleLabel.text = book.title;
-    
-    NSString *siteURL = @"http://www.mashasbookstore.com/storeops/story-long-description.aspx?id=";
-    NSString *urlAddress = [siteURL stringByAppendingString:[NSString stringWithFormat:@"%d", [book.bookID intValue]]];
-    
-    
-    
-    //Create a URL object.
-    NSURL *url = [NSURL URLWithString:urlAddress];
-    
-    //URL Requst Object
-    NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
-    
-    //Load the request in the UIWebView.
-    [self.bookWebView loadRequest:requestObj];
-//    self.priceLabel.text = book.price;
-//    [self.bookWebView loadHTMLString:book.descriptionLongHTML baseURL:nil];
+    [self bookSelectedAtIndex:indexPath.row];
     
 }
 
