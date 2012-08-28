@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11E53" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="bF8-g2-sFo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2549" systemVersion="12A269" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="bF8-g2-sFo">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
-        <development defaultVersion="4200" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1498"/>
     </dependencies>
     <scenes>
         <!--Slikovnica Root View Controller-->
@@ -99,7 +98,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="n6y-tU-zbR">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="blackTranslucent" id="n6y-tU-zbR">
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
@@ -108,12 +107,12 @@
                                             <action selector="goBackToLibrary:" destination="uxW-mI-LhG" id="gfu-2r-uah"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Voice ON" style="done" id="JQd-Zd-eim">
+                                    <barButtonItem image="voice-on.png" style="done" id="JQd-Zd-eim">
                                         <connections>
                                             <action selector="turnVoiceOnOff:" destination="uxW-mI-LhG" id="K2G-xY-4dM"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Text ON" style="done" id="N2K-Ly-idX">
+                                    <barButtonItem image="text-on.png" style="done" id="N2K-Ly-idX">
                                         <connections>
                                             <action selector="turnTextOnOff:" destination="uxW-mI-LhG" id="lei-hY-Npu"/>
                                         </connections>
@@ -124,17 +123,17 @@
                                     <barButtonItem title="0/0" style="plain" id="byU-Lu-iCA"/>
                                 </items>
                             </toolbar>
-                            <scrollView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.70000000000000007" contentMode="scaleToFill" id="UqZ-TK-rsC">
-                                <rect key="frame" x="0.0" y="640" width="1024" height="128"/>
+                            <scrollView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="UqZ-TK-rsC">
+                                <rect key="frame" x="0.0" y="618" width="1024" height="150"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.75" colorSpace="calibratedWhite"/>
                             </scrollView>
                             <view contentMode="scaleToFill" id="n2P-sd-2fW">
                                 <rect key="frame" x="262" y="184" width="500" height="400"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" alpha="0.70000000000000007" contentMode="scaleToFill" image="play.png" id="ynH-Gc-wfl">
-                                        <rect key="frame" x="171" y="120" width="159" height="159"/>
+                                    <imageView userInteractionEnabled="NO" alpha="0.70000000000000007" contentMode="center" image="play.png" id="ynH-Gc-wfl">
+                                        <rect key="frame" x="0.0" y="0.0" width="500" height="400"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     </imageView>
                                 </subviews>
@@ -164,12 +163,15 @@
         </scene>
     </scenes>
     <resources>
-        <image name="play.png" width="256" height="256"/>
+        <image name="play.png" width="289" height="288"/>
+        <image name="text-on.png" width="43" height="20"/>
+        <image name="voice-on.png" width="55" height="20"/>
     </resources>
     <classes>
         <class className="SlikovnicaDataViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SlikovnicaDataViewController.h"/>
             <relationships>
+                <relationship kind="action" name="goBackToLibrary:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="pageImage" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="textImage" candidateClass="UIImageView"/>
             </relationships>
@@ -177,6 +179,10 @@
         <class className="SlikovnicaNavigationViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SlikovnicaNavigationViewController.h"/>
             <relationships>
+                <relationship kind="action" name="goBackToLibrary:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="action" name="tapReturn:" candidateClass="UITapGestureRecognizer"/>
+                <relationship kind="action" name="turnTextOnOff:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="action" name="turnVoiceOnOff:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="bookNameLabel" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="pageNumberLabel" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
@@ -185,6 +191,7 @@
         <class className="SlikovnicaRootViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SlikovnicaRootViewController.h"/>
             <relationships>
+                <relationship kind="action" name="userTappedForNavigation:" candidateClass="UITapGestureRecognizer"/>
                 <relationship kind="outlet" name="navigationRequestView" candidateClass="UIView"/>
             </relationships>
         </class>
