@@ -17,7 +17,7 @@
 #define BOOKCELL_HEIGHT 200
 
 
-@interface ShopViewController : UIViewController
+@interface ShopViewController : UIViewController <categoryTableViewControllerProtocol>
 @property (strong, nonatomic) IBOutlet UIButton *categoryButton;
 @property (strong, nonatomic) IBOutlet UITableView *booksTableView;
 @property (strong, nonatomic) IBOutlet UIImageView *thumbImageView;
@@ -31,5 +31,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *bookTitleLabel;
 
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+
+- (void)categoryPicked:(Category *)category inController:(CategoryTableViewController *)controller;
 
 @end

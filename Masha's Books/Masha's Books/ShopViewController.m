@@ -41,6 +41,12 @@
     return _picturebookShop;
 }
 
+- (void)categoryPicked:(Category *)category inController:(CategoryTableViewController *)controller {
+    [self.picturebookShop userSelectsCategory:category];
+    [controller dismissViewControllerAnimated:YES completion:nil];
+    [self.booksTableView reloadData];
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -234,9 +240,19 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"segueToCategoryTable"]) {
-        CategoryTableViewController *controller = (CategoryTableViewController *)segue.destinationViewController;
-        controller.categories = [Category getAllCategoriesFromContext:self.picturebookShop.libraryDatabase.managedObjectContext];
-        NSLog(@"Number of categories passed: %d", controller.categories.count);
+        UIStoryboardPopoverSegue *popoverSegue;
+        popoverSegue = (UIStoryboardPopoverSegue *)segue;
+        
+        UIPopoverController *popoverController;
+        popoverController = popoverSegue.popoverController;
+        
+        CategoryTableViewController *categoryVC = (CategoryTableViewController *)popoverSegue.destinationViewController;
+        categoryVC.categories = [Category getAllCategoriesFromContext:self.picturebookShop.libraryDatabase.managedObjectContext];
+   
+        categoryVC.delegate = self;
+        categoryVC.popoverController = popoverController;
+        
+
         
     }
 }

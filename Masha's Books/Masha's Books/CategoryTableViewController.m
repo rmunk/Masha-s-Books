@@ -10,13 +10,15 @@
 
 @interface CategoryTableViewController ()
 
+
+
 @end
 
 @implementation CategoryTableViewController
 
-@synthesize shop = _shop;
-@synthesize libraryDatabase = _libraryDatabase;
 @synthesize categories = _categories;
+@synthesize delegate = _delegate;
+@synthesize popoverController;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -134,7 +136,8 @@
 {
     Category *category = [self.categories objectAtIndex:indexPath.row];
     NSLog(@"Category %@ tapped", category.name);
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.delegate categoryPicked:category inController:self];
+    [self.popoverController dismissPopoverAnimated:YES];
     
 }
 

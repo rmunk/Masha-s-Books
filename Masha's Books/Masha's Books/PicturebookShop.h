@@ -50,6 +50,7 @@
 - (void)refreshShop;    
 - (void)refreshDatabase; 
 - (void)userSelectsCategoryAtIndex:(NSUInteger)index;
+- (void)userSelectsCategory:(Category *)category;
 - (void)userSelectsBook:(Book *)book;
 - (Book *)getSelectedBook;
 - (Category *)getSelectedCategory;

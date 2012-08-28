@@ -188,6 +188,12 @@
     }
 }
 
+- (void)userSelectsCategory:(Category *)category {
+    self.selectedCategory = category;
+    NSLog(@"User selects category %@", self.selectedCategory.name);
+   
+}
+
 - (void)userSelectsBook:(Book *)book {
     self.selectedBook = book;
 }
