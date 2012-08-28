@@ -635,6 +635,7 @@
 		C0B3FF6A15742E41002DF30F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C099A1EB15EC4F9700019E00 /* UIImage Category */,
 				C093EB45159E773A00035D20 /* SSZipArchive */,
 				C00383701575510F00999A19 /* ScrollViewContainer.h */,
 				C00383711575510F00999A19 /* ScrollViewContainer.m */,
@@ -644,7 +645,6 @@
 				C0B3FF6C15742E41002DF30F /* InfoPlist.strings */,
 				C0B3FF6F15742E41002DF30F /* main.m */,
 				C0B3FF7115742E41002DF30F /* Masha's Books-Prefix.pch */,
-				C099A1EB15EC4F9700019E00 /* UIImage Category */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";

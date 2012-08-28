@@ -124,16 +124,16 @@
                                 </items>
                             </toolbar>
                             <scrollView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="UqZ-TK-rsC">
-                                <rect key="frame" x="0.0" y="618" width="1024" height="150"/>
+                                <rect key="frame" x="0.0" y="632" width="1024" height="136"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.75" colorSpace="calibratedWhite"/>
                             </scrollView>
                             <view contentMode="scaleToFill" id="n2P-sd-2fW">
-                                <rect key="frame" x="262" y="184" width="500" height="400"/>
+                                <rect key="frame" x="262" y="54" width="500" height="570"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" alpha="0.70000000000000007" contentMode="center" image="play.png" id="ynH-Gc-wfl">
-                                        <rect key="frame" x="0.0" y="0.0" width="500" height="400"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" image="play.png" id="ynH-Gc-wfl">
+                                        <rect key="frame" x="0.0" y="0.0" width="500" height="570"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     </imageView>
                                 </subviews>
@@ -171,7 +171,6 @@
         <class className="SlikovnicaDataViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SlikovnicaDataViewController.h"/>
             <relationships>
-                <relationship kind="action" name="goBackToLibrary:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="pageImage" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="textImage" candidateClass="UIImageView"/>
             </relationships>
@@ -179,10 +178,6 @@
         <class className="SlikovnicaNavigationViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SlikovnicaNavigationViewController.h"/>
             <relationships>
-                <relationship kind="action" name="goBackToLibrary:" candidateClass="UIBarButtonItem"/>
-                <relationship kind="action" name="tapReturn:" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="action" name="turnTextOnOff:" candidateClass="UIBarButtonItem"/>
-                <relationship kind="action" name="turnVoiceOnOff:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="bookNameLabel" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="pageNumberLabel" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
