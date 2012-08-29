@@ -336,7 +336,7 @@
                                     <outlet property="delegate" destination="qfq-Kt-d9p" id="xVX-FQ-Mpx"/>
                                 </connections>
                             </tableView>
-                            <navigationBar alpha="0.50000000000000011" contentMode="scaleToFill" barStyle="blackOpaque" id="VRR-cR-5eE">
+                            <navigationBar hidden="YES" alpha="0.50000000000000011" contentMode="scaleToFill" barStyle="blackOpaque" id="VRR-cR-5eE">
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>

@@ -237,6 +237,9 @@
 + (NSOrderedSet *)getBooksForCategory:(Category *)category inContext:(NSManagedObjectContext *)context {
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"]; 
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"bookID"
+                                                                   ascending:YES];
+    request.sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
     NSError *error;
     
     NSArray *books = [context executeFetchRequest:request error:&error];

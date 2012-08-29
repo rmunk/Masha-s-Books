@@ -68,6 +68,7 @@
     //self.allPicturebookCovers = [[NSMutableArray alloc] init];
     self.booksInSelectedCategory = [self.picturebookShop getBooksForSelectedCategory];
     self.downloadProgressView.hidden = YES;
+    [self.picturebookShop refreshShop];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(picturebookShopFinishedLoading:) name:@"PicturebookShopFinishedLoading" object:nil ]; 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(picturebookShopLoadingError:) name:@"PicturebookShopLoadingError" object:nil ];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setDownloadStatus:) name:@"NewShopReceivedZipData" object:nil ];
