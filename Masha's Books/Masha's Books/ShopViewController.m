@@ -11,7 +11,8 @@
 @interface ShopViewController ()
 @property (nonatomic, strong) PicturebookShop *picturebookShop;
 @property (nonatomic, strong) BookExtractor *bookExtractor;
-@property (nonatomic, strong) NSMutableArray *allPicturebookCovers;
+//@property (nonatomic, strong) NSMutableArray *allPicturebookCovers;
+@property (nonatomic, strong) NSOrderedSet *booksInSelectedCategory;
 
 @end
 
@@ -30,7 +31,8 @@
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize picturebookShop = _picturebookShop;
 @synthesize bookExtractor = _bookExtractor;
-@synthesize allPicturebookCovers = _allPicturebookCovers;
+//@synthesize allPicturebookCovers = _allPicturebookCovers;
+@synthesize booksInSelectedCategory = _booksInSelectedCategory;
 
 - (PicturebookShop *)picturebookShop
 {
@@ -45,6 +47,7 @@
     [self.picturebookShop userSelectsCategory:category];
     [controller dismissViewControllerAnimated:YES completion:nil];
     self.categoryButton.titleLabel.text = category.name;
+    self.booksInSelectedCategory = [self.picturebookShop getBooksForSelectedCategory];
     [self.booksTableView reloadData];
     [self bookSelectedAtIndex:0];
 }
@@ -62,12 +65,13 @@
 {
 	[super viewDidLoad];
 
-    self.allPicturebookCovers = [[NSMutableArray alloc] init];
+    //self.allPicturebookCovers = [[NSMutableArray alloc] init];
+    self.booksInSelectedCategory = [self.picturebookShop getBooksForSelectedCategory];
     self.downloadProgressView.hidden = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(picturebookShopFinishedLoading:) name:@"PicturebookShopFinishedLoading" object:nil ]; 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(picturebookShopLoadingError:) name:@"PicturebookShopLoadingError" object:nil ];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setDownloadStatus:) name:@"NewShopReceivedZipData" object:nil ];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshCoversTable:) name:@"BookExtracted" object:nil ];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bookExtracted:) name:@"BookExtracted" object:nil ];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -131,6 +135,7 @@
     [self.picturebookShop userSelectsCategoryAtIndex:0];
     if ([self.picturebookShop getCategoriesInShop].count) {
         self.categoryButton.titleLabel.text = [NSString stringWithString:self.picturebookShop.selectedCategory.name];
+        self.booksInSelectedCategory = [self.picturebookShop getBooksForSelectedCategory];
         [self.booksTableView reloadData];
         
         [self.view setNeedsDisplay];
@@ -153,7 +158,7 @@
 }
 
 - (void)bookSelectedAtIndex:(NSInteger)index {
-    NSOrderedSet *books = [self.picturebookShop getBooksForSelectedCategory];
+    NSOrderedSet *books = self.booksInSelectedCategory;
     if (books.count > 0) {
         self.downloadProgressView.hidden = YES;
     
@@ -185,8 +190,8 @@
     }
 }
 
-- (void)refreshCoversTable:(NSNotification *) notification {
-        
+- (void)bookExtracted:(NSNotification *) notification {
+    self.downloadProgressView.hidden = YES;
 }
 
 #pragma mark - Table view data source
@@ -252,7 +257,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {    
  
-    [self.allPicturebookCovers removeAllObjects];
+ //   [self.allPicturebookCovers removeAllObjects];
     [self bookSelectedAtIndex:indexPath.row];
     
 }

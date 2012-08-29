@@ -99,7 +99,7 @@
         NSLog(@"Database at %@ is opened and ready for use.", self.libraryDatabase.fileURL);
         //[self loadShopFromDatabase];
         self.isShopLoaded = YES;
-        [self shopDataLoaded];
+        //[self shopDataLoaded];
     }
 }
 
@@ -143,10 +143,13 @@
     
     BOOL parsingSuccesfull = [self.xmlParser parse];
     
-    if (parsingSuccesfull == YES)
+    if (parsingSuccesfull == YES) {
         self.isShopLoaded = YES;
-    else 
+        //[self shopDataLoaded];
+    }
+    else {
         [self shopErrorLoading];
+    }
 
 }
 
@@ -217,7 +220,15 @@
 }
 
 - (void)coversLoaded {
-    [self shopDataLoaded];
+    // save database
+    
+    [self.libraryDatabase saveToURL:self.libraryDatabase.fileURL forSaveOperation:UIDocumentSaveForOverwriting completionHandler:^(BOOL success) {
+        if (success) {
+            NSLog(@"Library database saved!");  
+            [self shopDataLoaded];
+        }
+    }];
+    
 }
 
 - (void)shopDataLoaded {
@@ -323,12 +334,7 @@
         [Book loadCoversFromURL:@"http://www.mashasbookstore.com/covers/" forShop:self];
         NSLog(@"Books covers downloaded!");
         
-        // save database
         
-        [self.libraryDatabase saveToURL:self.libraryDatabase.fileURL forSaveOperation:UIDocumentSaveForOverwriting completionHandler:^(BOOL success) {
-            if (success) 
-                NSLog(@"Library database saved!");                
-        }];
         
         //NSLog(@"Persistent store size: %llu bytes", [self directorySizeAtPath:[self.libraryDatabase.fileURL path]]);
         
