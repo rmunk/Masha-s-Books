@@ -9,6 +9,7 @@
 #import "SlikovnicaModelController.h"
 #import "SlikovnicaDataViewController.h"
 #import "Image.h"
+#import "UIImage+Resize.h"
 
 /* 
  The controller serves as the data source for the page view controller; it therefore implements pageViewController:viewControllerBeforeViewController: and pageViewController:viewControllerAfterViewController:.
@@ -44,10 +45,10 @@
     // Create a new view controller and pass suitable data.
     SlikovnicaDataViewController *dataViewController = [storyboard instantiateViewControllerWithIdentifier:@"SlikovnicaDataViewController"];
     dataViewController.page = [self.book.pages objectAtIndex:index];
-//    if (!self.textVisibility)
-//        dataViewController.page.text = nil;
     dataViewController.textVisibility = self.textVisibility;
     dataViewController.voiceOverPlay = self.voiceOverPlay;
+    
+    [self.book.managedObjectContext refreshObject:self.book mergeChanges:NO];
     return dataViewController;
 }
 
@@ -66,11 +67,13 @@
 - (NSArray *)getPageThumbnails
 {
     NSMutableArray *thumbnails = [[NSMutableArray alloc] init];
-    
+
     for (Page *page in self.book.pages) {
-        UIImage *thumbnail = page.image;
+        UIImage *thumbnail = [page.image resizedImage:CGSizeMake(138, 103) interpolationQuality:kCGInterpolationHigh];
         [thumbnails addObject:thumbnail];
-    }
+     }
+    [self.book.managedObjectContext refreshObject:self.book mergeChanges:NO];
+
     return thumbnails;
 }
 
