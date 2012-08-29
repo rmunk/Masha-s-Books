@@ -43,6 +43,7 @@
 @property (readwrite) NSUInteger numberOfBooksWhinchNeedCoversDownloaded;
 @property (nonatomic, strong) Category *selectedCategory; //currently browsed book category in shop
 @property (nonatomic, strong) Book *selectedBook;
+@property float lastPercentage;
 
 @property (nonatomic, strong) UIManagedDocument *libraryDatabase;
 

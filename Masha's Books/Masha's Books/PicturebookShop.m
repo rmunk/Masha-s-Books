@@ -22,7 +22,7 @@
 
 
 @property (nonatomic, strong) Book *bookWithLastReportedPercentage;
-@property float lastPercentage;
+
 
 
 @end
@@ -352,6 +352,9 @@
     self.lastPercentage = percentage;
 //    NSLog(@"Shop: Book %f", percentage);
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ShopReceivedZipData" object:nil];
+    if (book == self.selectedBook) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"NewShopReceivedZipData" object:nil];
+    }
     
 }
 

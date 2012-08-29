@@ -63,9 +63,10 @@
 	[super viewDidLoad];
 
     self.allPicturebookCovers = [[NSMutableArray alloc] init];
+    self.downloadProgressView.hidden = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(picturebookShopFinishedLoading:) name:@"PicturebookShopFinishedLoading" object:nil ]; 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(picturebookShopLoadingError:) name:@"PicturebookShopLoadingError" object:nil ];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getMyCoversStatus:) name:@"ShopReceivedZipData" object:nil ];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setDownloadStatus:) name:@"NewShopReceivedZipData" object:nil ];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshCoversTable:) name:@"BookExtracted" object:nil ];
 }
 
@@ -142,25 +143,29 @@
     PBDLOG(@"ERROR: Picture book shop reports loading error!");
 }
 
-- (void)getMyCoversStatus:(NSNotification *) notification {
-    [self.picturebookShop refreshCovers:self.allPicturebookCovers];
+- (void)setDownloadStatus:(NSNotification *) notification {
+    //[self.picturebookShop refreshCovers:self.allPicturebookCovers];
+    if ([self.downloadProgressView isHidden]) {
+        self.downloadProgressView.hidden = NO;
+    }
+    self.downloadProgressView.progress = self.picturebookShop.lastPercentage;
     
 }
 
 - (void)bookSelectedAtIndex:(NSInteger)index {
     NSOrderedSet *books = [self.picturebookShop getBooksForSelectedCategory];
     if (books.count > 0) {
-        
+        self.downloadProgressView.hidden = YES;
     
-        Book *book = [[self.picturebookShop getBooksForSelectedCategory] objectAtIndex:index];
+        self.picturebookShop.selectedBook = [books objectAtIndex:index];
     
-        [self.picturebookShop userSelectsBook:book];
+        [self.picturebookShop userSelectsBook:self.picturebookShop.selectedBook];
     
-        self.thumbImageView.image = book.coverThumbnailImageMedium;
-        self.bookTitleLabel.text = book.title;
+        self.thumbImageView.image = self.picturebookShop.selectedBook.coverThumbnailImageMedium;
+        self.bookTitleLabel.text = self.picturebookShop.selectedBook.title;
     
         NSString *siteURL = @"http://www.mashasbookstore.com/storeops/story-long-description.aspx?id=";
-        NSString *urlAddress = [siteURL stringByAppendingString:[NSString stringWithFormat:@"%d", [book.bookID intValue]]];
+        NSString *urlAddress = [siteURL stringByAppendingString:[NSString stringWithFormat:@"%d", [self.picturebookShop.selectedBook.bookID intValue]]];
     
     
     
