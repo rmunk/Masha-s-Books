@@ -44,12 +44,14 @@
 }
 
 - (void)categoryPicked:(Category *)category inController:(CategoryTableViewController *)controller {
+    NSIndexPath *indexPath = [[NSIndexPath alloc] init];
+    indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [self.picturebookShop userSelectsCategory:category];
     [controller dismissViewControllerAnimated:YES completion:nil];
     self.categoryButton.titleLabel.text = category.name;
     self.booksInSelectedCategory = [self.picturebookShop getBooksForSelectedCategory];
     [self.booksTableView reloadData];
-    [self bookSelectedAtIndex:0];
+    [self bookSelectedAtIndexPath:indexPath];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -66,7 +68,7 @@
 	[super viewDidLoad];
 
     //self.allPicturebookCovers = [[NSMutableArray alloc] init];
-    self.booksInSelectedCategory = [self.picturebookShop getBooksForSelectedCategory];
+    //self.booksInSelectedCategory = [self.picturebookShop getBooksForSelectedCategory];
     self.downloadProgressView.hidden = YES;
     [self.picturebookShop refreshShop];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(picturebookShopFinishedLoading:) name:@"PicturebookShopFinishedLoading" object:nil ]; 
@@ -132,12 +134,17 @@
 
 - (void)picturebookShopFinishedLoading:(NSNotification *) notification {
     PBDLOG(@"Picture book shop reports loading finished!");
-    
+        
     [self.picturebookShop userSelectsCategoryAtIndex:0];
     if ([self.picturebookShop getCategoriesInShop].count) {
+        NSIndexPath *indexPath = [[NSIndexPath alloc] init];
+        indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
         self.categoryButton.titleLabel.text = [NSString stringWithString:self.picturebookShop.selectedCategory.name];
+        
         self.booksInSelectedCategory = [self.picturebookShop getBooksForSelectedCategory];
+        
         [self.booksTableView reloadData];
+        [self bookSelectedAtIndexPath:indexPath];
         
         [self.view setNeedsDisplay];
     }
@@ -158,22 +165,21 @@
     
 }
 
-- (void)bookSelectedAtIndex:(NSInteger)index {
+- (void)bookSelectedAtIndexPath:(NSIndexPath *)indexPath {
     NSOrderedSet *books = self.booksInSelectedCategory;
     if (books.count > 0) {
         self.downloadProgressView.hidden = YES;
     
-        self.picturebookShop.selectedBook = [books objectAtIndex:index];
+        self.picturebookShop.selectedBook = [books objectAtIndex:indexPath.row];
     
         [self.picturebookShop userSelectsBook:self.picturebookShop.selectedBook];
     
         self.thumbImageView.image = self.picturebookShop.selectedBook.coverThumbnailImageMedium;
         self.bookTitleLabel.text = self.picturebookShop.selectedBook.title;
+        [self.booksTableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
     
         NSString *siteURL = @"http://www.mashasbookstore.com/storeops/story-long-description.aspx?id=";
         NSString *urlAddress = [siteURL stringByAppendingString:[NSString stringWithFormat:@"%d", [self.picturebookShop.selectedBook.bookID intValue]]];
-    
-    
     
         //Create a URL object.
         NSURL *url = [NSURL URLWithString:urlAddress];
@@ -228,8 +234,7 @@
     cell.coverImage.image = book.coverThumbnailImage;
     cell.bookTitle.text = book.title;
     cell.shortDescription.text = book.descriptionString;
-    
-    [self bookSelectedAtIndex:0];
+
     
     //        self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"box.png"]];
     //        self.backgroundView.contentMode = UIViewContentModeTopLeft;
@@ -259,7 +264,8 @@
 {    
  
  //   [self.allPicturebookCovers removeAllObjects];
-    [self bookSelectedAtIndex:indexPath.row];
+    [self bookSelectedAtIndexPath:indexPath];
+    [self.booksTableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
     
 }
 

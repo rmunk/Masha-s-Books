@@ -9,7 +9,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "SlikovnicaDataViewController.h"
 #import "SlikovnicaModelController.h"
-#define HACKINTOSH
+//#define HACKINTOSH
 
 @interface SlikovnicaDataViewController () <AVAudioPlayerDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *textImage;
