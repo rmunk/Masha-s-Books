@@ -49,12 +49,12 @@
                                 </items>
                             </navigationBar>
                             <webView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" scalesPageToFit="YES" id="5Ac-2s-lwz">
-                                <rect key="frame" x="0.0" y="563" width="1024" height="156"/>
+                                <rect key="frame" x="0.0" y="608" width="1024" height="156"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </webView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="gg6-oF-mCr">
-                                <rect key="frame" x="913" y="667" width="91" height="38"/>
+                                <rect key="frame" x="913" y="710" width="91" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
                                 <state key="normal" title="Buy">
@@ -341,7 +341,7 @@
                                     <outlet property="delegate" destination="qfq-Kt-d9p" id="xVX-FQ-Mpx"/>
                                 </connections>
                             </tableView>
-                            <navigationBar hidden="YES" alpha="0.50000000000000011" contentMode="scaleToFill" barStyle="blackOpaque" id="VRR-cR-5eE">
+                            <navigationBar alpha="0.50000000000000011" contentMode="scaleToFill" barStyle="blackOpaque" id="VRR-cR-5eE">
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>

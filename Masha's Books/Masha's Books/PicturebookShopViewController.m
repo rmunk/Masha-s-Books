@@ -34,6 +34,7 @@
     if (!_picturebookShop) {
         _picturebookShop = [[PicturebookShop alloc] initShop];
         _bookExtractor = [[BookExtractor alloc] initExtractorWithShop:_picturebookShop andContext:self.picturebookShop.libraryDatabase.managedObjectContext];
+        //[self.picturebookShop.libraryDatabase.managedObjectContext setMergePolicy:NSMergeByPropertyStoreTrumpMergePolicy];
     }
     return _picturebookShop;
 }
@@ -144,6 +145,7 @@
 
     NSError *error = nil;
     NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
+    
     if (managedObjectContext != nil) {
         if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
             // Replace this implementation with code to handle the error appropriately.

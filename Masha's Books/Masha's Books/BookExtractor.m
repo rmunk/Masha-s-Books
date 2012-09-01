@@ -184,6 +184,7 @@
                         NSLog(@"Error saving context (%@)!", error.description);
                         self.success = FALSE;
                     }
+                    
                     [dnc removeObserver:self.delegate name:NSManagedObjectContextDidSaveNotification object:self.context];
                 }
             }
