@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="Vx0-Iu-9ec">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2549" systemVersion="12A269" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="Vx0-Iu-9ec">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1498"/>
     </dependencies>
     <scenes>
         <!--Picturebook Shop View Controller - Mashas Shop Old-->
@@ -11,11 +11,11 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d2s-Tk-IWN" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="xHD-JE-7WU" customClass="PicturebookShopViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Nkw-7L-aac">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="719"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView tag="1" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="80" sectionHeaderHeight="22" sectionFooterHeight="22" id="r1X-TC-HH7">
-                                <rect key="frame" x="0.0" y="44" width="296" height="518"/>
+                                <rect key="frame" x="0.0" y="44" width="296" height="567"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -25,7 +25,7 @@
                                 </connections>
                             </tableView>
                             <tableView clipsSubviews="YES" tag="2" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="180" sectionHeaderHeight="22" sectionFooterHeight="22" id="PLS-8e-7AK">
-                                <rect key="frame" x="298" y="44" width="726" height="518"/>
+                                <rect key="frame" x="298" y="44" width="726" height="567"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -173,15 +173,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="719"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="mybooks_norm.png" id="SxL-kz-zDU">
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="-1" contentMode="center" image="mybooks_norm.png" id="SxL-kz-zDU">
                                 <rect key="frame" x="0.0" y="-24" width="1024" height="768"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </imageView>
-                            <view contentMode="scaleToFill" id="lfJ-I4-Nyn" customClass="ScrollViewContainer">
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="-1" contentMode="right" image="box_arrow.png" id="WXL-JV-gHF">
+                                <rect key="frame" x="-77" y="195" width="77" height="384"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </imageView>
+                            <view tag="-1" contentMode="scaleToFill" id="lfJ-I4-Nyn" customClass="ScrollViewContainer">
                                 <rect key="frame" x="-1" y="196" width="1024" height="377"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <scrollView opaque="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="Kdk-AG-gvB">
+                                    <scrollView opaque="NO" multipleTouchEnabled="YES" tag="-1" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="Kdk-AG-gvB">
                                         <rect key="frame" x="77" y="0.0" width="903" height="371"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -195,11 +199,11 @@
                                     <outlet property="scrollView" destination="Kdk-AG-gvB" id="FgW-do-1T7"/>
                                 </connections>
                             </view>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" image="masha.png" id="EOM-rI-369">
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" tag="-1" contentMode="center" image="masha.png" id="EOM-rI-369">
                                 <rect key="frame" x="511" y="-24" width="512" height="768"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </imageView>
-                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="esv-JK-l7K">
+                            <button opaque="NO" tag="-1" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="esv-JK-l7K">
                                 <rect key="frame" x="25" y="56" width="42" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -213,7 +217,7 @@
                                     <action selector="goToWebSite:" destination="i4c-PB-hBI" eventType="touchUpInside" id="vb4-kC-NoJ"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="rG6-Gf-5Yn">
+                            <button opaque="NO" tag="-1" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="rG6-Gf-5Yn">
                                 <rect key="frame" x="75" y="56" width="42" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -227,7 +231,7 @@
                                     <action selector="sendMail:" destination="i4c-PB-hBI" eventType="touchUpInside" id="DjK-NV-PMg"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="zbY-eG-Hxh">
+                            <button opaque="NO" tag="-1" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="zbY-eG-Hxh">
                                 <rect key="frame" x="915" y="56" width="42" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -241,7 +245,7 @@
                                     <action selector="goToFacebook:" destination="i4c-PB-hBI" eventType="touchUpInside" id="ceK-T4-VpE"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="ZxN-rK-ybZ">
+                            <button opaque="NO" tag="-1" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="ZxN-rK-ybZ">
                                 <rect key="frame" x="965" y="56" width="42" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -261,6 +265,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="My Books" image="tab-mybooks.png" id="b95-jO-Xcx"/>
                     <connections>
+                        <outlet property="leftBookImage" destination="WXL-JV-gHF" id="m98-AM-g3Q"/>
                         <outlet property="scrollView" destination="Kdk-AG-gvB" id="kSW-OB-Rxs"/>
                         <outlet property="scrollViewContainer" destination="lfJ-I4-Nyn" id="ZOR-el-rBr"/>
                     </connections>
@@ -587,7 +592,6 @@
                         <segue destination="i4c-PB-hBI" kind="relationship" relationship="viewControllers" id="pul-tk-AYM"/>
                         <segue destination="qfq-Kt-d9p" kind="relationship" relationship="viewControllers" id="yFj-yF-39l"/>
                         <segue destination="4VB-yG-v2V" kind="relationship" relationship="viewControllers" id="zJU-0Z-7mh"/>
-                        <segue destination="xHD-JE-7WU" kind="relationship" relationship="viewControllers" id="TI6-Lj-jNf"/>
                     </connections>
                 </tabBarController>
             </objects>
@@ -597,6 +601,7 @@
     <resources>
         <image name="Shop.png" width="30" height="30"/>
         <image name="box.png" width="304" height="173"/>
+        <image name="box_arrow.png" width="582" height="384"/>
         <image name="box_sel.png" width="315" height="174"/>
         <image name="buy.png" width="36" height="36"/>
         <image name="dropdown.png" width="41" height="35"/>
@@ -632,6 +637,7 @@
         <class className="MyBooksViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/MyBooksViewController.h"/>
             <relationships>
+                <relationship kind="outlet" name="leftBookImage" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="scrollViewContainer" candidateClass="UIView"/>
             </relationships>
@@ -659,6 +665,12 @@
         <class className="ShopViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ShopViewController.h"/>
             <relationships>
+                <relationship kind="action" name="bookBought:" candidateClass="UIButton"/>
+                <relationship kind="action" name="categorySelection:" candidateClass="UIButton"/>
+                <relationship kind="action" name="goToFacebookPage:" candidateClass="UIButton"/>
+                <relationship kind="action" name="goToTwitterPage:" candidateClass="UIButton"/>
+                <relationship kind="action" name="goToYoutubePage:" candidateClass="UIButton"/>
+                <relationship kind="action" name="shopRefresh:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="bookTitleLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="bookWebView" candidateClass="UIWebView"/>
                 <relationship kind="outlet" name="booksTableView" candidateClass="UITableView"/>

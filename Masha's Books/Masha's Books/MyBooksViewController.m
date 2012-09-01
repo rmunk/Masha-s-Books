@@ -16,6 +16,7 @@
 @interface MyBooksViewController ()<UIScrollViewDelegate, SlikovnicaRootViewControllerDelegate, MFMailComposeViewControllerDelegate>
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, weak) IBOutlet UIView *scrollViewContainer;
+@property (weak, nonatomic) IBOutlet UIImageView *leftBookImage;
 
 @property (nonatomic, strong) NSArray *myBooks;
 @property (nonatomic, strong) NSMutableArray *coverViews;
@@ -28,6 +29,7 @@
 
 @synthesize scrollView = _scrollView;
 @synthesize scrollViewContainer = _scrollViewContainer;
+@synthesize leftBookImage = _leftBookImage;
 
 @synthesize myBooks = _myBooks;
 @synthesize coverViews = _coverViews;
@@ -162,9 +164,9 @@
 }
 
 #pragma mark - View lifecycle
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidLoad
 {
-    [super viewWillAppear:animated];
+    [super viewDidLoad];
     
     self.title = @"My Books";
 
@@ -172,6 +174,17 @@
     url = [url URLByAppendingPathComponent:@"Library"];
     self.library = [[UIManagedDocument alloc] initWithFileURL:url];
     [self getMyBooks];
+    
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if (self.scrollView.contentOffset.x == 0) {
+        self.leftBookImage.frame = CGRectMake(-77, self.leftBookImage.frame.origin.y, self.leftBookImage.frame.size.width, self.leftBookImage.frame.size.height);
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -183,6 +196,7 @@
     [self setScrollViewContainer:nil];
     [self setMyBooks:nil];
     [self setCoverViews:nil];
+    [self setLeftBookImage:nil];
     [super viewDidUnload];
 }
 
@@ -224,7 +238,26 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
+    if (scrollView.contentOffset.x > 0) {
+        [UIView animateWithDuration:1
+                         animations:^{
+                             self.leftBookImage.frame = CGRectMake(0, self.leftBookImage.frame.origin.y, self.leftBookImage.frame.size.width, self.leftBookImage.frame.size.height);
+                             
+                         }];
+    }
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    //    CGPoint scrollVelocity = [[scrollView panGestureRecognizer] velocityInView:self];
     
+    if (scrollView.contentOffset.x > 0) {
+        [UIView animateWithDuration:0.3
+                         animations:^{
+                             self.leftBookImage.frame = CGRectMake(-77, self.leftBookImage.frame.origin.y, self.leftBookImage.frame.size.width, self.leftBookImage.frame.size.height);
+                             
+                         }];
+    }    
 }
 
 #pragma mark - Top Buttons
