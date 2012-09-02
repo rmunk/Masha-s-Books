@@ -9,7 +9,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "SlikovnicaDataViewController.h"
 #import "SlikovnicaModelController.h"
-//#define HACKINTOSH
+#define HACKINTOSH
 
 @interface SlikovnicaDataViewController () <AVAudioPlayerDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *textImage;
@@ -43,12 +43,12 @@
 
 - (IBAction)goBackToLibrary:(UIBarButtonItem *)sender 
 {
-    UIStoryboard *settingsStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    UIViewController *initialSettingsVC = [settingsStoryboard instantiateInitialViewController];
-    initialSettingsVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    [self presentModalViewController:initialSettingsVC animated:YES];
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"userFinishedBook" object:self];
 }
 
+- (IBAction)restartBook:(UIButton *)sender {
+}
 
 - (NSString *)description
 {

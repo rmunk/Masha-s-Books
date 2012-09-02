@@ -8,38 +8,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Masha&apos;s Books/SLiKOVNICA/SlikovnicaModelController.m"
-         timestampString = "367885038.58459"
+         timestampString = "368230003.984856"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "85"
-         endingLineNumber = "85"
+         startingLineNumber = "87"
+         endingLineNumber = "87"
          landmarkName = "-pageViewController:viewControllerBeforeViewController:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Masha&apos;s Books/SLiKOVNICA/SlikovnicaModelController.m"
-         timestampString = "367885038.58459"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "96"
-         endingLineNumber = "96"
-         landmarkName = "-pageViewController:viewControllerAfterViewController:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Masha&apos;s Books/SLiKOVNICA/SlikovnicaRootViewController.m"
-         timestampString = "367806559.753574"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "174"
-         endingLineNumber = "174"
-         landmarkName = "-pageViewController:didFinishAnimating:previousViewControllers:transitionCompleted:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -60,11 +34,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Masha&apos;s Books/MyBooksViewController.m"
-         timestampString = "366850635.921577"
+         timestampString = "368068580.522627"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "197"
-         endingLineNumber = "197"
+         startingLineNumber = "211"
+         endingLineNumber = "211"
          landmarkName = "-userTappedImage:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -86,12 +60,77 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Masha&apos;s Books/MyBooksViewController.m"
-         timestampString = "366850635.921577"
+         timestampString = "368068580.522627"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "226"
-         endingLineNumber = "226"
+         startingLineNumber = "241"
+         endingLineNumber = "241"
          landmarkName = "-scrollViewDidEndDecelerating:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Masha&apos;s Books/MyBooksViewController.m"
+         timestampString = "368068580.522627"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "254"
+         endingLineNumber = "254"
+         landmarkName = "-scrollViewWillBeginDragging:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Masha&apos;s Books/MyBooksViewController.m"
+         timestampString = "368068580.522627"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "195"
+         endingLineNumber = "195"
+         landmarkName = "-viewDidUnload"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Masha&apos;s Books/SLiKOVNICA/SlikovnicaNavigationViewController.m"
+         timestampString = "368232219.366588"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "63"
+         endingLineNumber = "63"
+         landmarkName = "-turnTextOnOff:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Masha&apos;s Books/SLiKOVNICA/SlikovnicaNavigationViewController.m"
+         timestampString = "368240474.901781"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "99"
+         endingLineNumber = "99"
+         landmarkName = "-viewDidAppear:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Masha&apos;s Books/SLiKOVNICA/SlikovnicaNavigationViewController.m"
+         timestampString = "368240476.838186"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "101"
+         endingLineNumber = "101"
+         landmarkName = "-viewDidAppear:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

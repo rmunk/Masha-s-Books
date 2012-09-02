@@ -31,18 +31,15 @@
     else{
         self.pageNumberLabel.title = [NSString stringWithFormat:@"%d/%d", currentPage, self.pageImages.count - 1];
         UIImageView *currentPageView = (UIImageView *)[self.scrollView viewWithTag:currentPage];
-        if ([currentPageView respondsToSelector:@selector(setHighlighted:)])
-            currentPageView.highlighted = TRUE;
+//        if ([currentPageView respondsToSelector:@selector(setHighlighted:)])
+//            currentPageView.highlighted = TRUE;
         [self.scrollView scrollRectToVisible:currentPageView.frame animated:YES];
     }
 }
 
+#pragma mark - Toolbar buttons
 - (IBAction)goBackToLibrary:(UIBarButtonItem *)sender
 {
-    //    UIStoryboard *settingsStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    //    UIViewController *initialSettingsVC = [settingsStoryboard instantiateInitialViewController];
-    //    initialSettingsVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    //    [self presentModalViewController:initialSettingsVC animated:YES];
     [self.delegate navigationControllerClosedBook:self];
 }
 
@@ -51,14 +48,14 @@
     if (self.voiceOverPlay) {
         self.voiceOverPlay = FALSE;
         sender.style = UIBarButtonItemStyleBordered;
-        sender.title = @"Voice OFF";
+        sender.image = [UIImage imageNamed:@"voice-off.png"];
     }
     else {
         self.voiceOverPlay = TRUE;
         sender.style = UIBarButtonItemStyleDone;
-        sender.title = @"Voice ON";
+        sender.image = [UIImage imageNamed:@"voice-on.png"];
     }
-    if ([self.delegate respondsToSelector:@selector(navigationController:SetVoiceoverPlay:)])
+    if ([self.delegate respondsToSelector:@selector(navigationController:setVoiceoverPlay:)])
         [self.delegate navigationController:self setVoiceoverPlay:self.voiceOverPlay];
 }
 
@@ -67,17 +64,18 @@
     if (self.textVisibility) {
         self.textVisibility = FALSE;
         sender.style = UIBarButtonItemStyleBordered;
-        sender.title = @"Text OFF";
+        sender.image = [UIImage imageNamed:@"text-off.png"];
     }
     else {
         self.textVisibility = TRUE;
         sender.style = UIBarButtonItemStyleDone;
-        sender.title = @"Text ON";
+        sender.image = [UIImage imageNamed:@"text-on.png"];
     }
-    if ([self.delegate respondsToSelector:@selector(navigationController:SetTextVisibility:)])
+    if ([self.delegate respondsToSelector:@selector(navigationController:setTextVisibility:)])
         [self.delegate navigationController:self setTextVisibility:self.textVisibility];
 }
 
+#pragma mark - View lifecycle
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -97,6 +95,10 @@
         newPageView.frame = frame;
         newPageView.userInteractionEnabled = YES;
         [newPageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userTappedImage:)]];
+        if (i == self.currentPage)
+            newPageView.highlighted = TRUE;
+        else
+            newPageView.highlighted = FALSE;
         
         UIImageView *pageThumbnail = [[UIImageView alloc] initWithImage:[self.pageImages objectAtIndex:i]];
         pageThumbnail.contentMode = UIViewContentModeBottomLeft;
@@ -105,15 +107,13 @@
         [newPageView addSubview:pageThumbnail];
         
         [self.scrollView addSubview:newPageView];
+        
+        [UIView animateWithDuration:0.5
+                         animations:^{
+                             self.scrollView.frame = CGRectMake(self.scrollView.frame.origin.x, 632, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
+                             
+                         }];
     }
-}
-
-- (IBAction)tapReturn:(UITapGestureRecognizer *)sender
-{
-    UIImageView *currentPageView = (UIImageView *)[self.scrollView viewWithTag:self.currentPage];
-    if ([currentPageView respondsToSelector:@selector(setHighlighted:)])
-        currentPageView.highlighted = FALSE;
-    [self.delegate navigationController:self didChoosePage:-1];
 }
 
 - (void)viewDidUnload
@@ -125,14 +125,46 @@
     // Release any retained subviews of the main view.
 }
 
-- (void)userTappedImage:(UITapGestureRecognizer *)sender
+#pragma mark - Navigation Controller return
+- (IBAction)tapReturn:(UITapGestureRecognizer *)sender
 {
-    UIView *page = sender.view;
     UIImageView *currentPageView = (UIImageView *)[self.scrollView viewWithTag:self.currentPage];
     if ([currentPageView respondsToSelector:@selector(setHighlighted:)])
         currentPageView.highlighted = FALSE;
+    [UIView animateWithDuration:0.25
+                     animations:^{
+                         self.scrollView.frame = CGRectMake(self.scrollView.frame.origin.x, 768, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
+                         
+                     } completion:^(BOOL finished){
+                         if (finished) {
+                             [self.delegate navigationController:self didChoosePage:-1];
+                             [self.view removeFromSuperview];
+                         }
+                     }];
+}
+
+- (void)userTappedImage:(UITapGestureRecognizer *)sender
+{
+    UIImageView *page = (UIImageView *)sender.view;
+    
+//    UIImageView *currentPageView = (UIImageView *)[self.scrollView viewWithTag:self.currentPage];
+//    if ([currentPageView respondsToSelector:@selector(setHighlighted:)])
+//        currentPageView.highlighted = FALSE;
+//    
+//    //    page.highlighted = TRUE;
+    
     NSLog(@"Skip to Page %d", page.tag);
-    [self.delegate navigationController:self didChoosePage:page.tag];
+    
+    [UIView animateWithDuration:0.25
+                     animations:^{
+                         self.scrollView.frame = CGRectMake(self.scrollView.frame.origin.x, 768, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
+                         
+                     } completion:^(BOOL finished){
+                         if (finished) {
+                             [self.delegate navigationController:self didChoosePage:page.tag];
+                             [self.view removeFromSuperview];
+                         }
+                     }];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
