@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2549" systemVersion="12A269" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="Vx0-Iu-9ec">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="Vx0-Iu-9ec">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1498"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
     </dependencies>
     <scenes>
         <!--Picturebook Shop View Controller - Mashas Shop Old-->
@@ -529,6 +529,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Masha's Shop" image="tab-store.png" id="mp9-Qy-S3d"/>
                     <connections>
+                        <outlet property="backgroundView" destination="zds-sV-jqY" id="hU0-RK-Ulx"/>
                         <outlet property="bookTitleLabel" destination="cus-tJ-CEc" id="DXl-Bj-SX2"/>
                         <outlet property="bookWebView" destination="WnR-hZ-Zew" id="bNb-8o-MEd"/>
                         <outlet property="booksTableView" destination="V92-dz-yS4" id="VSm-I0-m7Y"/>
@@ -622,69 +623,6 @@
         <image name="twitter1.png" width="42" height="40"/>
         <image name="web.png" width="42" height="40"/>
     </resources>
-    <classes>
-        <class className="BooksTableCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BooksTableCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="bookTitle" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="coverImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="shortDescription" candidateClass="UITextView"/>
-            </relationships>
-        </class>
-        <class className="CategoryTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CategoryTableViewController.h"/>
-        </class>
-        <class className="MyBooksViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MyBooksViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="leftBookImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="scrollViewContainer" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="PicturebookShopViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PicturebookShopViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="buyButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="shopRefreshButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="shopWebView" candidateClass="UIWebView"/>
-            </relationships>
-        </class>
-        <class className="ScrollViewContainer" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ScrollViewContainer.h"/>
-            <relationships>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-            </relationships>
-        </class>
-        <class className="SettingsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="restoreButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="ShopViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ShopViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="bookBought:" candidateClass="UIButton"/>
-                <relationship kind="action" name="categorySelection:" candidateClass="UIButton"/>
-                <relationship kind="action" name="goToFacebookPage:" candidateClass="UIButton"/>
-                <relationship kind="action" name="goToTwitterPage:" candidateClass="UIButton"/>
-                <relationship kind="action" name="goToYoutubePage:" candidateClass="UIButton"/>
-                <relationship kind="action" name="shopRefresh:" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="bookTitleLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="bookWebView" candidateClass="UIWebView"/>
-                <relationship kind="outlet" name="booksTableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="buyButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="categoryButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="downloadProgressView" candidateClass="UIProgressView"/>
-                <relationship kind="outlet" name="facebookButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="priceLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="thumbImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="twitterButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="youtubeButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <nil key="statusBar"/>
         <simulatedOrientationMetrics key="orientation" orientation="landscapeRight"/>

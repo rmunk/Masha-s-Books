@@ -21,6 +21,7 @@
 @synthesize booksTableView = _booksTableView;
 @synthesize thumbImageView = _thumbImageView;
 @synthesize bookWebView = _bookWebView;
+@synthesize backgroundView = _backgroundView;
 @synthesize priceLabel = _priceLabel;
 @synthesize buyButton = _buyButton;
 @synthesize facebookButton = _facebookButton;
@@ -48,10 +49,13 @@
     indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [self.picturebookShop userSelectsCategory:category];
     [controller dismissViewControllerAnimated:YES completion:nil];
+    self.backgroundView.image = category.bgImage;
+    NSLog(@"Category background image: %@", category.bgImageURL);
     self.categoryButton.titleLabel.text = category.name;
     self.booksInSelectedCategory = [self.picturebookShop getBooksForSelectedCategory];
     [self.booksTableView reloadData];
     [self bookSelectedAtIndexPath:indexPath];
+    [self.view setNeedsDisplay];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -109,6 +113,7 @@
     [self setDownloadProgressView:nil];
     [self setBooksTableView:nil];
     [self setBookTitleLabel:nil];
+    [self setBackgroundView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
