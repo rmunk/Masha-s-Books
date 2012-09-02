@@ -11,7 +11,7 @@
 #import "Image.h"
 #import "UIImage+Resize.h"
 
-/* 
+/*
  The controller serves as the data source for the page view controller; it therefore implements pageViewController:viewControllerBeforeViewController: and pageViewController:viewControllerAfterViewController:.
  It also implements a custom method, viewControllerAtIndex: which is useful in the implementation of the data source methods, and in the initial configuration of the application.
  
@@ -27,7 +27,7 @@
 - (id)init
 {
     self = [super init];
-    if (self) 
+    if (self)
     {
         self.textVisibility = TRUE;
         self.voiceOverPlay = TRUE;
@@ -36,7 +36,7 @@
 }
 
 - (SlikovnicaDataViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard
-{   
+{
     // Return the data view controller for the given index.
     if (([self.book.pages count] == 0) || (index >= [self.book.pages count])) {
         return nil;
@@ -49,13 +49,15 @@
     dataViewController.voiceOverPlay = self.voiceOverPlay;
     
     [self.book.managedObjectContext refreshObject:self.book mergeChanges:NO];
+    
+    //    Page *preloadNextPage = [self.book.pages objectAtIndex:index + 1];
     return dataViewController;
 }
 
 - (NSUInteger)indexOfViewController:(SlikovnicaDataViewController *)viewController
-{   
-     // Return the index of the given data view controller.
-     // For simplicity, this implementation uses a static array of model objects and the view controller stores the model object; you can therefore use the model object to identify the index.
+{
+    // Return the index of the given data view controller.
+    // For simplicity, this implementation uses a static array of model objects and the view controller stores the model object; you can therefore use the model object to identify the index.
     return [self.book.pages indexOfObject:viewController.page];
 }
 
@@ -67,13 +69,13 @@
 - (NSArray *)getPageThumbnails
 {
     NSMutableArray *thumbnails = [[NSMutableArray alloc] init];
-
+    
     for (Page *page in self.book.pages) {
         UIImage *thumbnail = [page.image resizedImage:CGSizeMake(138, 103) interpolationQuality:kCGInterpolationHigh];
         [thumbnails addObject:thumbnail];
-     }
+    }
     [self.book.managedObjectContext refreshObject:self.book mergeChanges:NO];
-
+    
     return thumbnails;
 }
 
@@ -101,7 +103,9 @@
     if (index == [self.book.pages count]) {
         SlikovnicaDataViewController *dataViewController = [viewController.storyboard instantiateViewControllerWithIdentifier:@"SlikovnicaDataViewController"];
         return dataViewController;
-//        return nil;
+        //        [[NSNotificationCenter defaultCenter]
+        //         postNotificationName:@"userFinishedBook" object:self];
+        //        return nil;
     }
     return [self viewControllerAtIndex:index storyboard:viewController.storyboard];
 }

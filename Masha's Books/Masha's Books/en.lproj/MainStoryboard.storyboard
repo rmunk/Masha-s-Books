@@ -178,7 +178,7 @@
                                 <autoresizingMask key="autoresizingMask"/>
                             </imageView>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="-1" contentMode="right" image="box_arrow.png" id="WXL-JV-gHF">
-                                <rect key="frame" x="-77" y="195" width="77" height="384"/>
+                                <rect key="frame" x="-77" y="196" width="77" height="384"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </imageView>
                             <view tag="-1" contentMode="scaleToFill" id="lfJ-I4-Nyn" customClass="ScrollViewContainer">

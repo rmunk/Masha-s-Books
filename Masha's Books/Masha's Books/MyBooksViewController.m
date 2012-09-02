@@ -173,7 +173,7 @@
     NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
     url = [url URLByAppendingPathComponent:@"Library"];
     self.library = [[UIManagedDocument alloc] initWithFileURL:url];
-    [self getMyBooks];
+    //    [self getMyBooks];
     
     
 }
@@ -239,7 +239,7 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     if (scrollView.contentOffset.x > 0) {
-        [UIView animateWithDuration:1
+        [UIView animateWithDuration:0.75
                          animations:^{
                              self.leftBookImage.frame = CGRectMake(0, self.leftBookImage.frame.origin.y, self.leftBookImage.frame.size.width, self.leftBookImage.frame.size.height);
                              
@@ -252,7 +252,7 @@
     //    CGPoint scrollVelocity = [[scrollView panGestureRecognizer] velocityInView:self];
     
     if (scrollView.contentOffset.x > 0) {
-        [UIView animateWithDuration:0.3
+        [UIView animateWithDuration:0.25
                          animations:^{
                              self.leftBookImage.frame = CGRectMake(-77, self.leftBookImage.frame.origin.y, self.leftBookImage.frame.size.width, self.leftBookImage.frame.size.height);
                              

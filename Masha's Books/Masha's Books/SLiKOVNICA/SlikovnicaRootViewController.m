@@ -13,7 +13,7 @@
 #define HACKINTOSH
 
 @interface SlikovnicaRootViewController ()<AVAudioPlayerDelegate, SlikovnicaNavigationViewControllerDelegate>
-@property (strong, nonatomic) SlikovnicaNavigationViewController *slikovnicaNavigationViewController;
+@property (retain, nonatomic) SlikovnicaNavigationViewController *slikovnicaNavigationViewController;
 @property (strong, nonatomic) IBOutlet UIView *navigationRequestView;
 @property (strong, nonatomic) AVAudioPlayer *audioPlayerMusic;
 @end
@@ -79,6 +79,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(pageVoiceOverDidFinishPlaying:)
                                                  name:@"pageVoiceOverDidFinishPlaying" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(userFinishedBook:)
+                                                 name:@"userFinishedBook" object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -90,7 +94,7 @@
     self.slikovnicaNavigationViewController.bookNameLabel.title = self.modelController.book.title;
     
     [self addChildViewController:self.slikovnicaNavigationViewController];
-    [self.view insertSubview:self.slikovnicaNavigationViewController.view atIndex:0];
+    //    [self.view addSubview:self.slikovnicaNavigationViewController.view];// insertSubview:self.slikovnicaNavigationViewController.view atIndex:0];
     [self.slikovnicaNavigationViewController didMoveToParentViewController:self];
     [self.audioPlayerMusic play];
     SlikovnicaDataViewController *currentViewController = [self.pageViewController.viewControllers objectAtIndex:0];
@@ -104,7 +108,30 @@
     [super viewDidUnload];
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return (interfaceOrientation != UIInterfaceOrientationPortrait && interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+}
+
 #pragma mark - NavigationViewController delegate methods
+- (IBAction)userTappedForNavigation:(UITapGestureRecognizer *)sender 
+{
+    SlikovnicaDataViewController *currentViewController = [self.pageViewController.viewControllers objectAtIndex:0];
+
+    [currentViewController pauseAudio];
+    [self.audioPlayerMusic pause];
+
+    self.slikovnicaNavigationViewController.currentPage = [currentViewController.page.pageNumber intValue];
+    self.slikovnicaNavigationViewController.bookNameLabel.title = self.modelController.book.title;
+    self.slikovnicaNavigationViewController.textVisibility = self.modelController.textVisibility;
+    self.slikovnicaNavigationViewController.voiceOverPlay = self.modelController.voiceOverPlay;
+    self.view.gestureRecognizers = NULL;
+    
+    [self.view addSubview:self.slikovnicaNavigationViewController.view];
+    //    self.slikovnicaNavigationViewController.view.hidden = FALSE;
+    //    [self.view bringSubviewToFront:self.slikovnicaNavigationViewController.view];
+}
+
 - (void)navigationController:(SlikovnicaNavigationViewController *)sender didChoosePage:(NSInteger)page
 {
     if (page >= 0) {
@@ -118,7 +145,8 @@
         [currentViewController playAudio];
     }
 
-    [self.view sendSubviewToBack:self.slikovnicaNavigationViewController.view];
+    //    self.slikovnicaNavigationViewController.view.hidden = TRUE;
+    //    [self.view sendSubviewToBack:self.slikovnicaNavigationViewController.view];
     self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
     [self.audioPlayerMusic play];
 }
@@ -140,28 +168,6 @@
 - (void)navigationControllerClosedBook:(SlikovnicaNavigationViewController *)sender
 {
     [self.delegate slikovnicaRootViewController:self closedPictureBook:self.modelController.book];
-}
-
-- (IBAction)userTappedForNavigation:(UITapGestureRecognizer *)sender 
-{
-    SlikovnicaDataViewController *currentViewController = [self.pageViewController.viewControllers objectAtIndex:0];
-
-    [currentViewController pauseAudio];
-    [self.audioPlayerMusic pause];
-
-    self.slikovnicaNavigationViewController.currentPage = [currentViewController.page.pageNumber intValue];
-    self.slikovnicaNavigationViewController.bookNameLabel.title = self.modelController.book.title;
-    self.slikovnicaNavigationViewController.textVisibility = self.modelController.textVisibility;
-    self.slikovnicaNavigationViewController.voiceOverPlay = self.modelController.voiceOverPlay;
-    self.view.gestureRecognizers = NULL;
-    
-    [self.view bringSubviewToFront:self.slikovnicaNavigationViewController.view];
-}
-
-#pragma mark - 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation != UIInterfaceOrientationPortrait && interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
 #pragma mark - UIPageViewController delegate methods
@@ -192,6 +198,9 @@
     return UIPageViewControllerSpineLocationMin;
 }
 
+
+#pragma mark - DataVievController notifications
+
 - (void)pageVoiceOverDidFinishPlaying:(NSNotification *) notification
 {
     SlikovnicaDataViewController *currentViewController = [self.pageViewController.viewControllers objectAtIndex:0];
@@ -204,6 +213,14 @@
         [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:^(BOOL finished){if (finished) [nextViewController playAudio];}];        
     }
 }
+
+- (void)userFinishedBook:(NSNotification *)notification
+{
+    //    self.pageViewController.view.hidden = TRUE;
+    [self.delegate slikovnicaRootViewController:self closedPictureBook:self.modelController.book];
+}
+
+#pragma mark - AVAudioPlayer delegate methods
 
 - (void)playerDecodeErrorDidOccur:(AVAudioPlayer *)p error:(NSError *)error
 {
