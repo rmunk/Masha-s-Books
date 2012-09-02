@@ -140,12 +140,14 @@
         // does not exist on disk, so create it
         [self.library saveToURL:self.library.fileURL forSaveOperation:UIDocumentSaveForCreating completionHandler:^(BOOL success) {
         // go to shop
+            [self useDocument];
             
         }];
     } else if (self.library.documentState == UIDocumentStateClosed) {
         // exists on disk, but we need to open it
         [self.library openWithCompletionHandler:^(BOOL success) {
-            [self getMyBooks];
+            //[self getMyBooks];
+            [self useDocument];
         }];
     } else if (self.library.documentState == UIDocumentStateNormal) {
         // already open and ready to use
