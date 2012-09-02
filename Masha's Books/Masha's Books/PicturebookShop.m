@@ -49,6 +49,7 @@
 @synthesize lastPercentage = _lastPercentage;
 
 @synthesize isShopLoaded = _isShopLoaded;
+@synthesize libraryLoaded = _libraryLoaded;
 
 
 - (PicturebookShop *)initShop {
@@ -72,6 +73,7 @@
     [self.df setDateFormat:@"dd.mm.yyyy"]; 
     
     self.isShopLoaded = NO;
+    self.libraryLoaded = NO;
     
     return self;
 }
@@ -98,7 +100,9 @@
     } else if (self.libraryDatabase.documentState == UIDocumentStateNormal) {
         NSLog(@"Database at %@ is opened and ready for use.", self.libraryDatabase.fileURL);
         //[self loadShopFromDatabase];
-        self.isShopLoaded = YES;
+        //self.isShopLoaded = YES;
+        self.libraryLoaded = YES;
+        [self refreshShop];
         //[self shopDataLoaded];
     }
 }
@@ -128,27 +132,31 @@
 }
 
 - (void)refreshShop {
+    if (self.libraryLoaded == YES) {    
+        PBDLOG_ARG(@"Picturebook shop: Refreshing shop from URL %@", [self.shopURL description]);
     
-    PBDLOG_ARG(@"Picturebook shop: Refreshing shop from URL %@", [self.shopURL description]);
-    
-    //PicturebookCategory *all = [[PicturebookCategory alloc] initWithName:@"All" AndID:0];   
+        //PicturebookCategory *all = [[PicturebookCategory alloc] initWithName:@"All" AndID:0];   
 
-    //[self.categories addObject:all];    // Add "All" category to categories sets
+        //[self.categories addObject:all];    // Add "All" category to categories sets
      
-    self.xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:self.shopURL];
-    if (self.xmlParser) {
-        PBDLOG_ARG(@"Picturebook shop found at %@", self.shopURL.description);
-    }
-    [self.xmlParser setDelegate:self];
+        self.xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:self.shopURL];
+        if (self.xmlParser) {
+            PBDLOG_ARG(@"Picturebook shop found at %@", self.shopURL.description);
+        }
+        [self.xmlParser setDelegate:self];
     
-    BOOL parsingSuccesfull = [self.xmlParser parse];
+        BOOL parsingSuccesfull = [self.xmlParser parse];
     
-    if (parsingSuccesfull == YES) {
-        self.isShopLoaded = YES;
-        //[self shopDataLoaded];
+        if (parsingSuccesfull == YES) {
+            //self.isShopLoaded = YES;
+            //[self shopDataLoaded];
+        }
+        else {
+            [self shopErrorLoading];
+        }
     }
     else {
-        [self shopErrorLoading];
+        NSLog(@"Library not loaded. Refresh will be called from useDocument funcion");
     }
 
 }
@@ -333,6 +341,9 @@
         // fillBookWithCovers
         [Book loadCoversFromURL:@"http://www.mashasbookstore.com/covers/" forShop:self];
         NSLog(@"Books covers downloaded!");
+        self.isShopLoaded = YES;
+
+        
         
         
         
@@ -347,8 +358,8 @@
 
 - (void)bookExtractorDidAddPagesToBook:(NSNotification*)pagesAddedNotification 
 {
-	[self.libraryDatabase.managedObjectContext mergeChangesFromContextDidSaveNotification:pagesAddedNotification];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"PagesAdded" object:self.libraryDatabase.managedObjectContext];
+	//[self.libraryDatabase.managedObjectContext mergeChangesFromContextDidSaveNotification:pagesAddedNotification];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"PagesAdded" object:pagesAddedNotification];
      
     NSLog(@"Extracted book pages saved to database.");
 }

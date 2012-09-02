@@ -40,6 +40,7 @@
 
 @property (nonatomic, strong) NSURL *urlBase;
 @property (readwrite) BOOL isShopLoaded;
+@property (readwrite) BOOL libraryLoaded;
 @property (readwrite) NSUInteger numberOfBooksWhinchNeedCoversDownloaded;
 @property (nonatomic, strong) Category *selectedCategory; //currently browsed book category in shop
 @property (nonatomic, strong) Book *selectedBook;
