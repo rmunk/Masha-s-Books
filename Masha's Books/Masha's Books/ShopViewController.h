@@ -22,6 +22,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *booksTableView;
 @property (strong, nonatomic) IBOutlet UIImageView *thumbImageView;
 @property (strong, nonatomic) IBOutlet UIWebView *bookWebView;
+@property (strong, nonatomic) IBOutlet UIImageView *backgroundView;
 @property (strong, nonatomic) IBOutlet UILabel *priceLabel;
 @property (weak, nonatomic) IBOutlet UIButton *buyButton;
 @property (weak, nonatomic) IBOutlet UIButton *facebookButton;

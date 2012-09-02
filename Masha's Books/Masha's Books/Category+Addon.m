@@ -37,6 +37,10 @@
         if (![category.name isEqualToString:[attributes objectForKey:@"Name"]]) {
             category.name = [attributes objectForKey:@"Name"];
         }
+        
+        if (![category.bgImageURL isEqualToString:[attributes objectForKey:@"BGImage"]]) {
+            category.bgImageURL = [attributes objectForKey:@"BGImage"];
+        }
     }
     else {
          NSLog(@"ERROR: Database inconsisctency: To many categories with sam ID in database!");
@@ -88,6 +92,44 @@
     NSArray *authorWithID = [context executeFetchRequest:request error:&error];
     NSOrderedSet *authorWithIDSet = [[NSOrderedSet alloc] initWithArray:authorWithID];
     return authorWithIDSet;
+    
+}
+
++ (void)loadBackgroundsForContext:(NSManagedObjectContext *)context {
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Category"];
+    NSError *error;
+    NSArray *categories = [context executeFetchRequest:request error:&error];
+    
+    for (Category *category in categories) {
+        
+        NSURL *backgroundURL = [[NSURL alloc] initWithString:
+                                    [NSString stringWithFormat:@"%@%@", 
+                                     @"http://www.mashasbookstore.com", category.bgImageURL]];
+      
+        
+        NSLog(@"Downloading background image for category %@ at %@", category.name, backgroundURL);
+        
+        // Get an image from the URL below
+        dispatch_queue_t backgroundsDownloadQueue = dispatch_queue_create("category download", NULL);
+        dispatch_async(backgroundsDownloadQueue, ^{
+            
+            UIImage *background = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:backgroundURL]];
+            
+            
+            dispatch_async(dispatch_get_main_queue(), ^{                    
+                if (background != nil) {                                    
+                               
+                    category.bgImage = background;
+                    
+                    NSLog(@"Downloaded background image for category %@", category.name);
+                        
+                    
+                }
+            });   
+        });
+        dispatch_release(backgroundsDownloadQueue);
+    } 
+
     
 }
 

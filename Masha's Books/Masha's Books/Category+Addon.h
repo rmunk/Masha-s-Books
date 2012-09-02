@@ -20,6 +20,8 @@
 
 + (NSOrderedSet *)getAllCategoriesFromContext:(NSManagedObjectContext *)context;
 
++ (void)loadBackgroundsForContext:(NSManagedObjectContext *)context;
+
 - (void)pickYourBooksFromLinkerObject:(CategoryToBookMap *)categoryToBookMap;
 
 @end

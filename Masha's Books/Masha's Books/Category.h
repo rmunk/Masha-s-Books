@@ -16,7 +16,7 @@
 @property (nonatomic, retain) NSNumber * categoryID;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * bgImageURL;
-@property (nonatomic, retain) id bgImage;
+@property (nonatomic, retain) UIImage *bgImage;
 @property (nonatomic, retain) NSOrderedSet *books;
 @end
 

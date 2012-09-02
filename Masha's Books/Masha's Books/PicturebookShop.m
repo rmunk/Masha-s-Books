@@ -258,6 +258,45 @@
         NSLog(@"PARSING STARTED");
 		return;		
 	}
+    else if([elementName isEqualToString:@"info"]) {
+       // 
+        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Info"]; 
+        NSError *error;
+        Info *info;
+        
+        NSArray *infoArray = [self.libraryDatabase.managedObjectContext executeFetchRequest:request error:&error];
+        if (infoArray.count == 0) {
+            info = [NSEntityDescription insertNewObjectForEntityForName:@"Info" inManagedObjectContext:self.libraryDatabase.managedObjectContext];
+        }
+        else if (infoArray.count == 1) {
+            info = [infoArray lastObject];
+        }
+        else {
+            NSLog(@"ERROR: More than one Info managed object in database");
+            return;
+        }
+        
+        NSLog(@"Storing info");
+        NSLog(@"%@", [attributeDict objectForKey:@"appVer"]);
+        info.appVer = [attributeDict objectForKey:@"appVer"];
+        NSLog(@"%@", [attributeDict objectForKey:@"appStoreURL"]);
+        info.appStoreURL = [attributeDict objectForKey:@"appStoreURL"];
+        NSLog(@"%@", [attributeDict objectForKey:@"websiteURL"]);
+        info.websiteURL = [attributeDict objectForKey:@"websiteURL"];
+        NSLog(@"%@", [attributeDict objectForKey:@"facebookURL"]);
+        info.facebookURL = [attributeDict objectForKey:@"facebookURL"];
+        NSLog(@"%@", [attributeDict objectForKey:@"twitterURL"]);
+        info.twitterURL = [attributeDict objectForKey:@"twitterURL"];
+        NSLog(@"%@", [attributeDict objectForKey:@"contactURL"]);
+        info.contactURL = [attributeDict objectForKey:@"contactURL"];
+       
+        
+    }
+    else if([elementName isEqualToString:@"myBooks"]) {
+        
+        
+        
+    }
     else if([elementName isEqualToString:@"categories"]) {
                     
         [Category categoryWithAttributes:attributeDict forContext:self.libraryDatabase.managedObjectContext];
@@ -336,6 +375,7 @@
        
         NSLog(@"PARSING FINISHED");
         // ovdi pozvat funkcije za likanje knjiga i kategorija, knjiga i autora
+        [Category loadBackgroundsForContext:self.libraryDatabase.managedObjectContext];
         [Book linkBooksToCategoriesWithLinker:self.categoryToBookMap inContext:self.libraryDatabase.managedObjectContext];
         [Book linkBooksToAuthorsInContext:self.libraryDatabase.managedObjectContext];
         // fillBookWithCovers

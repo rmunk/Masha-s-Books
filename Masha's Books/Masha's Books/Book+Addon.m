@@ -143,7 +143,8 @@
                                     [NSString stringWithFormat:@"%@%d%@", 
                                      coverUrlString, [book.bookID intValue], @"_m.jpg"]];
         
-        NSLog(@"Downloading cover images for book %@", book.title);
+        NSLog(@"Downloading cover images for book %@ at %@", book.title, coverThumbnailURL);
+
             
             // Get an image from the URL below
         dispatch_queue_t downloadQueue = dispatch_queue_create("image download", NULL);
