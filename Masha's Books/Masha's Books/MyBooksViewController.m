@@ -165,6 +165,31 @@
     }
 }
 
+- (void)newBookReady:(NSNotification *)notification {
+    NSLog(@"Merging contexts");
+    [self.library.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
+     NSError *error;
+    
+    NSNotificationCenter *dnc = [NSNotificationCenter defaultCenter];
+    [dnc addObserver:self selector:@selector(contextsMergedAndSaved:) name:NSManagedObjectContextDidSaveNotification object:nil];
+    
+    NSLog(@"Saving contexts");
+    [self.library.managedObjectContext save:&error];
+    if (error) {
+        NSLog(@"Error saving context (%@)!", error.description);
+    }
+    
+    [dnc removeObserver:self name:NSManagedObjectContextDidSaveNotification object:nil];
+
+    
+    
+}
+
+- (void)contextsMergedAndSaved:(NSNotification *)notification {
+    NSLog(@"Calling getMyBooks");
+    [self getMyBooks];
+}
+
 #pragma mark - View lifecycle
 - (void)viewDidLoad
 {
@@ -176,6 +201,7 @@
     url = [url URLByAppendingPathComponent:@"Library"];
     self.library = [[UIManagedDocument alloc] initWithFileURL:url];
     //    [self getMyBooks];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newBookReady:) name:@"PagesAdded" object:nil ];
     
     
 }
@@ -187,6 +213,8 @@
     if (self.scrollView.contentOffset.x == 0) {
         self.leftBookImage.frame = CGRectMake(-77, self.leftBookImage.frame.origin.y, self.leftBookImage.frame.size.width, self.leftBookImage.frame.size.height);
     }
+    
+    [self getMyBooks];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

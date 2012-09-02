@@ -358,8 +358,8 @@
 
 - (void)bookExtractorDidAddPagesToBook:(NSNotification*)pagesAddedNotification 
 {
-	[self.libraryDatabase.managedObjectContext mergeChangesFromContextDidSaveNotification:pagesAddedNotification];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"PagesAdded" object:self.libraryDatabase.managedObjectContext];
+	//[self.libraryDatabase.managedObjectContext mergeChangesFromContextDidSaveNotification:pagesAddedNotification];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"PagesAdded" object:pagesAddedNotification];
      
     NSLog(@"Extracted book pages saved to database.");
 }
