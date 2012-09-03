@@ -139,6 +139,20 @@
     [self loadVisiblePages];
 }
 
+- (void)loadDesignImages
+{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Design"];
+    
+    NSError *error;
+    Design *design = [[self.library.managedObjectContext executeFetchRequest:request error:&error] lastObject];
+    
+    if (design)
+    {
+        self.backgroundImage.image = design.bgImage;
+        self.mashaImage.image = design.bgMasha;
+    }
+}
+
 - (void)useDocument
 {
     if (![[NSFileManager defaultManager] fileExistsAtPath:[self.library.fileURL path]]) {
@@ -156,6 +170,7 @@
         }];
     } else if (self.library.documentState == UIDocumentStateNormal) {
         // already open and ready to use
+        [self loadDesignImages];
         [self getMyBooks];
     }
 }
@@ -202,14 +217,6 @@
     self.library = [[UIManagedDocument alloc] initWithFileURL:url];
     //    [self getMyBooks];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newBookReady:) name:@"PagesAdded" object:nil ];
-    
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Design"];
-    
-    NSError *error;
-    Design *design = [[self.library.managedObjectContext executeFetchRequest:request error:&error] lastObject];
-    
-//    self.backgroundImage.image = design.bgImage;
-//    self.mashaImage.image = design.bgMasha;    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -279,8 +286,6 @@
 - (void)slikovnicaRootViewController:(SlikovnicaRootViewController *)sender closedPictureBook:(Book *)book
 {
     [self dismissModalViewControllerAnimated:YES];
-    UIView *page = [self.scrollView viewWithTag:[self.myBooks indexOfObject:book]];
-    
 }
 
 #pragma mark - UIScrollViewDelegate
