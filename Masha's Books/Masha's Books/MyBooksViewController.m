@@ -37,6 +37,7 @@
 @synthesize context = _context;
 
 #pragma mark - Load Pages
+
 - (void)loadVisiblePages {
 
     // First, determine which page is currently visible
@@ -236,28 +237,43 @@
 }
 
 #pragma mark - Read Book
+
 - (void)userTappedImage:(UITapGestureRecognizer *)sender 
 {
     UIView *page = sender.view;
+    
+    UIActivityIndicatorView *bookLoadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    bookLoadingIndicator.contentMode = UIViewContentModeCenter;
+    bookLoadingIndicator.frame = ((UIView *)[page.subviews lastObject]).frame;
+    bookLoadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+    [page addSubview:bookLoadingIndicator];
+    [bookLoadingIndicator startAnimating];
+    
     Book *selectedBook = [self.myBooks objectAtIndex:page.tag];
     NSLog(@"User selected book %@.", selectedBook.title);
-        
+    
     if (selectedBook.pages.count <= 0) {
         NSLog(@"No pages in book!");
         return;
     }
     
-    UIStoryboard *slikovnicaStoryboard = [UIStoryboard storyboardWithName:@"PicturebookStoryboard" bundle:nil];
-    SlikovnicaRootViewController *initialVC = [slikovnicaStoryboard instantiateInitialViewController];
-    initialVC.delegate = self;
-    initialVC.modelController.book = selectedBook;
-    initialVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    [self presentModalViewController:initialVC animated:YES];
+    dispatch_queue_t slikovnicaQueue = dispatch_queue_create("slikovnicaQueue", NULL);
+    dispatch_async(slikovnicaQueue, ^{
+        UIStoryboard *slikovnicaStoryboard = [UIStoryboard storyboardWithName:@"PicturebookStoryboard" bundle:nil];
+        SlikovnicaRootViewController *initialVC = [slikovnicaStoryboard instantiateInitialViewController];
+        initialVC.delegate = self;
+        initialVC.modelController.book = selectedBook;
+        initialVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+        [self presentModalViewController:initialVC animated:YES];
+    });
+    dispatch_release(slikovnicaQueue);
 }
 
 - (void)slikovnicaRootViewController:(SlikovnicaRootViewController *)sender closedPictureBook:(Book *)book
 {
     [self dismissModalViewControllerAnimated:YES];
+    UIView *page = [self.scrollView viewWithTag:[self.myBooks indexOfObject:book]];
+    
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -269,24 +285,28 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     if (scrollView.contentOffset.x > 0) {
-        [UIView animateWithDuration:0.75
+        [UIView animateWithDuration:0.5
+                              delay:0
+                            options:UIViewAnimationCurveEaseOut
                          animations:^{
                              self.leftBookImage.frame = CGRectMake(0, self.leftBookImage.frame.origin.y, self.leftBookImage.frame.size.width, self.leftBookImage.frame.size.height);
                              
-                         }];
+                         }
+                         completion:nil];
     }
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-    //    CGPoint scrollVelocity = [[scrollView panGestureRecognizer] velocityInView:self];
-    
     if (scrollView.contentOffset.x > 0) {
-        [UIView animateWithDuration:0.25
+        [UIView animateWithDuration:0.2
+                              delay:0
+                            options:UIViewAnimationCurveEaseIn
                          animations:^{
                              self.leftBookImage.frame = CGRectMake(-77, self.leftBookImage.frame.origin.y, self.leftBookImage.frame.size.width, self.leftBookImage.frame.size.height);
                              
-                         }];
+                         }
+                         completion:nil];
     }    
 }
 

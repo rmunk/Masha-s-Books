@@ -83,19 +83,22 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(userFinishedBook:)
                                                  name:@"userFinishedBook" object:nil];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
+    
     self.slikovnicaNavigationViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Navigation"];
     self.slikovnicaNavigationViewController.view.frame = self.view.bounds;
     self.slikovnicaNavigationViewController.pageImages = [self.modelController getPageThumbnails];
     self.slikovnicaNavigationViewController.delegate = self;
     self.slikovnicaNavigationViewController.bookNameLabel.title = self.modelController.book.title;
+    self.slikovnicaNavigationViewController.currentPage = 1;
     
     [self addChildViewController:self.slikovnicaNavigationViewController];
     //    [self.view addSubview:self.slikovnicaNavigationViewController.view];// insertSubview:self.slikovnicaNavigationViewController.view atIndex:0];
     [self.slikovnicaNavigationViewController didMoveToParentViewController:self];
+    NSLog(@"Book loaded");
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
     [self.audioPlayerMusic play];
     SlikovnicaDataViewController *currentViewController = [self.pageViewController.viewControllers objectAtIndex:0];
     [currentViewController playAudio];
@@ -121,13 +124,14 @@
     [currentViewController pauseAudio];
     [self.audioPlayerMusic pause];
 
+    [self.view addSubview:self.slikovnicaNavigationViewController.view];
+    
     self.slikovnicaNavigationViewController.currentPage = [currentViewController.page.pageNumber intValue];
     self.slikovnicaNavigationViewController.bookNameLabel.title = self.modelController.book.title;
     self.slikovnicaNavigationViewController.textVisibility = self.modelController.textVisibility;
     self.slikovnicaNavigationViewController.voiceOverPlay = self.modelController.voiceOverPlay;
     self.view.gestureRecognizers = NULL;
     
-    [self.view addSubview:self.slikovnicaNavigationViewController.view];
     //    self.slikovnicaNavigationViewController.view.hidden = FALSE;
     //    [self.view bringSubviewToFront:self.slikovnicaNavigationViewController.view];
 }

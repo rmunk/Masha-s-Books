@@ -18,6 +18,10 @@
  There is no need to actually create view controllers for each page in advance -- indeed doing so incurs unnecessary overhead. Given the data model, these methods create, configure, and return a new view controller on demand.
  */
 
+@interface SlikovnicaModelController()
+@property Page *nextPage;
+@end
+
 @implementation SlikovnicaModelController
 
 @synthesize book = _book;
@@ -68,6 +72,7 @@
 
 - (NSArray *)getPageThumbnails
 {
+    NSLog(@"Creating filmstrip thumbnails...");
     NSMutableArray *thumbnails = [[NSMutableArray alloc] init];
     
     for (Page *page in self.book.pages) {
