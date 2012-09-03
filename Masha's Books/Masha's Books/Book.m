@@ -2,7 +2,7 @@
 //  Book.m
 //  Masha's Books
 //
-//  Created by Luka Miljak on 8/26/12.
+//  Created by Luka Miljak on 9/3/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -21,6 +21,7 @@
 @dynamic backgroundMusic;
 @dynamic bookID;
 @dynamic coverThumbnailImage;
+@dynamic coverThumbnailImageMedium;
 @dynamic descriptionString;
 @dynamic downloadDate;
 @dynamic downloaded;
@@ -34,7 +35,9 @@
 @dynamic title;
 @dynamic type;
 @dynamic youTubeVideoURL;
-@dynamic coverThumbnailImageMedium;
+@dynamic rateImageUp;
+@dynamic tagImageLarge;
+@dynamic tagImageSmall;
 @dynamic author;
 @dynamic categories;
 @dynamic coverImage;

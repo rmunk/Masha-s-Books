@@ -24,6 +24,8 @@
         category.categoryID = [NSNumber numberWithInt:[[attributes objectForKey:@"ID"] integerValue]];
         
         category.name = [attributes objectForKey:@"Name"];
+        
+        category.bgImageURL = [attributes objectForKey:@"BGImage"];
     }
     else if (categoryWithID.count == 1) {
         Category *category = [categoryWithID lastObject];

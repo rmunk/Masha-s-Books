@@ -328,13 +328,19 @@
                                                     <rect key="frame" x="236" y="10" width="42" height="42"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="NSk-wa-FBc">
+                                                    <rect key="frame" x="11" y="10" width="117" height="80"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <connections>
                                             <outlet property="bookTitle" destination="DXy-Z1-F4j" id="ueP-T3-HT5"/>
                                             <outlet property="coverImage" destination="23g-ch-5lA" id="9kg-8s-gtT"/>
+                                            <outlet property="rateImage" destination="u8n-qX-Ced" id="Roq-iB-Vii"/>
                                             <outlet property="shortDescription" destination="ZQL-MU-aXy" id="fip-E3-4co"/>
+                                            <outlet property="tagImage" destination="NSk-wa-FBc" id="VEx-Wm-jun"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -381,6 +387,14 @@
                                 <rect key="frame" x="345" y="146" width="285" height="194"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="fBK-lq-WPe">
+                                <rect key="frame" x="345" y="146" width="285" height="194"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <progressView opaque="NO" contentMode="scaleToFill" progress="0.5" id="af5-7l-ada">
+                                <rect key="frame" x="352" y="323" width="271" height="9"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </progressView>
                             <webView opaque="NO" contentMode="scaleToFill" id="WnR-hZ-Zew">
                                 <rect key="frame" x="679" y="136" width="321" height="533"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -409,10 +423,6 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <progressView opaque="NO" contentMode="scaleToFill" progress="0.5" id="af5-7l-ada">
-                                <rect key="frame" x="352" y="324" width="271" height="9"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </progressView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" lineBreakMode="middleTruncation" id="OcG-gV-JOz">
                                 <rect key="frame" x="697" y="677" width="52" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -540,6 +550,8 @@
                         <outlet property="downloadProgressView" destination="af5-7l-ada" id="ghB-5v-Tzi"/>
                         <outlet property="facebookButton" destination="OcG-gV-JOz" id="Gda-Wr-f8b"/>
                         <outlet property="priceLabel" destination="fgv-lU-3s6" id="fjH-PP-KoS"/>
+                        <outlet property="rateImage" destination="s5k-PB-C3T" id="QKN-hi-nFN"/>
+                        <outlet property="tagViewLarge" destination="fBK-lq-WPe" id="bTA-lU-mSb"/>
                         <outlet property="thumbImageView" destination="JO4-Mq-aBd" id="9yS-Hx-La2"/>
                         <outlet property="twitterButton" destination="y7M-LU-HqL" id="iVl-7c-NSF"/>
                         <outlet property="youtubeButton" destination="Dc8-xW-0pJ" id="tCP-SF-BWI"/>
@@ -625,6 +637,68 @@
         <image name="twitter1.png" width="42" height="40"/>
         <image name="web.png" width="42" height="40"/>
     </resources>
+    <classes>
+        <class className="BooksTableCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BooksTableCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="bookTitle" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="coverImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="rateImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="shortDescription" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="tagImage" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="CategoryTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CategoryTableViewController.h"/>
+        </class>
+        <class className="MyBooksViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MyBooksViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="leftBookImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="scrollViewContainer" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="PicturebookShopViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PicturebookShopViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="buyButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="shopRefreshButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="shopWebView" candidateClass="UIWebView"/>
+            </relationships>
+        </class>
+        <class className="ScrollViewContainer" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ScrollViewContainer.h"/>
+            <relationships>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+            </relationships>
+        </class>
+        <class className="SettingsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="restoreButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="ShopViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ShopViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="backgroundView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="bookTitleLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="bookWebView" candidateClass="UIWebView"/>
+                <relationship kind="outlet" name="booksTableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="buyButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="categoryButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="downloadProgressView" candidateClass="UIProgressView"/>
+                <relationship kind="outlet" name="facebookButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="priceLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="rateImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="tagViewLarge" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="thumbImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="twitterButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="youtubeButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <nil key="statusBar"/>
         <simulatedOrientationMetrics key="orientation" orientation="landscapeRight"/>

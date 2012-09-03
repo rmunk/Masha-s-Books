@@ -30,6 +30,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *youtubeButton;
 @property (weak, nonatomic) IBOutlet UIProgressView *downloadProgressView;
 @property (weak, nonatomic) IBOutlet UILabel *bookTitleLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *tagViewLarge;
+@property (strong, nonatomic) IBOutlet UIImageView *rateImage;
 
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 

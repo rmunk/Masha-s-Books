@@ -32,6 +32,12 @@
         
         book.type = [NSNumber numberWithInt:[[attributes objectForKey:@"Type"] integerValue]];
         
+        book.price = [NSNumber numberWithFloat:[[attributes objectForKey:@"Price"] floatValue]];
+        
+        book.rate = [NSNumber numberWithFloat:[[attributes objectForKey:@"Rate"] floatValue]];
+        
+        book.tag = [NSNumber numberWithFloat:[[attributes objectForKey:@"Tag"] floatValue]];
+        
         book.title = [attributes objectForKey:@"Title"];
         
         book.appStoreID = [NSNumber numberWithInt:[[attributes objectForKey:@"AppleStoreID"] integerValue]];
@@ -143,15 +149,32 @@
                                     [NSString stringWithFormat:@"%@%d%@", 
                                      coverUrlString, [book.bookID intValue], @"_m.jpg"]];
         
+        NSURL *rateImageUpURL = [[NSURL alloc] initWithString:
+                                    [NSString stringWithFormat:@"%@%d%@", 
+                                     @"http://www.mashasbookstore.com/tags/rate", [book.rate intValue], @".png"]];
+        
+        NSURL *tagImageLargeURL = [[NSURL alloc] initWithString:
+                                    [NSString stringWithFormat:@"%@%d%@", 
+                                     @"http://www.mashasbookstore.com/tags/tag", [book.tag intValue], @".png"]];
+        
+        NSURL *tagImageSmallURL = [[NSURL alloc] initWithString:
+                                   [NSString stringWithFormat:@"%@%d%@", 
+                                    @"http://www.mashasbookstore.com/tags/tag", [book.tag intValue], @"s.png"]];
+
+        
         NSLog(@"Downloading cover images for book %@ at %@", book.title, coverThumbnailURL);
+        NSLog(@"Tags URLs: %@ %@ %@", rateImageUpURL, tagImageLargeURL, tagImageSmallURL);
 
             
-            // Get an image from the URL below
+        // Get an image from the URL below
         dispatch_queue_t downloadQueue = dispatch_queue_create("image download", NULL);
         dispatch_async(downloadQueue, ^{
                 
             UIImage *coverThumbnailImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:coverThumbnailURL]];
             UIImage *coverThumbnailUImageMedium = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:coverThumbnailMediumURL]];
+            UIImage *rateImageUp = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:rateImageUpURL]];
+            UIImage *tagImageLarge = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:tagImageLargeURL]];
+            UIImage *tagImageSmall = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:tagImageSmallURL]];
                 
                  
             dispatch_async(dispatch_get_main_queue(), ^{                    
@@ -159,6 +182,9 @@
                     //coverImage.image = coverUImage;                        
                     book.coverThumbnailImage = coverThumbnailImage;
                     book.coverThumbnailImageMedium = coverThumbnailUImageMedium;
+                    book.rateImageUp = rateImageUp;
+                    book.tagImageLarge = tagImageLarge;
+                    book.tagImageSmall = tagImageSmall;
                     //book.coverImage = coverImage;
                     
                     //[self shopDataLoaded];
@@ -185,6 +211,21 @@
     if (![book.type isEqualToNumber:[NSNumber numberWithInt:[[attributes objectForKey:@"Type"] integerValue]]]) {
         book.type = [NSNumber numberWithInt:[[attributes objectForKey:@"Type"] integerValue]];
         NSLog(@"New value for book %@ attribute book.type", book.title);
+    }
+    
+    if (![book.price isEqualToNumber:[NSNumber numberWithFloat:[[attributes objectForKey:@"Price"] floatValue]]]) {
+        book.price = [NSNumber numberWithFloat:[[attributes objectForKey:@"Price"] floatValue]];
+        NSLog(@"New value for book %@ attribute book.price", book.title);
+    }
+    
+    if (![book.rate isEqualToNumber:[NSNumber numberWithFloat:[[attributes objectForKey:@"Rate"] floatValue]]]) {
+        book.rate = [NSNumber numberWithFloat:[[attributes objectForKey:@"Rate"] floatValue]];
+        NSLog(@"New value for book %@ attribute book.rate", book.title);
+    }
+    
+    if (![book.tag isEqualToNumber:[NSNumber numberWithFloat:[[attributes objectForKey:@"Tag"] floatValue]]]) {
+        book.tag = [NSNumber numberWithFloat:[[attributes objectForKey:@"Tag"] floatValue]];
+        NSLog(@"New value for book %@ attribute book.tag", book.title);
     }
     
     if (![book.title isEqualToString:[attributes objectForKey:@"Title"]]) {

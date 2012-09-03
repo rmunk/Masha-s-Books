@@ -29,6 +29,8 @@
 @synthesize youtubeButton = _youtubeButton;
 @synthesize downloadProgressView = _downloadProgressView;
 @synthesize bookTitleLabel = _bookTitleLabel;
+@synthesize tagViewLarge = _tagViewLarge;
+@synthesize rateImage = _rateImage;
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize picturebookShop = _picturebookShop;
 @synthesize bookExtractor = _bookExtractor;
@@ -120,6 +122,8 @@
     [self setBooksTableView:nil];
     [self setBookTitleLabel:nil];
     [self setBackgroundView:nil];
+    [self setTagViewLarge:nil];
+    [self setRateImage:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -189,7 +193,10 @@
         [self.picturebookShop userSelectsBook:self.picturebookShop.selectedBook];
     
         self.thumbImageView.image = self.picturebookShop.selectedBook.coverThumbnailImageMedium;
+        self.tagViewLarge.image = self.picturebookShop.selectedBook.tagImageLarge;
+        self.rateImage.image = self.picturebookShop.selectedBook.rateImageUp;
         self.bookTitleLabel.text = self.picturebookShop.selectedBook.title;
+        self.priceLabel.text = [NSString stringWithFormat:@"$ %.2f", [self.picturebookShop.selectedBook.price floatValue]];
         [self.booksTableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
     
         NSString *siteURL = @"http://www.mashasbookstore.com/storeops/story-long-description.aspx?id=";
@@ -248,6 +255,8 @@
     cell.coverImage.image = book.coverThumbnailImage;
     cell.bookTitle.text = book.title;
     cell.shortDescription.text = book.descriptionString;
+    cell.rateImage.image = book.rateImageUp;
+    cell.tagImage.image = book.tagImageSmall;
 
     
     //        self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"box.png"]];
