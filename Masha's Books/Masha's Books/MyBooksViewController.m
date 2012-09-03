@@ -26,6 +26,8 @@
 
 @implementation MyBooksViewController
 @synthesize library = _library;
+@synthesize mashaImage = _mashaImage;
+@synthesize backgroundImage = _backgroundImage;
 
 @synthesize scrollView = _scrollView;
 @synthesize scrollViewContainer = _scrollViewContainer;
@@ -181,9 +183,6 @@
     }
     
     [dnc removeObserver:self name:NSManagedObjectContextDidSaveNotification object:nil];
-
-    
-    
 }
 
 - (void)contextsMergedAndSaved:(NSNotification *)notification {
@@ -204,7 +203,13 @@
     //    [self getMyBooks];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newBookReady:) name:@"PagesAdded" object:nil ];
     
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Design"];
     
+    NSError *error;
+    Design *design = [[self.library.managedObjectContext executeFetchRequest:request error:&error] lastObject];
+    
+//    self.backgroundImage.image = design.bgImage;
+//    self.mashaImage.image = design.bgMasha;    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -228,6 +233,8 @@
     [self setMyBooks:nil];
     [self setCoverViews:nil];
     [self setLeftBookImage:nil];
+    [self setMashaImage:nil];
+    [self setBackgroundImage:nil];
     [super viewDidUnload];
 }
 
