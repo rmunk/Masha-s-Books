@@ -49,8 +49,14 @@
     indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [self.picturebookShop userSelectsCategory:category];
     [controller dismissViewControllerAnimated:YES completion:nil];
-    self.backgroundView.image = category.bgImage;
-    NSLog(@"Category background image: %@", category.bgImageURL);
+    
+    [UIView transitionWithView:self.view
+                      duration:0.5f
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    animations:^{
+                        self.backgroundView.image = category.bgImage;
+                    } completion:NULL];
+ 
     self.categoryButton.titleLabel.text = category.name;
     self.booksInSelectedCategory = [self.picturebookShop getBooksForSelectedCategory];
     [self.booksTableView reloadData];

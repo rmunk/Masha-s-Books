@@ -294,7 +294,24 @@
     }
     else if([elementName isEqualToString:@"myBooks"]) {
         
+        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Design"]; 
+        NSError *error;
+        Design *design;
         
+        NSArray *infoArray = [self.libraryDatabase.managedObjectContext executeFetchRequest:request error:&error];
+        if (infoArray.count == 0) {
+            design = [NSEntityDescription insertNewObjectForEntityForName:@"Design" inManagedObjectContext:self.libraryDatabase.managedObjectContext];
+        }
+        else if (infoArray.count == 1) {
+            design = [infoArray lastObject];
+        }
+        else {
+            NSLog(@"ERROR: More than one Info managed object in database");
+            return;
+        }
+        
+        design.bgImageURL = [attributeDict objectForKey:@"BGImage"];
+        design.bgMashaURL = [attributeDict objectForKey:@"BGMasha"];
         
     }
     else if([elementName isEqualToString:@"categories"]) {
@@ -375,6 +392,7 @@
        
         NSLog(@"PARSING FINISHED");
         // ovdi pozvat funkcije za likanje knjiga i kategorija, knjiga i autora
+        [Design loadImages:self.libraryDatabase.managedObjectContext];
         [Category loadBackgroundsForContext:self.libraryDatabase.managedObjectContext];
         [Book linkBooksToCategoriesWithLinker:self.categoryToBookMap inContext:self.libraryDatabase.managedObjectContext];
         [Book linkBooksToAuthorsInContext:self.libraryDatabase.managedObjectContext];

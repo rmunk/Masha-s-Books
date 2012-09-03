@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BA04783A15F42C74003BD7B2 /* Design+Addon.m in Sources */ = {isa = PBXBuildFile; fileRef = BA04783915F42C71003BD7B2 /* Design+Addon.m */; };
 		BA05ED4615EAAF5F00B0220E /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = BA05ED4515EAAF5F00B0220E /* Book.m */; };
 		BA0E4E1115EBFF3700012F17 /* CategoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0E4E1015EBFF3700012F17 /* CategoryTableViewController.m */; };
 		BA523BB615E6D1B4008617AB /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = BA523BB515E6D1B4008617AB /* Category.m */; };
@@ -153,6 +154,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BA04783815F42C70003BD7B2 /* Design+Addon.h */ = {isa = PBXFileReference; fileEncoding = 4; path = "Design+Addon.h"; sourceTree = "<group>"; };
+		BA04783915F42C71003BD7B2 /* Design+Addon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Design+Addon.m"; sourceTree = "<group>"; };
 		BA05ED4415EAAF5F00B0220E /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Book.h; sourceTree = "<group>"; };
 		BA05ED4515EAAF5F00B0220E /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Book.m; sourceTree = "<group>"; };
 		BA0E4E0F15EBFF3700012F17 /* CategoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryTableViewController.h; sourceTree = "<group>"; };
@@ -400,6 +403,8 @@
 			isa = PBXGroup;
 			children = (
 				BA523BBB15E6D1CD008617AB /* Design.h */,
+				BA04783815F42C70003BD7B2 /* Design+Addon.h */,
+				BA04783915F42C71003BD7B2 /* Design+Addon.m */,
 				BA523BBC15E6D1CD008617AB /* Design.m */,
 				BA523BB815E6D1CD008617AB /* Info.h */,
 				BA523BB915E6D1CD008617AB /* Info.m */,
@@ -887,6 +892,7 @@
 				BA523BBD15E6D1CD008617AB /* Design.m in Sources */,
 				BA05ED4615EAAF5F00B0220E /* Book.m in Sources */,
 				BA0E4E1115EBFF3700012F17 /* CategoryTableViewController.m in Sources */,
+				BA04783A15F42C74003BD7B2 /* Design+Addon.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
