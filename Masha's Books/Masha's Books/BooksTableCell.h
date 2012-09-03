@@ -13,6 +13,8 @@
 
 @property (readonly) CGFloat cellHeight;
 @property (weak, nonatomic) IBOutlet UIImageView *coverImage;
+@property (weak, nonatomic) IBOutlet UIImageView *tagImage;
+@property (weak, nonatomic) IBOutlet UIImageView *rateImage;
 @property (weak, nonatomic) IBOutlet UILabel *bookTitle;
 @property (weak, nonatomic) IBOutlet UITextView *shortDescription;
 

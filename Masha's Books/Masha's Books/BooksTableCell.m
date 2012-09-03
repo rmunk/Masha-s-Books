@@ -21,6 +21,8 @@
 @synthesize shortDescription = _shortDescription;
 @synthesize bookCover = _bookCover;
 @synthesize bookDescription = _bookDescription;
+@synthesize rateImage = _rateImage;
+@synthesize tagImage = _tagImage;
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {

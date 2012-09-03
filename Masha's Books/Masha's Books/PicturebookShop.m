@@ -310,7 +310,9 @@
             return;
         }
         
+        NSLog(@"Setting BGImage %@", [attributeDict objectForKey:@"BGImage"]);
         design.bgImageURL = [attributeDict objectForKey:@"BGImage"];
+        NSLog(@"Setting BGMasha %@", [attributeDict objectForKey:@"BGMasha"]);
         design.bgMashaURL = [attributeDict objectForKey:@"BGMasha"];
         
     }
