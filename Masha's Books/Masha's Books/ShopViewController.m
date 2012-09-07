@@ -8,9 +8,8 @@
 
 #import "ShopViewController.h"
 
-@interface ShopViewController ()
+@interface ShopViewController () <MFMailComposeViewControllerDelegate>
 @property (nonatomic, strong) PicturebookShop *picturebookShop;
-@property (nonatomic, strong) BookExtractor *bookExtractor;
 //@property (nonatomic, strong) NSMutableArray *allPicturebookCovers;
 @property (nonatomic, strong) NSOrderedSet *booksInSelectedCategory;
 
@@ -33,7 +32,6 @@
 @synthesize rateImage = _rateImage;
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize picturebookShop = _picturebookShop;
-@synthesize bookExtractor = _bookExtractor;
 //@synthesize allPicturebookCovers = _allPicturebookCovers;
 @synthesize booksInSelectedCategory = _booksInSelectedCategory;
 
@@ -41,7 +39,6 @@
 {
     if (!_picturebookShop) {
         _picturebookShop = [[PicturebookShop alloc] initShop];
-        _bookExtractor = [[BookExtractor alloc] initExtractorWithShop:_picturebookShop andContext:self.picturebookShop.libraryDatabase.managedObjectContext];
     }
     return _picturebookShop;
 }
@@ -88,8 +85,9 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(picturebookShopFinishedLoading:) name:@"PicturebookShopFinishedLoading" object:nil ]; 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(picturebookShopLoadingError:) name:@"PicturebookShopLoadingError" object:nil ];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setDownloadStatus:) name:@"NewShopReceivedZipData" object:nil ];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bookExtracted:) name:@"BookExtracted" object:nil ];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setDownloadStatus:) name:@"NewShopReceivedZipData" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bookExtracted:) name:@"BookExtracted" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bookReady:) name:@"BookReady" object:self.picturebookShop];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -130,10 +128,10 @@
 - (IBAction)categorySelection:(UIButton *)sender {
 }
 - (IBAction)bookBought:(UIButton *)sender {
-  
+    NSLog(@"Buying book1");
     Book *bookJustBought = [self.picturebookShop getSelectedBook]; 
-    NSLog(@"Buying book %@", bookJustBought.title);
-    [self.bookExtractor addBookToQue:bookJustBought];
+    NSLog(@"Buying book2 %@", bookJustBought.title);
+    [self.picturebookShop userBuysBook:bookJustBought];
     //[self.booksTableView reloadData];
 }
 - (IBAction)goToFacebookPage:(UIButton *)sender {
@@ -174,22 +172,43 @@
     PBDLOG(@"ERROR: Picture book shop reports loading error!");
 }
 
+- (void)bookExtracted:(NSNotification *) notification {
+    NSLog(@"ShopViewController: Received BookExtracted notification");
+}
+
 - (void)setDownloadStatus:(NSNotification *) notification {
     //[self.picturebookShop refreshCovers:self.allPicturebookCovers];
     if ([self.downloadProgressView isHidden]) {
         self.downloadProgressView.hidden = NO;
     }
-    self.downloadProgressView.progress = self.picturebookShop.lastPercentage;
+    else {
+        self.downloadProgressView.progress = self.picturebookShop.lastPercentage;
+    }
+    
     
 }
 
+- (void)bookReady:(NSNotification *)notification {
+    NSLog(@"ShopViewController: Received BookReady notification");
+    self.downloadProgressView.hidden = YES;
+    [self.downloadProgressView setNeedsDisplay];
+    
+    NSLog(@"ShopViewController: Posting PagesAdded notification");
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"PagesAdded" object:nil];
+}
+
 - (void)bookSelectedAtIndexPath:(NSIndexPath *)indexPath {
-    NSOrderedSet *books = self.booksInSelectedCategory;
-    if (books.count > 0) {
-        self.downloadProgressView.hidden = YES;
+   //NSOrderedSet *books = self.booksInSelectedCategory;//[self.picturebookShop getBooksForSelectedCategory];
+    if (self.booksInSelectedCategory.count > 0) {
+        NSLog(@"bookSelected: Number of books in category %@ is %d", self.picturebookShop.selectedCategory.name, self.booksInSelectedCategory.count);
+        if (![self.downloadProgressView isHidden]) {
+            self.downloadProgressView.hidden = YES;
+        }
+        
     
-        self.picturebookShop.selectedBook = [books objectAtIndex:indexPath.row];
-    
+        self.picturebookShop.selectedBook = [self.booksInSelectedCategory objectAtIndex:indexPath.row];
+        
+        NSLog(@"User selects book %@", self.picturebookShop.selectedBook.title);
         [self.picturebookShop userSelectsBook:self.picturebookShop.selectedBook];
     
         self.thumbImageView.image = self.picturebookShop.selectedBook.coverThumbnailImageMedium;
@@ -218,9 +237,8 @@
     }
 }
 
-- (void)bookExtracted:(NSNotification *) notification {
-    self.downloadProgressView.hidden = YES;
-}
+
+
 
 #pragma mark - Table view data source
 
@@ -251,7 +269,8 @@
         cell = [[BooksTableCell alloc] initWithStyle:UITableViewCellStyleSubtitle
                                       reuseIdentifier:CellIdentifier];
     }
-    Book *book = [[self.picturebookShop getBooksForSelectedCategory] objectAtIndex:indexPath.row];
+    //Book *book = [[self.picturebookShop getBooksForSelectedCategory] objectAtIndex:indexPath.row];
+    Book *book = [self.booksInSelectedCategory objectAtIndex:indexPath.row];
     cell.coverImage.image = book.coverThumbnailImage;
     cell.bookTitle.text = book.title;
     cell.shortDescription.text = book.descriptionString;
@@ -285,10 +304,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {    
+    NSLog(@"User selects book at index %d", indexPath.row);
+    NSLog(@"Buy button description %@", self.buyButton);
  
  //   [self.allPicturebookCovers removeAllObjects];
     [self bookSelectedAtIndexPath:indexPath];
-    [self.booksTableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+    [self.booksTableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionTop];
     
 }
 
@@ -322,5 +343,60 @@
     
     return YES;
 }
+
+#pragma mark - Top Buttons
+- (IBAction)goToWebSite:(UIButton *)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.mashasbookstore.com"]];
+}
+
+- (IBAction)sendMail:(UIButton *)sender {
+    if ([MFMailComposeViewController canSendMail])
+    {
+        MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
+        
+        mailer.mailComposeDelegate = self;
+        mailer.modalPresentationStyle = UIModalPresentationPageSheet;
+        
+        NSArray *toRecipients = [NSArray arrayWithObjects:@"masha@mashasbookstore.com", @"ranko.munk@gmail.com", nil];
+        [mailer setToRecipients:toRecipients];
+        
+        [self presentModalViewController:mailer animated:YES];
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:@"Your device cannot send eMail!"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles: nil];
+        [alert show];
+    }
+}
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
+{
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+            NSLog(@"Mail cancelled: you cancelled the operation and no email message was queued.");
+            break;
+        case MFMailComposeResultSaved:
+            NSLog(@"Mail saved: you saved the email message in the drafts folder.");
+            break;
+        case MFMailComposeResultSent:
+            NSLog(@"Mail send: the email message is queued in the outbox. It is ready to send.");
+            break;
+        case MFMailComposeResultFailed:
+            NSLog(@"Mail failed: the email message was not saved or queued, possibly due to an error.");
+            break;
+        default:
+            NSLog(@"Mail not sent.");
+            break;
+    }
+    
+    // Remove the mail view
+    [self dismissModalViewControllerAnimated:YES];
+}
+
 
 @end

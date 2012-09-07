@@ -13,6 +13,7 @@
 #import "BookExtractor.h"
 #import "BooksTableCell.h"
 #import "CategoryTableViewController.h"
+#import <MessageUI/MessageUI.h>
 
 #define BOOKCELL_HEIGHT 200
 

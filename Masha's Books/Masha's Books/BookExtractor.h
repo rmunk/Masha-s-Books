@@ -37,10 +37,9 @@
 @property long long expectedZipSize;
 @property (nonatomic, strong) NSMutableData *downloadedZipData;
 @property BOOL downloading;
-- (BookExtractor *)initExtractorWithUrl:(NSURL *)zipURL;
+//- (BookExtractor *)initExtractorWithUrl:(NSURL *)zipURL;
 - (BookExtractor *)initExtractorWithShop:(id)shop andContext:(NSManagedObjectContext *)context;
 - (void)extractBookFromFile:(NSString *)zipFile;
-- (void)downloadBookZipFile;
 - (BOOL)isDownloading;
 - (NSData *)getDownloadedData;
 - (void)addBookToQue:(Book *)book;

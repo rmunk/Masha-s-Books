@@ -167,28 +167,12 @@
 }
 
 - (void)newBookReady:(NSNotification *)notification {
-    NSLog(@"Merging contexts");
-    [self.library.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
-     NSError *error;
-    
-    NSNotificationCenter *dnc = [NSNotificationCenter defaultCenter];
-    [dnc addObserver:self selector:@selector(contextsMergedAndSaved:) name:NSManagedObjectContextDidSaveNotification object:nil];
-    
-    NSLog(@"Saving contexts");
-    [self.library.managedObjectContext save:&error];
-    if (error) {
-        NSLog(@"Error saving context (%@)!", error.description);
-    }
-    
-    [dnc removeObserver:self name:NSManagedObjectContextDidSaveNotification object:nil];
-
-    
-    
-}
-
-- (void)contextsMergedAndSaved:(NSNotification *)notification {
     NSLog(@"Calling getMyBooks");
     [self getMyBooks];
+
+
+    
+    
 }
 
 #pragma mark - View lifecycle
@@ -215,7 +199,7 @@
         self.leftBookImage.frame = CGRectMake(-77, self.leftBookImage.frame.origin.y, self.leftBookImage.frame.size.width, self.leftBookImage.frame.size.height);
     }
     
-    [self getMyBooks];
+    //[self getMyBooks];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -272,7 +256,7 @@
 - (void)slikovnicaRootViewController:(SlikovnicaRootViewController *)sender closedPictureBook:(Book *)book
 {
     [self dismissModalViewControllerAnimated:YES];
-    UIView *page = [self.scrollView viewWithTag:[self.myBooks indexOfObject:book]];
+   // UIView *page = [self.scrollView viewWithTag:[self.myBooks indexOfObject:book]];
     
 }
 

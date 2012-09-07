@@ -64,6 +64,7 @@
 - (void)coversLoaded;
 - (void)loadShopFromDatabase;
 - (void)refreshCovers:(NSArray *)covers;
+- (void)userBuysBook:(Book *)book;
 
 
 
