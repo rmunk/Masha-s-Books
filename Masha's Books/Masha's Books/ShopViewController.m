@@ -309,7 +309,7 @@
  
  //   [self.allPicturebookCovers removeAllObjects];
     [self bookSelectedAtIndexPath:indexPath];
-    [self.booksTableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionTop];
+    [self.booksTableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
     
 }
 

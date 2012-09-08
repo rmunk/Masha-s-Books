@@ -13,6 +13,10 @@
 		BA0E4E1115EBFF3700012F17 /* CategoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0E4E1015EBFF3700012F17 /* CategoryTableViewController.m */; };
 		BA523BB615E6D1B4008617AB /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = BA523BB515E6D1B4008617AB /* Category.m */; };
 		BA523BBA15E6D1CD008617AB /* Info.m in Sources */ = {isa = PBXBuildFile; fileRef = BA523BB915E6D1CD008617AB /* Info.m */; };
+		BA651EE515FB41B000352B2F /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = BA651EE015FB41B000352B2F /* UIImage+Alpha.m */; };
+		BA651EE615FB41B000352B2F /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = BA651EE215FB41B000352B2F /* UIImage+Resize.m */; };
+		BA651EE715FB41B000352B2F /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = BA651EE415FB41B000352B2F /* UIImage+RoundedCorner.m */; };
+		BA651EED15FB454000352B2F /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = BA651EE215FB41B000352B2F /* UIImage+Resize.m */; };
 		BA8B446C15A387650098F063 /* Author+Addon.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8B446715A387650098F063 /* Author+Addon.m */; };
 		BA8B446D15A387650098F063 /* Book+Addon.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8B446915A387650098F063 /* Book+Addon.m */; };
 		BA8B446E15A387650098F063 /* Category+Addon.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8B446B15A387650098F063 /* Category+Addon.m */; };
@@ -164,6 +168,12 @@
 		BA523BB515E6D1B4008617AB /* Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Category.m; sourceTree = "<group>"; };
 		BA523BB815E6D1CD008617AB /* Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Info.h; path = ../Info.h; sourceTree = "<group>"; };
 		BA523BB915E6D1CD008617AB /* Info.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Info.m; path = ../Info.m; sourceTree = "<group>"; };
+		BA651EDF15FB41B000352B2F /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Alpha.h"; sourceTree = "<group>"; };
+		BA651EE015FB41B000352B2F /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Alpha.m"; sourceTree = "<group>"; };
+		BA651EE115FB41B000352B2F /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
+		BA651EE215FB41B000352B2F /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
+		BA651EE315FB41B000352B2F /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
+		BA651EE415FB41B000352B2F /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
 		BA8B446615A387650098F063 /* Author+Addon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Author+Addon.h"; sourceTree = "<group>"; };
 		BA8B446715A387650098F063 /* Author+Addon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Author+Addon.m"; sourceTree = "<group>"; };
 		BA8B446815A387650098F063 /* Book+Addon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Book+Addon.h"; sourceTree = "<group>"; };
@@ -551,6 +561,12 @@
 		C099A1EB15EC4F9700019E00 /* UIImage Category */ = {
 			isa = PBXGroup;
 			children = (
+				BA651EDF15FB41B000352B2F /* UIImage+Alpha.h */,
+				BA651EE015FB41B000352B2F /* UIImage+Alpha.m */,
+				BA651EE115FB41B000352B2F /* UIImage+Resize.h */,
+				BA651EE215FB41B000352B2F /* UIImage+Resize.m */,
+				BA651EE315FB41B000352B2F /* UIImage+RoundedCorner.h */,
+				BA651EE415FB41B000352B2F /* UIImage+RoundedCorner.m */,
 			);
 			name = "UIImage Category";
 			sourceTree = "<group>";
@@ -844,6 +860,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA651EED15FB454000352B2F /* UIImage+Resize.m in Sources */,
 				C09D3E7515F81A42003D1896 /* AVAudioPlayer+PGFade.m in Sources */,
 				C0B3FF7015742E41002DF30F /* main.m in Sources */,
 				C0B3FF7415742E41002DF30F /* MashasBooksAppDelegate.m in Sources */,
@@ -895,6 +912,9 @@
 				C093EB24159E63F800035D20 /* BookExtractor.m in Sources */,
 				C090C3D015A10A5A001246FF /* UIImageToDataTransformer.m in Sources */,
 				C09C32C315F6C71F00C21ADB /* AVAudioPlayer+PGFade.m in Sources */,
+				BA651EE515FB41B000352B2F /* UIImage+Alpha.m in Sources */,
+				BA651EE615FB41B000352B2F /* UIImage+Resize.m in Sources */,
+				BA651EE715FB41B000352B2F /* UIImage+RoundedCorner.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
