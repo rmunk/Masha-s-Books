@@ -188,39 +188,10 @@
 }
 
 - (void)newBookReady:(NSNotification *)notification {
-<<<<<<< HEAD
-    NSLog(@"Merging contexts");
-    [self.library.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
-     NSError *error;
-    
-    NSNotificationCenter *dnc = [NSNotificationCenter defaultCenter];
-    [dnc addObserver:self selector:@selector(contextsMergedAndSaved:) name:NSManagedObjectContextDidSaveNotification object:nil];
-    
-    NSLog(@"Saving contexts");
-    [self.library.managedObjectContext save:&error];
-    if (error) {
-        NSLog(@"Error saving context (%@)!", error.description);
-    }
-    
-    [dnc removeObserver:self name:NSManagedObjectContextDidSaveNotification object:nil];
-}
-
-- (void)contextsMergedAndSaved:(NSNotification *)notification {
     NSLog(@"Calling getMyBooks");
     [self getMyBooks];
 }
 
-
-=======
-    NSLog(@"Calling getMyBooks");
-    [self getMyBooks];
-
-
-    
-    
-}
-
->>>>>>> eb97e6a341feb868751049d3eb7204d2f3d2bc4f
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
@@ -240,12 +211,7 @@
         self.leftBookImage.frame = CGRectMake(-77, self.leftBookImage.frame.origin.y, self.leftBookImage.frame.size.width, self.leftBookImage.frame.size.height);
     }
     
-<<<<<<< HEAD
-    //    [self getMyBooks];
     [super viewWillAppear:animated];
-=======
-    //[self getMyBooks];
->>>>>>> eb97e6a341feb868751049d3eb7204d2f3d2bc4f
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -305,11 +271,6 @@
 {
     [self.bookLoadingIndicator stopAnimating];
     [self dismissModalViewControllerAnimated:YES];
-<<<<<<< HEAD
-=======
-   // UIView *page = [self.scrollView viewWithTag:[self.myBooks indexOfObject:book]];
-    
->>>>>>> eb97e6a341feb868751049d3eb7204d2f3d2bc4f
 }
 
 #pragma mark - UIScrollViewDelegate

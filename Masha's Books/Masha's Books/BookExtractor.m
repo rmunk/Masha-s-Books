@@ -178,82 +178,18 @@
             page.image = book.coverImage.image;
             [book insertObject:page inPagesAtIndex:0];
                 
-<<<<<<< HEAD
-                NSArray *dirContents = [fileManager contentsOfDirectoryAtPath:unzippedPath error:&error];
-                if (error) {
-                    NSLog(@"Error reading %@ (%@)!", unzippedPath.lastPathComponent, error.description);
-                    self.success = FALSE;
-                }
-                else
-                {
-                    for (Page *pageToDelete in self.activeBook.pages)
-                        [self.context deleteObject:pageToDelete];
-                    
-                    NSPredicate *flter = [NSPredicate predicateWithFormat:@"self BEGINSWITH 'page'"];
-                    NSArray *pageFiles = [[dirContents filteredArrayUsingPredicate:flter] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-                    
-                    if (!self.activeBook.coverImage){
-                        Image *coverImage = [NSEntityDescription insertNewObjectForEntityForName:@"Image" inManagedObjectContext:self.context];
-                        coverImage.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingString:@"/title.jpg"]];
-                        self.activeBook.coverImage = coverImage;
-                    }
-                    else
-                        self.activeBook.coverImage.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingString:@"/title.jpg"]];
-                    
-                    
-                    self.activeBook.backgroundMusic = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingPathComponent:@"music.m4a"]];
-                    
-                    // Insert title page first
-                    // NSManagedObjectContext *context = [self.activeBook managedObjectContext];
-                    Page *page = [NSEntityDescription insertNewObjectForEntityForName:@"Page" inManagedObjectContext:self.context];
-                    page.pageNumber = [NSNumber numberWithInt:0];
-                    page.image = self.activeBook.coverImage.image;
-                    [self.activeBook insertObject:page inPagesAtIndex:0];
-                    
-                    int pageNumber = 1;
-                    for (NSString *pageFile in pageFiles) {
-                        Page *page = [NSEntityDescription insertNewObjectForEntityForName:@"Page" inManagedObjectContext:self.context];
-                        page.pageNumber = [NSNumber numberWithInt:pageNumber];
-                        page.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingPathComponent:pageFile]];
-                        page.thumbnail = [page.image resizedImage:CGSizeMake(138, 103) interpolationQuality:kCGInterpolationHigh];
-                        page.text = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/text%03d.png",pageNumber]];
-                        page.voiceOver = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/voice%03d.m4a",pageNumber]];
-                        page.sound = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/sound%03d.m4a",pageNumber]];
-                        if(!page.sound){
-                            page.sound = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/sound%03d_L.m4a",pageNumber]];
-                            if(page.sound) page.soundLoop = [NSNumber numberWithBool:TRUE];
-                        }
-                        [self.activeBook insertObject:page inPagesAtIndex:pageNumber];
-                        pageNumber++;
-                    }
-                    
-                    self.activeBook.downloadDate = [NSDate date];
-                    self.activeBook.downloaded = [NSNumber numberWithInt:1];
-                    self.activeBook.status = [NSString stringWithString:@"ready"];
-                    
-                    NSNotificationCenter *dnc = [NSNotificationCenter defaultCenter];
-                    [dnc addObserver:self.delegate selector:@selector(bookExtractorDidAddPagesToBook:) name:NSManagedObjectContextDidSaveNotification object:self.context];
-                    
-                    [self.context save:&error];
-                    if (error) {
-                        NSLog(@"Error saving context (%@)!", error.description);
-                        self.success = FALSE;
-                    }
-                    
-                    [dnc removeObserver:self.delegate name:NSManagedObjectContextDidSaveNotification object:self.context];
-=======
             int pageNumber = 1;
             for (NSString *pageFile in pageFiles) {
                 Page *page = [NSEntityDescription insertNewObjectForEntityForName:@"Page" inManagedObjectContext:addingContext];
                 page.pageNumber = [NSNumber numberWithInt:pageNumber];
                 page.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingPathComponent:pageFile]];
+                page.thumbnail = [page.image resizedImage:CGSizeMake(138, 103) interpolationQuality:kCGInterpolationHigh];
                 page.text = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/text%03d.png",pageNumber]];
                 page.voiceOver = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/voice%03d.m4a",pageNumber]];
                 page.sound = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/sound%03d.m4a",pageNumber]];
                 if(!page.sound){
                     page.sound = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/sound%03d_L.m4a",pageNumber]];
                     if(page.sound) page.soundLoop = [NSNumber numberWithBool:TRUE];
->>>>>>> eb97e6a341feb868751049d3eb7204d2f3d2bc4f
                 }
                 [book insertObject:page inPagesAtIndex:pageNumber];
                 pageNumber++;
