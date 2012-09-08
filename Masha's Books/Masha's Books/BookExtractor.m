@@ -70,10 +70,14 @@
     return self;
 }
 
-
 - (void)contextSaved:(NSNotification *)notification
 {
     NSLog(@"SaveThread reports context saved");
+    [self performSelectorOnMainThread:@selector(mergeContexts:) withObject:notification waitUntilDone:NO];  
+}
+
+- (void)mergeContexts:(NSNotification *)notification {
+    NSLog(@"Merge contexts on main thread called");
     NSError *error;
     self.activeBook.status = @"ready";
     //self.activeBook.downloaded = [NSNumber numberWithInt:1];
@@ -89,8 +93,8 @@
     
     
     //if (self.success == YES) 
-        
-        
+    
+    
     [self processQue];
 }
 
@@ -155,7 +159,7 @@
         else
         {
             for (Page *pageToDelete in book.pages)
-                [self.context deleteObject:pageToDelete];
+                [addingContext deleteObject:pageToDelete];
                 
             NSPredicate *filter = [NSPredicate predicateWithFormat:@"self BEGINSWITH 'page'"];
             NSArray *pageFiles = [[dirContents filteredArrayUsingPredicate:filter] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
