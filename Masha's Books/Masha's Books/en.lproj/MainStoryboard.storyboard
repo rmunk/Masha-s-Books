@@ -5,84 +5,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1498"/>
     </dependencies>
     <scenes>
-        <!--Picturebook Shop View Controller - Mashas Shop Old-->
-        <scene sceneID="tTT-hf-GH2">
-            <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="d2s-Tk-IWN" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="xHD-JE-7WU" customClass="PicturebookShopViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Nkw-7L-aac">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <tableView tag="1" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="80" sectionHeaderHeight="22" sectionFooterHeight="22" id="r1X-TC-HH7">
-                                <rect key="frame" x="0.0" y="44" width="296" height="567"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="xHD-JE-7WU" id="gws-Dz-lby"/>
-                                    <outlet property="delegate" destination="xHD-JE-7WU" id="PlX-SH-ggB"/>
-                                </connections>
-                            </tableView>
-                            <tableView clipsSubviews="YES" tag="2" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="180" sectionHeaderHeight="22" sectionFooterHeight="22" id="PLS-8e-7AK">
-                                <rect key="frame" x="298" y="44" width="726" height="567"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="xHD-JE-7WU" id="cnb-lo-hRI"/>
-                                    <outlet property="delegate" destination="xHD-JE-7WU" id="e4X-Lx-c4X"/>
-                                </connections>
-                            </tableView>
-                            <navigationBar contentMode="scaleToFill" barStyle="blackOpaque" id="cBM-1Q-Maf">
-                                <rect key="frame" x="0.0" y="0.0" width="1024" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <items>
-                                    <navigationItem title="Mashas shop" id="jaa-CK-ifg">
-                                        <barButtonItem key="leftBarButtonItem" title="Settings" id="T4N-UI-YWb"/>
-                                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="XEt-33-Ykc">
-                                            <connections>
-                                                <action selector="refreshPicturebookShop:" destination="xHD-JE-7WU" id="fWQ-dt-IRl"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
-                            <webView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" scalesPageToFit="YES" id="5Ac-2s-lwz">
-                                <rect key="frame" x="0.0" y="608" width="1024" height="156"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </webView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="gg6-oF-mCr">
-                                <rect key="frame" x="913" y="710" width="91" height="38"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" size="button"/>
-                                <state key="normal" title="Buy">
-                                    <color key="titleColor" red="0.19607843137254902" green="0.30980392156862746" blue="0.52156862745098043" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="buyPictureBook:" destination="xHD-JE-7WU" eventType="touchUpInside" id="79n-rw-quK"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
-                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Mashas Shop Old" image="Shop.png" id="iba-wP-Gil"/>
-                    <navigationItem key="navigationItem" id="Jfs-h4-KNe"/>
-                    <connections>
-                        <outlet property="buyButton" destination="gg6-oF-mCr" id="ah0-iK-jld"/>
-                        <outlet property="shopRefreshButton" destination="XEt-33-Ykc" id="8rM-a7-79l"/>
-                        <outlet property="shopWebView" destination="5Ac-2s-lwz" id="JCR-b7-rn7"/>
-                    </connections>
-                </viewController>
-            </objects>
-            <point key="canvasLocation" x="1791" y="-750"/>
-        </scene>
         <!--Settings View Controller - Settings-->
         <scene sceneID="0Fx-IG-xQZ">
             <objects>
@@ -349,7 +271,7 @@
                                     <outlet property="delegate" destination="qfq-Kt-d9p" id="xVX-FQ-Mpx"/>
                                 </connections>
                             </tableView>
-                            <navigationBar alpha="0.50000000000000011" contentMode="scaleToFill" barStyle="blackOpaque" id="VRR-cR-5eE">
+                            <navigationBar hidden="YES" alpha="0.50000000000000011" contentMode="scaleToFill" barStyle="blackOpaque" id="VRR-cR-5eE">
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
@@ -490,6 +412,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
+                                    <action selector="goToWebSite:" destination="qfq-Kt-d9p" eventType="touchUpInside" id="a13-er-Wsp"/>
                                     <action selector="goToWebSite:" destination="i4c-PB-hBI" eventType="touchUpInside" id="cQ7-fR-6fe"/>
                                 </connections>
                             </button>
@@ -504,6 +427,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
+                                    <action selector="sendMail:" destination="qfq-Kt-d9p" eventType="touchUpInside" id="GQd-Tm-yHf"/>
                                     <action selector="sendMail:" destination="i4c-PB-hBI" eventType="touchUpInside" id="lcM-Ky-k3a"/>
                                 </connections>
                             </button>
@@ -614,7 +538,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Shop.png" width="30" height="30"/>
         <image name="box.png" width="304" height="173"/>
         <image name="box_arrow.png" width="582" height="384"/>
         <image name="box_sel.png" width="315" height="174"/>
@@ -657,14 +580,6 @@
                 <relationship kind="outlet" name="leftBookImage" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="scrollViewContainer" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="PicturebookShopViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PicturebookShopViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="buyButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="shopRefreshButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="shopWebView" candidateClass="UIWebView"/>
             </relationships>
         </class>
         <class className="ScrollViewContainer" superclassName="UIView">

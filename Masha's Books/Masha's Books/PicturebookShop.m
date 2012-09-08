@@ -19,6 +19,8 @@
 @property (nonatomic, weak) Book *currentBook;
 @property (nonatomic, weak) Author *currentAuthor;
 @property (nonatomic, strong) CategoryToBookMap *categoryToBookMap;
+@property (nonatomic, strong) NSOrderedSet *booksInSelectedCategory;
+@property (nonatomic, strong) BookExtractor *extractor;
 
 
 @property (nonatomic, strong) Book *bookWithLastReportedPercentage;
@@ -47,15 +49,19 @@
 @synthesize numberOfBooksWhinchNeedCoversDownloaded = _numberOfBooksWhinchNeedCoversDownloaded;
 @synthesize bookWithLastReportedPercentage = _bookWithLastReportedPercentage;
 @synthesize lastPercentage = _lastPercentage;
+@synthesize extractor = _extractor;
 
 @synthesize isShopLoaded = _isShopLoaded;
 @synthesize libraryLoaded = _libraryLoaded;
+@synthesize booksInSelectedCategory = _booksInSelectedCategory;
 
 
 - (PicturebookShop *)initShop {
     self = [super init];
     self.shopURL = [[NSURL alloc] initWithString:@"http://www.mashasbookstore.com/storeops/bookstore-xml.aspx"];
     //_shopURL = [[NSURL alloc] initWithString:@"http://dl.dropbox.com/u/286270/PicturebookShop.xml"];
+    
+    
     
     // Init library database UIManagedDocument
     if (!self.libraryDatabase) {
@@ -75,8 +81,17 @@
     self.isShopLoaded = NO;
     self.libraryLoaded = NO;
     
+    
+    
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contextSaved:) name:NSManagedObjectContextDidSaveNotification object:self.libraryDatabase.managedObjectContext];
+    
     return self;
 }
+
+//- (void)contextSaved:(NSNotification *) notification {
+//    NSLog(@"SaveThread reports context saved");
+//    [self.libraryDatabase.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
+//}
 
 - (void)loadShopFromDatabase {
     self.isShopLoaded = YES;
@@ -102,6 +117,7 @@
         //[self loadShopFromDatabase];
         //self.isShopLoaded = YES;
         self.libraryLoaded = YES;
+        self.extractor = [[BookExtractor alloc] initExtractorWithShop:self andContext:self.libraryDatabase.managedObjectContext];
         [self refreshShop];
         //[self shopDataLoaded];
     }
@@ -113,6 +129,10 @@
         _libraryDatabase = libraryDatabase;
         [self useDocument];
     }
+}
+
+- (void)userBuysBook:(Book *)book {
+    [self.extractor addBookToQue:book];
 }
 
 //Method for calculation of directory size. No recursion so for now works correctly only if directory does not have any sub directories.
@@ -192,6 +212,7 @@
     NSLog(@"Number of categories is %d", categories.count);
     if (categories.count && index < categories.count) {
         self.selectedCategory = [categories objectAtIndex:index];
+        self.booksInSelectedCategory = [Book getBooksForCategory:self.selectedCategory inContext:self.libraryDatabase.managedObjectContext];
         NSLog(@"User selects category %@", self.selectedCategory.name);
     } 
     else {
@@ -201,6 +222,7 @@
 
 - (void)userSelectsCategory:(Category *)category {
     self.selectedCategory = category;
+    self.booksInSelectedCategory = [Book getBooksForCategory:self.selectedCategory inContext:self.libraryDatabase.managedObjectContext];
     NSLog(@"User selects category %@", self.selectedCategory.name);
    
 }
@@ -219,7 +241,8 @@
  
 
 - (NSOrderedSet *)getBooksForSelectedCategory {
-    return [Book getBooksForCategory:self.selectedCategory inContext:self.libraryDatabase.managedObjectContext];
+    return self.booksInSelectedCategory;
+    //return [Book getBooksForCategory:self.selectedCategory inContext:self.libraryDatabase.managedObjectContext];
 }
 
 - (NSOrderedSet *)getCategoriesInShop {
@@ -416,12 +439,13 @@
     }
 }
 
-- (void)bookExtractorDidAddPagesToBook:(NSNotification*)pagesAddedNotification 
+- (void)pagesAdded
 {
 	//[self.libraryDatabase.managedObjectContext mergeChangesFromContextDidSaveNotification:pagesAddedNotification];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"PagesAdded" object:pagesAddedNotification];
-     
     NSLog(@"Extracted book pages saved to database.");
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"BookReady" object:self];
+     
+    
 }
 
 
@@ -430,15 +454,15 @@
     self.bookWithLastReportedPercentage = book;
     self.lastPercentage = percentage;
 //    NSLog(@"Shop: Book %f", percentage);
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ShopReceivedZipData" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ShopReceivedZipData" object:self];
     if (book == self.selectedBook) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"NewShopReceivedZipData" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"NewShopReceivedZipData" object:self];
     }
     
 }
 
 - (void)extractorForBook:(Book *)book didFinishExtractingWithSuccess:(BOOL)success {
-    if (success == TRUE) {
+    if (success == YES) {
         NSLog(@"Shop: Book %@ extracted", book.title);
         [[NSNotificationCenter defaultCenter] postNotificationName:@"BookExtracted" object:nil];
     } else {
