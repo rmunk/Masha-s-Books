@@ -7,14 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 #import "SSZipArchive.h"
 #import "Book+XcodeBugFix.h"
 #import "Page.h"
 #import "Image.h"
 #import "Book.h"
 #import "Book+Addon.h"
+#import "UIImage+Resize.h"
 //#import "PicturebookShop.h"
-#import <CoreData/CoreData.h>
 
 
 

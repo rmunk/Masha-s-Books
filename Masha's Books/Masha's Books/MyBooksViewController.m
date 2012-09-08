@@ -20,6 +20,7 @@
 
 @property (nonatomic, strong) NSArray *myBooks;
 @property (nonatomic, strong) NSMutableArray *coverViews;
+@property (nonatomic, strong) UIActivityIndicatorView *bookLoadingIndicator;
 
 @property (nonatomic, strong) NSManagedObjectContext *context;
 @end
@@ -35,6 +36,7 @@
 
 @synthesize myBooks = _myBooks;
 @synthesize coverViews = _coverViews;
+@synthesize bookLoadingIndicator = _bookLoadingIndicator;
 
 @synthesize context = _context;
 
@@ -112,7 +114,9 @@
     }
 }
 
+
 #pragma mark - Setup Database
+
 - (void)getMyBooks
 {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
@@ -205,29 +209,28 @@
     [self getMyBooks];
 }
 
+
 #pragma mark - View lifecycle
+
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-    
-    self.title = @"My Books";
-
     NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
     url = [url URLByAppendingPathComponent:@"Library"];
     self.library = [[UIManagedDocument alloc] initWithFileURL:url];
     //    [self getMyBooks];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newBookReady:) name:@"PagesAdded" object:nil ];
+    
+    [super viewDidLoad];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
-    
     if (self.scrollView.contentOffset.x == 0) {
         self.leftBookImage.frame = CGRectMake(-77, self.leftBookImage.frame.origin.y, self.leftBookImage.frame.size.width, self.leftBookImage.frame.size.height);
     }
     
-    [self getMyBooks];
+    //    [self getMyBooks];
+    [super viewWillAppear:animated];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -256,12 +259,12 @@
 {
     UIView *page = sender.view;
     
-    UIActivityIndicatorView *bookLoadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    bookLoadingIndicator.contentMode = UIViewContentModeCenter;
-    bookLoadingIndicator.frame = ((UIView *)[page.subviews lastObject]).frame;
-    bookLoadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-    [page addSubview:bookLoadingIndicator];
-    [bookLoadingIndicator startAnimating];
+    self.bookLoadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    self.bookLoadingIndicator.contentMode = UIViewContentModeCenter;
+    self.bookLoadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+    self.bookLoadingIndicator.frame = ((UIView *)[page.subviews lastObject]).frame;
+    [page addSubview:self.bookLoadingIndicator];
+    [self.bookLoadingIndicator startAnimating];
     
     Book *selectedBook = [self.myBooks objectAtIndex:page.tag];
     NSLog(@"User selected book %@.", selectedBook.title);
@@ -271,20 +274,21 @@
         return;
     }
     
-    dispatch_queue_t slikovnicaQueue = dispatch_queue_create("slikovnicaQueue", NULL);
-    dispatch_async(slikovnicaQueue, ^{
+//    dispatch_queue_t slikovnicaQueue = dispatch_queue_create("slikovnicaQueue", NULL);
+//    dispatch_async(slikovnicaQueue, ^{
         UIStoryboard *slikovnicaStoryboard = [UIStoryboard storyboardWithName:@"PicturebookStoryboard" bundle:nil];
         SlikovnicaRootViewController *initialVC = [slikovnicaStoryboard instantiateInitialViewController];
         initialVC.delegate = self;
         initialVC.modelController.book = selectedBook;
         initialVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         [self presentModalViewController:initialVC animated:YES];
-    });
-    dispatch_release(slikovnicaQueue);
+//    });
+//    dispatch_release(slikovnicaQueue);
 }
 
 - (void)slikovnicaRootViewController:(SlikovnicaRootViewController *)sender closedPictureBook:(Book *)book
 {
+    [self.bookLoadingIndicator stopAnimating];
     [self dismissModalViewControllerAnimated:YES];
 }
 

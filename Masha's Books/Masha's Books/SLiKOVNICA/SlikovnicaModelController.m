@@ -61,7 +61,6 @@
 - (NSUInteger)indexOfViewController:(SlikovnicaDataViewController *)viewController
 {
     // Return the index of the given data view controller.
-    // For simplicity, this implementation uses a static array of model objects and the view controller stores the model object; you can therefore use the model object to identify the index.
     return [self.book.pages indexOfObject:viewController.page];
 }
 
@@ -76,11 +75,13 @@
     NSMutableArray *thumbnails = [[NSMutableArray alloc] init];
     
     for (Page *page in self.book.pages) {
-        UIImage *thumbnail = [page.image resizedImage:CGSizeMake(138, 103) interpolationQuality:kCGInterpolationHigh];
-        [thumbnails addObject:thumbnail];
+        //        UIImage *thumbnail = [page.image resizedImage:CGSizeMake(138, 103) interpolationQuality:kCGInterpolationHigh];
+        if (page.thumbnail)
+            [thumbnails addObject:page.thumbnail];
     }
     [self.book.managedObjectContext refreshObject:self.book mergeChanges:NO];
     
+    NSLog(@"Creating filmstrip thumbnails done.");
     return thumbnails;
 }
 

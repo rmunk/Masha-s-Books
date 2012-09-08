@@ -10,7 +10,8 @@
 #import "SlikovnicaModelController.h"
 #import "SlikovnicaNavigationViewController.h"
 #import <AVFoundation/AVFoundation.h>
-#define HACKINTOSH
+#import "AVAudioPlayer+PGFade.h"
+//#define HACKINTOSH
 
 @interface SlikovnicaRootViewController ()<AVAudioPlayerDelegate, SlikovnicaNavigationViewControllerDelegate>
 @property (retain, nonatomic) SlikovnicaNavigationViewController *slikovnicaNavigationViewController;
@@ -40,6 +41,7 @@
 }
 
 #pragma mark - View lifecycle
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -117,12 +119,13 @@
 }
 
 #pragma mark - NavigationViewController delegate methods
+
 - (IBAction)userTappedForNavigation:(UITapGestureRecognizer *)sender 
 {
     SlikovnicaDataViewController *currentViewController = [self.pageViewController.viewControllers objectAtIndex:0];
 
     [currentViewController pauseAudio];
-    [self.audioPlayerMusic pause];
+    [self.audioPlayerMusic pauseWithFadeDuration:0.5];
 
     [self.view addSubview:self.slikovnicaNavigationViewController.view];
     
