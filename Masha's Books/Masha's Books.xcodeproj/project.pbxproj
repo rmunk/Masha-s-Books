@@ -117,10 +117,6 @@
 		C099A1DE15EC3B7B00019E00 /* text-on-@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C099A1D915EC3B7B00019E00 /* text-on-@2x.png */; };
 		C099A1DF15EC3B7B00019E00 /* voice-off-@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C099A1DA15EC3B7B00019E00 /* voice-off-@2x.png */; };
 		C099A1E015EC3B7B00019E00 /* voice-on-@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C099A1DB15EC3B7B00019E00 /* voice-on-@2x.png */; };
-		C099A1E315EC449C00019E00 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = C099A1E215EC449C00019E00 /* UIImage+Resize.m */; };
-		C099A1E415EC4B6000019E00 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = C099A1E215EC449C00019E00 /* UIImage+Resize.m */; };
-		C099A1E915EC4C1E00019E00 /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = C099A1E615EC4C1E00019E00 /* UIImage+Alpha.m */; };
-		C099A1EA15EC4C1E00019E00 /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = C099A1E815EC4C1E00019E00 /* UIImage+RoundedCorner.m */; };
 		C09C32C315F6C71F00C21ADB /* AVAudioPlayer+PGFade.m in Sources */ = {isa = PBXBuildFile; fileRef = C09C32C215F6C71F00C21ADB /* AVAudioPlayer+PGFade.m */; };
 		C09D3E7515F81A42003D1896 /* AVAudioPlayer+PGFade.m in Sources */ = {isa = PBXBuildFile; fileRef = C09C32C215F6C71F00C21ADB /* AVAudioPlayer+PGFade.m */; };
 		C09EB5D715D9D7E8003FEBB0 /* tab-books copy.png in Resources */ = {isa = PBXBuildFile; fileRef = C09EB5D615D9D7E8003FEBB0 /* tab-books copy.png */; };
@@ -295,12 +291,6 @@
 		C099A1D915EC3B7B00019E00 /* text-on-@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "text-on-@2x.png"; path = "../../Grafika/full/text-on-@2x.png"; sourceTree = "<group>"; };
 		C099A1DA15EC3B7B00019E00 /* voice-off-@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "voice-off-@2x.png"; path = "../../Grafika/full/voice-off-@2x.png"; sourceTree = "<group>"; };
 		C099A1DB15EC3B7B00019E00 /* voice-on-@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "voice-on-@2x.png"; path = "../../Grafika/full/voice-on-@2x.png"; sourceTree = "<group>"; };
-		C099A1E115EC449C00019E00 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
-		C099A1E215EC449C00019E00 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
-		C099A1E515EC4C1E00019E00 /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Alpha.h"; sourceTree = "<group>"; };
-		C099A1E615EC4C1E00019E00 /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Alpha.m"; sourceTree = "<group>"; };
-		C099A1E715EC4C1E00019E00 /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
-		C099A1E815EC4C1E00019E00 /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
 		C09C32C115F6C71F00C21ADB /* AVAudioPlayer+PGFade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AVAudioPlayer+PGFade.h"; sourceTree = "<group>"; };
 		C09C32C215F6C71F00C21ADB /* AVAudioPlayer+PGFade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AVAudioPlayer+PGFade.m"; sourceTree = "<group>"; };
 		C09EB5D615D9D7E8003FEBB0 /* tab-books copy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-books copy.png"; sourceTree = "<group>"; };
@@ -561,12 +551,6 @@
 		C099A1EB15EC4F9700019E00 /* UIImage Category */ = {
 			isa = PBXGroup;
 			children = (
-				C099A1E515EC4C1E00019E00 /* UIImage+Alpha.h */,
-				C099A1E615EC4C1E00019E00 /* UIImage+Alpha.m */,
-				C099A1E715EC4C1E00019E00 /* UIImage+RoundedCorner.h */,
-				C099A1E815EC4C1E00019E00 /* UIImage+RoundedCorner.m */,
-				C099A1E115EC449C00019E00 /* UIImage+Resize.h */,
-				C099A1E215EC449C00019E00 /* UIImage+Resize.m */,
 			);
 			name = "UIImage Category";
 			sourceTree = "<group>";
@@ -861,7 +845,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C09D3E7515F81A42003D1896 /* AVAudioPlayer+PGFade.m in Sources */,
-				C099A1E415EC4B6000019E00 /* UIImage+Resize.m in Sources */,
 				C0B3FF7015742E41002DF30F /* main.m in Sources */,
 				C0B3FF7415742E41002DF30F /* MashasBooksAppDelegate.m in Sources */,
 				C0982991157501D1004EAA0D /* MyBooksViewController.m in Sources */,
@@ -911,9 +894,6 @@
 				C00383731575510F00999A19 /* ScrollViewContainer.m in Sources */,
 				C093EB24159E63F800035D20 /* BookExtractor.m in Sources */,
 				C090C3D015A10A5A001246FF /* UIImageToDataTransformer.m in Sources */,
-				C099A1E315EC449C00019E00 /* UIImage+Resize.m in Sources */,
-				C099A1E915EC4C1E00019E00 /* UIImage+Alpha.m in Sources */,
-				C099A1EA15EC4C1E00019E00 /* UIImage+RoundedCorner.m in Sources */,
 				C09C32C315F6C71F00C21ADB /* AVAudioPlayer+PGFade.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
