@@ -8,8 +8,8 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import "SlikovnicaDataViewController.h"
-#import "SlikovnicaModelController.h"
-#define HACKINTOSH
+#import "AVAudioPlayer+PGFade.h"
+//#define HACKINTOSH
 
 @interface SlikovnicaDataViewController () <AVAudioPlayerDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *textImage;
@@ -58,7 +58,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSLog(@"%@", self.description);
+    //    NSLog(@"%@", self.description);
 }
 
 - (void)viewDidUnload
@@ -105,7 +105,7 @@
         self.audioPlayerSound = [[AVAudioPlayer alloc] initWithData:self.page.sound error:&error];
         if(error) self.audioPlayerSound = nil;
         self.audioPlayerSound.delegate = self;
-        self.audioPlayerSound.volume = 0.6;
+        self.audioPlayerSound.volume = 1;
         if (self.page.soundLoop == [NSNumber numberWithInt:1]) 
             self.audioPlayerSound.numberOfLoops = -1;
         [self.audioPlayerSound play];
@@ -114,14 +114,14 @@
 
 - (void)pauseAudio
 {
-    [self.audioPlayerVoiceOver pause];
-    [self.audioPlayerSound pause];
+    [self.audioPlayerVoiceOver pauseWithFadeDuration:0.5];
+    [self.audioPlayerSound pauseWithFadeDuration:0.5];
 }
 
 - (void)stopAudio
 {
-    [self.audioPlayerVoiceOver stop];
-    [self.audioPlayerSound stop];
+    [self.audioPlayerVoiceOver stopWithFadeDuration:0.5];
+    [self.audioPlayerSound stopWithFadeDuration:0.5];
 }
 
 #pragma mark AVAudioPlayer delegate methods

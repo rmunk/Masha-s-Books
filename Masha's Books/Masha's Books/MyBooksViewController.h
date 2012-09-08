@@ -10,4 +10,6 @@
 
 @interface MyBooksViewController : UIViewController
 @property (nonatomic, strong) UIManagedDocument *library;
+@property (weak, nonatomic) IBOutlet UIImageView *mashaImage;
+@property (weak, nonatomic) IBOutlet UIImageView *backgroundImage;
 @end

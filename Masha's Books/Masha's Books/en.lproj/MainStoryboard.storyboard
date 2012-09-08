@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="Vx0-Iu-9ec">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2549" systemVersion="12A269" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="Vx0-Iu-9ec">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1498"/>
     </dependencies>
     <scenes>
         <!--Settings View Controller - Settings-->
@@ -187,7 +187,9 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="My Books" image="tab-mybooks.png" id="b95-jO-Xcx"/>
                     <connections>
+                        <outlet property="backgroundImage" destination="SxL-kz-zDU" id="x6C-aR-PiF"/>
                         <outlet property="leftBookImage" destination="WXL-JV-gHF" id="m98-AM-g3Q"/>
+                        <outlet property="mashaImage" destination="EOM-rI-369" id="DZZ-mT-M99"/>
                         <outlet property="scrollView" destination="Kdk-AG-gvB" id="kSW-OB-Rxs"/>
                         <outlet property="scrollViewContainer" destination="lfJ-I4-Nyn" id="ZOR-el-rBr"/>
                     </connections>

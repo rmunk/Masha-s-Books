@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1171" systemVersion="11D50" minimumToolsVersion="Xcode 4.1" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1487" systemVersion="12A269" minimumToolsVersion="Xcode 4.1" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Author" representedClassName="Author" syncable="YES">
         <attribute name="authorID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="bioHtml" optional="YES" attributeType="String" syncable="YES"/>
@@ -68,17 +68,18 @@
         <attribute name="sound" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="soundLoop" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="text" optional="YES" attributeType="Transformable" valueTransformerName="UIImageToDataTransformer" syncable="YES"/>
+        <attribute name="thumbnail" optional="YES" attributeType="Transformable" valueTransformerName="UIImageToDataTransformer" syncable="YES"/>
         <attribute name="voiceOver" optional="YES" attributeType="Binary" syncable="YES"/>
         <relationship name="book" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Book" inverseName="pages" inverseEntity="Book" syncable="YES"/>
     </entity>
     <fetchRequest name="DownloadedBooks" entity="Book" predicateString="downloaded == 1"/>
     <elements>
-        <element name="Author" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Book" positionX="0" positionY="0" width="0" height="405"/>
-        <element name="Category" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Design" positionX="160" positionY="192" width="128" height="105"/>
-        <element name="Image" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Info" positionX="160" positionY="192" width="128" height="135"/>
-        <element name="Page" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Author" positionX="-182" positionY="306" width="128" height="133"/>
+        <element name="Book" positionX="7" positionY="63" width="128" height="448"/>
+        <element name="Category" positionX="-189" positionY="494" width="128" height="118"/>
+        <element name="Design" positionX="-452" positionY="21" width="128" height="105"/>
+        <element name="Image" positionX="214" positionY="350" width="128" height="73"/>
+        <element name="Info" positionX="-450" positionY="153" width="128" height="135"/>
+        <element name="Page" positionX="214" positionY="450" width="128" height="163"/>
     </elements>
 </model>

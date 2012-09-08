@@ -121,7 +121,10 @@
 		C099A1E415EC4B6000019E00 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = C099A1E215EC449C00019E00 /* UIImage+Resize.m */; };
 		C099A1E915EC4C1E00019E00 /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = C099A1E615EC4C1E00019E00 /* UIImage+Alpha.m */; };
 		C099A1EA15EC4C1E00019E00 /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = C099A1E815EC4C1E00019E00 /* UIImage+RoundedCorner.m */; };
+		C09C32C315F6C71F00C21ADB /* AVAudioPlayer+PGFade.m in Sources */ = {isa = PBXBuildFile; fileRef = C09C32C215F6C71F00C21ADB /* AVAudioPlayer+PGFade.m */; };
+		C09D3E7515F81A42003D1896 /* AVAudioPlayer+PGFade.m in Sources */ = {isa = PBXBuildFile; fileRef = C09C32C215F6C71F00C21ADB /* AVAudioPlayer+PGFade.m */; };
 		C09EB5D715D9D7E8003FEBB0 /* tab-books copy.png in Resources */ = {isa = PBXBuildFile; fileRef = C09EB5D615D9D7E8003FEBB0 /* tab-books copy.png */; };
+		C0A0CD3A15FAC37D00D4B3E4 /* Page.m in Sources */ = {isa = PBXBuildFile; fileRef = C0A0CD3915FAC37D00D4B3E4 /* Page.m */; };
 		C0B3FF6415742E41002DF30F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0B3FF6315742E41002DF30F /* UIKit.framework */; };
 		C0B3FF6615742E41002DF30F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0B3FF6515742E41002DF30F /* Foundation.framework */; };
 		C0B3FF6815742E41002DF30F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0B3FF6715742E41002DF30F /* CoreGraphics.framework */; };
@@ -137,7 +140,6 @@
 		C0B3FF99157436CA002DF30F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0B3FF98157436CA002DF30F /* AVFoundation.framework */; };
 		C0BE86CA15AB837200D03B80 /* PicturebookStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0BE86C915AB837200D03B80 /* PicturebookStoryboard.storyboard */; };
 		C0BE86CB15AB837200D03B80 /* PicturebookStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0BE86C915AB837200D03B80 /* PicturebookStoryboard.storyboard */; };
-		C0D7109D15AF8E96008A39EF /* Page.m in Sources */ = {isa = PBXBuildFile; fileRef = C0D7109C15AF8E96008A39EF /* Page.m */; };
 		C0E5CE4615A3B1C20049978B /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = C0E5CE4515A3B1C20049978B /* Image.m */; };
 		C0E5CE4915A3B1C30049978B /* Author.m in Sources */ = {isa = PBXBuildFile; fileRef = C0E5CE4815A3B1C30049978B /* Author.m */; };
 		C0E5CE5E15A3D02B0049978B /* Book+XcodeBugFix.m in Sources */ = {isa = PBXBuildFile; fileRef = C0E5CE5D15A3D02B0049978B /* Book+XcodeBugFix.m */; };
@@ -299,7 +301,11 @@
 		C099A1E615EC4C1E00019E00 /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Alpha.m"; sourceTree = "<group>"; };
 		C099A1E715EC4C1E00019E00 /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
 		C099A1E815EC4C1E00019E00 /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
+		C09C32C115F6C71F00C21ADB /* AVAudioPlayer+PGFade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AVAudioPlayer+PGFade.h"; sourceTree = "<group>"; };
+		C09C32C215F6C71F00C21ADB /* AVAudioPlayer+PGFade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AVAudioPlayer+PGFade.m"; sourceTree = "<group>"; };
 		C09EB5D615D9D7E8003FEBB0 /* tab-books copy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-books copy.png"; sourceTree = "<group>"; };
+		C0A0CD3815FAC37D00D4B3E4 /* Page.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Page.h; sourceTree = "<group>"; };
+		C0A0CD3915FAC37D00D4B3E4 /* Page.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Page.m; sourceTree = "<group>"; };
 		C0B3FF5F15742E41002DF30F /* Masha's Books.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Masha's Books.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0B3FF6315742E41002DF30F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C0B3FF6515742E41002DF30F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -319,8 +325,6 @@
 		C0B3FF8E15742E42002DF30F /* Masha_s_BooksTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Masha_s_BooksTests.m; sourceTree = "<group>"; };
 		C0B3FF98157436CA002DF30F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		C0BE86C915AB837200D03B80 /* PicturebookStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PicturebookStoryboard.storyboard; sourceTree = "<group>"; };
-		C0D7109B15AF8E96008A39EF /* Page.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Page.h; sourceTree = "<group>"; };
-		C0D7109C15AF8E96008A39EF /* Page.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Page.m; sourceTree = "<group>"; };
 		C0E5CE4415A3B1C20049978B /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Image.h; sourceTree = "<group>"; };
 		C0E5CE4515A3B1C20049978B /* Image.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Image.m; sourceTree = "<group>"; };
 		C0E5CE4715A3B1C20049978B /* Author.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Author.h; sourceTree = "<group>"; };
@@ -415,10 +419,10 @@
 				BA04784C15F55330003BD7B2 /* Book.h */,
 				BA04784D15F55330003BD7B2 /* Book.m */,
 				C08246EB157680E900054A3A /* Library.xcdatamodeld */,
+				C0A0CD3815FAC37D00D4B3E4 /* Page.h */,
+				C0A0CD3915FAC37D00D4B3E4 /* Page.m */,
 				BA523BB415E6D1B4008617AB /* Category.h */,
 				BA523BB515E6D1B4008617AB /* Category.m */,
-				C0D7109B15AF8E96008A39EF /* Page.h */,
-				C0D7109C15AF8E96008A39EF /* Page.m */,
 				BA8B446615A387650098F063 /* Author+Addon.h */,
 				BA8B446715A387650098F063 /* Author+Addon.m */,
 				BA8B446815A387650098F063 /* Book+Addon.h */,
@@ -642,6 +646,8 @@
 			children = (
 				C099A1EB15EC4F9700019E00 /* UIImage Category */,
 				C093EB45159E773A00035D20 /* SSZipArchive */,
+				C09C32C115F6C71F00C21ADB /* AVAudioPlayer+PGFade.h */,
+				C09C32C215F6C71F00C21ADB /* AVAudioPlayer+PGFade.m */,
 				C00383701575510F00999A19 /* ScrollViewContainer.h */,
 				C00383711575510F00999A19 /* ScrollViewContainer.m */,
 				C0B3FF7215742E41002DF30F /* MashasBooksAppDelegate.h */,
@@ -854,6 +860,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C09D3E7515F81A42003D1896 /* AVAudioPlayer+PGFade.m in Sources */,
 				C099A1E415EC4B6000019E00 /* UIImage+Resize.m in Sources */,
 				C0B3FF7015742E41002DF30F /* main.m in Sources */,
 				C0B3FF7415742E41002DF30F /* MashasBooksAppDelegate.m in Sources */,
@@ -883,7 +890,6 @@
 				C0E5CE4915A3B1C30049978B /* Author.m in Sources */,
 				C0E5CE5E15A3D02B0049978B /* Book+XcodeBugFix.m in Sources */,
 				BA8B449115A4D5BD0098F063 /* CategoryToBookMap.m in Sources */,
-				C0D7109D15AF8E96008A39EF /* Page.m in Sources */,
 				BAF45EAE15C725DB00A461FC /* SettingsViewController.m in Sources */,
 				BAE41B7615CB218200731C71 /* ShopViewController.m in Sources */,
 				BA8C844115CC862000461861 /* BooksTableCell.m in Sources */,
@@ -893,6 +899,7 @@
 				BA04783A15F42C74003BD7B2 /* Design+Addon.m in Sources */,
 				BA04784B15F5528B003BD7B2 /* Design.m in Sources */,
 				BA04784E15F55332003BD7B2 /* Book.m in Sources */,
+				C0A0CD3A15FAC37D00D4B3E4 /* Page.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -907,6 +914,7 @@
 				C099A1E315EC449C00019E00 /* UIImage+Resize.m in Sources */,
 				C099A1E915EC4C1E00019E00 /* UIImage+Alpha.m in Sources */,
 				C099A1EA15EC4C1E00019E00 /* UIImage+RoundedCorner.m in Sources */,
+				C09C32C315F6C71F00C21ADB /* AVAudioPlayer+PGFade.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

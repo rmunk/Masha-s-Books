@@ -11,12 +11,16 @@
 @interface SlikovnicaNavigationViewController ()
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *pageNumberLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *pauseImage;
+@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 
 @end
 
 @implementation SlikovnicaNavigationViewController
 @synthesize scrollView = _scrollView;
 @synthesize pageNumberLabel = _pageNumberLabel;
+@synthesize pauseImage = _pauseImage;
+@synthesize toolbar = _toolbar;
 @synthesize bookNameLabel = _bookNameLabel;
 @synthesize pageImages = _pageImages;
 @synthesize currentPage = _currentPage;
@@ -113,7 +117,9 @@
     
     [UIView animateWithDuration:0.5
                      animations:^{
-                         self.scrollView.frame = CGRectMake(self.scrollView.frame.origin.x, 632, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
+                         self.scrollView.frame = CGRectMake(self.scrollView.frame.origin.x, 768 - self.scrollView.frame.size.height, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
+                         self.toolbar.frame = CGRectMake(self.toolbar.frame.origin.x, 0, self.toolbar.frame.size.width, self.toolbar.frame.size.height);
+                         self.pauseImage.alpha = 1;
                      }];
 }
 
@@ -122,6 +128,8 @@
     [self setScrollView:nil];
     [self setPageNumberLabel:nil];
     [self setBookNameLabel:nil];
+    [self setPauseImage:nil];
+    [self setToolbar:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -138,12 +146,14 @@
     UIImageView *currentPageView = (UIImageView *)[self.scrollView viewWithTag:self.currentPage];
     if ([currentPageView respondsToSelector:@selector(setHighlighted:)])
         currentPageView.highlighted = FALSE;
-    [UIView animateWithDuration:0.25
+    [UIView animateWithDuration:0.3
                           delay:0
                         options:UIViewAnimationCurveEaseIn
                      animations:^{
                          self.scrollView.frame = CGRectMake(self.scrollView.frame.origin.x, 768, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
                          
+                         self.toolbar.frame = CGRectMake(self.toolbar.frame.origin.x, -self.toolbar.frame.size.height, self.toolbar.frame.size.width, self.toolbar.frame.size.height);
+                         self.pauseImage.alpha = 0;
                      } completion:^(BOOL finished){
                          if (finished) {
                              [self.delegate navigationController:self didChoosePage:-1];

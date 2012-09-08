@@ -20,12 +20,15 @@
 
 @property (nonatomic, strong) NSArray *myBooks;
 @property (nonatomic, strong) NSMutableArray *coverViews;
+@property (nonatomic, strong) UIActivityIndicatorView *bookLoadingIndicator;
 
 @property (nonatomic, strong) NSManagedObjectContext *context;
 @end
 
 @implementation MyBooksViewController
 @synthesize library = _library;
+@synthesize mashaImage = _mashaImage;
+@synthesize backgroundImage = _backgroundImage;
 
 @synthesize scrollView = _scrollView;
 @synthesize scrollViewContainer = _scrollViewContainer;
@@ -33,6 +36,7 @@
 
 @synthesize myBooks = _myBooks;
 @synthesize coverViews = _coverViews;
+@synthesize bookLoadingIndicator = _bookLoadingIndicator;
 
 @synthesize context = _context;
 
@@ -110,7 +114,9 @@
     }
 }
 
+
 #pragma mark - Setup Database
+
 - (void)getMyBooks
 {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
@@ -137,6 +143,20 @@
     [self loadVisiblePages];
 }
 
+- (void)loadDesignImages
+{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Design"];
+    
+    NSError *error;
+    Design *design = [[self.library.managedObjectContext executeFetchRequest:request error:&error] lastObject];
+    
+    if (design)
+    {
+        self.backgroundImage.image = design.bgImage;
+        self.mashaImage.image = design.bgMasha;
+    }
+}
+
 - (void)useDocument
 {
     if (![[NSFileManager defaultManager] fileExistsAtPath:[self.library.fileURL path]]) {
@@ -154,6 +174,7 @@
         }];
     } else if (self.library.documentState == UIDocumentStateNormal) {
         // already open and ready to use
+        [self loadDesignImages];
         [self getMyBooks];
     }
 }
@@ -169,37 +190,28 @@
 - (void)newBookReady:(NSNotification *)notification {
     NSLog(@"Calling getMyBooks");
     [self getMyBooks];
-
-
-    
-    
 }
 
 #pragma mark - View lifecycle
+
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-    
-    self.title = @"My Books";
-
     NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
     url = [url URLByAppendingPathComponent:@"Library"];
     self.library = [[UIManagedDocument alloc] initWithFileURL:url];
     //    [self getMyBooks];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newBookReady:) name:@"PagesAdded" object:nil ];
     
-    
+    [super viewDidLoad];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
-    
     if (self.scrollView.contentOffset.x == 0) {
         self.leftBookImage.frame = CGRectMake(-77, self.leftBookImage.frame.origin.y, self.leftBookImage.frame.size.width, self.leftBookImage.frame.size.height);
     }
     
-    //[self getMyBooks];
+    [super viewWillAppear:animated];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -212,6 +224,8 @@
     [self setMyBooks:nil];
     [self setCoverViews:nil];
     [self setLeftBookImage:nil];
+    [self setMashaImage:nil];
+    [self setBackgroundImage:nil];
     [super viewDidUnload];
 }
 
@@ -226,12 +240,12 @@
 {
     UIView *page = sender.view;
     
-    UIActivityIndicatorView *bookLoadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    bookLoadingIndicator.contentMode = UIViewContentModeCenter;
-    bookLoadingIndicator.frame = ((UIView *)[page.subviews lastObject]).frame;
-    bookLoadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-    [page addSubview:bookLoadingIndicator];
-    [bookLoadingIndicator startAnimating];
+    self.bookLoadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    self.bookLoadingIndicator.contentMode = UIViewContentModeCenter;
+    self.bookLoadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+    self.bookLoadingIndicator.frame = ((UIView *)[page.subviews lastObject]).frame;
+    [page addSubview:self.bookLoadingIndicator];
+    [self.bookLoadingIndicator startAnimating];
     
     Book *selectedBook = [self.myBooks objectAtIndex:page.tag];
     NSLog(@"User selected book %@.", selectedBook.title);
@@ -241,23 +255,22 @@
         return;
     }
     
-    dispatch_queue_t slikovnicaQueue = dispatch_queue_create("slikovnicaQueue", NULL);
-    dispatch_async(slikovnicaQueue, ^{
+//    dispatch_queue_t slikovnicaQueue = dispatch_queue_create("slikovnicaQueue", NULL);
+//    dispatch_async(slikovnicaQueue, ^{
         UIStoryboard *slikovnicaStoryboard = [UIStoryboard storyboardWithName:@"PicturebookStoryboard" bundle:nil];
         SlikovnicaRootViewController *initialVC = [slikovnicaStoryboard instantiateInitialViewController];
         initialVC.delegate = self;
         initialVC.modelController.book = selectedBook;
         initialVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         [self presentModalViewController:initialVC animated:YES];
-    });
-    dispatch_release(slikovnicaQueue);
+//    });
+//    dispatch_release(slikovnicaQueue);
 }
 
 - (void)slikovnicaRootViewController:(SlikovnicaRootViewController *)sender closedPictureBook:(Book *)book
 {
+    [self.bookLoadingIndicator stopAnimating];
     [self dismissModalViewControllerAnimated:YES];
-   // UIView *page = [self.scrollView viewWithTag:[self.myBooks indexOfObject:book]];
-    
 }
 
 #pragma mark - UIScrollViewDelegate

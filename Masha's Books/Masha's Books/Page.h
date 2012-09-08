@@ -2,8 +2,8 @@
 //  Page.h
 //  Masha's Books
 //
-//  Created by Ranko Munk on 7/13/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Created by Ranko Munk on 9/8/12.
+//
 //
 
 #import <Foundation/Foundation.h>
@@ -13,12 +13,13 @@
 
 @interface Page : NSManagedObject
 
-@property (nonatomic, retain) id image;
+@property (nonatomic, retain) UIImage *image;
 @property (nonatomic, retain) NSNumber * pageNumber;
 @property (nonatomic, retain) NSData * sound;
-@property (nonatomic, retain) id text;
-@property (nonatomic, retain) NSData * voiceOver;
 @property (nonatomic, retain) NSNumber * soundLoop;
+@property (nonatomic, retain) UIImage *text;
+@property (nonatomic, retain) NSData * voiceOver;
+@property (nonatomic, retain) UIImage *thumbnail;
 @property (nonatomic, retain) Book *book;
 
 @end

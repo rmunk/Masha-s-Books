@@ -79,7 +79,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="1A9-i8-lHi">
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="1A9-i8-lHi">
                                 <rect key="frame" x="794" y="325" width="124" height="117"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -144,7 +144,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="blackTranslucent" id="n6y-tU-zbR">
-                                <rect key="frame" x="0.0" y="0.0" width="1024" height="44"/>
+                                <rect key="frame" x="0.0" y="-44" width="1024" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
                                     <barButtonItem systemItem="bookmarks" id="gag-K0-oT0">
@@ -165,7 +165,7 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="uSf-Tq-6sG"/>
                                     <barButtonItem title="Book Title" style="plain" id="R73-eJ-SHW"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="1FE-TD-jFg"/>
-                                    <barButtonItem title="0/0" style="plain" id="byU-Lu-iCA"/>
+                                    <barButtonItem enabled="NO" title="0/0" style="plain" id="byU-Lu-iCA"/>
                                 </items>
                             </toolbar>
                             <scrollView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="UqZ-TK-rsC">
@@ -177,7 +177,7 @@
                                 <rect key="frame" x="262" y="54" width="500" height="570"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" image="play.png" id="ynH-Gc-wfl">
+                                    <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="center" image="play.png" id="ynH-Gc-wfl">
                                         <rect key="frame" x="0.0" y="0.0" width="500" height="570"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     </imageView>
@@ -195,7 +195,9 @@
                     <connections>
                         <outlet property="bookNameLabel" destination="R73-eJ-SHW" id="1Sl-5n-0Ji"/>
                         <outlet property="pageNumberLabel" destination="byU-Lu-iCA" id="YOU-y9-rVe"/>
+                        <outlet property="pauseImage" destination="ynH-Gc-wfl" id="KyO-Eq-1hZ"/>
                         <outlet property="scrollView" destination="UqZ-TK-rsC" id="F1V-w2-sFT"/>
+                        <outlet property="toolbar" destination="n6y-tU-zbR" id="nlH-xL-7Lj"/>
                     </connections>
                 </viewController>
                 <tapGestureRecognizer id="jdI-0t-2GB">
@@ -216,8 +218,6 @@
         <class className="SlikovnicaDataViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SlikovnicaDataViewController.h"/>
             <relationships>
-                <relationship kind="action" name="goBackToLibrary:" candidateClass="UIBarButtonItem"/>
-                <relationship kind="action" name="restartBook:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="pageImage" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="textImage" candidateClass="UIImageView"/>
             </relationships>
@@ -231,7 +231,9 @@
                 <relationship kind="action" name="turnVoiceOnOff:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="bookNameLabel" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="pageNumberLabel" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="pauseImage" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
             </relationships>
         </class>
         <class className="SlikovnicaRootViewController" superclassName="UIViewController">

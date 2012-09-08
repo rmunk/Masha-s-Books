@@ -13,6 +13,7 @@
 #import "Image.h"
 #import "Book.h"
 #import "Book+Addon.h"
+#import "UIImage+Resize.h"
 //#import "PicturebookShop.h"
 #import <CoreData/CoreData.h>
 
