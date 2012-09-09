@@ -30,7 +30,8 @@
 @synthesize bookTitleLabel = _bookTitleLabel;
 @synthesize tagViewLarge = _tagViewLarge;
 @synthesize rateImage = _rateImage;
-@synthesize managedObjectContext = _managedObjectContext;
+@synthesize activityView = _activityView;
+//@synthesize managedObjectContext = _managedObjectContext;
 @synthesize picturebookShop = _picturebookShop;
 //@synthesize allPicturebookCovers = _allPicturebookCovers;
 @synthesize booksInSelectedCategory = _booksInSelectedCategory;
@@ -87,6 +88,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(picturebookShopLoadingError:) name:@"PicturebookShopLoadingError" object:nil ];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setDownloadStatus:) name:@"NewShopReceivedZipData" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bookExtracted:) name:@"BookExtracted" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bookExtractingError:) name:@"BookExtractingError" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bookReady:) name:@"BookReady" object:self.picturebookShop];
 }
 
@@ -95,9 +97,9 @@
     [super viewDidDisappear:animated];
     
     NSError *error = nil;
-    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
-    if (managedObjectContext != nil) {
-        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
+   // NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
+    if (self.picturebookShop.libraryDatabase.managedObjectContext != nil) {
+        if ([self.picturebookShop.libraryDatabase.managedObjectContext hasChanges] && ![self.picturebookShop.libraryDatabase.managedObjectContext save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
@@ -122,17 +124,30 @@
     [self setBackgroundView:nil];
     [self setTagViewLarge:nil];
     [self setRateImage:nil];
+    [self setActivityView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
 - (IBAction)categorySelection:(UIButton *)sender {
 }
 - (IBAction)bookBought:(UIButton *)sender {
-    NSLog(@"Buying book1");
+
     Book *bookJustBought = [self.picturebookShop getSelectedBook]; 
-    NSLog(@"Buying book2 %@", bookJustBought.title);
+ 
     [self.picturebookShop userBuysBook:bookJustBought];
-    //[self.booksTableView reloadData];
+    self. booksInSelectedCategory = [self.picturebookShop getBooksForSelectedCategory];
+    [self.booksTableView reloadData];
+    
+    NSIndexPath *indexPath = [[NSIndexPath alloc] init];
+    int i = 0;
+    for (i = 0; i < self.booksInSelectedCategory.count; i++) {
+        if (bookJustBought.bookID == ((Book *)[self.booksInSelectedCategory objectAtIndex:i]).bookID) {
+            break;
+        }
+    }
+    
+    indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+    [self bookSelectedAtIndexPath:indexPath];
 }
 - (IBAction)goToFacebookPage:(UIButton *)sender {
 }
@@ -176,16 +191,25 @@
     NSLog(@"ShopViewController: Received BookExtracted notification");
 }
 
+- (void)bookExtractingError:(NSNotification *) notification {
+    NSLog(@"ShopViewController: Received BookExtracting error notification");
+    [self.booksTableView reloadData];
+}
+
 - (void)setDownloadStatus:(NSNotification *) notification {
     //[self.picturebookShop refreshCovers:self.allPicturebookCovers];
+    
     if ([self.downloadProgressView isHidden]) {
         self.downloadProgressView.hidden = NO;
     }
     else {
+    //    self per
         self.downloadProgressView.progress = self.picturebookShop.lastPercentage;
     }
-    
-    
+}
+
+- (void)setPercentage {
+    self.downloadProgressView.progress = self.picturebookShop.lastPercentage;
 }
 
 - (void)bookReady:(NSNotification *)notification {
@@ -193,8 +217,13 @@
     self.downloadProgressView.hidden = YES;
     [self.downloadProgressView setNeedsDisplay];
     
+   // NSIndexPath *selectedIndexPath = [self.booksTableView indexPathForSelectedRow];
+    //[self bookSelectedAtIndexPath:selectedIndexPath];
+    [self.booksTableView reloadData];
+    
+    
     NSLog(@"ShopViewController: Posting PagesAdded notification");
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"PagesAdded" object:nil];
+   // [[NSNotificationCenter defaultCenter] postNotificationName:@"PagesAdded" object:nil];
 }
 
 - (void)bookSelectedAtIndexPath:(NSIndexPath *)indexPath {
@@ -276,6 +305,31 @@
     cell.shortDescription.text = book.descriptionString;
     cell.rateImage.image = book.rateImageUp;
     cell.tagImage.image = book.tagImageSmall;
+    
+    if ([book.status isEqualToString:@"qued"]) {
+        cell.transparencyView.hidden = NO;
+        if (![cell.activityView isAnimating]) {
+            [cell.activityView startAnimating];
+        }
+        cell.statusLabel.text = @"Waiting...";
+    }
+    else if ([book.status isEqualToString:@"downloading"]) {
+        cell.transparencyView.hidden = NO;
+        if (![cell.activityView isAnimating]) {
+            [cell.activityView startAnimating];
+        }
+        
+        cell.statusLabel.text = @"Downloading...";
+    }
+    else {
+        cell.transparencyView.hidden = YES;
+        cell.activityView.hidden = YES;
+        if ([cell.activityView isAnimating]) {
+            [cell.activityView stopAnimating];
+        }
+        cell.statusLabel.text = @"";
+                
+    }
 
     
     //        self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"box.png"]];
@@ -305,7 +359,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {    
     NSLog(@"User selects book at index %d", indexPath.row);
-    NSLog(@"Buy button description %@", self.buyButton);
  
  //   [self.allPicturebookCovers removeAllObjects];
     [self bookSelectedAtIndexPath:indexPath];

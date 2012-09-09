@@ -33,8 +33,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *bookTitleLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *tagViewLarge;
 @property (strong, nonatomic) IBOutlet UIImageView *rateImage;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityView;
 
-@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+//@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
 - (void)categoryPicked:(Category *)category inController:(CategoryTableViewController *)controller;
 

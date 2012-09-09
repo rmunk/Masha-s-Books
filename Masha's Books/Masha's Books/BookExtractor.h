@@ -44,5 +44,6 @@
 - (BOOL)isDownloading;
 - (NSData *)getDownloadedData;
 - (void)addBookToQue:(Book *)book;
+- (void)processQue;
 
 @end

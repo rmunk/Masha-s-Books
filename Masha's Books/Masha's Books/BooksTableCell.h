@@ -17,6 +17,9 @@
 @property (weak, nonatomic) IBOutlet UIImageView *rateImage;
 @property (weak, nonatomic) IBOutlet UILabel *bookTitle;
 @property (weak, nonatomic) IBOutlet UITextView *shortDescription;
+@property (weak, nonatomic) IBOutlet UIView *transparencyView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityView;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 
 - (id)initWithFrame:(CGRect)frame forBook:(Book *)book;
 

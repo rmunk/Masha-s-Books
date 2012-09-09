@@ -2,8 +2,8 @@
 //  Page.m
 //  Masha's Books
 //
-//  Created by Ranko Munk on 9/8/12.
-//
+//  Created by Luka Miljak on 9/8/12.
+//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
 #import "Page.h"

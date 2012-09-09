@@ -200,7 +200,7 @@
     url = [url URLByAppendingPathComponent:@"Library"];
     self.library = [[UIManagedDocument alloc] initWithFileURL:url];
     //    [self getMyBooks];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newBookReady:) name:@"PagesAdded" object:nil ];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newBookReady:) name:@"BookReady" object:nil ];
     
     [super viewDidLoad];
 }

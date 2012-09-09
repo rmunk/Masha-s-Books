@@ -68,6 +68,7 @@
         NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
         url = [url URLByAppendingPathComponent:@"Library"];
         self.libraryDatabase = [[UIManagedDocument alloc] initWithFileURL:url];
+        
     }
     
     self.currentElementValue = [[NSString alloc] init];
@@ -117,6 +118,7 @@
         //[self loadShopFromDatabase];
         //self.isShopLoaded = YES;
         self.libraryLoaded = YES;
+        [self.libraryDatabase.managedObjectContext setMergePolicy:NSOverwriteMergePolicy];
         self.extractor = [[BookExtractor alloc] initExtractorWithShop:self andContext:self.libraryDatabase.managedObjectContext];
         [self refreshShop];
         //[self shopDataLoaded];
@@ -169,7 +171,7 @@
     
         if (parsingSuccesfull == YES) {
             //self.isShopLoaded = YES;
-            //[self shopDataLoaded];
+            [self shopDataLoaded];
         }
         else {
             [self shopErrorLoading];
@@ -441,7 +443,6 @@
 
 - (void)pagesAdded
 {
-	//[self.libraryDatabase.managedObjectContext mergeChangesFromContextDidSaveNotification:pagesAddedNotification];
     NSLog(@"Extracted book pages saved to database.");
     [[NSNotificationCenter defaultCenter] postNotificationName:@"BookReady" object:self];
      
@@ -468,6 +469,8 @@
     } else {
         NSLog(@"Shop: Book %@ extracting error", book.title);
         [[[UIAlertView alloc] initWithTitle:@"Download Error" message:@"There was an error downloading book. Please try again." delegate:nil cancelButtonTitle:@"OK"otherButtonTitles:nil] show];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"BookExtractingError" object:nil];
+        
     }
 }
 

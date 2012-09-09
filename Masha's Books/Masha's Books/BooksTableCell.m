@@ -23,6 +23,9 @@
 @synthesize bookDescription = _bookDescription;
 @synthesize rateImage = _rateImage;
 @synthesize tagImage = _tagImage;
+@synthesize activityView = _activityView;
+@synthesize transparencyView = _transparencyView;
+@synthesize statusLabel = _statusLabel;
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
