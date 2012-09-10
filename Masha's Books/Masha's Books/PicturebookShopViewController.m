@@ -164,6 +164,14 @@
     [self setBuyButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"PicturebookShopFinishedLoading" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"PicturebookShopLoadingError" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ShopReceivedZipData" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"BookExtracted" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(picturebookShopFinishedLoading:) name:@"PicturebookShopFinishedLoading" object:nil ]; 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(picturebookShopLoadingError:) name:@"PicturebookShopLoadingError" object:nil ];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getMyCoversStatus:) name:@"" object:nil ];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshCoversTable:) name:@"" object:nil ];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

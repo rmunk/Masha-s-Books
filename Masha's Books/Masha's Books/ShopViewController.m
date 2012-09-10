@@ -87,7 +87,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(picturebookShopFinishedLoading:) name:@"PicturebookShopFinishedLoading" object:nil ]; 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(picturebookShopLoadingError:) name:@"PicturebookShopLoadingError" object:nil ];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setDownloadStatus:) name:@"NewShopReceivedZipData" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bookExtracted:) name:@"BookExtracted" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bookExtracted:) name:@"" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bookExtractingError:) name:@"BookExtractingError" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bookReady:) name:@"BookReady" object:self.picturebookShop];
 }
@@ -127,6 +127,12 @@
     [self setActivityView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"PicturebookShopFinishedLoading" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"PicturebookShopLoadingError" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NewShopReceivedZipData" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"BookExtracted" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"BookExtractingError" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"BookReady" object:nil];
 }
 - (IBAction)categorySelection:(UIButton *)sender {
 }
@@ -203,7 +209,7 @@
         self.downloadProgressView.hidden = NO;
     }
     else {
-    //    self per
+       // [self.booksTableView reloadData];
         self.downloadProgressView.progress = self.picturebookShop.lastPercentage;
     }
 }
@@ -308,18 +314,22 @@
     
     if ([book.status isEqualToString:@"qued"]) {
         cell.transparencyView.hidden = NO;
+        cell.activityView.hidden = NO;
         if (![cell.activityView isAnimating]) {
             [cell.activityView startAnimating];
+            [cell.activityView setNeedsDisplay];
         }
         cell.statusLabel.text = @"Waiting...";
     }
     else if ([book.status isEqualToString:@"downloading"]) {
         cell.transparencyView.hidden = NO;
+        cell.activityView.hidden = NO;
         if (![cell.activityView isAnimating]) {
             [cell.activityView startAnimating];
         }
         
         cell.statusLabel.text = @"Downloading...";
+        //cell.statusLabel.text = [NSString stringWithFormat:@"%d %", (int)(self.picturebookShop.lastPercentage * 100)];
     }
     else {
         cell.transparencyView.hidden = YES;
