@@ -84,7 +84,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="-517" y="178"/>
+            <point key="canvasLocation" x="-2457" y="182"/>
         </scene>
         <!--My Books View Controller - My Books-->
         <scene sceneID="9NB-gE-jkU">
@@ -195,7 +195,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="-517" y="-1656"/>
+            <point key="canvasLocation" x="-2457" y="-1652"/>
         </scene>
         <!--Shop View Controller - Masha's Shop-->
         <scene sceneID="s3E-db-7l0">
@@ -383,7 +383,7 @@
                                 <rect key="frame" x="548" y="341" width="36" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Preview" image="preview.png">
+                                <state key="normal" image="preview.png">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -501,7 +501,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="-517" y="-762"/>
+            <point key="canvasLocation" x="-2457" y="-758"/>
         </scene>
         <!--Category Table View Controller-->
         <scene sceneID="y7E-q2-OpF">
@@ -532,7 +532,7 @@
                     <value key="contentSizeForViewInPopover" type="size" width="287" height="400"/>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="771" y="-688"/>
+            <point key="canvasLocation" x="-1033" y="-964"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="I8b-r3-gmp">
@@ -553,7 +553,7 @@
                     </connections>
                 </tabBarController>
             </objects>
-            <point key="canvasLocation" x="-1975" y="-1166"/>
+            <point key="canvasLocation" x="-3915" y="-1162"/>
         </scene>
     </scenes>
     <resources>

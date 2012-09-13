@@ -16,7 +16,7 @@
 @property (nonatomic, strong) Book *activeBook;
 @property (nonatomic, strong) NSString *file;
 @property (nonatomic, strong) NSManagedObjectContext *context;
-@property (readwrite) BOOL merging;
+@property (nonatomic, strong) UIManagedDocument *library;
 
 //- (void)saveDataToBook:(Book *)book FromPath:(NSString *)unzippedPath;
 @end
@@ -31,7 +31,7 @@
 @synthesize activeBook = _activeBook;
 @synthesize file = _file;
 @synthesize context = _context;
-@synthesize merging = _merging;
+@synthesize library = _library;
 
 
 
@@ -64,8 +64,10 @@
         self.bookQue = [[NSMutableOrderedSet alloc] init];
         self.delegate = shop;
         self.downloading = NO;
-        self.merging = NO;
         self.activeBook = nil;
+        if(![NSThread isMainThread]){
+            NSLog(@"Not the main thread...");
+        }
         self.context = context;
        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(anyContextSaved:) name:NSManagedObjectContextDidSaveNotification object:nil];
         
@@ -93,20 +95,16 @@
     // Fault in all updated objects
     NSError *error;
 	NSArray* updates = [[notification.userInfo objectForKey:@"updated"] allObjects];
-	for (NSInteger i = [updates count]-1; i >= 0; i--)
-	{
-		[[self.context objectWithID:[[updates objectAtIndex:i] objectID]] willAccessValueForKey:nil];
-	}
     
     NSLog(@"Merge contexts on main thread called");
     
-    self.activeBook.status = @"ready";
-    self.activeBook.downloaded = [NSNumber numberWithInt:1];
+    
     //NSLog(@"activeBook info before merge: %@", self.activeBook);
     [self.context mergeChangesFromContextDidSaveNotification:notification];
-    self.merging = YES;
+    self.activeBook.status = @"ready";
+    self.activeBook.downloaded = [NSNumber numberWithInt:1];
     if ([self.context save:&error]) {
-        self.activeBook = [Book getBookWithId:self.activeBook.bookID inContext:self.context withErrorHandler:error];
+        NSLog(@"book has changes = %d", (int)[self.activeBook hasChanges]);
         //NSLog(@"activeBook info after merge: %@", self.activeBook);
         [self.delegate performSelector:@selector(pagesAdded)];
         [self processQue];
@@ -130,8 +128,8 @@
     
     self.activeBook.status = @"extracting";
     
-    dispatch_queue_t zipQueue = dispatch_queue_create("zipQueue", NULL);
-    dispatch_async(zipQueue, ^{
+    dispatch_queue_t bgQue = dispatch_queue_create("bgQue", NULL);
+    dispatch_async(bgQue, ^{
         
         // Extract zip file to tmp folder
         NSLog(@"Extracting %@ Started...", zipFile.lastPathComponent);
@@ -153,34 +151,36 @@
                 [self.delegate extractorForBook:self.activeBook didFinishExtractingWithSuccess:YES];
                 if([self.context save:&error]) {
                     NSLog(@"Saving new book data for %@", self.activeBook.title);
+                    self.activeBook = (Book *)[self.context existingObjectWithID:self.activeBook.objectID error:nil];
                     [self saveDataToBook:self.activeBook FromPath:newDir];
                 }
                 else 
                     NSLog(@"Context saving error");
             }
-            
-                
         });    
     });
-    dispatch_release(zipQueue);
+    dispatch_release(bgQue);
 }
 
 - (void)saveDataToBook:(Book *)bookFromMainThread FromPath:(NSString *)unzippedPath {
    // NSError *error;
     //[self.context save:&error];
   //  NSManagedObjectID *objectID = [[NSManagedObjectID alloc] init];
- //   objectID = [bookFromMainThread.objectID copy];
-//    NSPersistentStoreCoordinator *storeCordinator = bookFromMainThread.managedObjectContext.persistentStoreCoordinator;
-    //[storeCordinator lock];
-    dispatch_queue_t saveQue = dispatch_queue_create("saveQue", NULL);
-    dispatch_async(saveQue, ^{
+    //NSManagedObjectID *objectID = bookFromMainThread.objectID;
+    NSPersistentStoreCoordinator *storeCordinator = self.context.persistentStoreCoordinator;
+    NSNumber *bookID = bookFromMainThread.bookID;
+    dispatch_queue_t bgQue = dispatch_queue_create("bgQue", NULL);
+    dispatch_async(bgQue, ^{
         NSError *error;
 
         NSManagedObjectContext *addingContext = [[NSManagedObjectContext alloc] init];
-        [addingContext setPersistentStoreCoordinator:bookFromMainThread.managedObjectContext.persistentStoreCoordinator];
+        [addingContext setMergePolicy:NSMergeByPropertyStoreTrumpMergePolicy];
+        [addingContext setPersistentStoreCoordinator:storeCordinator];
         
-      //  Book *book = (Book *)[addingContext existingObjectWithID:bookFromMainThread.objectID error:&error];
-        Book *book = [Book getBookWithId:bookFromMainThread.bookID inContext:addingContext withErrorHandler:error];
+       
+        
+      //  Book *book = (Book *)[addingContext existingObjectWithID:objectID error:&error];
+      Book *book = [Book getBookWithId:bookID inContext:addingContext withErrorHandler:error];
             
         NSLog(@"Fetched book %@ with objectID", book.title);
         // Fill database with extracted data
@@ -254,8 +254,10 @@
                 
             if([addingContext save:&error]) {
                 NSLog(@"Saving addingContext sucessfull");
+                [fileManager removeItemAtPath:unzippedPath error:nil];
             }
             else {
+                [fileManager removeItemAtPath:unzippedPath error:nil];
                 NSLog(@"Failed to save to data store: %@", [error localizedDescription]);
                 NSArray* detailedErrors = [[error userInfo] objectForKey:NSDetailedErrorsKey];
                 if(detailedErrors != nil && [detailedErrors count] > 0) {
@@ -289,10 +291,10 @@
         //}
         
         // Cleanup of temp files
-        //            [fileManager removeItemAtPath:zipFile error:nil];
-        //            [fileManager removeItemAtPath:newDir error:nil];
+               //     [fileManager removeItemAtPath:unzippedPath error:nil];
+                 //   [fileManager removeItemAtPath:newDir error:nil];
     });
-    dispatch_release(saveQue);
+    dispatch_release(bgQue);
 
 }
 

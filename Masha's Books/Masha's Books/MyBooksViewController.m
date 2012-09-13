@@ -212,6 +212,7 @@
     }
     
     [super viewWillAppear:animated];
+    [self getMyBooks];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

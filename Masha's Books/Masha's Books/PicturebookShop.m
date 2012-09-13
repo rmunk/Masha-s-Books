@@ -118,8 +118,9 @@
         //[self loadShopFromDatabase];
         //self.isShopLoaded = YES;
         self.libraryLoaded = YES;
-        [self.libraryDatabase.managedObjectContext setMergePolicy:NSOverwriteMergePolicy];
+        [self.libraryDatabase.managedObjectContext setMergePolicy:NSMergeByPropertyStoreTrumpMergePolicy];
         self.extractor = [[BookExtractor alloc] initExtractorWithShop:self andContext:self.libraryDatabase.managedObjectContext];
+        //self.extractor = [[BookExtractor alloc] initExtractorWithShop:self andDocument:self.libraryDatabase];
         [self refreshShop];
         //[self shopDataLoaded];
     }
