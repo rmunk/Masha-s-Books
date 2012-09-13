@@ -2,8 +2,8 @@
 //  Design.h
 //  Masha's Books
 //
-//  Created by Luka Miljak on 9/3/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Created by Ranko Munk on 9/13/12.
+//
 //
 
 #import <Foundation/Foundation.h>
@@ -12,9 +12,9 @@
 
 @interface Design : NSManagedObject
 
-@property (nonatomic, retain) UIImage * bgImage;
+@property (nonatomic, retain) NSData * bgImage;
 @property (nonatomic, retain) NSString * bgImageURL;
-@property (nonatomic, retain) UIImage * bgMasha;
+@property (nonatomic, retain) NSData * bgMasha;
 @property (nonatomic, retain) NSString * bgMashaURL;
 
 @end

@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BA04783A15F42C74003BD7B2 /* Design+Addon.m in Sources */ = {isa = PBXBuildFile; fileRef = BA04783915F42C71003BD7B2 /* Design+Addon.m */; };
-		BA04784B15F5528B003BD7B2 /* Design.m in Sources */ = {isa = PBXBuildFile; fileRef = BA04784A15F5528A003BD7B2 /* Design.m */; };
 		BA04784E15F55332003BD7B2 /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = BA04784D15F55330003BD7B2 /* Book.m */; };
 		BA0E4E1115EBFF3700012F17 /* CategoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0E4E1015EBFF3700012F17 /* CategoryTableViewController.m */; };
 		BA523BB615E6D1B4008617AB /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = BA523BB515E6D1B4008617AB /* Category.m */; };
@@ -149,6 +147,7 @@
 		C09C93AD1601380B00278B2D /* MagicalRecord+Setup.m in Sources */ = {isa = PBXBuildFile; fileRef = C09C938F1601380B00278B2D /* MagicalRecord+Setup.m */; };
 		C09C93AE1601380B00278B2D /* MagicalRecord+ShorthandSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = C09C93911601380B00278B2D /* MagicalRecord+ShorthandSupport.m */; };
 		C09C93AF1601380B00278B2D /* MagicalRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = C09C93931601380B00278B2D /* MagicalRecord.m */; };
+		C09CC1B316028CC1004E644F /* Design.m in Sources */ = {isa = PBXBuildFile; fileRef = C09CC1B216028CC1004E644F /* Design.m */; };
 		C09D3E7515F81A42003D1896 /* AVAudioPlayer+PGFade.m in Sources */ = {isa = PBXBuildFile; fileRef = C09C32C215F6C71F00C21ADB /* AVAudioPlayer+PGFade.m */; };
 		C09EB5D715D9D7E8003FEBB0 /* tab-books copy.png in Resources */ = {isa = PBXBuildFile; fileRef = C09EB5D615D9D7E8003FEBB0 /* tab-books copy.png */; };
 		C0B3FF6415742E41002DF30F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0B3FF6315742E41002DF30F /* UIKit.framework */; };
@@ -182,10 +181,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		BA04783815F42C70003BD7B2 /* Design+Addon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Design+Addon.h"; sourceTree = "<group>"; };
-		BA04783915F42C71003BD7B2 /* Design+Addon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Design+Addon.m"; sourceTree = "<group>"; };
-		BA04784915F55289003BD7B2 /* Design.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Design.h; sourceTree = "<group>"; };
-		BA04784A15F5528A003BD7B2 /* Design.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Design.m; sourceTree = "<group>"; };
 		BA04784C15F55330003BD7B2 /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Book.h; sourceTree = "<group>"; };
 		BA04784D15F55330003BD7B2 /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Book.m; sourceTree = "<group>"; };
 		BA0E4E0F15EBFF3700012F17 /* CategoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryTableViewController.h; sourceTree = "<group>"; };
@@ -385,6 +380,8 @@
 		C09C93931601380B00278B2D /* MagicalRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MagicalRecord.m; sourceTree = "<group>"; };
 		C09C93941601380B00278B2D /* MagicalRecordShorthand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagicalRecordShorthand.h; sourceTree = "<group>"; };
 		C09C93951601380B00278B2D /* CoreData+MagicalRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreData+MagicalRecord.h"; sourceTree = "<group>"; };
+		C09CC1B116028CC1004E644F /* Design.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Design.h; sourceTree = "<group>"; };
+		C09CC1B216028CC1004E644F /* Design.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Design.m; sourceTree = "<group>"; };
 		C09EB5D615D9D7E8003FEBB0 /* tab-books copy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-books copy.png"; sourceTree = "<group>"; };
 		C0B3FF5F15742E41002DF30F /* Masha's Books.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Masha's Books.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0B3FF6315742E41002DF30F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -486,19 +483,17 @@
 		C08247061576870C00054A3A /* LibraryDataModel */ = {
 			isa = PBXGroup;
 			children = (
-				BA04783815F42C70003BD7B2 /* Design+Addon.h */,
-				BA04783915F42C71003BD7B2 /* Design+Addon.m */,
 				BA523BB815E6D1CD008617AB /* Info.h */,
 				BA523BB915E6D1CD008617AB /* Info.m */,
 				C0E5CE4715A3B1C20049978B /* Author.h */,
 				C0E5CE4815A3B1C30049978B /* Author.m */,
 				C0E5CE4415A3B1C20049978B /* Image.h */,
 				C0E5CE4515A3B1C20049978B /* Image.m */,
-				BA04784915F55289003BD7B2 /* Design.h */,
-				BA04784A15F5528A003BD7B2 /* Design.m */,
 				BA04784C15F55330003BD7B2 /* Book.h */,
 				BA04784D15F55330003BD7B2 /* Book.m */,
 				C08246EB157680E900054A3A /* Library.xcdatamodeld */,
+				C09CC1B116028CC1004E644F /* Design.h */,
+				C09CC1B216028CC1004E644F /* Design.m */,
 				BA651EF115FB96D700352B2F /* Page.h */,
 				BA651EF215FB96D700352B2F /* Page.m */,
 				BA523BB415E6D1B4008617AB /* Category.h */,
@@ -1078,8 +1073,6 @@
 				BA523BB615E6D1B4008617AB /* Category.m in Sources */,
 				BA523BBA15E6D1CD008617AB /* Info.m in Sources */,
 				BA0E4E1115EBFF3700012F17 /* CategoryTableViewController.m in Sources */,
-				BA04783A15F42C74003BD7B2 /* Design+Addon.m in Sources */,
-				BA04784B15F5528B003BD7B2 /* Design.m in Sources */,
 				BA04784E15F55332003BD7B2 /* Book.m in Sources */,
 				BA651EF315FB96D700352B2F /* Page.m in Sources */,
 				C09C93961601380B00278B2D /* MagicalImportFunctions.m in Sources */,
@@ -1108,6 +1101,7 @@
 				C09C93AD1601380B00278B2D /* MagicalRecord+Setup.m in Sources */,
 				C09C93AE1601380B00278B2D /* MagicalRecord+ShorthandSupport.m in Sources */,
 				C09C93AF1601380B00278B2D /* MagicalRecord.m in Sources */,
+				C09CC1B316028CC1004E644F /* Design.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

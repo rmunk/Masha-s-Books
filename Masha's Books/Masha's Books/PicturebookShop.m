@@ -284,58 +284,55 @@
 		return;		
 	}
     else if([elementName isEqualToString:@"info"]) {
-
+        
         Info *info = [Info MR_findFirst];
         if (!info) info = [Info MR_createEntity];
         
-        [MagicalRecord saveInBackgroundWithBlock:^(NSManagedObjectContext *localContext){
-            NSLog(@"Storing info");
-            NSLog(@"%@", [attributeDict objectForKey:@"appVer"]);
-            info.appVer = [attributeDict objectForKey:@"appVer"];
-            NSLog(@"%@", [attributeDict objectForKey:@"appStoreURL"]);
-            info.appStoreURL = [attributeDict objectForKey:@"appStoreURL"];
-            NSLog(@"%@", [attributeDict objectForKey:@"websiteURL"]);
-            info.websiteURL = [attributeDict objectForKey:@"websiteURL"];
-            NSLog(@"%@", [attributeDict objectForKey:@"facebookURL"]);
-            info.facebookURL = [attributeDict objectForKey:@"facebookURL"];
-            NSLog(@"%@", [attributeDict objectForKey:@"twitterURL"]);
-            info.twitterURL = [attributeDict objectForKey:@"twitterURL"];
-            NSLog(@"%@", [attributeDict objectForKey:@"contactURL"]);
-            info.contactURL = [attributeDict objectForKey:@"contactURL"];
-        }];
+        [MagicalRecord saveInBackgroundUsingCurrentContextWithBlock:^(NSManagedObjectContext *localContext)
+        {
+             NSLog(@"Storing info");
+             NSLog(@"%@", [attributeDict objectForKey:@"appVer"]);
+             info.appVer = [attributeDict objectForKey:@"appVer"];
+             NSLog(@"%@", [attributeDict objectForKey:@"appStoreURL"]);
+             info.appStoreURL = [attributeDict objectForKey:@"appStoreURL"];
+             NSLog(@"%@", [attributeDict objectForKey:@"websiteURL"]);
+             info.websiteURL = [attributeDict objectForKey:@"websiteURL"];
+             NSLog(@"%@", [attributeDict objectForKey:@"facebookURL"]);
+             info.facebookURL = [attributeDict objectForKey:@"facebookURL"];
+             NSLog(@"%@", [attributeDict objectForKey:@"twitterURL"]);
+             info.twitterURL = [attributeDict objectForKey:@"twitterURL"];
+             NSLog(@"%@", [attributeDict objectForKey:@"contactURL"]);
+             info.contactURL = [attributeDict objectForKey:@"contactURL"];
+         }
+         completion:^{ NSLog(@"Web links saved to database."); }
+         errorHandler:^(NSError *error){ NSLog(error.localizedDescription); }];
     }
     else if([elementName isEqualToString:@"myBooks"]) {
         
         Design *design = [Design MR_findFirst];
         if (!design) design = [Design MR_createEntity];
-         
-        [MagicalRecord saveInBackgroundUsingCurrentContextWithBlock:^(NSManagedObjectContext *localContext){
-            NSLog(@"Setting BGImage %@", [attributeDict objectForKey:@"BGImage"]);
-            design.bgImageURL = [attributeDict objectForKey:@"BGImage"];
-            NSLog(@"Setting BGMasha %@", [attributeDict objectForKey:@"BGMasha"]);
-            design.bgMashaURL = [attributeDict objectForKey:@"BGMasha"];
-            
-            NSURL *bacgroundURL = [[NSURL alloc] initWithString:
-                                   [NSString stringWithFormat:@"%@%@",
-                                    @"http://www.mashasbookstore.com", design.bgImageURL]];
-            NSURL *mashaURL = [[NSURL alloc] initWithString:
-                               [NSString stringWithFormat:@"%@%@",
-                                @"http://www.mashasbookstore.com", design.bgMashaURL]];
-            NSLog(@"Downloading background images at %@ and %@", bacgroundURL, mashaURL);
-            
-            UIImage *background = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:bacgroundURL]];
-            UIImage *masha = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:mashaURL]];
-
-            design.bgImage = background;
-            design.bgMasha = masha;
-            
-        }
-        completion:^{
-            NSLog(@"My Books BG images downloaded.");
-        }
-        errorHandler:^(NSError *error){
-            NSLog(error.localizedDescription);
-        }];
+        
+        [MagicalRecord saveInBackgroundUsingCurrentContextWithBlock:^(NSManagedObjectContext *localContext)
+        {
+             NSLog(@"Setting BGImage %@", [attributeDict objectForKey:@"BGImage"]);
+             design.bgImageURL = [attributeDict objectForKey:@"BGImage"];
+             NSLog(@"Setting BGMasha %@", [attributeDict objectForKey:@"BGMasha"]);
+             design.bgMashaURL = [attributeDict objectForKey:@"BGMasha"];
+             
+             NSURL *bacgroundURL = [[NSURL alloc] initWithString:
+                                    [NSString stringWithFormat:@"%@%@",
+                                     @"http://www.mashasbookstore.com", design.bgImageURL]];
+             NSURL *mashaURL = [[NSURL alloc] initWithString:
+                                [NSString stringWithFormat:@"%@%@",
+                                 @"http://www.mashasbookstore.com", design.bgMashaURL]];
+             NSLog(@"Downloading background images at %@ and %@", bacgroundURL, mashaURL);
+             
+             design.bgImage = [NSData dataWithContentsOfURL:bacgroundURL];
+             design.bgMasha = [NSData dataWithContentsOfURL:mashaURL];
+             
+         }
+         completion:^{ NSLog(@"My Books BG images downloaded and saved to database."); }
+         errorHandler:^(NSError *error){ NSLog(error.localizedDescription); }];
     }
     else if([elementName isEqualToString:@"categories"]) {
                     

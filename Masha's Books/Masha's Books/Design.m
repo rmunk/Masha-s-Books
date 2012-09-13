@@ -2,8 +2,8 @@
 //  Design.m
 //  Masha's Books
 //
-//  Created by Luka Miljak on 9/3/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Created by Ranko Munk on 9/13/12.
+//
 //
 
 #import "Design.h"

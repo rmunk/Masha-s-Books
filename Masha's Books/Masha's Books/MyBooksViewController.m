@@ -149,8 +149,8 @@
     
     if (design)
     {
-        self.backgroundImage.image = design.bgImage;
-        self.mashaImage.image = design.bgMasha;
+        self.backgroundImage.image = [[UIImage alloc] initWithData:design.bgImage];
+        self.mashaImage.image = [[UIImage alloc] initWithData:design.bgMasha];
     }
 }
 
