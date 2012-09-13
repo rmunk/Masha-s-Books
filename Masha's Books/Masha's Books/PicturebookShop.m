@@ -412,7 +412,6 @@
        
         NSLog(@"PARSING FINISHED");
         // ovdi pozvat funkcije za likanje knjiga i kategorija, knjiga i autora
-        [Design loadImages:self.libraryDatabase.managedObjectContext];
         [Category loadBackgroundsForContext:self.libraryDatabase.managedObjectContext];
         [Book linkBooksToCategoriesWithLinker:self.categoryToBookMap inContext:self.libraryDatabase.managedObjectContext];
         [Book linkBooksToAuthorsInContext:self.libraryDatabase.managedObjectContext];
