@@ -15,6 +15,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    [MagicalRecord setupCoreDataStack];
     return YES;
 }
 							
@@ -42,6 +43,8 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
+    [[NSManagedObjectContext MR_defaultContext] MR_save];
+    [MagicalRecord cleanUp];
 #warning Tu bi trebalo snimit bazu nekako
 }
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="Vx0-Iu-9ec">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2549" systemVersion="12A269" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="Vx0-Iu-9ec">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1498"/>
     </dependencies>
     <scenes>
         <!--Settings View Controller - Settings-->
@@ -125,7 +125,7 @@
                                 <rect key="frame" x="511" y="-24" width="512" height="768"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </imageView>
-                            <button opaque="NO" tag="-1" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="esv-JK-l7K">
+                            <button opaque="NO" tag="1" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="esv-JK-l7K">
                                 <rect key="frame" x="25" y="56" width="42" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -136,10 +136,10 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="goToWebSite:" destination="i4c-PB-hBI" eventType="touchUpInside" id="vb4-kC-NoJ"/>
+                                    <action selector="topButtonPressed:" destination="i4c-PB-hBI" eventType="touchUpInside" id="al2-AF-33b"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" tag="-1" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="rG6-Gf-5Yn">
+                            <button opaque="NO" tag="2" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="rG6-Gf-5Yn">
                                 <rect key="frame" x="75" y="56" width="42" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -150,10 +150,10 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="sendMail:" destination="i4c-PB-hBI" eventType="touchUpInside" id="DjK-NV-PMg"/>
+                                    <action selector="topButtonPressed:" destination="i4c-PB-hBI" eventType="touchUpInside" id="bow-PP-gUL"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" tag="-1" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="zbY-eG-Hxh">
+                            <button opaque="NO" tag="3" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="zbY-eG-Hxh">
                                 <rect key="frame" x="915" y="56" width="42" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -164,10 +164,10 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="goToFacebook:" destination="i4c-PB-hBI" eventType="touchUpInside" id="ceK-T4-VpE"/>
+                                    <action selector="topButtonPressed:" destination="i4c-PB-hBI" eventType="touchUpInside" id="cWA-WK-urK"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" tag="-1" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="ZxN-rK-ybZ">
+                            <button opaque="NO" tag="4" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="ZxN-rK-ybZ">
                                 <rect key="frame" x="965" y="56" width="42" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -178,7 +178,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="tweet:" destination="i4c-PB-hBI" eventType="touchUpInside" id="0fG-ZU-INp"/>
+                                    <action selector="topButtonPressed:" destination="i4c-PB-hBI" eventType="touchUpInside" id="6Mm-mb-Oru"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -420,7 +420,7 @@
                                 <rect key="frame" x="503" y="340" width="37" height="38"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </imageView>
-                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="IkL-U1-qq6">
+                            <button opaque="NO" tag="1" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="IkL-U1-qq6">
                                 <rect key="frame" x="22" y="79" width="42" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -431,11 +431,10 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="goToWebSite:" destination="qfq-Kt-d9p" eventType="touchUpInside" id="a13-er-Wsp"/>
-                                    <action selector="goToWebSite:" destination="i4c-PB-hBI" eventType="touchUpInside" id="cQ7-fR-6fe"/>
+                                    <action selector="topButtonPressed:" destination="qfq-Kt-d9p" eventType="touchUpInside" id="cg2-qm-x4H"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="6JN-S7-Iy1">
+                            <button opaque="NO" tag="2" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="6JN-S7-Iy1">
                                 <rect key="frame" x="72" y="79" width="42" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -446,11 +445,10 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="sendMail:" destination="qfq-Kt-d9p" eventType="touchUpInside" id="GQd-Tm-yHf"/>
-                                    <action selector="sendMail:" destination="i4c-PB-hBI" eventType="touchUpInside" id="lcM-Ky-k3a"/>
+                                    <action selector="topButtonPressed:" destination="qfq-Kt-d9p" eventType="touchUpInside" id="ukx-lv-Fmb"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="cJB-xl-saj">
+                            <button opaque="NO" tag="3" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="cJB-xl-saj">
                                 <rect key="frame" x="912" y="79" width="42" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -461,10 +459,10 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="goToFacebook:" destination="i4c-PB-hBI" eventType="touchUpInside" id="GxR-vu-w3J"/>
+                                    <action selector="topButtonPressed:" destination="qfq-Kt-d9p" eventType="touchUpInside" id="HDU-fp-hjU"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="Atn-5g-PNW">
+                            <button opaque="NO" tag="4" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="Atn-5g-PNW">
                                 <rect key="frame" x="962" y="79" width="42" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -475,7 +473,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="tweet:" destination="i4c-PB-hBI" eventType="touchUpInside" id="s8h-eV-1IY"/>
+                                    <action selector="topButtonPressed:" destination="qfq-Kt-d9p" eventType="touchUpInside" id="hx8-U9-GE3"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -599,6 +597,7 @@
         <class className="MyBooksViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/MyBooksViewController.h"/>
             <relationships>
+                <relationship kind="action" name="topButtonPressed:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="backgroundImage" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="leftBookImage" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="mashaImage" candidateClass="UIImageView"/>
@@ -621,6 +620,15 @@
         <class className="ShopViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ShopViewController.h"/>
             <relationships>
+                <relationship kind="action" name="bookBought:" candidateClass="UIButton"/>
+                <relationship kind="action" name="categorySelection:" candidateClass="UIButton"/>
+                <relationship kind="action" name="goToFacebookPage:" candidateClass="UIButton"/>
+                <relationship kind="action" name="goToTwitterPage:" candidateClass="UIButton"/>
+                <relationship kind="action" name="goToWebSite:" candidateClass="UIButton"/>
+                <relationship kind="action" name="goToYoutubePage:" candidateClass="UIButton"/>
+                <relationship kind="action" name="sendMail:" candidateClass="UIButton"/>
+                <relationship kind="action" name="shopRefresh:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="action" name="topButtonPressed:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="activityView" candidateClass="UIActivityIndicatorView"/>
                 <relationship kind="outlet" name="backgroundView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="bookTitleLabel" candidateClass="UILabel"/>

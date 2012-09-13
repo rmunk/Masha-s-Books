@@ -284,62 +284,58 @@
 		return;		
 	}
     else if([elementName isEqualToString:@"info"]) {
-       // 
-        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Info"]; 
-        NSError *error;
-        Info *info;
+
+        Info *info = [Info MR_findFirst];
+        if (!info) info = [Info MR_createEntity];
         
-        NSArray *infoArray = [self.libraryDatabase.managedObjectContext executeFetchRequest:request error:&error];
-        if (infoArray.count == 0) {
-            info = [NSEntityDescription insertNewObjectForEntityForName:@"Info" inManagedObjectContext:self.libraryDatabase.managedObjectContext];
-        }
-        else if (infoArray.count == 1) {
-            info = [infoArray lastObject];
-        }
-        else {
-            NSLog(@"ERROR: More than one Info managed object in database");
-            return;
-        }
-        
-        NSLog(@"Storing info");
-        NSLog(@"%@", [attributeDict objectForKey:@"appVer"]);
-        info.appVer = [attributeDict objectForKey:@"appVer"];
-        NSLog(@"%@", [attributeDict objectForKey:@"appStoreURL"]);
-        info.appStoreURL = [attributeDict objectForKey:@"appStoreURL"];
-        NSLog(@"%@", [attributeDict objectForKey:@"websiteURL"]);
-        info.websiteURL = [attributeDict objectForKey:@"websiteURL"];
-        NSLog(@"%@", [attributeDict objectForKey:@"facebookURL"]);
-        info.facebookURL = [attributeDict objectForKey:@"facebookURL"];
-        NSLog(@"%@", [attributeDict objectForKey:@"twitterURL"]);
-        info.twitterURL = [attributeDict objectForKey:@"twitterURL"];
-        NSLog(@"%@", [attributeDict objectForKey:@"contactURL"]);
-        info.contactURL = [attributeDict objectForKey:@"contactURL"];
-       
-        
+        [MagicalRecord saveInBackgroundWithBlock:^(NSManagedObjectContext *localContext){
+            NSLog(@"Storing info");
+            NSLog(@"%@", [attributeDict objectForKey:@"appVer"]);
+            info.appVer = [attributeDict objectForKey:@"appVer"];
+            NSLog(@"%@", [attributeDict objectForKey:@"appStoreURL"]);
+            info.appStoreURL = [attributeDict objectForKey:@"appStoreURL"];
+            NSLog(@"%@", [attributeDict objectForKey:@"websiteURL"]);
+            info.websiteURL = [attributeDict objectForKey:@"websiteURL"];
+            NSLog(@"%@", [attributeDict objectForKey:@"facebookURL"]);
+            info.facebookURL = [attributeDict objectForKey:@"facebookURL"];
+            NSLog(@"%@", [attributeDict objectForKey:@"twitterURL"]);
+            info.twitterURL = [attributeDict objectForKey:@"twitterURL"];
+            NSLog(@"%@", [attributeDict objectForKey:@"contactURL"]);
+            info.contactURL = [attributeDict objectForKey:@"contactURL"];
+        }];
     }
     else if([elementName isEqualToString:@"myBooks"]) {
         
-        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Design"]; 
-        NSError *error;
-        Design *design;
-        
-        NSArray *infoArray = [self.libraryDatabase.managedObjectContext executeFetchRequest:request error:&error];
-        if (infoArray.count == 0) {
-            design = [NSEntityDescription insertNewObjectForEntityForName:@"Design" inManagedObjectContext:self.libraryDatabase.managedObjectContext];
+        Design *design = [Design MR_findFirst];
+        if (!design) design = [Design MR_createEntity];
+         
+        [MagicalRecord saveInBackgroundUsingCurrentContextWithBlock:^(NSManagedObjectContext *localContext){
+            NSLog(@"Setting BGImage %@", [attributeDict objectForKey:@"BGImage"]);
+            design.bgImageURL = [attributeDict objectForKey:@"BGImage"];
+            NSLog(@"Setting BGMasha %@", [attributeDict objectForKey:@"BGMasha"]);
+            design.bgMashaURL = [attributeDict objectForKey:@"BGMasha"];
+            
+            NSURL *bacgroundURL = [[NSURL alloc] initWithString:
+                                   [NSString stringWithFormat:@"%@%@",
+                                    @"http://www.mashasbookstore.com", design.bgImageURL]];
+            NSURL *mashaURL = [[NSURL alloc] initWithString:
+                               [NSString stringWithFormat:@"%@%@",
+                                @"http://www.mashasbookstore.com", design.bgMashaURL]];
+            NSLog(@"Downloading background images at %@ and %@", bacgroundURL, mashaURL);
+            
+            UIImage *background = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:bacgroundURL]];
+            UIImage *masha = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:mashaURL]];
+
+            design.bgImage = background;
+            design.bgMasha = masha;
+            
         }
-        else if (infoArray.count == 1) {
-            design = [infoArray lastObject];
+        completion:^{
+            NSLog(@"My Books BG images downloaded.");
         }
-        else {
-            NSLog(@"ERROR: More than one Info managed object in database");
-            return;
-        }
-        
-        NSLog(@"Setting BGImage %@", [attributeDict objectForKey:@"BGImage"]);
-        design.bgImageURL = [attributeDict objectForKey:@"BGImage"];
-        NSLog(@"Setting BGMasha %@", [attributeDict objectForKey:@"BGMasha"]);
-        design.bgMashaURL = [attributeDict objectForKey:@"BGMasha"];
-        
+        errorHandler:^(NSError *error){
+            NSLog(error.localizedDescription);
+        }];
     }
     else if([elementName isEqualToString:@"categories"]) {
                     

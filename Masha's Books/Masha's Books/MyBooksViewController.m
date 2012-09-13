@@ -13,7 +13,7 @@
 #import "SlikovnicaRootViewController.h"
 #import <MessageUI/MessageUI.h>
 
-@interface MyBooksViewController ()<UIScrollViewDelegate, SlikovnicaRootViewControllerDelegate, MFMailComposeViewControllerDelegate>
+@interface MyBooksViewController ()<UIScrollViewDelegate, SlikovnicaRootViewControllerDelegate, MFMailComposeViewControllerDelegate, UIAlertViewDelegate>
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, weak) IBOutlet UIView *scrollViewContainer;
 @property (weak, nonatomic) IBOutlet UIImageView *leftBookImage;
@@ -145,10 +145,7 @@
 
 - (void)loadDesignImages
 {
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Design"];
-    
-    NSError *error;
-    Design *design = [[self.library.managedObjectContext executeFetchRequest:request error:&error] lastObject];
+    Design *design = [Design MR_findFirst];
     
     if (design)
     {
@@ -210,6 +207,8 @@
     if (self.scrollView.contentOffset.x == 0) {
         self.leftBookImage.frame = CGRectMake(-77, self.leftBookImage.frame.origin.y, self.leftBookImage.frame.size.width, self.leftBookImage.frame.size.height);
     }
+    
+    [self loadDesignImages];
     
     [super viewWillAppear:animated];
 }
@@ -308,63 +307,43 @@
 }
 
 #pragma mark - Top Buttons
-- (IBAction)goToWebSite:(UIButton *)sender {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.mashasbookstore.com"]];
-}
 
-- (IBAction)sendMail:(UIButton *)sender {
-    if ([MFMailComposeViewController canSendMail])
-    {
-        MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
-        
-        mailer.mailComposeDelegate = self;
-        mailer.modalPresentationStyle = UIModalPresentationPageSheet;
-
-        NSArray *toRecipients = [NSArray arrayWithObjects:@"masha@mashasbookstore.com", @"ranko.munk@gmail.com", nil];
-        [mailer setToRecipients:toRecipients];
-        
-        [self presentModalViewController:mailer animated:YES];
-    }
-    else
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                        message:@"Your device cannot send eMail!"
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles: nil];
-        [alert show];
-    }
-}
-
-- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
-{
-    switch (result)
-    {
-        case MFMailComposeResultCancelled:
-            NSLog(@"Mail cancelled: you cancelled the operation and no email message was queued.");
+- (IBAction)topButtonPressed:(UIButton *)sender {
+    NSString *url;
+    NSString *message;
+    Info *info = [Info MR_findFirst];
+    switch (sender.tag) {
+        case 1:
+            url = info.websiteURL;
+            message = @"Go and visit Masha's Bookstore website.";
             break;
-        case MFMailComposeResultSaved:
-            NSLog(@"Mail saved: you saved the email message in the drafts folder.");
+        case 2:
+            url = info.contactURL;
+            message = @"Go and contact Masha's Bookstore.";
             break;
-        case MFMailComposeResultSent:
-            NSLog(@"Mail send: the email message is queued in the outbox. It is ready to send.");
+        case 3:
+            url = info.facebookURL;
+            message = @"Go and like Masha's Bookstore on Facebook.";
             break;
-        case MFMailComposeResultFailed:
-            NSLog(@"Mail failed: the email message was not saved or queued, possibly due to an error.");
+        case 4:
+            url = info.twitterURL;
+            message = @"Go and follow Masha's Bookstore on Tweeter.";
             break;
         default:
-            NSLog(@"Mail not sent.");
             break;
     }
+    if (url){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Leave Masha's Bookstore?" message:message delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+        alert.accessibilityHint = url;
+        [alert show];
+    }
     
-    // Remove the mail view
-    [self dismissModalViewControllerAnimated:YES];
 }
 
-- (IBAction)goToFacebook:(UIButton *)sender {
-}
-
-- (IBAction)tweet:(UIButton *)sender {
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (alertView.title == @"Leave Masha's Bookstore?") {
+        if (buttonIndex == 1) [[UIApplication sharedApplication] openURL:[NSURL URLWithString:alertView.accessibilityHint]];
+    }
 }
 
 @end
