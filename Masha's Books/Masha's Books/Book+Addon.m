@@ -78,6 +78,73 @@
     }   
 }
 
++ (Book *)bookWithAttributes:(NSDictionary *)attributes {
+    
+    //kreiranje fetch requesta
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"bookID = %d", [[attributes objectForKey:@"ID"] integerValue]];
+    NSArray *booksWithID = [Book MR_findAllWithPredicate:predicate];
+    
+    
+    if ([booksWithID count] == 0) {
+        //ako knjige nema u bazi onda ovo
+        NSLog(@"NEMA JE !!!!!!!!!!!!!!!!!!!!!!");
+        
+        Book *book = [Book createEntity];
+        
+        NSDateFormatter *df = [[NSDateFormatter alloc] init];
+        [df setDateFormat:@"dd.mm.yyyy"];
+        
+        book.bookID = [NSNumber numberWithInt:[[attributes objectForKey:@"ID"] integerValue]];
+        
+        book.type = [NSNumber numberWithInt:[[attributes objectForKey:@"Type"] integerValue]];
+        
+        book.price = [NSNumber numberWithFloat:[[attributes objectForKey:@"Price"] floatValue]];
+        
+        book.rate = [NSNumber numberWithFloat:[[attributes objectForKey:@"Rate"] floatValue]];
+        
+        book.tag = [NSNumber numberWithFloat:[[attributes objectForKey:@"Tag"] floatValue]];
+        
+        book.title = [attributes objectForKey:@"Title"];
+        
+        book.appStoreID = [NSNumber numberWithInt:[[attributes objectForKey:@"AppleStoreID"] integerValue]];
+        
+        book.authorID = [NSNumber numberWithInt:[[attributes objectForKey:@"AuthorID"] integerValue]];
+        
+        book.publishDate = [df dateFromString:[attributes objectForKey:@"PublishDate"]];
+        
+        book.downloadURL = [attributes objectForKey:@"DownloadURL"];
+        
+        book.facebookLikeURL = [attributes objectForKey:@"FacebookLikeURL"];
+        
+        book.youTubeVideoURL = [attributes objectForKey:@"YouTubeVideoURL"];
+        
+        book.active = [attributes objectForKey:@"Active"];
+        
+        book.downloaded = [NSNumber numberWithInt:0];
+        
+        /* ovde se treba provjerit jeli knjiga vec kupljena, ako je drugaciji botun treba bit za nju u shopu
+         i za knjigu treba postavit status bought */
+        
+        book.status = [NSString stringWithString:@"available"];
+        
+        return book;
+    }
+    else if ([booksWithID count] == 1)       
+    {
+        Book *book = [booksWithID lastObject];
+        // ovdje treba refreshat postojecu knjigu s novi atributima
+        NSLog(@"Book with ID=%d already exists in database. Updating...", [book.bookID intValue]);
+        [Book updateBook:book withAttributes:attributes];
+        
+        return book;
+    }
+    else {
+        NSLog(@"ERROR: More than one book with ID $d exists in database!");
+        return nil;
+    }   
+}
+
+
 + (void)pickBookCategoriesFromLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context forBook:(Book *)book {
     
     //kreiranje fetch requesta
@@ -101,6 +168,27 @@
     }
 }
 
++ (void)pickBookCategoriesFromLinker:(CategoryToBookMap *)categoryToBookMap forBook:(Book *)book {
+    
+    //kreiranje fetch requesta
+    NSArray *categoriesForBook = [categoryToBookMap getCategoryIdentifiersForBookIdentifier:[book.bookID intValue]];
+    
+    for (NSNumber *catID in categoriesForBook) {        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"categoryID = %d", [catID intValue]];
+        NSArray *categoriesWithID = [Category MR_findAllWithPredicate:predicate];
+        if (categoriesWithID.count == 1) {
+            [book addCategoriesObject:(Category *)[categoriesWithID lastObject]];
+            NSLog(@"Dodajem kategoriju %@ u knjigu %@", ((Category *)[categoriesWithID lastObject]).name, book.title);
+        }
+        else if (categoriesWithID.count > 1) {
+            NSLog(@"ERROR: Multiple entries for category ID = %d in database!", [catID intValue]);
+        }
+        else {
+            NSLog(@"ERROR: No entries for category ID = %d in database! Linker error.", [catID intValue]);
+        }                  
+    }
+}
+
 + (void)linkBooksToCategoriesWithLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context {
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"]; 
@@ -110,6 +198,15 @@
     for (Book *book in books) 
         [self pickBookCategoriesFromLinker:categoryToBookMap inContext:context forBook:book];
 
+}
+
++ (void)linkBooksToCategoriesWithLinker:(CategoryToBookMap *)categoryToBookMap {
+    
+    NSArray *books = [Book MR_findAll];
+    
+    for (Book *book in books) 
+        [self pickBookCategoriesFromLinker:categoryToBookMap forBook:book];
+    
 }
 
 + (void)linkBooksToAuthorsInContext:(NSManagedObjectContext *)context {
@@ -135,7 +232,8 @@
 
 + (void)loadCoversFromURL:(NSString *)coverUrlString forShop:(PicturebookShop *)shop {
 
-    NSArray *books = [Book getAllBooksFromContext:shop.libraryDatabase.managedObjectContext];
+    //NSArray *books = [Book getAllBooksFromContext:shop.libraryDatabase.managedObjectContext];
+    NSArray *books = [Book MR_findAll];
     
     shop.numberOfBooksWhinchNeedCoversDownloaded = books.count;
     
@@ -167,41 +265,40 @@
 
             
         // Get an image from the URL below
-        dispatch_queue_t downloadQueue = dispatch_queue_create("image download", NULL);
-        dispatch_async(downloadQueue, ^{
+        UIImage *coverThumbnailImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:coverThumbnailURL]];
+        UIImage *coverThumbnailUImageMedium = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:coverThumbnailMediumURL]];
+        UIImage *rateImageUp = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:rateImageUpURL]];
+        UIImage *tagImageLarge = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:tagImageLargeURL]];
+        UIImage *tagImageSmall = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:tagImageSmallURL]];
                 
-            UIImage *coverThumbnailImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:coverThumbnailURL]];
-            UIImage *coverThumbnailUImageMedium = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:coverThumbnailMediumURL]];
-            UIImage *rateImageUp = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:rateImageUpURL]];
-            UIImage *tagImageLarge = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:tagImageLargeURL]];
-            UIImage *tagImageSmall = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:tagImageSmallURL]];
+        [MagicalRecord saveInBackgroundUsingCurrentContextWithBlock:^(NSManagedObjectContext *localContext)
+        {
+            if (coverThumbnailImage && coverThumbnailUImageMedium) {                                    
+                //coverImage.image = coverUImage;                        
+                book.coverThumbnailImage = coverThumbnailImage;
+                book.coverThumbnailImageMedium = coverThumbnailUImageMedium;
+                book.rateImageUp = rateImageUp;
+                book.tagImageLarge = tagImageLarge;
+                book.tagImageSmall = tagImageSmall;
+                //book.coverImage = coverImage;
                 
-                 
-            dispatch_async(dispatch_get_main_queue(), ^{                    
-                if (coverThumbnailImage && coverThumbnailUImageMedium) {                                    
-                    //coverImage.image = coverUImage;                        
-                    book.coverThumbnailImage = coverThumbnailImage;
-                    book.coverThumbnailImageMedium = coverThumbnailUImageMedium;
-                    book.rateImageUp = rateImageUp;
-                    book.tagImageLarge = tagImageLarge;
-                    book.tagImageSmall = tagImageSmall;
-                    //book.coverImage = coverImage;
-                    
-                    //[self shopDataLoaded];
-                    if (shop.numberOfBooksWhinchNeedCoversDownloaded > 1) {
-                        shop.numberOfBooksWhinchNeedCoversDownloaded = shop.numberOfBooksWhinchNeedCoversDownloaded - 1;
-                    }
-                    else {
-                        shop.numberOfBooksWhinchNeedCoversDownloaded = 0;
-                        NSLog(@"Images downloaded!!!!!!!!!!!!!!!!!!!!!!!");
-                        [shop coversLoaded];
-                    }
+                //[self shopDataLoaded];
+                if (shop.numberOfBooksWhinchNeedCoversDownloaded > 1) {
+                    shop.numberOfBooksWhinchNeedCoversDownloaded = shop.numberOfBooksWhinchNeedCoversDownloaded - 1;
                 }
-            });   
-        });
-        dispatch_release(downloadQueue);
+                else {
+                    shop.numberOfBooksWhinchNeedCoversDownloaded = 0;
+                    NSLog(@"Images downloaded!!!!!!!!!!!!!!!!!!!!!!!");
+                    [shop coversLoaded];
+                }
+            } 
+        }
+        completion:^{ NSLog(@"My Books BG images downloaded and saved to database."); }
+        errorHandler:^(NSError *error){ NSLog(error.localizedDescription); }]; 
     } 
 }
+
+
 
 + (void)updateBook:(Book *)book withAttributes:(NSDictionary *)attributes {
     
@@ -296,6 +393,28 @@
         }
     }
     
+    return [booksInCategory copy];
+    
+}
+
++ (NSOrderedSet *)getBooksForCategory:(Category *)category {
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"]; 
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"bookID"
+                                                                   ascending:YES];
+    request.sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    
+    NSArray *books = [Book MR_findAllSortedBy:@"bookID" ascending:YES];
+    
+    NSMutableOrderedSet *booksInCategory = [[NSMutableOrderedSet alloc] init];
+    
+    for (Book *book in books) {
+        for (Category *cat in book.categories) {
+            if (category.categoryID == cat.categoryID ) {
+                [booksInCategory addObject:book];
+            }
+        }
+    }
     
     return [booksInCategory copy];
     

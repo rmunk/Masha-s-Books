@@ -49,6 +49,42 @@
     }
 }
 
++ (void)categoryWithAttributes:(NSDictionary *)attributes {
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"categoryID = %d", [[attributes objectForKey:@"ID"] integerValue]];
+    NSArray *categoryWithID = [Category MR_findAllWithPredicate:predicate];
+    
+    if (categoryWithID.count == 0) {
+        Category *category = [Category createEntity];
+        
+        category.categoryID = [NSNumber numberWithInt:[[attributes objectForKey:@"ID"] integerValue]];
+        
+        category.name = [attributes objectForKey:@"Name"];
+        
+        category.bgImageURL = [attributes objectForKey:@"BGImage"];
+    }
+    else if (categoryWithID.count == 1) {
+        Category *category = [categoryWithID lastObject];
+        NSLog(@"Category with ID=%d already exists in database. Updating...", [category.categoryID intValue]);
+        
+        
+        if (![category.categoryID isEqualToNumber:[NSNumber numberWithInt:[[attributes objectForKey:@"ID"] integerValue]]]) {
+            category.categoryID = [NSNumber numberWithInt:[[attributes objectForKey:@"ID"] integerValue]];
+        }
+        
+        if (![category.name isEqualToString:[attributes objectForKey:@"Name"]]) {
+            category.name = [attributes objectForKey:@"Name"];
+        }
+        
+        if (![category.bgImageURL isEqualToString:[attributes objectForKey:@"BGImage"]]) {
+            category.bgImageURL = [attributes objectForKey:@"BGImage"];
+        }
+    }
+    else {
+        NSLog(@"ERROR: Database inconsisctency: To many categories with sam ID in database!");
+    }
+}
+
 + (void)pickBookFromLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context forCategory:(Category *)category {
     
     //kreiranje fetch requesta
@@ -97,6 +133,14 @@
     
 }
 
++ (NSOrderedSet *)getAllCategories {
+    
+    NSArray *categoriesArray = [Category MR_findAll];
+    NSOrderedSet *categories = [[NSOrderedSet alloc] initWithArray:categoriesArray];
+    return categories;
+    
+}
+
 + (void)loadBackgroundsForContext:(NSManagedObjectContext *)context {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Category"];
     NSError *error;
@@ -132,6 +176,44 @@
         dispatch_release(backgroundsDownloadQueue);
     } 
 
+    
+}
+
++ (void)loadBackgrounds {
+
+    NSArray *categories = [Category MR_findAll];
+    
+    for (Category *category in categories) {
+        
+        NSURL *backgroundURL = [[NSURL alloc] initWithString:
+                                [NSString stringWithFormat:@"%@%@", 
+                                 @"http://www.mashasbookstore.com", category.bgImageURL]];
+        
+        
+        NSLog(@"Downloading background image for category %@ at %@", category.name, backgroundURL);
+        
+        UIImage *background = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:backgroundURL]];
+        
+        
+        [MagicalRecord saveInBackgroundUsingCurrentContextWithBlock:^(NSManagedObjectContext *localContext)
+        {
+            if (background != nil) {                                    
+                 
+                category.bgImage = background;
+                 
+                NSLog(@"Downloaded background image for category %@", category.name);
+                 
+                 
+            }             
+        }
+        completion:^{ NSLog(@"My Books BG images downloaded and saved to database."); }
+        errorHandler:^(NSError *error){ NSLog(error.localizedDescription); }]; 
+
+        
+        // Get an image from the URL below
+        
+    } 
+    
     
 }
 

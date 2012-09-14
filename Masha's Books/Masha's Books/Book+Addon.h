@@ -19,13 +19,23 @@
 @interface Book (Addon)
 
 + (Book *)bookWithAttributes:(NSDictionary *)attributes forContext:(NSManagedObjectContext *)context;
++ (Book *)bookWithAttributes:(NSDictionary *)attributes;
+
 + (void)pickBookCategoriesFromLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context forBook:(Book *)book;
+
 + (void)linkBooksToCategoriesWithLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context;
++ (void)linkBooksToCategoriesWithLinker:(CategoryToBookMap *)categoryToBookMap;
+
 + (void)linkBooksToAuthorsInContext:(NSManagedObjectContext *)context;
+
 + (void)loadCoversFromURL:(NSString *)coverUrlString forShop:(PicturebookShop *)shop;
 + (void)updateBook:(Book *)book withAttributes:(NSDictionary *)attributes;
+
 + (NSArray *)getAllBooksFromContext:(NSManagedObjectContext *)context;
+
 + (NSOrderedSet *)getBooksForCategory:(Category *)category inContext:(NSManagedObjectContext *)context;
++ (NSOrderedSet *)getBooksForCategory:(Category *)category;
+
 + (Book *)getBookWithId:(NSNumber *)bookID inContext:(NSManagedObjectContext *)context withErrorHandler:(NSError *)error;
 
 - (void)fillBookElement:(NSString *)element withDescription:(NSString *)description;

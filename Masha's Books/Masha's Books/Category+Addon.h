@@ -14,13 +14,19 @@
 
 + (void)categoryWithAttributes:(NSDictionary *)attributes forContext:(NSManagedObjectContext *)context;
 
++ (void)categoryWithAttributes:(NSDictionary *)attributes;
+
 + (void)pickBookFromLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context forCategory:(Category *)category;
 
 + (void)linkCategoriesToBooksWithLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context;
 
 + (NSOrderedSet *)getAllCategoriesFromContext:(NSManagedObjectContext *)context;
 
++ (NSOrderedSet *)getAllCategories;
+
 + (void)loadBackgroundsForContext:(NSManagedObjectContext *)context;
+
++ (void)loadBackgrounds;
 
 - (void)pickYourBooksFromLinkerObject:(CategoryToBookMap *)categoryToBookMap;
 

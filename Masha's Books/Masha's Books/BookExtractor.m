@@ -16,7 +16,6 @@
 @property (nonatomic, strong) Book *activeBook;
 @property (nonatomic, strong) NSString *file;
 @property (nonatomic, strong) NSManagedObjectContext *context;
-@property (readwrite) BOOL merging;
 
 //- (void)saveDataToBook:(Book *)book FromPath:(NSString *)unzippedPath;
 @end
@@ -31,7 +30,6 @@
 @synthesize activeBook = _activeBook;
 @synthesize file = _file;
 @synthesize context = _context;
-@synthesize merging = _merging;
 
 
 
@@ -64,7 +62,6 @@
         self.bookQue = [[NSMutableOrderedSet alloc] init];
         self.delegate = shop;
         self.downloading = NO;
-        self.merging = NO;
         self.activeBook = nil;
         self.context = context;
        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(anyContextSaved:) name:NSManagedObjectContextDidSaveNotification object:nil];
@@ -76,9 +73,7 @@
 
 - (void)anyContextSaved:(NSNotification *)notification
 {
-    NSLog(@"mergin");
     //[self performSelectorOnMainThread:@selector(mergeContexts:) withObject:notification waitUntilDone:NO];  
-    
 }
 
 - (void)contextSaved:(NSNotification *)notification
@@ -104,7 +99,7 @@
     self.activeBook.downloaded = [NSNumber numberWithInt:1];
     //NSLog(@"activeBook info before merge: %@", self.activeBook);
     [self.context mergeChangesFromContextDidSaveNotification:notification];
-    self.merging = YES;
+    
     if ([self.context save:&error]) {
         self.activeBook = [Book getBookWithId:self.activeBook.bookID inContext:self.context withErrorHandler:error];
         //NSLog(@"activeBook info after merge: %@", self.activeBook);

@@ -24,7 +24,6 @@
 		BA98026F1575AFC600EE06BB /* CoverTableRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9802621575AFC600EE06BB /* CoverTableRowCell.m */; };
 		BA9802721575AFC600EE06BB /* PicturebookCover.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9802681575AFC600EE06BB /* PicturebookCover.m */; };
 		BA9802741575AFC600EE06BB /* PicturebookShop.m in Sources */ = {isa = PBXBuildFile; fileRef = BA98026C1575AFC600EE06BB /* PicturebookShop.m */; };
-		BA9802751575AFC600EE06BB /* PicturebookShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA98026E1575AFC600EE06BB /* PicturebookShopViewController.m */; };
 		BAC1FD5B15AB898B00F97489 /* green_check.png in Resources */ = {isa = PBXBuildFile; fileRef = BAC1FD5A15AB898B00F97489 /* green_check.png */; };
 		BAE41B7615CB218200731C71 /* ShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAE41B7515CB218200731C71 /* ShopViewController.m */; };
 		BAE41B7A15CC622C00731C71 /* facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = BAE41B7715CC622C00731C71 /* facebook.png */; };
@@ -213,8 +212,6 @@
 		BA9802681575AFC600EE06BB /* PicturebookCover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PicturebookCover.m; sourceTree = "<group>"; };
 		BA98026B1575AFC600EE06BB /* PicturebookShop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PicturebookShop.h; sourceTree = "<group>"; };
 		BA98026C1575AFC600EE06BB /* PicturebookShop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PicturebookShop.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		BA98026D1575AFC600EE06BB /* PicturebookShopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PicturebookShopViewController.h; sourceTree = "<group>"; };
-		BA98026E1575AFC600EE06BB /* PicturebookShopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PicturebookShopViewController.m; sourceTree = "<group>"; };
 		BAC1FD5A15AB898B00F97489 /* green_check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green_check.png; sourceTree = "<group>"; };
 		BAE41B7415CB218200731C71 /* ShopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopViewController.h; sourceTree = "<group>"; };
 		BAE41B7515CB218200731C71 /* ShopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopViewController.m; sourceTree = "<group>"; };
@@ -448,8 +445,6 @@
 				BA9802681575AFC600EE06BB /* PicturebookCover.m */,
 				BA98026B1575AFC600EE06BB /* PicturebookShop.h */,
 				BA98026C1575AFC600EE06BB /* PicturebookShop.m */,
-				BA98026D1575AFC600EE06BB /* PicturebookShopViewController.h */,
-				BA98026E1575AFC600EE06BB /* PicturebookShopViewController.m */,
 				BA8B448F15A4D5BD0098F063 /* CategoryToBookMap.h */,
 				BA8B449015A4D5BD0098F063 /* CategoryToBookMap.m */,
 				BAF45EAC15C725DB00A461FC /* SettingsViewController.h */,
@@ -1047,7 +1042,6 @@
 				BA98026F1575AFC600EE06BB /* CoverTableRowCell.m in Sources */,
 				BA9802721575AFC600EE06BB /* PicturebookCover.m in Sources */,
 				BA9802741575AFC600EE06BB /* PicturebookShop.m in Sources */,
-				BA9802751575AFC600EE06BB /* PicturebookShopViewController.m in Sources */,
 				C08246ED157680E900054A3A /* Library.xcdatamodeld in Sources */,
 				C072881B15784A6100B64A68 /* SlikovnicaDataViewController.m in Sources */,
 				C072881C15784A6100B64A68 /* SlikovnicaModelController.m in Sources */,
