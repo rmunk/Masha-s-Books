@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2549" systemVersion="12A269" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="Vx0-Iu-9ec">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2549" systemVersion="12A269" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="Jz7-kR-CaY">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1498"/>
@@ -211,16 +211,16 @@
                                 <autoresizingMask key="autoresizingMask"/>
                             </imageView>
                             <tableView autoresizesSubviews="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="174" sectionHeaderHeight="22" sectionFooterHeight="22" id="V92-dz-yS4">
-                                <rect key="frame" x="13" y="203" width="308" height="507"/>
+                                <rect key="frame" x="13" y="203" width="321" height="507"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell autoresizesSubviews="NO" clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="BooksTableCell" rowHeight="174" id="QrV-we-ZV9" customClass="BooksTableCell">
-                                        <rect key="frame" x="0.0" y="22" width="308" height="174"/>
+                                        <rect key="frame" x="0.0" y="22" width="321" height="174"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="308" height="173"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="321" height="173"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="TopLeft" image="box.png" highlightedImage="box_sel.png" id="jxe-qE-Zsx">
@@ -530,13 +530,13 @@
                     <value key="contentSizeForViewInPopover" type="size" width="287" height="400"/>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="771" y="-688"/>
+            <point key="canvasLocation" x="787" y="-578"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="I8b-r3-gmp">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G9T-9i-TNR" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tabBarController definesPresentationContext="YES" id="Vx0-Iu-9ec" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarController" definesPresentationContext="YES" id="Vx0-Iu-9ec" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="8Ta-5e-Rxt"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="T6z-NY-daQ">
@@ -551,10 +551,34 @@
                     </connections>
                 </tabBarController>
             </objects>
-            <point key="canvasLocation" x="-1975" y="-1166"/>
+            <point key="canvasLocation" x="-2153" y="-762"/>
+        </scene>
+        <!--Initial View Controller-->
+        <scene sceneID="0Eo-UK-OAM">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Eyn-oh-JD5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="Jz7-kR-CaY" customClass="InitialViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="4AL-LF-Gp0">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Default-Landscape~ipad.png" id="SHg-BZ-xlg">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="7uy-Jt-K1J"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="-3374" y="-762"/>
         </scene>
     </scenes>
     <resources>
+        <image name="Default-Landscape~ipad.png" width="1024" height="768"/>
         <image name="box.png" width="304" height="173"/>
         <image name="box_arrow.png" width="582" height="384"/>
         <image name="box_sel.png" width="315" height="174"/>
@@ -594,6 +618,9 @@
         <class className="CategoryTableViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CategoryTableViewController.h"/>
         </class>
+        <class className="InitialViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/InitialViewController.h"/>
+        </class>
         <class className="MyBooksViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/MyBooksViewController.h"/>
             <relationships>
@@ -620,15 +647,8 @@
         <class className="ShopViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ShopViewController.h"/>
             <relationships>
-                <relationship kind="action" name="bookBought:" candidateClass="UIButton"/>
                 <relationship kind="action" name="categorySelection:" candidateClass="UIButton"/>
-                <relationship kind="action" name="goToFacebookPage:" candidateClass="UIButton"/>
                 <relationship kind="action" name="goToTwitterPage:" candidateClass="UIButton"/>
-                <relationship kind="action" name="goToWebSite:" candidateClass="UIButton"/>
-                <relationship kind="action" name="goToYoutubePage:" candidateClass="UIButton"/>
-                <relationship kind="action" name="sendMail:" candidateClass="UIButton"/>
-                <relationship kind="action" name="shopRefresh:" candidateClass="UIBarButtonItem"/>
-                <relationship kind="action" name="topButtonPressed:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="activityView" candidateClass="UIActivityIndicatorView"/>
                 <relationship kind="outlet" name="backgroundView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="bookTitleLabel" candidateClass="UILabel"/>
