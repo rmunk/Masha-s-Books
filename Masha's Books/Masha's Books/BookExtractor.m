@@ -101,7 +101,8 @@
     [self.context mergeChangesFromContextDidSaveNotification:notification];
     
     if ([self.context save:&error]) {
-        self.activeBook = [Book getBookWithId:self.activeBook.bookID inContext:self.context withErrorHandler:error];
+        //self.activeBook = [Book getBookWithId:self.activeBook.bookID inContext:self.context withErrorHandler:error];
+        self.activeBook = [Book getBookWithId:self.activeBook.bookID withErrorHandler:error];
         //NSLog(@"activeBook info after merge: %@", self.activeBook);
         [self.delegate performSelector:@selector(pagesAdded)];
         [self processQue];
@@ -175,7 +176,8 @@
         [addingContext setPersistentStoreCoordinator:bookFromMainThread.managedObjectContext.persistentStoreCoordinator];
         
       //  Book *book = (Book *)[addingContext existingObjectWithID:bookFromMainThread.objectID error:&error];
-        Book *book = [Book getBookWithId:bookFromMainThread.bookID inContext:addingContext withErrorHandler:error];
+       // Book *book = [Book getBookWithId:bookFromMainThread.bookID inContext:addingContext withErrorHandler:error];
+        Book *book = [Book getBookWithId:bookFromMainThread.bookID withErrorHandler:error];
             
         NSLog(@"Fetched book %@ with objectID", book.title);
         // Fill database with extracted data

@@ -291,7 +291,7 @@
              info.contactURL = [attributeDict objectForKey:@"contactURL"];
          }
          completion:^{ NSLog(@"Web links saved to database."); }
-         errorHandler:^(NSError *error){ NSLog(error.localizedDescription); }];
+         errorHandler:^(NSError *error){ NSLog(@"%@", error.localizedDescription); }];
     }
     else if([elementName isEqualToString:@"myBooks"]) {
         
@@ -318,7 +318,7 @@
              
          }
          completion:^{ NSLog(@"My Books BG images downloaded and saved to database."); }
-         errorHandler:^(NSError *error){ NSLog(error.localizedDescription); }];
+         errorHandler:^(NSError *error){ NSLog(@"%@", error.localizedDescription); }];
     }
     else if([elementName isEqualToString:@"categories"]) {
                     
@@ -359,7 +359,8 @@
     else if([elementName isEqualToString:@"author"]) {
         
         //Initialize new author
-        self.currentAuthor = [Author authorWithAttributes:attributeDict forContext:self.libraryDatabase.managedObjectContext];
+        //self.currentAuthor = [Author authorWithAttributes:attributeDict forContext:self.libraryDatabase.managedObjectContext];
+        self.currentAuthor = [Author authorWithAttributes:attributeDict];
         
     }    
     else if([elementName isEqualToString:@"Description"]) {
@@ -400,15 +401,12 @@
        
         NSLog(@"PARSING FINISHED");
         // ovdi pozvat funkcije za likanje knjiga i kategorija, knjiga i autora
-        //[Design loadImages:self.libraryDatabase.managedObjectContext];
-        
         //[Category loadBackgroundsForContext:self.libraryDatabase.managedObjectContext];
         [Category loadBackgrounds];
-        
         //[Book linkBooksToCategoriesWithLinker:self.categoryToBookMap inContext:self.libraryDatabase.managedObjectContext];
         [Book linkBooksToCategoriesWithLinker:self.categoryToBookMap];
-        
         //[Book linkBooksToAuthorsInContext:self.libraryDatabase.managedObjectContext];
+        [Book linkBooksToAuthors];
         // fillBookWithCovers
         [Book loadCoversFromURL:@"http://www.mashasbookstore.com/covers/" forShop:self];
         NSLog(@"Books covers downloaded!");

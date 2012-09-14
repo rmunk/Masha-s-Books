@@ -108,6 +108,27 @@
     }
 }
 
++ (void)pickBookFromLinker:(CategoryToBookMap *)categoryToBookMap forCategory:(Category *)category {
+    
+    //kreiranje fetch requesta
+    NSArray *bookForCategory = [categoryToBookMap getBookIdentifiersForCategoryIdentifier:[category.categoryID intValue]];
+    
+    for (NSNumber *bookID in bookForCategory) {        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"bookID = %d", [bookID intValue]];
+        NSArray *booksWithID = [Category MR_findAllWithPredicate:predicate];
+        if (booksWithID.count == 1) {
+            [category addBooksObject:(Book *)[booksWithID lastObject]];
+            NSLog(@"Dodajem knjigu %@ u kategoriju %@", ((Book *)[booksWithID lastObject]).title, category.name);
+        }
+        else if (booksWithID.count > 1) {
+            NSLog(@"ERROR: Multiple entries for category ID = %d in database!", [bookID intValue]);
+        }
+        else {
+            NSLog(@"ERROR: No entries for category ID = %d in database! Linker error.", [bookID intValue]);
+        }                  
+    }
+}
+
 + (void)linkCategoriesToBooksWithLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context {
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Category"]; 
@@ -116,6 +137,15 @@
     
     for (Category *category in categories) 
         [self pickBookFromLinker:categoryToBookMap inContext:context forCategory:category];
+    
+}
+
++ (void)linkCategoriesToBooksWithLinker:(CategoryToBookMap *)categoryToBookMap {
+    
+    NSArray *categories = [Category MR_findAll];
+    
+    for (Category *category in categories) 
+        [self pickBookFromLinker:categoryToBookMap forCategory:category];
     
 }
 
@@ -191,23 +221,21 @@
         
         
         NSLog(@"Downloading background image for category %@ at %@", category.name, backgroundURL);
-        
-        UIImage *background = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:backgroundURL]];
-        
-        
+    
         [MagicalRecord saveInBackgroundUsingCurrentContextWithBlock:^(NSManagedObjectContext *localContext)
         {
+            UIImage *background = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:backgroundURL]]; 
             if (background != nil) {                                    
-                 
+                
                 category.bgImage = background;
-                 
+                
                 NSLog(@"Downloaded background image for category %@", category.name);
-                 
-                 
-            }             
+                
+                
+            } 
         }
-        completion:^{ NSLog(@"My Books BG images downloaded and saved to database."); }
-        errorHandler:^(NSError *error){ NSLog(error.localizedDescription); }]; 
+        completion:^{NSLog(@"My Books BG images downloaded and saved to database.");}
+        errorHandler:^(NSError *error){ NSLog(@"%@", error.localizedDescription); }]; 
 
         
         // Get an image from the URL below

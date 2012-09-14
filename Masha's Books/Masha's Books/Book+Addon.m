@@ -209,6 +209,7 @@
     
 }
 
+/*
 + (void)linkBooksToAuthorsInContext:(NSManagedObjectContext *)context {
     
     NSArray *books = [Book getAllBooksFromContext:context];
@@ -216,6 +217,27 @@
     for (Book *book in books) {
         
         NSArray *author = [Author getAuthorWithID:book.authorID fromContext:context];        
+        if (author.count == 1) {
+            book.author = [author lastObject];
+            NSLog(@"Found autor %@ for book %@ in database!", ((Author *)[author lastObject]).name, book.title);
+        }
+        else if (author.count > 1)
+        {
+            NSLog(@"ERROR: Multiple autors for book %@ in database!", book.title);
+        }
+        else {
+            NSLog(@"ERROR: No authors for book %@ in database!", book.title);
+        }
+    }
+}*/
+
++ (void)linkBooksToAuthors {
+    
+    NSArray *books = [Book MR_findAll];
+    
+    for (Book *book in books) {
+        
+        NSArray *author = [Author getAuthorWithID:book.authorID];        
         if (author.count == 1) {
             book.author = [author lastObject];
             NSLog(@"Found autor %@ for book %@ in database!", ((Author *)[author lastObject]).name, book.title);
@@ -264,15 +286,17 @@
         NSLog(@"Tags URLs: %@ %@ %@", rateImageUpURL, tagImageLargeURL, tagImageSmallURL);
 
             
-        // Get an image from the URL below
-        UIImage *coverThumbnailImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:coverThumbnailURL]];
-        UIImage *coverThumbnailUImageMedium = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:coverThumbnailMediumURL]];
-        UIImage *rateImageUp = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:rateImageUpURL]];
-        UIImage *tagImageLarge = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:tagImageLargeURL]];
-        UIImage *tagImageSmall = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:tagImageSmallURL]];
+        
                 
         [MagicalRecord saveInBackgroundUsingCurrentContextWithBlock:^(NSManagedObjectContext *localContext)
-        {
+        {            
+            // Get an image from the URL below
+            UIImage *coverThumbnailImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:coverThumbnailURL]];
+            UIImage *coverThumbnailUImageMedium = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:coverThumbnailMediumURL]];
+            UIImage *rateImageUp = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:rateImageUpURL]];
+            UIImage *tagImageLarge = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:tagImageLargeURL]];
+            UIImage *tagImageSmall = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:tagImageSmallURL]];
+            
             if (coverThumbnailImage && coverThumbnailUImageMedium) {                                    
                 //coverImage.image = coverUImage;                        
                 book.coverThumbnailImage = coverThumbnailImage;
@@ -283,18 +307,21 @@
                 //book.coverImage = coverImage;
                 
                 //[self shopDataLoaded];
-                if (shop.numberOfBooksWhinchNeedCoversDownloaded > 1) {
-                    shop.numberOfBooksWhinchNeedCoversDownloaded = shop.numberOfBooksWhinchNeedCoversDownloaded - 1;
-                }
-                else {
-                    shop.numberOfBooksWhinchNeedCoversDownloaded = 0;
-                    NSLog(@"Images downloaded!!!!!!!!!!!!!!!!!!!!!!!");
-                    [shop coversLoaded];
-                }
+                
             } 
         }
-        completion:^{ NSLog(@"My Books BG images downloaded and saved to database."); }
-        errorHandler:^(NSError *error){ NSLog(error.localizedDescription); }]; 
+        completion:^{ 
+            NSLog(@"My Books BG images downloaded and saved to database."); 
+            if (shop.numberOfBooksWhinchNeedCoversDownloaded > 1) {
+                shop.numberOfBooksWhinchNeedCoversDownloaded = shop.numberOfBooksWhinchNeedCoversDownloaded - 1;
+            }
+            else {
+                shop.numberOfBooksWhinchNeedCoversDownloaded = 0;
+                NSLog(@"Images downloaded!!!!!!!!!!!!!!!!!!!!!!!");
+                [shop coversLoaded];
+            }
+        }
+        errorHandler:^(NSError *error){ NSLog(@"%@", error.localizedDescription); }]; 
     } 
 }
 
@@ -448,14 +475,32 @@
     }
 }
 
-+ (Book *)getBookWithId:(NSNumber *)bookID inContext:(NSManagedObjectContext *)context withErrorHandler:(NSError *)error {
+- (void)pickYourCategoriesFromLinker:(CategoryToBookMap *)categoryToBookMap {
     
-    //kreiranje fetch requesta
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"]; 
+    NSArray *categoriesForBook = [categoryToBookMap getCategoryIdentifiersForBookIdentifier:[self.bookID intValue]];
+    
+    for (NSNumber *catID in categoriesForBook) {        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"categoryID = %d", [catID intValue]];
+        NSArray *categoriesWithID = [Category findAllWithPredicate:predicate];
+        if (categoriesWithID.count == 1) {
+            [self addCategoriesObject:(Category *)[categoriesWithID lastObject]];
+            NSLog(@"Dodajem kategoriju %@ u knjigu %@", ((Category *)[categoriesWithID lastObject]).name, self.title);
+        }
+        else if (categoriesWithID.count > 1) {
+            NSLog(@"ERROR: Multiple entries for category ID = %d in database!", [catID intValue]);
+        }
+        else {
+            NSLog(@"ERROR: No entries for category ID = %d in database! Linker error.", [catID intValue]);
+        }                  
+    }
+}
+
++ (Book *)getBookWithId:(NSNumber *)bookID withErrorHandler:(NSError *)error {
+    
     NSMutableDictionary *errorDetails = [NSMutableDictionary dictionary];
     
-    request.predicate = [NSPredicate predicateWithFormat:@"bookID = %d", [bookID integerValue]];
-    NSArray *booksWithID = [context executeFetchRequest:request error:&error];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"bookID = %d", [bookID integerValue]];
+    NSArray *booksWithID = [Book findAllWithPredicate:predicate];
     
     if ([booksWithID count] == 0) {
         //ako knjige nema u bazi onda ovo

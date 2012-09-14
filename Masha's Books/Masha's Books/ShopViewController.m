@@ -251,7 +251,7 @@
         self.rateImage.image = self.picturebookShop.selectedBook.rateImageUp;
         self.bookTitleLabel.text = self.picturebookShop.selectedBook.title;
         self.priceLabel.text = [NSString stringWithFormat:@"$ %.2f", [self.picturebookShop.selectedBook.price floatValue]];
-        //[self.booksTableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+       [self.booksTableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
     
         NSString *siteURL = @"http://www.mashasbookstore.com/storeops/story-long-description.aspx?id=";
         NSString *urlAddress = [siteURL stringByAppendingString:[NSString stringWithFormat:@"%d", [self.picturebookShop.selectedBook.bookID intValue]]];
@@ -386,7 +386,8 @@
         popoverController = popoverSegue.popoverController;
         
         CategoryTableViewController *categoryVC = (CategoryTableViewController *)popoverSegue.destinationViewController;
-        categoryVC.categories = [Category getAllCategoriesFromContext:self.picturebookShop.libraryDatabase.managedObjectContext];
+        //categoryVC.categories = [Category getAllCategoriesFromContext:self.picturebookShop.libraryDatabase.managedObjectContext];
+        categoryVC.categories = [Category getAllCategories];
    
         categoryVC.delegate = self;
         categoryVC.popoverController = popoverController;
