@@ -183,38 +183,22 @@
 
 }
 
-- (void)refreshDatabase {
-    
-    dispatch_queue_t refreshQ = dispatch_queue_create("Database refreshener", NULL);
-    
-    dispatch_async(refreshQ, ^{
-        [self.libraryDatabase.managedObjectContext performBlock:^{
-   
-        }];
-    });
-    dispatch_release(refreshQ);
-    
-    [self.libraryDatabase saveToURL:self.libraryDatabase.fileURL forSaveOperation:UIDocumentSaveForOverwriting completionHandler:^(BOOL success) {
-        if (success) {
-
-        }
-    }];
-}
-
 - (void)putObject:(id)obj inContext:(NSManagedObjectContext *)context {
   
 }
 
 - (void)userSelectsCategoryAtIndex:(NSUInteger)index {
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Category"]; 
-    NSSortDescriptor *sortByName = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]; 
-    request.sortDescriptors = [NSArray arrayWithObject:sortByName];
-    NSError *error;
-    NSArray *categories = [self.libraryDatabase.managedObjectContext executeFetchRequest:request error:&error];
+   // NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Category"]; 
+   // NSSortDescriptor *sortByName = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]; 
+ //  request.sortDescriptors = [NSArray arrayWithObject:sortByName];
+   // NSError *error;
+    NSArray *categories = [Category MR_findAllSortedBy:@"name" ascending:YES];
+    
     NSLog(@"Number of categories is %d", categories.count);
     if (categories.count && index < categories.count) {
         self.selectedCategory = [categories objectAtIndex:index];
-        self.booksInSelectedCategory = [Book getBooksForCategory:self.selectedCategory inContext:self.libraryDatabase.managedObjectContext];
+        //self.booksInSelectedCategory = [Book getBooksForCategory:self.selectedCategory inContext:self.libraryDatabase.managedObjectContext];
+        self.booksInSelectedCategory = [Book getBooksForCategory:self.selectedCategory];
         NSLog(@"User selects category %@", self.selectedCategory.name);
     } 
     else {
@@ -224,7 +208,8 @@
 
 - (void)userSelectsCategory:(Category *)category {
     self.selectedCategory = category;
-    self.booksInSelectedCategory = [Book getBooksForCategory:self.selectedCategory inContext:self.libraryDatabase.managedObjectContext];
+    //self.booksInSelectedCategory = [Book getBooksForCategory:self.selectedCategory inContext:self.libraryDatabase.managedObjectContext];
+    self.booksInSelectedCategory = [Book getBooksForCategory:self.selectedCategory];
     NSLog(@"User selects category %@", self.selectedCategory.name);
    
 }
@@ -248,7 +233,8 @@
 }
 
 - (NSOrderedSet *)getCategoriesInShop {
-    return [Category getAllCategoriesFromContext:self.libraryDatabase.managedObjectContext];
+   // return [Category getAllCategoriesFromContext:self.libraryDatabase.managedObjectContext];
+    return [Category getAllCategories];
     
 }
 
@@ -305,7 +291,7 @@
              info.contactURL = [attributeDict objectForKey:@"contactURL"];
          }
          completion:^{ NSLog(@"Web links saved to database."); }
-         errorHandler:^(NSError *error){ NSLog(error.localizedDescription); }];
+         errorHandler:^(NSError *error){ NSLog(@"%@", error.localizedDescription); }];
     }
     else if([elementName isEqualToString:@"myBooks"]) {
         
@@ -332,11 +318,12 @@
              
          }
          completion:^{ NSLog(@"My Books BG images downloaded and saved to database."); }
-         errorHandler:^(NSError *error){ NSLog(error.localizedDescription); }];
+         errorHandler:^(NSError *error){ NSLog(@"%@", error.localizedDescription); }];
     }
     else if([elementName isEqualToString:@"categories"]) {
                     
-        [Category categoryWithAttributes:attributeDict forContext:self.libraryDatabase.managedObjectContext];
+        //[Category categoryWithAttributes:attributeDict forContext:self.libraryDatabase.managedObjectContext];
+        [Category categoryWithAttributes:attributeDict];
         PBDLOG(@"\n");
         PBDLOG(@"New book category found!");       
         
@@ -365,13 +352,15 @@
 	else if([elementName isEqualToString:@"book"]) {       
         
         //Initialize new picture book
-        self.currentBook = [Book bookWithAttributes:attributeDict forContext:self.libraryDatabase.managedObjectContext];
+        //self.currentBook = [Book bookWithAttributes:attributeDict forContext:self.libraryDatabase.managedObjectContext];
+        self.currentBook = [Book bookWithAttributes:attributeDict];
         
 	}
     else if([elementName isEqualToString:@"author"]) {
         
         //Initialize new author
-        self.currentAuthor = [Author authorWithAttributes:attributeDict forContext:self.libraryDatabase.managedObjectContext];
+        //self.currentAuthor = [Author authorWithAttributes:attributeDict forContext:self.libraryDatabase.managedObjectContext];
+        self.currentAuthor = [Author authorWithAttributes:attributeDict];
         
     }    
     else if([elementName isEqualToString:@"Description"]) {
@@ -412,23 +401,16 @@
        
         NSLog(@"PARSING FINISHED");
         // ovdi pozvat funkcije za likanje knjiga i kategorija, knjiga i autora
-        [Category loadBackgroundsForContext:self.libraryDatabase.managedObjectContext];
-        [Book linkBooksToCategoriesWithLinker:self.categoryToBookMap inContext:self.libraryDatabase.managedObjectContext];
-        [Book linkBooksToAuthorsInContext:self.libraryDatabase.managedObjectContext];
+        //[Category loadBackgroundsForContext:self.libraryDatabase.managedObjectContext];
+        [Category loadBackgrounds];
+        //[Book linkBooksToCategoriesWithLinker:self.categoryToBookMap inContext:self.libraryDatabase.managedObjectContext];
+        [Book linkBooksToCategoriesWithLinker:self.categoryToBookMap];
+        //[Book linkBooksToAuthorsInContext:self.libraryDatabase.managedObjectContext];
+        [Book linkBooksToAuthors];
         // fillBookWithCovers
         [Book loadCoversFromURL:@"http://www.mashasbookstore.com/covers/" forShop:self];
         NSLog(@"Books covers downloaded!");
         self.isShopLoaded = YES;
-
-        
-        
-        
-        
-        //NSLog(@"Persistent store size: %llu bytes", [self directorySizeAtPath:[self.libraryDatabase.fileURL path]]);
-        
-        
-        
-        
         
     }
 }
@@ -440,8 +422,6 @@
      
     
 }
-
-
 
 - (void)extractorBook:(Book *)book receivedNewPercentage:(float)percentage {
     self.bookWithLastReportedPercentage = book;
@@ -466,27 +446,6 @@
     }
 }
 
-- (void)refreshCovers:(NSArray *)covers {
-    for (PicturebookCover *cover in covers) {
-        if (cover.bookForCover.bookID != nil && self.bookWithLastReportedPercentage.bookID != nil) {
-            if ([cover.bookForCover.bookID isEqualToNumber:self.bookWithLastReportedPercentage.bookID]) {
-                
-                cover.taskProgress.alpha = 1;
-                cover.taskProgress.progress = self.lastPercentage;
-                //NSLog(@"Shop: Book %f", lastPercentage);
-                if (cover.taskProgress.progress == 0) {
-                    cover.taskProgress.alpha = 1;
-                    cover.bookStatus.alpha = 0;
-                
-                }
-                else if (cover.taskProgress.progress == 1) {
-                    cover.taskProgress.alpha = 0;
-                    cover.bookStatus.alpha = 1;
-                }
-            }
-        }
-    }
-}
 
 @end
 

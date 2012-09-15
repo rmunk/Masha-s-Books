@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		BA04784E15F55332003BD7B2 /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = BA04784D15F55330003BD7B2 /* Book.m */; };
 		BA0E4E1115EBFF3700012F17 /* CategoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0E4E1015EBFF3700012F17 /* CategoryTableViewController.m */; };
+		BA1D197316048F1700059BA4 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = BA1D197216048F1700059BA4 /* close.png */; };
 		BA523BB615E6D1B4008617AB /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = BA523BB515E6D1B4008617AB /* Category.m */; };
 		BA523BBA15E6D1CD008617AB /* Info.m in Sources */ = {isa = PBXBuildFile; fileRef = BA523BB915E6D1CD008617AB /* Info.m */; };
 		BA651EE515FB41B000352B2F /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = BA651EE015FB41B000352B2F /* UIImage+Alpha.m */; };
@@ -24,7 +25,6 @@
 		BA98026F1575AFC600EE06BB /* CoverTableRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9802621575AFC600EE06BB /* CoverTableRowCell.m */; };
 		BA9802721575AFC600EE06BB /* PicturebookCover.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9802681575AFC600EE06BB /* PicturebookCover.m */; };
 		BA9802741575AFC600EE06BB /* PicturebookShop.m in Sources */ = {isa = PBXBuildFile; fileRef = BA98026C1575AFC600EE06BB /* PicturebookShop.m */; };
-		BA9802751575AFC600EE06BB /* PicturebookShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA98026E1575AFC600EE06BB /* PicturebookShopViewController.m */; };
 		BAC1FD5B15AB898B00F97489 /* green_check.png in Resources */ = {isa = PBXBuildFile; fileRef = BAC1FD5A15AB898B00F97489 /* green_check.png */; };
 		BAE41B7615CB218200731C71 /* ShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAE41B7515CB218200731C71 /* ShopViewController.m */; };
 		BAE41B7A15CC622C00731C71 /* facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = BAE41B7715CC622C00731C71 /* facebook.png */; };
@@ -186,6 +186,7 @@
 		BA04784D15F55330003BD7B2 /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Book.m; sourceTree = "<group>"; };
 		BA0E4E0F15EBFF3700012F17 /* CategoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryTableViewController.h; sourceTree = "<group>"; };
 		BA0E4E1015EBFF3700012F17 /* CategoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryTableViewController.m; sourceTree = "<group>"; };
+		BA1D197216048F1700059BA4 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
 		BA523BB415E6D1B4008617AB /* Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Category.h; sourceTree = "<group>"; };
 		BA523BB515E6D1B4008617AB /* Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Category.m; sourceTree = "<group>"; };
 		BA523BB815E6D1CD008617AB /* Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Info.h; path = ../Info.h; sourceTree = "<group>"; };
@@ -214,8 +215,6 @@
 		BA9802681575AFC600EE06BB /* PicturebookCover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PicturebookCover.m; sourceTree = "<group>"; };
 		BA98026B1575AFC600EE06BB /* PicturebookShop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PicturebookShop.h; sourceTree = "<group>"; };
 		BA98026C1575AFC600EE06BB /* PicturebookShop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PicturebookShop.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		BA98026D1575AFC600EE06BB /* PicturebookShopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PicturebookShopViewController.h; sourceTree = "<group>"; };
-		BA98026E1575AFC600EE06BB /* PicturebookShopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PicturebookShopViewController.m; sourceTree = "<group>"; };
 		BAC1FD5A15AB898B00F97489 /* green_check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green_check.png; sourceTree = "<group>"; };
 		BAE41B7415CB218200731C71 /* ShopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopViewController.h; sourceTree = "<group>"; };
 		BAE41B7515CB218200731C71 /* ShopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopViewController.m; sourceTree = "<group>"; };
@@ -451,8 +450,6 @@
 				BA9802681575AFC600EE06BB /* PicturebookCover.m */,
 				BA98026B1575AFC600EE06BB /* PicturebookShop.h */,
 				BA98026C1575AFC600EE06BB /* PicturebookShop.m */,
-				BA98026D1575AFC600EE06BB /* PicturebookShopViewController.h */,
-				BA98026E1575AFC600EE06BB /* PicturebookShopViewController.m */,
 				BA8B448F15A4D5BD0098F063 /* CategoryToBookMap.h */,
 				BA8B449015A4D5BD0098F063 /* CategoryToBookMap.m */,
 				BA8C843F15CC862000461861 /* BooksTableCell.h */,
@@ -526,6 +523,7 @@
 				C0899EB615DBCDDF0007FE8E /* buy@2x.png */,
 				C0899EA315DBCD870007FE8E /* dropdown.png */,
 				C0899EB715DBCDDF0007FE8E /* dropdown@2x.png */,
+				BA1D197216048F1700059BA4 /* close.png */,
 				C0899EA415DBCD870007FE8E /* like.png */,
 				C0899EB815DBCDDF0007FE8E /* like@2x.png */,
 				C0899EA515DBCD870007FE8E /* preview.png */,
@@ -1007,6 +1005,7 @@
 				C099A1DE15EC3B7B00019E00 /* text-on-@2x.png in Resources */,
 				C099A1DF15EC3B7B00019E00 /* voice-off-@2x.png in Resources */,
 				C099A1E015EC3B7B00019E00 /* voice-on-@2x.png in Resources */,
+				BA1D197316048F1700059BA4 /* close.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1051,7 +1050,6 @@
 				BA98026F1575AFC600EE06BB /* CoverTableRowCell.m in Sources */,
 				BA9802721575AFC600EE06BB /* PicturebookCover.m in Sources */,
 				BA9802741575AFC600EE06BB /* PicturebookShop.m in Sources */,
-				BA9802751575AFC600EE06BB /* PicturebookShopViewController.m in Sources */,
 				C08246ED157680E900054A3A /* Library.xcdatamodeld in Sources */,
 				C072881B15784A6100B64A68 /* SlikovnicaDataViewController.m in Sources */,
 				C072881C15784A6100B64A68 /* SlikovnicaModelController.m in Sources */,

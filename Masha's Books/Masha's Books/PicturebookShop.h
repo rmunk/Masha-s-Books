@@ -52,7 +52,6 @@
 
 - (PicturebookShop *)initShop;
 - (void)refreshShop;    
-- (void)refreshDatabase; 
 - (void)userSelectsCategoryAtIndex:(NSUInteger)index;
 - (void)userSelectsCategory:(Category *)category;
 - (void)userSelectsBook:(Book *)book;
@@ -62,7 +61,6 @@
 - (NSOrderedSet *)getCategoriesInShop;
 - (void)coversLoaded;
 - (void)loadShopFromDatabase;
-- (void)refreshCovers:(NSArray *)covers;
 - (void)userBuysBook:(Book *)book;
 
 

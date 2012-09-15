@@ -12,6 +12,9 @@
 @property (nonatomic, strong) PicturebookShop *picturebookShop;
 //@property (nonatomic, strong) NSMutableArray *allPicturebookCovers;
 @property (nonatomic, strong) NSOrderedSet *booksInSelectedCategory;
+@property (nonatomic, strong) UIView *youTubeTransparentView;
+@property (nonatomic, strong) UIWebView *youTubeVideoView;
+@property (nonatomic, strong) UIButton *youTubeCloseButton;
 
 @end
 
@@ -35,6 +38,10 @@
 @synthesize picturebookShop = _picturebookShop;
 //@synthesize allPicturebookCovers = _allPicturebookCovers;
 @synthesize booksInSelectedCategory = _booksInSelectedCategory;
+@synthesize youTubeTransparentView = _youTubeTransparentView;
+@synthesize youTubeVideoView = _youTubeVideoView;
+@synthesize youTubeCloseButton = _youTubeCloseButton;
+
 
 - (PicturebookShop *)picturebookShop
 {
@@ -160,7 +167,11 @@
 - (IBAction)goToTwitterPage:(UIButton *)sender {
 }
 - (IBAction)goToYoutubePage:(UIButton *)sender {
+    NSString *youTubeURL = [NSString stringWithFormat:@"%@%@", @"http://www.youtube.com/watch?feature=player_embedded&v=", sender.titleLabel.text];
+    NSLog(@"Youtube url: %@", youTubeURL);
+    [self embedYouTube:youTubeURL frame:CGRectMake(40, 40, 200, 150)];
 }
+
 - (IBAction)shopRefresh:(UIBarButtonItem *)sender {
     PBDLOG(@"PicturebookShopViewController: Calling refreshShop."); 
     
@@ -251,7 +262,8 @@
         self.rateImage.image = self.picturebookShop.selectedBook.rateImageUp;
         self.bookTitleLabel.text = self.picturebookShop.selectedBook.title;
         self.priceLabel.text = [NSString stringWithFormat:@"$ %.2f", [self.picturebookShop.selectedBook.price floatValue]];
-        [self.booksTableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+       [self.booksTableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+        self.youtubeButton.titleLabel.text = self.picturebookShop.selectedBook.youTubeVideoURL;
     
         NSString *siteURL = @"http://www.mashasbookstore.com/storeops/story-long-description.aspx?id=";
         NSString *urlAddress = [siteURL stringByAppendingString:[NSString stringWithFormat:@"%d", [self.picturebookShop.selectedBook.bookID intValue]]];
@@ -386,7 +398,8 @@
         popoverController = popoverSegue.popoverController;
         
         CategoryTableViewController *categoryVC = (CategoryTableViewController *)popoverSegue.destinationViewController;
-        categoryVC.categories = [Category getAllCategoriesFromContext:self.picturebookShop.libraryDatabase.managedObjectContext];
+        //categoryVC.categories = [Category getAllCategoriesFromContext:self.picturebookShop.libraryDatabase.managedObjectContext];
+        categoryVC.categories = [Category getAllCategories];
    
         categoryVC.delegate = self;
         categoryVC.popoverController = popoverController;
@@ -444,6 +457,90 @@
     if (alertView.title == @"Leave Masha's Bookstore?") {
         if (buttonIndex == 1) [[UIApplication sharedApplication] openURL:[NSURL URLWithString:alertView.accessibilityHint]];
     }
+}
+
+- (void)embedYouTube:(NSString *)urlString frame:(CGRect)frame {
+    
+    NSString *embedHTML = @"\
+    <html><head>\
+    <style type=\"text/css\">\
+    body {\
+    background-color: transparent;\
+    color: white;\
+    }\
+    </style>\
+    </head><body style=\"margin:0\">\
+    <embed id=\"yt\" src=\"%@\" type=\"application/x-shockwave-flash\" \
+    width=\"%0.0f\" height=\"%0.0f\"></embed>\
+    </body></html>";
+    
+    CGFloat width = self.view.frame.size.width;
+    CGFloat height = self.view.frame.size.height;
+    CGFloat scale = 0.5;
+    CGFloat cbX = width * (1 + scale) / 2; 
+    CGFloat cbY = height * (1 - scale) / 2;
+    CGFloat cbD = 15;
+    
+    CGRect youTubeFrame = CGRectMake(width * (1 - scale) / 2, height * (1 - scale) / 2, width * scale, height * scale);
+    CGRect closeButtonFrame = CGRectMake(cbX - cbD, cbY - cbD, 2 * cbD, 2 * cbD);
+    NSString *html = [NSString stringWithFormat:embedHTML, urlString, youTubeFrame.size.width, youTubeFrame.size.height];
+    UIImage *closeButtonImage = [UIImage imageNamed:@"close.png"];
+    //UIWebView *videoView = [[UIWebView alloc] initWithFrame:youTubeFrame];
+    //UIView *transparentView = [[UIView alloc] initWithFrame:self.view.frame];
+    
+    self.youTubeTransparentView = [[UIView alloc] initWithFrame:self.view.frame];
+    self.youTubeTransparentView.backgroundColor = [UIColor grayColor];
+    self.youTubeTransparentView.alpha = 0.8;     
+    [self.view addSubview:self.youTubeTransparentView];
+    
+    self.youTubeVideoView = [[UIWebView alloc] initWithFrame:youTubeFrame];
+    [self.youTubeVideoView loadHTMLString:html baseURL:nil];
+    [self.view addSubview:self.youTubeVideoView];
+    
+    self.youTubeCloseButton = [[UIButton alloc] initWithFrame:closeButtonFrame];
+    [self.youTubeCloseButton setImage:closeButtonImage forState:UIControlStateNormal];
+    self.youTubeCloseButton.backgroundColor = [UIColor clearColor];
+    [self.youTubeCloseButton addTarget:self action:@selector(closeButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.youTubeCloseButton];
+    
+}
+
+- (UIButton *)findButtonInView:(UIView *)view {
+    UIButton *button = nil;
+    
+    if ([view isMemberOfClass:[UIButton class]]) {
+        return (UIButton *)view;
+    }
+    
+    if (view.subviews && [view.subviews count] > 0) {
+        for (UIView *subview in view.subviews) {
+            button = [self findButtonInView:subview];
+            if (button) return button;
+        }
+    }
+    
+    return button;
+}
+
+
+- (void)webViewDidFinishLoad:(UIWebView *)_webView {
+    UIButton *button = [self findButtonInView:_webView];
+    [button sendActionsForControlEvents:UIControlEventTouchUpInside];
+}
+
+-(void)doneButtonClick:(NSNotification*)notification {
+    NSLog(@"Done button clicked");
+    [self.youTubeVideoView removeFromSuperview];
+    [self.youTubeTransparentView removeFromSuperview];
+    [self.youTubeCloseButton removeFromSuperview];
+}
+
+-(void)closeButtonClick {
+    NSLog(@"Close button clicked");
+    [self.youTubeVideoView loadHTMLString:@"" baseURL:nil];
+    [self.youTubeVideoView removeFromSuperview];    
+    [self.youTubeTransparentView removeFromSuperview];
+    [self.youTubeCloseButton removeFromSuperview];
 }
 
 @end

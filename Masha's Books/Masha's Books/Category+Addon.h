@@ -12,15 +12,25 @@
 
 @interface Category (Addon)
 
-+ (void)categoryWithAttributes:(NSDictionary *)attributes forContext:(NSManagedObjectContext *)context;
+//+ (void)categoryWithAttributes:(NSDictionary *)attributes forContext:(NSManagedObjectContext *)context;
 
-+ (void)pickBookFromLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context forCategory:(Category *)category;
++ (void)categoryWithAttributes:(NSDictionary *)attributes;
 
-+ (void)linkCategoriesToBooksWithLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context;
+//+ (void)pickBookFromLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context forCategory:(Category *)category;
 
-+ (NSOrderedSet *)getAllCategoriesFromContext:(NSManagedObjectContext *)context;
++ (void)pickBookFromLinker:(CategoryToBookMap *)categoryToBookMap forCategory:(Category *)category;
 
-+ (void)loadBackgroundsForContext:(NSManagedObjectContext *)context;
+//+ (void)linkCategoriesToBooksWithLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context;
+
++ (void)linkCategoriesToBooksWithLinker:(CategoryToBookMap *)categoryToBookMap;
+
+//+ (NSOrderedSet *)getAllCategoriesFromContext:(NSManagedObjectContext *)context;
+
++ (NSOrderedSet *)getAllCategories;
+
+//+ (void)loadBackgroundsForContext:(NSManagedObjectContext *)context;
+
++ (void)loadBackgrounds;
 
 - (void)pickYourBooksFromLinkerObject:(CategoryToBookMap *)categoryToBookMap;
 
