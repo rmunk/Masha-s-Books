@@ -14,74 +14,62 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="719"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="dZY-qB-msZ">
-                                <rect key="frame" x="0.0" y="44" width="380" height="611"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <color key="separatorColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
-                                <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="NQE-2N-ueX">
-                                        <rect key="frame" x="0.0" y="22" width="380" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="380" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="OKY-IH-NIE">
-                                        <rect key="frame" x="0.0" y="66" width="380" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="380" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Vw5-rG-JlC">
-                                        <rect key="frame" x="0.0" y="110" width="380" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="380" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
-                            <view opaque="NO" contentMode="scaleToFill" id="Yqr-eZ-PAB">
-                                <rect key="frame" x="382" y="44" width="644" height="675"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </view>
-                            <navigationBar contentMode="scaleToFill" barStyle="blackOpaque" id="cQh-Bw-lMR">
-                                <rect key="frame" x="0.0" y="0.0" width="1024" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <items>
-                                    <navigationItem title="Settings" id="iRS-ch-UUN"/>
-                                </items>
-                            </navigationBar>
-                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Hei-1a-Ji0">
-                                <rect key="frame" x="0.0" y="614" width="379" height="61"/>
+                            <view contentMode="scaleToFill" id="tC9-8C-l4w">
+                                <rect key="frame" x="0.0" y="0.0" width="342" height="719"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Restore">
-                                    <color key="titleColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
-                                    <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
+                                <subviews>
+                                    <navigationBar contentMode="scaleToFill" id="uvv-Rn-wsA">
+                                        <rect key="frame" x="0.0" y="0.0" width="342" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <items>
+                                            <navigationItem title="My Books" id="dlx-Tc-HMe"/>
+                                        </items>
+                                    </navigationBar>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="aor-1G-OdE">
+                                        <rect key="frame" x="0.0" y="44" width="342" height="675"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                                        <prototypes>
+                                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="sCh-kZ-h5p" detailTextLabel="YaW-RB-j1l" imageView="6ca-Sf-lKp" style="IBUITableViewCellStyleSubtitle" id="R8z-Qa-9FC">
+                                                <rect key="frame" x="0.0" y="22" width="342" height="45"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                                    <rect key="frame" x="0.0" y="0.0" width="342" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sCh-kZ-h5p">
+                                                            <rect key="frame" x="53" y="2" width="38" height="22"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        </label>
+                                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="YaW-RB-j1l">
+                                                            <rect key="frame" x="53" y="24" width="47" height="18"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                            <color key="textColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        </label>
+                                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="icon.png" id="6ca-Sf-lKp">
+                                                            <rect key="frame" x="0.0" y="0.0" width="43" height="43"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                        </imageView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                </view>
+                                            </tableViewCell>
+                                        </prototypes>
+                                        <sections/>
+                                    </tableView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Settings" image="tab-settings.png" id="Jwt-J4-Uua"/>
-                    <connections>
-                        <outlet property="restoreButton" destination="Hei-1a-Ji0" id="pbj-eV-rV9"/>
-                    </connections>
                 </viewController>
             </objects>
             <point key="canvasLocation" x="-517" y="178"/>
@@ -95,12 +83,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="719"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="-1" contentMode="center" image="mybooks_norm.png" id="SxL-kz-zDU">
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="-1" contentMode="center" image="mybooks setup.png" id="SxL-kz-zDU">
                                 <rect key="frame" x="0.0" y="-24" width="1024" height="768"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </imageView>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="-1" contentMode="right" image="box_arrow.png" id="WXL-JV-gHF">
-                                <rect key="frame" x="-77" y="196" width="77" height="384"/>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="-1" contentMode="right" image="box_norm.png" id="WXL-JV-gHF">
+                                <rect key="frame" x="0.0" y="195" width="53" height="384"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </imageView>
                             <view tag="-1" contentMode="scaleToFill" id="lfJ-I4-Nyn" customClass="ScrollViewContainer">
@@ -580,7 +568,7 @@
     <resources>
         <image name="Default-Landscape~ipad.png" width="1024" height="768"/>
         <image name="box.png" width="304" height="173"/>
-        <image name="box_arrow.png" width="582" height="384"/>
+        <image name="box_norm.png" width="557" height="384"/>
         <image name="box_sel.png" width="315" height="174"/>
         <image name="buy.png" width="36" height="36"/>
         <image name="dropdown.png" width="41" height="35"/>
@@ -589,7 +577,7 @@
         <image name="like.png" width="52" height="27"/>
         <image name="mail.png" width="42" height="40"/>
         <image name="masha.png" width="512" height="768"/>
-        <image name="mybooks_norm.png" width="1024" height="768"/>
+        <image name="mybooks setup.png" width="1024" height="768"/>
         <image name="preview.png" width="37" height="36"/>
         <image name="rate_left3.png" width="42" height="42"/>
         <image name="rate_mid3.png" width="37" height="38"/>
@@ -601,72 +589,6 @@
         <image name="twitter1.png" width="42" height="40"/>
         <image name="web.png" width="42" height="40"/>
     </resources>
-    <classes>
-        <class className="BooksTableCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BooksTableCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="activityView" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="bookTitle" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="coverImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="rateImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="shortDescription" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="statusLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="tagImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="transparencyView" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="CategoryTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CategoryTableViewController.h"/>
-        </class>
-        <class className="InitialViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/InitialViewController.h"/>
-        </class>
-        <class className="MyBooksViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MyBooksViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="topButtonPressed:" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="backgroundImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="leftBookImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="mashaImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="scrollViewContainer" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="ScrollViewContainer" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ScrollViewContainer.h"/>
-            <relationships>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-            </relationships>
-        </class>
-        <class className="SettingsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="restoreButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="ShopViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ShopViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="categorySelection:" candidateClass="UIButton"/>
-                <relationship kind="action" name="goToTwitterPage:" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="activityView" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="backgroundView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="bookTitleLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="bookWebView" candidateClass="UIWebView"/>
-                <relationship kind="outlet" name="booksTableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="buyButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="categoryButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="downloadProgressView" candidateClass="UIProgressView"/>
-                <relationship kind="outlet" name="facebookButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="priceLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="rateImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="tagViewLarge" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="thumbImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="twitterButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="youtubeButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <nil key="statusBar"/>
         <simulatedOrientationMetrics key="orientation" orientation="landscapeRight"/>

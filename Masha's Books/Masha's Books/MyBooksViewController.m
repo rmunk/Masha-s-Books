@@ -205,7 +205,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     if (self.scrollView.contentOffset.x == 0) {
-        self.leftBookImage.frame = CGRectMake(-77, self.leftBookImage.frame.origin.y, self.leftBookImage.frame.size.width, self.leftBookImage.frame.size.height);
+        self.leftBookImage.frame = CGRectMake(-self.leftBookImage.frame.size.width, self.leftBookImage.frame.origin.y, self.leftBookImage.frame.size.width, self.leftBookImage.frame.size.height);
     }
     
     [self loadDesignImages];
@@ -299,7 +299,7 @@
                               delay:0
                             options:UIViewAnimationCurveEaseIn
                          animations:^{
-                             self.leftBookImage.frame = CGRectMake(-77, self.leftBookImage.frame.origin.y, self.leftBookImage.frame.size.width, self.leftBookImage.frame.size.height);
+                             self.leftBookImage.frame = CGRectMake(-self.leftBookImage.frame.size.width, self.leftBookImage.frame.origin.y, self.leftBookImage.frame.size.width, self.leftBookImage.frame.size.height);
                              
                          }
                          completion:nil];

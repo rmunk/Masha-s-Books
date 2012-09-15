@@ -10,6 +10,5 @@
 #import <QuartzCore/QuartzCore.h>
 
 @interface SettingsViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UIButton *restoreButton;
 
 @end

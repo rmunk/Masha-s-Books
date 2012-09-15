@@ -89,7 +89,7 @@
     NSInteger pageCount = self.pageImages.count;
     const int border = 4;
     
-    for (NSInteger i = 1; i < pageCount; ++i) {
+    for (NSInteger i = 0; i < pageCount; ++i) {
         CGRect frame = CGRectMake(0, 0, 159, 128);
         self.scrollView.contentSize = CGSizeMake(border + (frame.size.width + border / 2) * (pageCount - 1), frame.size.height + border * 2);
         frame.origin.x = border + (frame.size.width + border / 2) * (i - 1);
@@ -113,6 +113,10 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    self.scrollView.frame = CGRectMake(self.scrollView.frame.origin.x, 768, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
+    self.toolbar.frame = CGRectMake(self.toolbar.frame.origin.x, -self.toolbar.frame.size.height, self.toolbar.frame.size.width, self.toolbar.frame.size.height);
+    self.pauseImage.alpha = 0;
+    
     [super viewDidAppear:animated];
     
     [UIView animateWithDuration:0.5
@@ -151,7 +155,6 @@
                         options:UIViewAnimationCurveEaseIn
                      animations:^{
                          self.scrollView.frame = CGRectMake(self.scrollView.frame.origin.x, 768, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
-                         
                          self.toolbar.frame = CGRectMake(self.toolbar.frame.origin.x, -self.toolbar.frame.size.height, self.toolbar.frame.size.width, self.toolbar.frame.size.height);
                          self.pauseImage.alpha = 0;
                      } completion:^(BOOL finished){

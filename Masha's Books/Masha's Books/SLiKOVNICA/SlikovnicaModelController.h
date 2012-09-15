@@ -16,10 +16,10 @@
 @property (strong, nonatomic) Book *book;
 @property (nonatomic) BOOL textVisibility;
 @property (nonatomic) BOOL voiceOverPlay;
+@property (nonatomic) NSUInteger numberOfPages;
 
 - (SlikovnicaDataViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard;
 - (NSUInteger)indexOfViewController:(SlikovnicaDataViewController *)viewController;
-- (NSNumber *)numberOfPages;
 - (NSArray *)getPageThumbnails;
 
 @end

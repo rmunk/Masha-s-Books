@@ -41,15 +41,6 @@
 - (AVAudioPlayer *)audioPlayerSound {return nil;}
 #endif
 
-- (IBAction)goBackToLibrary:(UIBarButtonItem *)sender 
-{
-    [[NSNotificationCenter defaultCenter]
-     postNotificationName:@"userFinishedBook" object:self];
-}
-
-- (IBAction)restartBook:(UIButton *)sender {
-}
-
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"Page %@", self.page.pageNumber];

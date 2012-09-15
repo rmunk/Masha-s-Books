@@ -105,7 +105,6 @@
 		C093EB58159E784100035D20 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C093EB57159E784100035D20 /* libz.dylib */; };
 		C093EB5A159E87CA00035D20 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = C093EB59159E87CA00035D20 /* LICENSE */; };
 		C0982991157501D1004EAA0D /* MyBooksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0982990157501D1004EAA0D /* MyBooksViewController.m */; };
-		C09829941575026E004EAA0D /* MashasShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C09829931575026E004EAA0D /* MashasShopViewController.m */; };
 		C099A1C715EC3A9A00019E00 /* filmstrip-norm-@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C099A1C515EC3A9A00019E00 /* filmstrip-norm-@2x.png */; };
 		C099A1C815EC3A9A00019E00 /* filmstrip-selected-@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C099A1C615EC3A9A00019E00 /* filmstrip-selected-@2x.png */; };
 		C099A1CB15EC3AA900019E00 /* filmstrip-norm.png in Resources */ = {isa = PBXBuildFile; fileRef = C099A1C915EC3AA900019E00 /* filmstrip-norm.png */; };
@@ -151,6 +150,7 @@
 		C09CC1B71602995B004E644F /* InitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C09CC1B61602995B004E644F /* InitialViewController.m */; };
 		C09D3E7515F81A42003D1896 /* AVAudioPlayer+PGFade.m in Sources */ = {isa = PBXBuildFile; fileRef = C09C32C215F6C71F00C21ADB /* AVAudioPlayer+PGFade.m */; };
 		C09EB5D715D9D7E8003FEBB0 /* tab-books copy.png in Resources */ = {isa = PBXBuildFile; fileRef = C09EB5D615D9D7E8003FEBB0 /* tab-books copy.png */; };
+		C09EB7C61603FB52005DEA0D /* SlikovnicaLastPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C09EB7C51603FB52005DEA0D /* SlikovnicaLastPageViewController.m */; };
 		C0B3FF6415742E41002DF30F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0B3FF6315742E41002DF30F /* UIKit.framework */; };
 		C0B3FF6615742E41002DF30F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0B3FF6515742E41002DF30F /* Foundation.framework */; };
 		C0B3FF6815742E41002DF30F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0B3FF6715742E41002DF30F /* CoreGraphics.framework */; };
@@ -309,8 +309,6 @@
 		C093EB59159E87CA00035D20 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		C098298F157501D1004EAA0D /* MyBooksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyBooksViewController.h; sourceTree = "<group>"; };
 		C0982990157501D1004EAA0D /* MyBooksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyBooksViewController.m; sourceTree = "<group>"; };
-		C09829921575026E004EAA0D /* MashasShopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MashasShopViewController.h; sourceTree = "<group>"; };
-		C09829931575026E004EAA0D /* MashasShopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MashasShopViewController.m; sourceTree = "<group>"; };
 		C099A1C515EC3A9A00019E00 /* filmstrip-norm-@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "filmstrip-norm-@2x.png"; path = "../../Grafika/full/filmstrip-norm-@2x.png"; sourceTree = "<group>"; };
 		C099A1C615EC3A9A00019E00 /* filmstrip-selected-@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "filmstrip-selected-@2x.png"; path = "../../Grafika/full/filmstrip-selected-@2x.png"; sourceTree = "<group>"; };
 		C099A1C915EC3AA900019E00 /* filmstrip-norm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "filmstrip-norm.png"; path = "../../Grafika/norm/filmstrip-norm.png"; sourceTree = "<group>"; };
@@ -386,6 +384,8 @@
 		C09CC1B51602995B004E644F /* InitialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialViewController.h; sourceTree = "<group>"; };
 		C09CC1B61602995B004E644F /* InitialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitialViewController.m; sourceTree = "<group>"; };
 		C09EB5D615D9D7E8003FEBB0 /* tab-books copy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-books copy.png"; sourceTree = "<group>"; };
+		C09EB7C41603FB52005DEA0D /* SlikovnicaLastPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlikovnicaLastPageViewController.h; sourceTree = "<group>"; };
+		C09EB7C51603FB52005DEA0D /* SlikovnicaLastPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlikovnicaLastPageViewController.m; sourceTree = "<group>"; };
 		C0B3FF5F15742E41002DF30F /* Masha's Books.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Masha's Books.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0B3FF6315742E41002DF30F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C0B3FF6515742E41002DF30F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -455,14 +455,12 @@
 				BA98026E1575AFC600EE06BB /* PicturebookShopViewController.m */,
 				BA8B448F15A4D5BD0098F063 /* CategoryToBookMap.h */,
 				BA8B449015A4D5BD0098F063 /* CategoryToBookMap.m */,
-				BAF45EAC15C725DB00A461FC /* SettingsViewController.h */,
-				BAF45EAD15C725DB00A461FC /* SettingsViewController.m */,
-				BAE41B7415CB218200731C71 /* ShopViewController.h */,
-				BAE41B7515CB218200731C71 /* ShopViewController.m */,
 				BA8C843F15CC862000461861 /* BooksTableCell.h */,
 				BA8C844015CC862000461861 /* BooksTableCell.m */,
 				BA0E4E0F15EBFF3700012F17 /* CategoryTableViewController.h */,
 				BA0E4E1015EBFF3700012F17 /* CategoryTableViewController.m */,
+				C093EB21159E63F800035D20 /* BookExtractor.h */,
+				C093EB22159E63F800035D20 /* BookExtractor.m */,
 			);
 			name = PicturebookShop;
 			sourceTree = "<group>";
@@ -472,6 +470,8 @@
 			children = (
 				C07287C015784A6100B64A68 /* SlikovnicaDataViewController.h */,
 				C07287C115784A6100B64A68 /* SlikovnicaDataViewController.m */,
+				C09EB7C41603FB52005DEA0D /* SlikovnicaLastPageViewController.h */,
+				C09EB7C51603FB52005DEA0D /* SlikovnicaLastPageViewController.m */,
 				C07287C215784A6100B64A68 /* SlikovnicaModelController.h */,
 				C07287C315784A6100B64A68 /* SlikovnicaModelController.m */,
 				C07287C415784A6100B64A68 /* SlikovnicaNavigationViewController.h */,
@@ -810,12 +810,12 @@
 				C0B3FF7515742E41002DF30F /* MainStoryboard.storyboard */,
 				C09CC1B51602995B004E644F /* InitialViewController.h */,
 				C09CC1B61602995B004E644F /* InitialViewController.m */,
-				C09829921575026E004EAA0D /* MashasShopViewController.h */,
-				C09829931575026E004EAA0D /* MashasShopViewController.m */,
 				C098298F157501D1004EAA0D /* MyBooksViewController.h */,
 				C0982990157501D1004EAA0D /* MyBooksViewController.m */,
-				C093EB21159E63F800035D20 /* BookExtractor.h */,
-				C093EB22159E63F800035D20 /* BookExtractor.m */,
+				BAE41B7415CB218200731C71 /* ShopViewController.h */,
+				BAE41B7515CB218200731C71 /* ShopViewController.m */,
+				BAF45EAC15C725DB00A461FC /* SettingsViewController.h */,
+				BAF45EAD15C725DB00A461FC /* SettingsViewController.m */,
 				C0B3FF6A15742E41002DF30F /* Supporting Files */,
 				C098299915750713004EAA0D /* Resources */,
 			);
@@ -1047,7 +1047,6 @@
 				C0B3FF7015742E41002DF30F /* main.m in Sources */,
 				C0B3FF7415742E41002DF30F /* MashasBooksAppDelegate.m in Sources */,
 				C0982991157501D1004EAA0D /* MyBooksViewController.m in Sources */,
-				C09829941575026E004EAA0D /* MashasShopViewController.m in Sources */,
 				C00383721575510F00999A19 /* ScrollViewContainer.m in Sources */,
 				BA98026F1575AFC600EE06BB /* CoverTableRowCell.m in Sources */,
 				BA9802721575AFC600EE06BB /* PicturebookCover.m in Sources */,
@@ -1108,6 +1107,7 @@
 				C09C93AF1601380B00278B2D /* MagicalRecord.m in Sources */,
 				C09CC1B316028CC1004E644F /* Design.m in Sources */,
 				C09CC1B71602995B004E644F /* InitialViewController.m in Sources */,
+				C09EB7C61603FB52005DEA0D /* SlikovnicaLastPageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

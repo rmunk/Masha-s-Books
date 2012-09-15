@@ -8,6 +8,7 @@
 
 #import "SlikovnicaModelController.h"
 #import "SlikovnicaDataViewController.h"
+#import "SlikovnicaLastPageViewController.h"
 #import "Image.h"
 #import "UIImage+Resize.h"
 
@@ -27,6 +28,7 @@
 @synthesize book = _book;
 @synthesize textVisibility = _textVisibility;
 @synthesize voiceOverPlay = _voiceOverPlay;
+@synthesize numberOfPages = _numberOfPages;
 
 - (id)init
 {
@@ -39,12 +41,15 @@
     return self;
 }
 
-- (SlikovnicaDataViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard
+- (UIViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard
 {
     // Return the data view controller for the given index.
-    if (([self.book.pages count] == 0) || (index >= [self.book.pages count])) {
+    if (([self.book.pages count] == 0) || (index > [self.book.pages count])) {
         return nil;
     }
+    
+    if (index == self.numberOfPages) return [storyboard instantiateViewControllerWithIdentifier:@"LastPage"];
+    
     
     // Create a new view controller and pass suitable data.
     SlikovnicaDataViewController *dataViewController = [storyboard instantiateViewControllerWithIdentifier:@"SlikovnicaDataViewController"];
@@ -61,12 +66,15 @@
 - (NSUInteger)indexOfViewController:(SlikovnicaDataViewController *)viewController
 {
     // Return the index of the given data view controller.
-    return [self.book.pages indexOfObject:viewController.page];
+    if([self.book.pages indexOfObject:viewController.page] != NSNotFound)
+        return [self.book.pages indexOfObject:viewController.page];
+    else
+        return self.book.pages.count; //tu vratiti -1 ako necu da se moze listati unatrag na zadnju stranicu
 }
 
-- (NSNumber *)numberOfPages
+- (NSUInteger)numberOfPages
 {
-    return [NSNumber numberWithInt:self.book.pages.count];
+    return self.book.pages.count;
 }
 
 - (NSArray *)getPageThumbnails
@@ -106,13 +114,6 @@
     }
     
     index++;
-    if (index == [self.book.pages count]) {
-        SlikovnicaDataViewController *dataViewController = [viewController.storyboard instantiateViewControllerWithIdentifier:@"SlikovnicaDataViewController"];
-        return dataViewController;
-        //        [[NSNotificationCenter defaultCenter]
-        //         postNotificationName:@"userFinishedBook" object:self];
-        //        return nil;
-    }
     return [self viewControllerAtIndex:index storyboard:viewController.storyboard];
 }
 
