@@ -161,6 +161,7 @@
     dispatch_release(zipQueue);
 }
 
+/*
 - (void)saveDataToBook:(Book *)bookFromMainThread FromPath:(NSString *)unzippedPath {
    // NSError *error;
     //[self.context save:&error];
@@ -291,7 +292,94 @@
     });
     dispatch_release(saveQue);
 
+} */
+
+- (void)saveDataToBook:(Book *)bookFromMainThread FromPath:(NSString *)unzippedPath {
+  
+   NSError *error;
+        
+    //  Book *book = (Book *)[addingContext existingObjectWithID:bookFromMainThread.objectID error:&error];
+    // Book *book = [Book getBookWithId:bookFromMainThread.bookID inContext:addingContext withErrorHandler:error];
+    
+    // Fill database with extracted data
+    
+    Book *book = [Book getBookWithId:bookFromMainThread.bookID withErrorHandler:error];
+    NSLog(@"Fetched book %@ with objectID", book.title);
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSArray *dirContents = [fileManager contentsOfDirectoryAtPath:unzippedPath error:&error];
+    if (error) {
+        NSLog(@"Error reading %@ (%@)!", unzippedPath.lastPathComponent, error.description);
+        //self.success = NO;
+    }
+    else
+    {
+        for (Page *pageToDelete in book.pages) {
+            [book.managedObjectContext deleteObject:pageToDelete];
+        }
+        
+        NSPredicate *filter = [NSPredicate predicateWithFormat:@"self BEGINSWITH 'page'"];
+        NSArray *pageFiles = [[dirContents filteredArrayUsingPredicate:filter] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+        
+        if (!book.coverImage){
+            Image *coverImage = [Image createEntity];
+            coverImage.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingString:@"/title.jpg"]];
+            book.coverImage = coverImage;
+        }
+        else
+            book.coverImage.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingString:@"/title.jpg"]];
+        
+        
+        book.backgroundMusic = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingPathComponent:@"music.m4a"]];
+        
+        // Insert title page first
+        // NSManagedObjectContext *context = [book managedObjectContext];
+        Page *page = [Page createEntity];
+        page.pageNumber = [NSNumber numberWithInt:0];
+        page.image = book.coverImage.image;
+        [book insertObject:page inPagesAtIndex:0];
+        
+        int pageNumber = 1;
+        for (NSString *pageFile in pageFiles) {
+            Page *page = [Page createEntity];
+            page.pageNumber = [NSNumber numberWithInt:pageNumber];
+            page.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingPathComponent:pageFile]];
+            page.thumbnail = [page.image resizedImage:CGSizeMake(138, 103) interpolationQuality:kCGInterpolationHigh];
+            page.text = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/text%03d.png",pageNumber]];
+            page.voiceOver = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/voice%03d.m4a",pageNumber]];
+            page.sound = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/sound%03d.m4a",pageNumber]];
+            if(!page.sound){
+                page.sound = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/sound%03d_L.m4a",pageNumber]];
+                if(page.sound) page.soundLoop = [NSNumber numberWithBool:TRUE];
+            }
+            [book insertObject:page inPagesAtIndex:pageNumber];
+            pageNumber++;
+        }
+        
+        NSLog(@"book.title %@", book.title);                
+        NSLog(@"book.downloadDate old:%@ new:%@", book.downloadDate.description, [[NSDate date] description]);
+        book.downloadDate = [NSDate date];
+        NSLog(@"book.downloaded old:%@ new:%@", [book.downloaded stringValue], [[NSNumber numberWithInt:1] stringValue]);
+        book.downloaded = [NSNumber numberWithInt:1];
+        NSLog(@"book.status old:%@ new:%@", book.status, @"ready");
+        book.status = [NSString stringWithString:@"ready"];
+    }
+    
+    [MagicalRecord saveInBackgroundUsingCurrentContextWithBlock:^(NSManagedObjectContext *localContext) {
+                
+        
+        
+
+    }
+    completion:^{ 
+   //     NSLog(@"Pages added for book %@.", book.title); 
+        [self.delegate performSelector:@selector(pagesAdded)];
+        [self processQue];
+    }
+    errorHandler:^(NSError *error){ NSLog(@"%@", error.localizedDescription); }]; 
+
+    
 }
+
 
 - (void)downloadZipFileForBook:(Book *)book
 {

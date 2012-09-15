@@ -298,7 +298,7 @@
             UIImage *tagImageSmall = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:tagImageSmallURL]];
             
             if (coverThumbnailImage && coverThumbnailUImageMedium) {                                    
-                //coverImage.image = coverUImage;                        
+                                      
                 book.coverThumbnailImage = coverThumbnailImage;
                 book.coverThumbnailImageMedium = coverThumbnailUImageMedium;
                 book.rateImageUp = rateImageUp;
@@ -398,6 +398,11 @@
     NSError *error;
     NSArray *books = [context executeFetchRequest:request error:&error];
     return books;
+}
+
++ (NSArray *)getAllBooks {
+    
+    return [Book MR_findAll];
 }
 
 + (NSOrderedSet *)getBooksForCategory:(Category *)category inContext:(NSManagedObjectContext *)context {
