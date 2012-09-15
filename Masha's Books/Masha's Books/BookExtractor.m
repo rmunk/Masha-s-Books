@@ -40,17 +40,17 @@
 
 
 /*
-- (BookExtractor *)initExtractorWithUrl:(NSURL *)zipURL {
-    self = [super init];
-    if (self) {
-        self.downloadedZipData = [[NSMutableData alloc] init];
-       self.downloadRequest = [[NSURLRequest alloc] initWithURL:zipURL cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10];
-        self.downloadConnection = [[NSURLConnection alloc] initWithRequest:self.downloadRequest delegate:self];        self.downloading = NO;
-        self.activeBook = nil;
-        
-    }
-    return self;
-}
+ - (BookExtractor *)initExtractorWithUrl:(NSURL *)zipURL {
+ self = [super init];
+ if (self) {
+ self.downloadedZipData = [[NSMutableData alloc] init];
+ self.downloadRequest = [[NSURLRequest alloc] initWithURL:zipURL cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10];
+ self.downloadConnection = [[NSURLConnection alloc] initWithRequest:self.downloadRequest delegate:self];        self.downloading = NO;
+ self.activeBook = nil;
+ 
+ }
+ return self;
+ }
  */
 
 - (BookExtractor *)initExtractorWithShop:(id)shop andContext:(NSManagedObjectContext *)context {
@@ -64,7 +64,7 @@
         self.downloading = NO;
         self.activeBook = nil;
         self.context = context;
-       [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(anyContextSaved:) name:NSManagedObjectContextDidSaveNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(anyContextSaved:) name:NSManagedObjectContextDidSaveNotification object:nil];
         
         
     }
@@ -73,13 +73,13 @@
 
 - (void)anyContextSaved:(NSNotification *)notification
 {
-    //[self performSelectorOnMainThread:@selector(mergeContexts:) withObject:notification waitUntilDone:NO];  
+    //[self performSelectorOnMainThread:@selector(mergeContexts:) withObject:notification waitUntilDone:NO];
 }
 
 - (void)contextSaved:(NSNotification *)notification
 {
     NSLog(@"SaveThread reports context saved");
-    [self performSelectorOnMainThread:@selector(mergeContexts:) withObject:notification waitUntilDone:NO];  
+    [self performSelectorOnMainThread:@selector(mergeContexts:) withObject:notification waitUntilDone:NO];
     
 }
 
@@ -111,7 +111,7 @@
 
 
 - (void)extractBookFromFile:(NSString *)zipFile
-{    
+{
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *tmpFolder = [NSHomeDirectory() stringByAppendingPathComponent:@"tmp"];
     NSString *newDir = [tmpFolder stringByAppendingPathComponent:[zipFile.lastPathComponent stringByDeletingPathExtension]];
@@ -138,53 +138,176 @@
             if ((self.success == NO) && [self.delegate respondsToSelector:@selector(extractorForBook:didFinishExtractingWithSuccess:)]) {
                 [self.delegate extractorForBook:self.activeBook didFinishExtractingWithSuccess:self.success];
                 [self.downloadedZipData setLength:0];
-                self.activeBook.status = [NSString stringWithString:@"failed"];
+                self.activeBook.status = @"failed";
                 [self processQue];
-                return;        
+                return;
             }
-            else {        
+            else {
                 NSError *error;
-
+                
                 NSLog(@"Extracting %@ Done!", zipFile.lastPathComponent);
                 [self.delegate extractorForBook:self.activeBook didFinishExtractingWithSuccess:YES];
-                if([self.context save:&error]) {
-                    NSLog(@"Saving new book data for %@", self.activeBook.title);
-                    [self saveDataToBook:self.activeBook FromPath:newDir];
-                }
-                else 
-                    NSLog(@"Context saving error");
+                //                if([self.context save:&error]) {
+                //                    NSLog(@"Saving new book data for %@", self.activeBook.title);
+                [self saveDataToBook:self.activeBook FromPath:newDir];
+                //                }
+                //                else
+                //                    NSLog(@"Context saving error");
             }
             
-                
-        });    
+            
+        });
     });
     dispatch_release(zipQueue);
 }
 
 /*
-- (void)saveDataToBook:(Book *)bookFromMainThread FromPath:(NSString *)unzippedPath {
-   // NSError *error;
-    //[self.context save:&error];
-  //  NSManagedObjectID *objectID = [[NSManagedObjectID alloc] init];
+ - (void)saveDataToBook:(Book *)bookFromMainThread FromPath:(NSString *)unzippedPath {
+ // NSError *error;
+ //[self.context save:&error];
+ //  NSManagedObjectID *objectID = [[NSManagedObjectID alloc] init];
  //   objectID = [bookFromMainThread.objectID copy];
-//    NSPersistentStoreCoordinator *storeCordinator = bookFromMainThread.managedObjectContext.persistentStoreCoordinator;
-    //[storeCordinator lock];
-    dispatch_queue_t saveQue = dispatch_queue_create("saveQue", NULL);
-    dispatch_async(saveQue, ^{
-        NSError *error;
+ //    NSPersistentStoreCoordinator *storeCordinator = bookFromMainThread.managedObjectContext.persistentStoreCoordinator;
+ //[storeCordinator lock];
+ dispatch_queue_t saveQue = dispatch_queue_create("saveQue", NULL);
+ dispatch_async(saveQue, ^{
+ NSError *error;
+ 
+ NSManagedObjectContext *addingContext = [[NSManagedObjectContext alloc] init];
+ [addingContext setPersistentStoreCoordinator:bookFromMainThread.managedObjectContext.persistentStoreCoordinator];
+ 
+ //  Book *book = (Book *)[addingContext existingObjectWithID:bookFromMainThread.objectID error:&error];
+ // Book *book = [Book getBookWithId:bookFromMainThread.bookID inContext:addingContext withErrorHandler:error];
+ Book *book = [Book getBookWithId:bookFromMainThread.bookID withErrorHandler:error];
+ 
+ NSLog(@"Fetched book %@ with objectID", book.title);
+ // Fill database with extracted data
+ 
+ NSFileManager *fileManager = [NSFileManager defaultManager];
+ 
+ NSArray *dirContents = [fileManager contentsOfDirectoryAtPath:unzippedPath error:&error];
+ if (error) {
+ NSLog(@"Error reading %@ (%@)!", unzippedPath.lastPathComponent, error.description);
+ //self.success = NO;
+ }
+ else
+ {
+ for (Page *pageToDelete in book.pages)
+ [addingContext deleteObject:pageToDelete];
+ 
+ NSPredicate *filter = [NSPredicate predicateWithFormat:@"self BEGINSWITH 'page'"];
+ NSArray *pageFiles = [[dirContents filteredArrayUsingPredicate:filter] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+ 
+ if (!book.coverImage){
+ Image *coverImage = [NSEntityDescription insertNewObjectForEntityForName:@"Image" inManagedObjectContext:addingContext];
+ coverImage.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingString:@"/title.jpg"]];
+ book.coverImage = coverImage;
+ }
+ else
+ book.coverImage.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingString:@"/title.jpg"]];
+ 
+ 
+ book.backgroundMusic = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingPathComponent:@"music.m4a"]];
+ 
+ // Insert title page first
+ // NSManagedObjectContext *context = [book managedObjectContext];
+ Page *page = [NSEntityDescription insertNewObjectForEntityForName:@"Page" inManagedObjectContext:addingContext];
+ page.pageNumber = [NSNumber numberWithInt:0];
+ page.image = book.coverImage.image;
+ [book insertObject:page inPagesAtIndex:0];
+ 
+ int pageNumber = 1;
+ for (NSString *pageFile in pageFiles) {
+ Page *page = [NSEntityDescription insertNewObjectForEntityForName:@"Page" inManagedObjectContext:addingContext];
+ page.pageNumber = [NSNumber numberWithInt:pageNumber];
+ page.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingPathComponent:pageFile]];
+ page.thumbnail = [page.image resizedImage:CGSizeMake(138, 103) interpolationQuality:kCGInterpolationHigh];
+ page.text = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/text%03d.png",pageNumber]];
+ page.voiceOver = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/voice%03d.m4a",pageNumber]];
+ page.sound = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/sound%03d.m4a",pageNumber]];
+ if(!page.sound){
+ page.sound = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/sound%03d_L.m4a",pageNumber]];
+ if(page.sound) page.soundLoop = [NSNumber numberWithBool:TRUE];
+ }
+ [book insertObject:page inPagesAtIndex:pageNumber];
+ pageNumber++;
+ }
+ 
+ NSLog(@"book.title %@", book.title);
+ NSLog(@"book.downloadDate old:%@ new:%@", book.downloadDate.description, [[NSDate date] description]);
+ book.downloadDate = [NSDate date];
+ NSLog(@"book.downloaded old:%@ new:%@", [book.downloaded stringValue], [[NSNumber numberWithInt:1] stringValue]);
+ book.downloaded = [NSNumber numberWithInt:1];
+ NSLog(@"book.status old:%@ new:%@", book.status, @"ready");
+ book.status = [NSString stringWithString:@"ready"];
+ 
+ 
+ 
+ NSNotificationCenter *dnc = [NSNotificationCenter defaultCenter];
+ [dnc addObserver:self selector:@selector(contextSaved:) name:NSManagedObjectContextDidSaveNotification object:addingContext];
+ 
+ 
+ //[[NSNotificationCenter defaultCenter] addObserver:self.delegate selector:@selector(contextSaved:) name:NSManagedObjectContextDidSaveNotification object:addingContext];
+ //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contextSaved:) name:NSManagedObjectContextDidSaveNotification object:addingContext];
+ 
+ if([addingContext save:&error]) {
+ NSLog(@"Saving addingContext sucessfull");
+ }
+ else {
+ NSLog(@"Failed to save to data store: %@", [error localizedDescription]);
+ NSArray* detailedErrors = [[error userInfo] objectForKey:NSDetailedErrorsKey];
+ if(detailedErrors != nil && [detailedErrors count] > 0) {
+ for(NSError* detailedError in detailedErrors) {
+ NSLog(@"  DetailedError: %@", [detailedError userInfo]);
+ }
+ }
+ else {
+ NSLog(@"  %@", [error userInfo]);
+ }
+ 
+ }
+ 
+ 
+ [dnc removeObserver:self name:NSManagedObjectContextDidSaveNotification object:addingContext];
+ 
+ 
+ }
+ 
+ 
+ 
+ 
+ // if (self.success) book.status = @"bought";
+ //  else book.status = @"failed";
+ 
+ 
+ // if ([self.delegate respondsToSelector:@selector(extractorForBook:didFinishExtractingWithSuccess:)]) {
+ //    [self.delegate extractorForBook:book didFinishExtractingWithSuccess:self.success];
+ //[self.downloadedZipData setLength:0];
+ // [self processQue];
+ //}
+ 
+ // Cleanup of temp files
+ //            [fileManager removeItemAtPath:zipFile error:nil];
+ //            [fileManager removeItemAtPath:newDir error:nil];
+ });
+ dispatch_release(saveQue);
+ 
+ } */
 
-        NSManagedObjectContext *addingContext = [[NSManagedObjectContext alloc] init];
-        [addingContext setPersistentStoreCoordinator:bookFromMainThread.managedObjectContext.persistentStoreCoordinator];
+- (void)saveDataToBook:(Book *)bookFromMainThread FromPath:(NSString *)unzippedPath {
+    
+    [MagicalRecord saveInBackgroundWithBlock:^(NSManagedObjectContext *localContext) {
+        NSError *error;
         
-      //  Book *book = (Book *)[addingContext existingObjectWithID:bookFromMainThread.objectID error:&error];
-       // Book *book = [Book getBookWithId:bookFromMainThread.bookID inContext:addingContext withErrorHandler:error];
-        Book *book = [Book getBookWithId:bookFromMainThread.bookID withErrorHandler:error];
-            
-        NSLog(@"Fetched book %@ with objectID", book.title);
+        //  Book *book = (Book *)[addingContext existingObjectWithID:bookFromMainThread.objectID error:&error];
+        // Book *book = [Book getBookWithId:bookFromMainThread.bookID inContext:addingContext withErrorHandler:error];
+        
         // Fill database with extracted data
-          
+        
+//        Book *book = [Book getBookWithId:bookFromMainThread.bookID withErrorHandler:error];
+        Book *book = [bookFromMainThread MR_inContext:localContext];
+        NSLog(@"Fetched book %@ with objectID", book.title);
         NSFileManager *fileManager = [NSFileManager defaultManager];
-            
         NSArray *dirContents = [fileManager contentsOfDirectoryAtPath:unzippedPath error:&error];
         if (error) {
             NSLog(@"Error reading %@ (%@)!", unzippedPath.lastPathComponent, error.description);
@@ -192,33 +315,34 @@
         }
         else
         {
-            for (Page *pageToDelete in book.pages)
-                [addingContext deleteObject:pageToDelete];
-                
+            for (Page *pageToDelete in book.pages) {
+                [book.managedObjectContext deleteObject:pageToDelete];
+            }
+            
             NSPredicate *filter = [NSPredicate predicateWithFormat:@"self BEGINSWITH 'page'"];
             NSArray *pageFiles = [[dirContents filteredArrayUsingPredicate:filter] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-                    
+            
             if (!book.coverImage){
-                Image *coverImage = [NSEntityDescription insertNewObjectForEntityForName:@"Image" inManagedObjectContext:addingContext];
+                Image *coverImage = [Image createEntity];
                 coverImage.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingString:@"/title.jpg"]];
                 book.coverImage = coverImage;
             }
             else
                 book.coverImage.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingString:@"/title.jpg"]];
-                
-                
+            
+            
             book.backgroundMusic = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingPathComponent:@"music.m4a"]];
-                
+            
             // Insert title page first
             // NSManagedObjectContext *context = [book managedObjectContext];
-            Page *page = [NSEntityDescription insertNewObjectForEntityForName:@"Page" inManagedObjectContext:addingContext];
+            Page *page = [Page createEntity];
             page.pageNumber = [NSNumber numberWithInt:0];
             page.image = book.coverImage.image;
             [book insertObject:page inPagesAtIndex:0];
-                
+            
             int pageNumber = 1;
             for (NSString *pageFile in pageFiles) {
-                Page *page = [NSEntityDescription insertNewObjectForEntityForName:@"Page" inManagedObjectContext:addingContext];
+                Page *page = [Page createEntity];
                 page.pageNumber = [NSNumber numberWithInt:pageNumber];
                 page.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingPathComponent:pageFile]];
                 page.thumbnail = [page.image resizedImage:CGSizeMake(138, 103) interpolationQuality:kCGInterpolationHigh];
@@ -233,151 +357,21 @@
                 pageNumber++;
             }
             
-            NSLog(@"book.title %@", book.title);                
+            NSLog(@"book.title %@", book.title);
             NSLog(@"book.downloadDate old:%@ new:%@", book.downloadDate.description, [[NSDate date] description]);
             book.downloadDate = [NSDate date];
             NSLog(@"book.downloaded old:%@ new:%@", [book.downloaded stringValue], [[NSNumber numberWithInt:1] stringValue]);
             book.downloaded = [NSNumber numberWithInt:1];
             NSLog(@"book.status old:%@ new:%@", book.status, @"ready");
-            book.status = [NSString stringWithString:@"ready"];
-            
- 
-     
-            NSNotificationCenter *dnc = [NSNotificationCenter defaultCenter];
-            [dnc addObserver:self selector:@selector(contextSaved:) name:NSManagedObjectContextDidSaveNotification object:addingContext];
-            
-            
-            //[[NSNotificationCenter defaultCenter] addObserver:self.delegate selector:@selector(contextSaved:) name:NSManagedObjectContextDidSaveNotification object:addingContext];
-            //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contextSaved:) name:NSManagedObjectContextDidSaveNotification object:addingContext];
-                
-            if([addingContext save:&error]) {
-                NSLog(@"Saving addingContext sucessfull");
-            }
-            else {
-                NSLog(@"Failed to save to data store: %@", [error localizedDescription]);
-                NSArray* detailedErrors = [[error userInfo] objectForKey:NSDetailedErrorsKey];
-                if(detailedErrors != nil && [detailedErrors count] > 0) {
-                    for(NSError* detailedError in detailedErrors) {
-                        NSLog(@"  DetailedError: %@", [detailedError userInfo]);
-                    }
-                }
-                else {
-                    NSLog(@"  %@", [error userInfo]);
-                }
-               
-            }
-            
-                
-            [dnc removeObserver:self name:NSManagedObjectContextDidSaveNotification object:addingContext];
-            
-        
+            book.status = @"ready";
         }
-        
-        
-
-        
-       // if (self.success) book.status = @"bought";
-      //  else book.status = @"failed";
-        
-        
-       // if ([self.delegate respondsToSelector:@selector(extractorForBook:didFinishExtractingWithSuccess:)]) {
-        //    [self.delegate extractorForBook:book didFinishExtractingWithSuccess:self.success];
-            //[self.downloadedZipData setLength:0];
-           // [self processQue];
-        //}
-        
-        // Cleanup of temp files
-        //            [fileManager removeItemAtPath:zipFile error:nil];
-        //            [fileManager removeItemAtPath:newDir error:nil];
-    });
-    dispatch_release(saveQue);
-
-} */
-
-- (void)saveDataToBook:(Book *)bookFromMainThread FromPath:(NSString *)unzippedPath {
-  
-   NSError *error;
-        
-    //  Book *book = (Book *)[addingContext existingObjectWithID:bookFromMainThread.objectID error:&error];
-    // Book *book = [Book getBookWithId:bookFromMainThread.bookID inContext:addingContext withErrorHandler:error];
-    
-    // Fill database with extracted data
-    
-    Book *book = [Book getBookWithId:bookFromMainThread.bookID withErrorHandler:error];
-    NSLog(@"Fetched book %@ with objectID", book.title);
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSArray *dirContents = [fileManager contentsOfDirectoryAtPath:unzippedPath error:&error];
-    if (error) {
-        NSLog(@"Error reading %@ (%@)!", unzippedPath.lastPathComponent, error.description);
-        //self.success = NO;
     }
-    else
-    {
-        for (Page *pageToDelete in book.pages) {
-            [book.managedObjectContext deleteObject:pageToDelete];
-        }
-        
-        NSPredicate *filter = [NSPredicate predicateWithFormat:@"self BEGINSWITH 'page'"];
-        NSArray *pageFiles = [[dirContents filteredArrayUsingPredicate:filter] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-        
-        if (!book.coverImage){
-            Image *coverImage = [Image createEntity];
-            coverImage.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingString:@"/title.jpg"]];
-            book.coverImage = coverImage;
-        }
-        else
-            book.coverImage.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingString:@"/title.jpg"]];
-        
-        
-        book.backgroundMusic = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingPathComponent:@"music.m4a"]];
-        
-        // Insert title page first
-        // NSManagedObjectContext *context = [book managedObjectContext];
-        Page *page = [Page createEntity];
-        page.pageNumber = [NSNumber numberWithInt:0];
-        page.image = book.coverImage.image;
-        [book insertObject:page inPagesAtIndex:0];
-        
-        int pageNumber = 1;
-        for (NSString *pageFile in pageFiles) {
-            Page *page = [Page createEntity];
-            page.pageNumber = [NSNumber numberWithInt:pageNumber];
-            page.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingPathComponent:pageFile]];
-            page.thumbnail = [page.image resizedImage:CGSizeMake(138, 103) interpolationQuality:kCGInterpolationHigh];
-            page.text = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/text%03d.png",pageNumber]];
-            page.voiceOver = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/voice%03d.m4a",pageNumber]];
-            page.sound = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/sound%03d.m4a",pageNumber]];
-            if(!page.sound){
-                page.sound = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/sound%03d_L.m4a",pageNumber]];
-                if(page.sound) page.soundLoop = [NSNumber numberWithBool:TRUE];
-            }
-            [book insertObject:page inPagesAtIndex:pageNumber];
-            pageNumber++;
-        }
-        
-        NSLog(@"book.title %@", book.title);                
-        NSLog(@"book.downloadDate old:%@ new:%@", book.downloadDate.description, [[NSDate date] description]);
-        book.downloadDate = [NSDate date];
-        NSLog(@"book.downloaded old:%@ new:%@", [book.downloaded stringValue], [[NSNumber numberWithInt:1] stringValue]);
-        book.downloaded = [NSNumber numberWithInt:1];
-        NSLog(@"book.status old:%@ new:%@", book.status, @"ready");
-        book.status = [NSString stringWithString:@"ready"];
-    }
-    
-    [MagicalRecord saveInBackgroundUsingCurrentContextWithBlock:^(NSManagedObjectContext *localContext) {
-                
-        
-        
-
-    }
-    completion:^{ 
-   //     NSLog(@"Pages added for book %@.", book.title); 
+    completion:^{
+        //        NSLog(@"Pages added for book %@.", book.title);
         [self.delegate performSelector:@selector(pagesAdded)];
         [self processQue];
-    }
-    errorHandler:^(NSError *error){ NSLog(@"%@", error.localizedDescription); }]; 
-
-    
+    }];
+    //    errorHandler:^(NSError *error){ NSLog(@"%@", error.localizedDescription); }];
 }
 
 
@@ -398,9 +392,9 @@
     if (self.downloadConnection) {
         NSLog(@"Downloading zip file for book %@ through connection %@.", book.title, self.downloadConnection.description);
         self.downloading = YES;
-      //  [self.downloadConnection start];
-   
-   
+        //  [self.downloadConnection start];
+        
+        
     }
     else {
         NSLog(@"Could not start download of %@.", book.title);
@@ -411,24 +405,24 @@
     
     
     /*
-    
-    dispatch_queue_t downloadZipQueue = dispatch_queue_create("zip download", NULL);
-    dispatch_async(downloadZipQueue, ^{
-        
-        
-        //while ([bookExtractor isDownloading] == YES);
-        
-        
-        // NSData *zipFile = [NSData dataWithData:self.downloadedZipData];
-        //NSData *zipFile = [NSData dataWithContentsOfURL:zipURL];
-        //   [zipFile writeToFile:file atomically:YES];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-        });
-        
-    });
-    dispatch_release(downloadZipQueue); */
+     
+     dispatch_queue_t downloadZipQueue = dispatch_queue_create("zip download", NULL);
+     dispatch_async(downloadZipQueue, ^{
+     
+     
+     //while ([bookExtractor isDownloading] == YES);
+     
+     
+     // NSData *zipFile = [NSData dataWithData:self.downloadedZipData];
+     //NSData *zipFile = [NSData dataWithContentsOfURL:zipURL];
+     //   [zipFile writeToFile:file atomically:YES];
+     
+     dispatch_async(dispatch_get_main_queue(), ^{
+     
+     });
+     
+     });
+     dispatch_release(downloadZipQueue); */
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
@@ -480,7 +474,7 @@
 // State machine processQue
 - (void)processQue {
     NSLog(@"Processing que");
-   // NSLog(@"Active book info: %@", self.activeBook);
+    // NSLog(@"Active book info: %@", self.activeBook);
     // remove processed books
     Book *bookToDelete;
     int flag = 1;
@@ -541,7 +535,7 @@
         book.status = [NSString stringWithString:@"qued"];
         if (self.activeBook == nil) {
             [self processQue];
-        }    
+        }
     }
     
 }

@@ -119,13 +119,15 @@
 
 - (void)getMyBooks
 {
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
-    request.predicate = [NSPredicate predicateWithFormat:@"downloaded > 0"];
-    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
-    request.sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+//    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"downloaded > 0"];
+//    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
+//    request.sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+//    
+//    NSError *error;
+//    self.myBooks = [self.library.managedObjectContext executeFetchRequest:request error:&error];
     
-    NSError *error;
-    self.myBooks = [self.library.managedObjectContext executeFetchRequest:request error:&error];
+    self.myBooks = [Book MR_findAllSortedBy:@"downloadDate" ascending:NO withPredicate:predicate];
 
     // Set up the array to hold the views for each page
     NSInteger pageCount = [self.myBooks count];
