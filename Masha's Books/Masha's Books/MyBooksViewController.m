@@ -13,7 +13,7 @@
 #import "SlikovnicaRootViewController.h"
 #import <MessageUI/MessageUI.h>
 
-@interface MyBooksViewController ()<UIScrollViewDelegate, SlikovnicaRootViewControllerDelegate, MFMailComposeViewControllerDelegate, UIAlertViewDelegate>
+@interface MyBooksViewController ()<UIScrollViewDelegate, SlikovnicaRootViewControllerDelegate, UIAlertViewDelegate>
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, weak) IBOutlet UIView *scrollViewContainer;
 @property (weak, nonatomic) IBOutlet UIImageView *leftBookImage;
@@ -21,6 +21,7 @@
 @property (nonatomic, strong) NSArray *myBooks;
 @property (nonatomic, strong) NSMutableArray *coverViews;
 @property (nonatomic, strong) UIActivityIndicatorView *bookLoadingIndicator;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
 
 @property (nonatomic, strong) NSManagedObjectContext *context;
 @end
@@ -37,6 +38,7 @@
 @synthesize myBooks = _myBooks;
 @synthesize coverViews = _coverViews;
 @synthesize bookLoadingIndicator = _bookLoadingIndicator;
+@synthesize loadingIndicator = _loadingIndicator;
 
 @synthesize context = _context;
 
@@ -227,6 +229,7 @@
     [self setLeftBookImage:nil];
     [self setMashaImage:nil];
     [self setBackgroundImage:nil];
+    [self setLoadingIndicator:nil];
     [super viewDidUnload];
 }
 
@@ -241,12 +244,14 @@
 {
     UIView *page = sender.view;
     
-    self.bookLoadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    self.bookLoadingIndicator.contentMode = UIViewContentModeCenter;
-    self.bookLoadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-    self.bookLoadingIndicator.frame = ((UIView *)[page.subviews lastObject]).frame;
-    [page addSubview:self.bookLoadingIndicator];
-    [self.bookLoadingIndicator startAnimating];
+//    self.bookLoadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+//    self.bookLoadingIndicator.contentMode = UIViewContentModeCenter;
+//    self.bookLoadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+//    self.bookLoadingIndicator.frame = ((UIView *)[page.subviews lastObject]).frame;
+//    [page addSubview:self.bookLoadingIndicator];
+//    [self.bookLoadingIndicator startAnimating];
+
+    [self.loadingIndicator startAnimating];
     
     Book *selectedBook = [self.myBooks objectAtIndex:page.tag];
     NSLog(@"User selected book %@.", selectedBook.title);
@@ -256,21 +261,17 @@
         return;
     }
     
-//    dispatch_queue_t slikovnicaQueue = dispatch_queue_create("slikovnicaQueue", NULL);
-//    dispatch_async(slikovnicaQueue, ^{
-        UIStoryboard *slikovnicaStoryboard = [UIStoryboard storyboardWithName:@"PicturebookStoryboard" bundle:nil];
-        SlikovnicaRootViewController *initialVC = [slikovnicaStoryboard instantiateInitialViewController];
-        initialVC.delegate = self;
-        initialVC.modelController.book = selectedBook;
-        initialVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-        [self presentModalViewController:initialVC animated:YES];
-//    });
-//    dispatch_release(slikovnicaQueue);
+    UIStoryboard *slikovnicaStoryboard = [UIStoryboard storyboardWithName:@"PicturebookStoryboard" bundle:nil];
+    SlikovnicaRootViewController *initialVC = [slikovnicaStoryboard instantiateInitialViewController];
+    initialVC.delegate = self;
+    initialVC.modelController.book = selectedBook;
+    initialVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self presentModalViewController:initialVC animated:YES];
 }
 
 - (void)slikovnicaRootViewController:(SlikovnicaRootViewController *)sender closedPictureBook:(Book *)book
 {
-    [self.bookLoadingIndicator stopAnimating];
+    [self.loadingIndicator stopAnimating];
     [self dismissModalViewControllerAnimated:YES];
 }
 
