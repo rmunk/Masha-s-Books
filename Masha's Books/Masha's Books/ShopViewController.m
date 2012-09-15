@@ -10,7 +10,6 @@
 
 @interface ShopViewController () <MFMailComposeViewControllerDelegate>
 @property (nonatomic, strong) PicturebookShop *picturebookShop;
-//@property (nonatomic, strong) NSMutableArray *allPicturebookCovers;
 @property (nonatomic, strong) NSOrderedSet *booksInSelectedCategory;
 @property (nonatomic, strong) UIView *youTubeTransparentView;
 @property (nonatomic, strong) UIWebView *youTubeVideoView;
@@ -34,9 +33,7 @@
 @synthesize tagViewLarge = _tagViewLarge;
 @synthesize rateImage = _rateImage;
 @synthesize activityView = _activityView;
-//@synthesize managedObjectContext = _managedObjectContext;
 @synthesize picturebookShop = _picturebookShop;
-//@synthesize allPicturebookCovers = _allPicturebookCovers;
 @synthesize booksInSelectedCategory = _booksInSelectedCategory;
 @synthesize youTubeTransparentView = _youTubeTransparentView;
 @synthesize youTubeVideoView = _youTubeVideoView;
@@ -84,8 +81,6 @@
 {
 	[super viewDidLoad];
 
-    //self.allPicturebookCovers = [[NSMutableArray alloc] init];
-    //self.booksInSelectedCategory = [self.picturebookShop getBooksForSelectedCategory];
     self.downloadProgressView.hidden = YES;
     if (self.picturebookShop.libraryLoaded == YES) {
         [self.picturebookShop refreshShop];
@@ -214,15 +209,12 @@
 }
 
 - (void)setDownloadStatus:(NSNotification *) notification {
-    //[self.picturebookShop refreshCovers:self.allPicturebookCovers];
     
-    if ([self.downloadProgressView isHidden]) {
+    if ([self.downloadProgressView isHidden]) 
         self.downloadProgressView.hidden = NO;
-    }
-    else {
-       // [self.booksTableView reloadData];
+    else 
         self.downloadProgressView.progress = self.picturebookShop.lastPercentage;
-    }
+    
 }
 
 - (void)setPercentage {
@@ -382,7 +374,6 @@
 {    
     NSLog(@"User selects book at index %d", indexPath.row);
  
- //   [self.allPicturebookCovers removeAllObjects];
     [self bookSelectedAtIndexPath:indexPath];
     [self.booksTableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
     
@@ -489,7 +480,7 @@
     //UIView *transparentView = [[UIView alloc] initWithFrame:self.view.frame];
     
     self.youTubeTransparentView = [[UIView alloc] initWithFrame:self.view.frame];
-    self.youTubeTransparentView.backgroundColor = [UIColor grayColor];
+    self.youTubeTransparentView.backgroundColor = [UIColor blackColor];
     self.youTubeTransparentView.alpha = 0.8;     
     [self.view addSubview:self.youTubeTransparentView];
     

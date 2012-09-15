@@ -22,8 +22,6 @@
 		BA8B446E15A387650098F063 /* Category+Addon.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8B446B15A387650098F063 /* Category+Addon.m */; };
 		BA8B449115A4D5BD0098F063 /* CategoryToBookMap.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8B449015A4D5BD0098F063 /* CategoryToBookMap.m */; };
 		BA8C844115CC862000461861 /* BooksTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8C844015CC862000461861 /* BooksTableCell.m */; };
-		BA98026F1575AFC600EE06BB /* CoverTableRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9802621575AFC600EE06BB /* CoverTableRowCell.m */; };
-		BA9802721575AFC600EE06BB /* PicturebookCover.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9802681575AFC600EE06BB /* PicturebookCover.m */; };
 		BA9802741575AFC600EE06BB /* PicturebookShop.m in Sources */ = {isa = PBXBuildFile; fileRef = BA98026C1575AFC600EE06BB /* PicturebookShop.m */; };
 		BAC1FD5B15AB898B00F97489 /* green_check.png in Resources */ = {isa = PBXBuildFile; fileRef = BAC1FD5A15AB898B00F97489 /* green_check.png */; };
 		BAE41B7615CB218200731C71 /* ShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAE41B7515CB218200731C71 /* ShopViewController.m */; };
@@ -209,10 +207,6 @@
 		BA8B449015A4D5BD0098F063 /* CategoryToBookMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryToBookMap.m; sourceTree = "<group>"; };
 		BA8C843F15CC862000461861 /* BooksTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BooksTableCell.h; sourceTree = "<group>"; };
 		BA8C844015CC862000461861 /* BooksTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BooksTableCell.m; sourceTree = "<group>"; };
-		BA9802611575AFC600EE06BB /* CoverTableRowCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoverTableRowCell.h; sourceTree = "<group>"; };
-		BA9802621575AFC600EE06BB /* CoverTableRowCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoverTableRowCell.m; sourceTree = "<group>"; };
-		BA9802671575AFC600EE06BB /* PicturebookCover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PicturebookCover.h; sourceTree = "<group>"; };
-		BA9802681575AFC600EE06BB /* PicturebookCover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PicturebookCover.m; sourceTree = "<group>"; };
 		BA98026B1575AFC600EE06BB /* PicturebookShop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PicturebookShop.h; sourceTree = "<group>"; };
 		BA98026C1575AFC600EE06BB /* PicturebookShop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PicturebookShop.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		BAC1FD5A15AB898B00F97489 /* green_check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green_check.png; sourceTree = "<group>"; };
@@ -444,10 +438,6 @@
 		BA98025F1575AF9600EE06BB /* PicturebookShop */ = {
 			isa = PBXGroup;
 			children = (
-				BA9802611575AFC600EE06BB /* CoverTableRowCell.h */,
-				BA9802621575AFC600EE06BB /* CoverTableRowCell.m */,
-				BA9802671575AFC600EE06BB /* PicturebookCover.h */,
-				BA9802681575AFC600EE06BB /* PicturebookCover.m */,
 				BA98026B1575AFC600EE06BB /* PicturebookShop.h */,
 				BA98026C1575AFC600EE06BB /* PicturebookShop.m */,
 				BA8B448F15A4D5BD0098F063 /* CategoryToBookMap.h */,
@@ -1047,8 +1037,6 @@
 				C0B3FF7415742E41002DF30F /* MashasBooksAppDelegate.m in Sources */,
 				C0982991157501D1004EAA0D /* MyBooksViewController.m in Sources */,
 				C00383721575510F00999A19 /* ScrollViewContainer.m in Sources */,
-				BA98026F1575AFC600EE06BB /* CoverTableRowCell.m in Sources */,
-				BA9802721575AFC600EE06BB /* PicturebookCover.m in Sources */,
 				BA9802741575AFC600EE06BB /* PicturebookShop.m in Sources */,
 				C08246ED157680E900054A3A /* Library.xcdatamodeld in Sources */,
 				C072881B15784A6100B64A68 /* SlikovnicaDataViewController.m in Sources */,

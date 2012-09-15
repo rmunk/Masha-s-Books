@@ -171,7 +171,7 @@
     
         if (parsingSuccesfull == YES) {
             //self.isShopLoaded = YES;
-            [self shopDataLoaded];
+            //[self shopDataLoaded];
         }
         else {
             [self shopErrorLoading];
@@ -188,16 +188,12 @@
 }
 
 - (void)userSelectsCategoryAtIndex:(NSUInteger)index {
-   // NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Category"]; 
-   // NSSortDescriptor *sortByName = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]; 
- //  request.sortDescriptors = [NSArray arrayWithObject:sortByName];
-   // NSError *error;
+
     NSArray *categories = [Category MR_findAllSortedBy:@"name" ascending:YES];
     
     NSLog(@"Number of categories is %d", categories.count);
     if (categories.count && index < categories.count) {
         self.selectedCategory = [categories objectAtIndex:index];
-        //self.booksInSelectedCategory = [Book getBooksForCategory:self.selectedCategory inContext:self.libraryDatabase.managedObjectContext];
         self.booksInSelectedCategory = [Book getBooksForCategory:self.selectedCategory];
         NSLog(@"User selects category %@", self.selectedCategory.name);
     } 
@@ -208,7 +204,6 @@
 
 - (void)userSelectsCategory:(Category *)category {
     self.selectedCategory = category;
-    //self.booksInSelectedCategory = [Book getBooksForCategory:self.selectedCategory inContext:self.libraryDatabase.managedObjectContext];
     self.booksInSelectedCategory = [Book getBooksForCategory:self.selectedCategory];
     NSLog(@"User selects category %@", self.selectedCategory.name);
    
@@ -229,13 +224,10 @@
 
 - (NSOrderedSet *)getBooksForSelectedCategory {
     return self.booksInSelectedCategory;
-    //return [Book getBooksForCategory:self.selectedCategory inContext:self.libraryDatabase.managedObjectContext];
 }
 
 - (NSOrderedSet *)getCategoriesInShop {
-   // return [Category getAllCategoriesFromContext:self.libraryDatabase.managedObjectContext];
     return [Category getAllCategories];
-    
 }
 
 - (void)coversLoaded {
@@ -252,6 +244,7 @@
 
 - (void)shopDataLoaded {
     NSLog(@"Persistent store size: %llu bytes", [self directorySizeAtPath:[self.libraryDatabase.fileURL path]]);
+    self.isShopLoaded = YES;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"PicturebookShopFinishedLoading" object:nil];
 }
 
@@ -276,7 +269,7 @@
         
         [MagicalRecord saveInBackgroundUsingCurrentContextWithBlock:^(NSManagedObjectContext *localContext)
         {
-             NSLog(@"Storing info");
+             //NSLog(@"Storing info");
              NSLog(@"%@", [attributeDict objectForKey:@"appVer"]);
              info.appVer = [attributeDict objectForKey:@"appVer"];
              NSLog(@"%@", [attributeDict objectForKey:@"appStoreURL"]);
@@ -300,9 +293,9 @@
         
         [MagicalRecord saveInBackgroundUsingCurrentContextWithBlock:^(NSManagedObjectContext *localContext)
         {
-             NSLog(@"Setting BGImage %@", [attributeDict objectForKey:@"BGImage"]);
+             //NSLog(@"Setting BGImage %@", [attributeDict objectForKey:@"BGImage"]);
              design.bgImageURL = [attributeDict objectForKey:@"BGImage"];
-             NSLog(@"Setting BGMasha %@", [attributeDict objectForKey:@"BGMasha"]);
+             //NSLog(@"Setting BGMasha %@", [attributeDict objectForKey:@"BGMasha"]);
              design.bgMashaURL = [attributeDict objectForKey:@"BGMasha"];
              
              NSURL *bacgroundURL = [[NSURL alloc] initWithString:
@@ -311,7 +304,7 @@
              NSURL *mashaURL = [[NSURL alloc] initWithString:
                                 [NSString stringWithFormat:@"%@%@",
                                  @"http://www.mashasbookstore.com", design.bgMashaURL]];
-             NSLog(@"Downloading background images at %@ and %@", bacgroundURL, mashaURL);
+             //NSLog(@"Downloading background images at %@ and %@", bacgroundURL, mashaURL);
              
              design.bgImage = [NSData dataWithContentsOfURL:bacgroundURL];
              design.bgMasha = [NSData dataWithContentsOfURL:mashaURL];
@@ -321,22 +314,10 @@
          errorHandler:^(NSError *error){ NSLog(@"%@", error.localizedDescription); }];
     }
     else if([elementName isEqualToString:@"categories"]) {
-                    
-        //[Category categoryWithAttributes:attributeDict forContext:self.libraryDatabase.managedObjectContext];
+
+        //Initialize new category
         [Category categoryWithAttributes:attributeDict];
-        PBDLOG(@"\n");
-        PBDLOG(@"New book category found!");       
-        
-        
-        //Extract category attributes from XML
-        NSInteger pbID = [[attributeDict objectForKey:@"ID"] integerValue];
-        PBDLOG_ARG(@"Category ID: %i", pbID);
-        
-        NSString *pbName = [attributeDict objectForKey:@"Name"];
-        PBDLOG_ARG(@"Category name: %@", pbName);        
-        
-        //Initialize new book category
-        
+
     }
     else if([elementName isEqualToString:@"categorybooks"]) {
         
@@ -352,7 +333,6 @@
 	else if([elementName isEqualToString:@"book"]) {       
         
         //Initialize new picture book
-        //self.currentBook = [Book bookWithAttributes:attributeDict forContext:self.libraryDatabase.managedObjectContext];
         self.currentBook = [Book bookWithAttributes:attributeDict];
         
 	}
@@ -385,8 +365,7 @@
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName 
   namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName {
     
-    if ([elementName isEqualToString:@"book"]) {
-        //[self.books addObject:self.pbookInfo];        
+    if ([elementName isEqualToString:@"book"]) {     
         PBDLOG(@"Book info storred!");
         
         self.currentBook = nil;
@@ -400,17 +379,14 @@
     else if ([elementName isEqualToString:@"bookstore"]) {
        
         NSLog(@"PARSING FINISHED");
-        // ovdi pozvat funkcije za likanje knjiga i kategorija, knjiga i autora
-        //[Category loadBackgroundsForContext:self.libraryDatabase.managedObjectContext];
+        
         [Category loadBackgrounds];
-        //[Book linkBooksToCategoriesWithLinker:self.categoryToBookMap inContext:self.libraryDatabase.managedObjectContext];
+
         [Book linkBooksToCategoriesWithLinker:self.categoryToBookMap];
-        //[Book linkBooksToAuthorsInContext:self.libraryDatabase.managedObjectContext];
-        [Book linkBooksToAuthors];
-        // fillBookWithCovers
+
+        //[Book linkBooksToAuthors];
+
         [Book loadCoversFromURL:@"http://www.mashasbookstore.com/covers/" forShop:self];
-        NSLog(@"Books covers downloaded!");
-        self.isShopLoaded = YES;
         
     }
 }
@@ -419,14 +395,12 @@
 {
     NSLog(@"Extracted book pages saved to database.");
     [[NSNotificationCenter defaultCenter] postNotificationName:@"BookReady" object:self];
-     
     
 }
 
 - (void)extractorBook:(Book *)book receivedNewPercentage:(float)percentage {
     self.bookWithLastReportedPercentage = book;
     self.lastPercentage = percentage;
-//    NSLog(@"Shop: Book %f", percentage);
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ShopReceivedZipData" object:self];
     if (book == self.selectedBook) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"NewShopReceivedZipData" object:self];

@@ -20,7 +20,6 @@
 #import "Author+Addon.h"
 #import "CategoryToBookMap.h"
 #import "BookExtractor.h"
-#import "PicturebookCover.h"
 #import "Info.h"
 #import "Design.h"
 

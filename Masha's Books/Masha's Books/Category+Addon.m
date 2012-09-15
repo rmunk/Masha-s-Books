@@ -29,7 +29,7 @@
     }
     else if (categoryWithID.count == 1) {
         Category *category = [categoryWithID lastObject];
-        NSLog(@"Category with ID=%d already exists in database. Updating...", [category.categoryID intValue]);
+        //NSLog(@"Category with ID=%d already exists in database. Updating...", [category.categoryID intValue]);
 
         
         if (![category.categoryID isEqualToNumber:[NSNumber numberWithInt:[[attributes objectForKey:@"ID"] integerValue]]]) {
@@ -65,7 +65,7 @@
     }
     else if (categoryWithID.count == 1) {
         Category *category = [categoryWithID lastObject];
-        NSLog(@"Category with ID=%d already exists in database. Updating...", [category.categoryID intValue]);
+        //NSLog(@"Category with ID=%d already exists in database. Updating...", [category.categoryID intValue]);
         
         
         if (![category.categoryID isEqualToNumber:[NSNumber numberWithInt:[[attributes objectForKey:@"ID"] integerValue]]]) {

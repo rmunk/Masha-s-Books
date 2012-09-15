@@ -38,7 +38,7 @@
     
     [self.catToBookPairs addObject:catBookPair];    
     
-    NSLog(@"New category-book pair [%d, %d]", [[catBookPair objectAtIndex:0] intValue], [[catBookPair objectAtIndex:1] intValue]);
+    //NSLog(@"New category-book pair [%d, %d]", [[catBookPair objectAtIndex:0] intValue], [[catBookPair objectAtIndex:1] intValue]);
 }
 
 - (NSArray *)getCategoryBookPairsArray {

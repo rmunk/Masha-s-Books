@@ -157,7 +157,7 @@
         NSArray *categoriesWithID = [context executeFetchRequest:request error:&error];
         if (categoriesWithID.count == 1) {
             [book addCategoriesObject:(Category *)[categoriesWithID lastObject]];
-            NSLog(@"Dodajem kategoriju %@ u knjigu %@", ((Category *)[categoriesWithID lastObject]).name, book.title);
+            //NSLog(@"Dodajem kategoriju %@ u knjigu %@", ((Category *)[categoriesWithID lastObject]).name, book.title);
         }
         else if (categoriesWithID.count > 1) {
             NSLog(@"ERROR: Multiple entries for category ID = %d in database!", [catID intValue]);
@@ -178,7 +178,7 @@
         NSArray *categoriesWithID = [Category MR_findAllWithPredicate:predicate];
         if (categoriesWithID.count == 1) {
             [book addCategoriesObject:(Category *)[categoriesWithID lastObject]];
-            NSLog(@"Dodajem kategoriju %@ u knjigu %@", ((Category *)[categoriesWithID lastObject]).name, book.title);
+            //NSLog(@"Dodajem kategoriju %@ u knjigu %@", ((Category *)[categoriesWithID lastObject]).name, book.title);
         }
         else if (categoriesWithID.count > 1) {
             NSLog(@"ERROR: Multiple entries for category ID = %d in database!", [catID intValue]);
@@ -311,13 +311,12 @@
             } 
         }
         completion:^{ 
-            NSLog(@"My Books BG images downloaded and saved to database."); 
             if (shop.numberOfBooksWhinchNeedCoversDownloaded > 1) {
                 shop.numberOfBooksWhinchNeedCoversDownloaded = shop.numberOfBooksWhinchNeedCoversDownloaded - 1;
             }
             else {
                 shop.numberOfBooksWhinchNeedCoversDownloaded = 0;
-                NSLog(@"Images downloaded!!!!!!!!!!!!!!!!!!!!!!!");
+                NSLog(@"Book covers downloaded");
                 [shop coversLoaded];
             }
         }
@@ -469,7 +468,7 @@
         NSArray *categoriesWithID = [context executeFetchRequest:request error:&error];
         if (categoriesWithID.count == 1) {
             [self addCategoriesObject:(Category *)[categoriesWithID lastObject]];
-            NSLog(@"Dodajem kategoriju %@ u knjigu %@", ((Category *)[categoriesWithID lastObject]).name, self.title);
+            //NSLog(@"Dodajem kategoriju %@ u knjigu %@", ((Category *)[categoriesWithID lastObject]).name, self.title);
         }
         else if (categoriesWithID.count > 1) {
             NSLog(@"ERROR: Multiple entries for category ID = %d in database!", [catID intValue]);
@@ -489,7 +488,7 @@
         NSArray *categoriesWithID = [Category findAllWithPredicate:predicate];
         if (categoriesWithID.count == 1) {
             [self addCategoriesObject:(Category *)[categoriesWithID lastObject]];
-            NSLog(@"Dodajem kategoriju %@ u knjigu %@", ((Category *)[categoriesWithID lastObject]).name, self.title);
+            //NSLog(@"Dodajem kategoriju %@ u knjigu %@", ((Category *)[categoriesWithID lastObject]).name, self.title);
         }
         else if (categoriesWithID.count > 1) {
             NSLog(@"ERROR: Multiple entries for category ID = %d in database!", [catID intValue]);
@@ -524,48 +523,6 @@
     }
 }
 
-- (void)downloadBookZipFileforShop:(PicturebookShop *)shop
-{
-  /*  NSURL *zipURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.mashasbookstore.com%@",self.downloadURL]];
-    NSString *file = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"tmp/%@",self.downloadURL.lastPathComponent]];
-    
-    BookExtractor *bookExtractor = [[BookExtractor alloc] initExtractorWithUrl:zipURL];
-    bookExtractor.delegate = shop;
-    bookExtractor.book = self;
-        
-    NSLog(@"Downloading zip file for book %@.", self.title);
 
-    dispatch_queue_t downloadZipQueue = dispatch_queue_create("zip download", NULL);
-    dispatch_async(downloadZipQueue, ^{
-        
-        [bookExtractor downloadBookZipFile];
-        
-        //while ([bookExtractor isDownloading] == YES);
-        
-        
-        NSData *zipFile = [NSData dataWithData:[bookExtractor getDownloadedData]];
-        //NSData *zipFile = [NSData dataWithContentsOfURL:zipURL];
-        [zipFile writeToFile:file atomically:YES];       
-        NSLog(@"Downloading file completed.");
-        
-        dispatch_async(dispatch_get_main_queue(), ^{                    
-            
-            
-            [bookExtractor extractBookFromFile:file];
-        });   
-        
-    });
-    dispatch_release(downloadZipQueue);*/
-}
-
-/*
--(void) connection:(NSURLConnection *)connection didReceiveData:(NSData *)data forFile:(NSData *)zipFile {
-    
-    float recievedData = [self.downloaded floatValue];
-    self.downloaded = [NSNumber numberWithFloat:((float)recievedData / (float) expectedTotalSize)];
-    recievedData += data.length;
-
-}
-*/
 
 @end
