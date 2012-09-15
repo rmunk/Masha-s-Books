@@ -47,8 +47,6 @@
 @property (nonatomic, strong) Book *selectedBook;
 @property float lastPercentage;
 
-@property (nonatomic, strong) UIManagedDocument *libraryDatabase;
-
 - (PicturebookShop *)initShop;
 - (void)refreshShop;    
 - (void)userSelectsCategoryAtIndex:(NSUInteger)index;

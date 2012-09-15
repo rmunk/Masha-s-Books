@@ -18,36 +18,26 @@
 
 @interface Book (Addon)
 
-//+ (Book *)bookWithAttributes:(NSDictionary *)attributes forContext:(NSManagedObjectContext *)context;
 + (Book *)bookWithAttributes:(NSDictionary *)attributes;
 
-//+ (void)pickBookCategoriesFromLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context forBook:(Book *)book;
 + (void)pickBookCategoriesFromLinker:(CategoryToBookMap *)categoryToBookMap forBook:(Book *)book;
 
-//+ (void)linkBooksToCategoriesWithLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context;
 + (void)linkBooksToCategoriesWithLinker:(CategoryToBookMap *)categoryToBookMap;
 
-//+ (void)linkBooksToAuthorsInContext:(NSManagedObjectContext *)context;
 + (void)linkBooksToAuthors;
 
 + (void)loadCoversFromURL:(NSString *)coverUrlString forShop:(PicturebookShop *)shop;
-//+ (void)loadCoversFromURL:(NSString *)coverUrlString;
 
 + (void)updateBook:(Book *)book withAttributes:(NSDictionary *)attributes;
 
-//+ (NSArray *)getAllBooksFromContext:(NSManagedObjectContext *)context;
 + (NSArray *)getAllBooks;
 
-//+ (NSOrderedSet *)getBooksForCategory:(Category *)category inContext:(NSManagedObjectContext *)context;
 + (NSOrderedSet *)getBooksForCategory:(Category *)category;
 
-//+ (Book *)getBookWithId:(NSNumber *)bookID inContext:(NSManagedObjectContext *)context withErrorHandler:(NSError *)error;
 + (Book *)getBookWithId:(NSNumber *)bookID withErrorHandler:(NSError *)error;
 
 - (void)fillBookElement:(NSString *)element withDescription:(NSString *)description;
 
-//- (void)pickYourCategoriesFromLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context;
-- (void)pickYourCategoriesFromLinker:(CategoryToBookMap *)categoryToBookMa;
+- (void)pickYourCategoriesFromLinker:(CategoryToBookMap *)categoryToBookMap;
 
-- (void)downloadBookZipFileforShop:(PicturebookShop *)shop;
 @end

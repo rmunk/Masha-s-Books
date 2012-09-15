@@ -97,17 +97,6 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    
-    NSError *error = nil;
-   // NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
-    if (self.picturebookShop.libraryDatabase.managedObjectContext != nil) {
-        if ([self.picturebookShop.libraryDatabase.managedObjectContext hasChanges] && ![self.picturebookShop.libraryDatabase.managedObjectContext save:&error]) {
-            // Replace this implementation with code to handle the error appropriately.
-            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        } 
-    }
 }
 
 - (void)viewDidUnload
@@ -226,17 +215,14 @@
     self.downloadProgressView.hidden = YES;
     [self.downloadProgressView setNeedsDisplay];
     
-   // NSIndexPath *selectedIndexPath = [self.booksTableView indexPathForSelectedRow];
-    //[self bookSelectedAtIndexPath:selectedIndexPath];
     [self.booksTableView reloadData];
     
-    
     NSLog(@"ShopViewController: Posting PagesAdded notification");
-   // [[NSNotificationCenter defaultCenter] postNotificationName:@"PagesAdded" object:nil];
+
 }
 
 - (void)bookSelectedAtIndexPath:(NSIndexPath *)indexPath {
-   //NSOrderedSet *books = self.booksInSelectedCategory;//[self.picturebookShop getBooksForSelectedCategory];
+
     if (self.booksInSelectedCategory.count > 0) {
         NSLog(@"bookSelected: Number of books in category %@ is %d", self.picturebookShop.selectedCategory.name, self.booksInSelectedCategory.count);
         if (![self.downloadProgressView isHidden]) {
@@ -268,8 +254,7 @@
     
         //Load the request in the UIWebView.
         [self.bookWebView loadRequest:requestObj];
-        //    self.priceLabel.text = book.price;
-        //    [self.bookWebView loadHTMLString:book.descriptionLongHTML baseURL:nil];
+
     }
     else {
         NSLog(@"No books in category");
@@ -308,7 +293,7 @@
         cell = [[BooksTableCell alloc] initWithStyle:UITableViewCellStyleSubtitle
                                       reuseIdentifier:CellIdentifier];
     }
-    //Book *book = [[self.picturebookShop getBooksForSelectedCategory] objectAtIndex:indexPath.row];
+
     Book *book = [self.booksInSelectedCategory objectAtIndex:indexPath.row];
     cell.coverImage.image = book.coverThumbnailImage;
     cell.bookTitle.text = book.title;
@@ -333,7 +318,6 @@
         }
         
         cell.statusLabel.text = @"Downloading...";
-        //cell.statusLabel.text = [NSString stringWithFormat:@"%d %", (int)(self.picturebookShop.lastPercentage * 100)];
     }
     else {
         cell.transparencyView.hidden = YES;
@@ -345,27 +329,7 @@
                 
     }
 
-    
-    //        self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"box.png"]];
-    //        self.backgroundView.contentMode = UIViewContentModeTopLeft;
-    //        self.selectedBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"box_sel"]];
-    //        self.selectedBackgroundView.contentMode = UIViewContentModeTopLeft;
-//    cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"box.png"]];
-//    cell.backgroundView.contentMode = UIViewContentModeTopLeft;
-//    cell.selectedBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"box_sel.png"]];
-//    cell.selectedBackgroundView.contentMode = UIViewContentModeTopLeft;
-//    
-    
-//    CGRect bookCellFrame = CGRectMake(0, 0, tableView.bounds.size.width, BOOKCELL_HEIGHT);
-//    
-//    Book *book = [[self.picturebookShop getBooksForSelectedCategory] objectAtIndex:indexPath.row];
-//    if (cell == nil) 
-//        cell = [[BooksTableCell alloc] initWithFrame:bookCellFrame forBook:book];
-//  
     return cell;
-    
-       
-    
 }
 
 #pragma mark - Table view delegate
@@ -389,7 +353,6 @@
         popoverController = popoverSegue.popoverController;
         
         CategoryTableViewController *categoryVC = (CategoryTableViewController *)popoverSegue.destinationViewController;
-        //categoryVC.categories = [Category getAllCategoriesFromContext:self.picturebookShop.libraryDatabase.managedObjectContext];
         categoryVC.categories = [Category getAllCategories];
    
         categoryVC.delegate = self;
@@ -476,8 +439,6 @@
     CGRect closeButtonFrame = CGRectMake(cbX - cbD, cbY - cbD, 2 * cbD, 2 * cbD);
     NSString *html = [NSString stringWithFormat:embedHTML, urlString, youTubeFrame.size.width, youTubeFrame.size.height];
     UIImage *closeButtonImage = [UIImage imageNamed:@"close.png"];
-    //UIWebView *videoView = [[UIWebView alloc] initWithFrame:youTubeFrame];
-    //UIView *transparentView = [[UIView alloc] initWithFrame:self.view.frame];
     
     self.youTubeTransparentView = [[UIView alloc] initWithFrame:self.view.frame];
     self.youTubeTransparentView.backgroundColor = [UIColor blackColor];

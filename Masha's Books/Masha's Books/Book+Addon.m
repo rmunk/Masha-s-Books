@@ -11,73 +11,6 @@
 
 @implementation Book (Addon)
 
-+ (Book *)bookWithAttributes:(NSDictionary *)attributes forContext:(NSManagedObjectContext *)context {
-    
-    //kreiranje fetch requesta
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"]; 
-    NSError *error;
-    
-    request.predicate = [NSPredicate predicateWithFormat:@"bookID = %d", [[attributes objectForKey:@"ID"] integerValue]];
-    NSArray *booksWithID = [context executeFetchRequest:request error:&error];
-    
-    if ([booksWithID count] == 0) {
-        //ako knjige nema u bazi onda ovo
-        NSLog(@"NEMA JE !!!!!!!!!!!!!!!!!!!!!!");
-        
-        Book *book = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:context];
-        NSDateFormatter *df = [[NSDateFormatter alloc] init];
-        [df setDateFormat:@"dd.mm.yyyy"];
-        
-        book.bookID = [NSNumber numberWithInt:[[attributes objectForKey:@"ID"] integerValue]];
-        
-        book.type = [NSNumber numberWithInt:[[attributes objectForKey:@"Type"] integerValue]];
-        
-        book.price = [NSNumber numberWithFloat:[[attributes objectForKey:@"Price"] floatValue]];
-        
-        book.rate = [NSNumber numberWithFloat:[[attributes objectForKey:@"Rate"] floatValue]];
-        
-        book.tag = [NSNumber numberWithFloat:[[attributes objectForKey:@"Tag"] floatValue]];
-        
-        book.title = [attributes objectForKey:@"Title"];
-        
-        book.appStoreID = [NSNumber numberWithInt:[[attributes objectForKey:@"AppleStoreID"] integerValue]];
-        
-        book.authorID = [NSNumber numberWithInt:[[attributes objectForKey:@"AuthorID"] integerValue]];
-        
-        book.publishDate = [df dateFromString:[attributes objectForKey:@"PublishDate"]];
-        
-        book.downloadURL = [attributes objectForKey:@"DownloadURL"];
-        
-        book.facebookLikeURL = [attributes objectForKey:@"FacebookLikeURL"];
-        
-        book.youTubeVideoURL = [attributes objectForKey:@"YouTubeVideoURL"];
-        
-        book.active = [attributes objectForKey:@"Active"];
-        
-        book.downloaded = [NSNumber numberWithInt:0];
-        
-        /* ovde se treba provjerit jeli knjiga vec kupljena, ako je drugaciji botun treba bit za nju u shopu
-         i za knjigu treba postavit status bought */
-        
-        book.status = [NSString stringWithString:@"available"];
-        
-        return book;
-    }
-    else if ([booksWithID count] == 1)       
-    {
-        Book *book = [booksWithID lastObject];
-         // ovdje treba refreshat postojecu knjigu s novi atributima
-        NSLog(@"Book with ID=%d already exists in database. Updating...", [book.bookID intValue]);
-        [Book updateBook:book withAttributes:attributes];
-        
-        return book;
-    }
-    else {
-        NSLog(@"ERROR: More than one book with ID $d exists in database!");
-        return nil;
-    }   
-}
-
 + (Book *)bookWithAttributes:(NSDictionary *)attributes {
     
     //kreiranje fetch requesta
@@ -144,30 +77,6 @@
     }   
 }
 
-
-+ (void)pickBookCategoriesFromLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context forBook:(Book *)book {
-    
-    //kreiranje fetch requesta
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Category"]; 
-    NSError *error;
-    NSArray *categoriesForBook = [categoryToBookMap getCategoryIdentifiersForBookIdentifier:[book.bookID intValue]];
-    
-    for (NSNumber *catID in categoriesForBook) {        
-        request.predicate = [NSPredicate predicateWithFormat:@"categoryID = %d", [catID intValue]];
-        NSArray *categoriesWithID = [context executeFetchRequest:request error:&error];
-        if (categoriesWithID.count == 1) {
-            [book addCategoriesObject:(Category *)[categoriesWithID lastObject]];
-            //NSLog(@"Dodajem kategoriju %@ u knjigu %@", ((Category *)[categoriesWithID lastObject]).name, book.title);
-        }
-        else if (categoriesWithID.count > 1) {
-            NSLog(@"ERROR: Multiple entries for category ID = %d in database!", [catID intValue]);
-        }
-        else {
-            NSLog(@"ERROR: No entries for category ID = %d in database! Linker error.", [catID intValue]);
-        }                  
-    }
-}
-
 + (void)pickBookCategoriesFromLinker:(CategoryToBookMap *)categoryToBookMap forBook:(Book *)book {
     
     //kreiranje fetch requesta
@@ -189,17 +98,6 @@
     }
 }
 
-+ (void)linkBooksToCategoriesWithLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context {
-    
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"]; 
-    NSError *error;
-    NSArray *books = [context executeFetchRequest:request error:&error];
-    
-    for (Book *book in books) 
-        [self pickBookCategoriesFromLinker:categoryToBookMap inContext:context forBook:book];
-
-}
-
 + (void)linkBooksToCategoriesWithLinker:(CategoryToBookMap *)categoryToBookMap {
     
     NSArray *books = [Book MR_findAll];
@@ -208,28 +106,6 @@
         [self pickBookCategoriesFromLinker:categoryToBookMap forBook:book];
     
 }
-
-/*
-+ (void)linkBooksToAuthorsInContext:(NSManagedObjectContext *)context {
-    
-    NSArray *books = [Book getAllBooksFromContext:context];
-    
-    for (Book *book in books) {
-        
-        NSArray *author = [Author getAuthorWithID:book.authorID fromContext:context];        
-        if (author.count == 1) {
-            book.author = [author lastObject];
-            NSLog(@"Found autor %@ for book %@ in database!", ((Author *)[author lastObject]).name, book.title);
-        }
-        else if (author.count > 1)
-        {
-            NSLog(@"ERROR: Multiple autors for book %@ in database!", book.title);
-        }
-        else {
-            NSLog(@"ERROR: No authors for book %@ in database!", book.title);
-        }
-    }
-}*/
 
 + (void)linkBooksToAuthors {
     
@@ -288,7 +164,7 @@
             
         
                 
-        [MagicalRecord saveInBackgroundUsingCurrentContextWithBlock:^(NSManagedObjectContext *localContext)
+        [MagicalRecord saveInBackgroundWithBlock:^(NSManagedObjectContext *localContext)
         {            
             // Get an image from the URL below
             UIImage *coverThumbnailImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:coverThumbnailURL]];
@@ -319,8 +195,7 @@
                 NSLog(@"Book covers downloaded");
                 [shop coversLoaded];
             }
-        }
-        errorHandler:^(NSError *error){ NSLog(@"%@", error.localizedDescription); }]; 
+        }]; 
     } 
 }
 
@@ -392,48 +267,12 @@
     }    
 }
 
-+ (NSArray *)getAllBooksFromContext:(NSManagedObjectContext *)context {
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"]; 
-    NSError *error;
-    NSArray *books = [context executeFetchRequest:request error:&error];
-    return books;
-}
-
 + (NSArray *)getAllBooks {
     
     return [Book MR_findAll];
 }
 
-+ (NSOrderedSet *)getBooksForCategory:(Category *)category inContext:(NSManagedObjectContext *)context {
-    
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"]; 
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"bookID"
-                                                                   ascending:YES];
-    request.sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-    NSError *error;
-    
-    NSArray *books = [context executeFetchRequest:request error:&error];
-    
-    NSMutableOrderedSet *booksInCategory = [[NSMutableOrderedSet alloc] init];
-    
-    for (Book *book in books) {
-        for (Category *cat in book.categories) {
-            if (category.categoryID == cat.categoryID ) {
-                [booksInCategory addObject:book];
-            }
-        }
-    }
-    
-    return [booksInCategory copy];
-    
-}
-
 + (NSOrderedSet *)getBooksForCategory:(Category *)category {
-    
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"]; 
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"bookID"
-                                                                   ascending:YES];
-    request.sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
     
     NSArray *books = [Book MR_findAllSortedBy:@"bookID" ascending:YES];
     
@@ -448,55 +287,6 @@
     }
     
     return [booksInCategory copy];
-    
-}
-
-- (void)fillBookElement:(NSString *)element withDescription:(NSString *)description {
-    if ([element isEqualToString:@"Description"]) 
-        self.descriptionString = description;
-}
-
-- (void)pickYourCategoriesFromLinker:(CategoryToBookMap *)categoryToBookMap inContext:(NSManagedObjectContext *)context {
-    
-    //kreiranje fetch requesta
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Category"]; 
-    NSError *error;
-    NSArray *categoriesForBook = [categoryToBookMap getCategoryIdentifiersForBookIdentifier:[self.bookID intValue]];
-    
-    for (NSNumber *catID in categoriesForBook) {        
-        request.predicate = [NSPredicate predicateWithFormat:@"categoryID = %d", [catID intValue]];
-        NSArray *categoriesWithID = [context executeFetchRequest:request error:&error];
-        if (categoriesWithID.count == 1) {
-            [self addCategoriesObject:(Category *)[categoriesWithID lastObject]];
-            //NSLog(@"Dodajem kategoriju %@ u knjigu %@", ((Category *)[categoriesWithID lastObject]).name, self.title);
-        }
-        else if (categoriesWithID.count > 1) {
-            NSLog(@"ERROR: Multiple entries for category ID = %d in database!", [catID intValue]);
-        }
-        else {
-            NSLog(@"ERROR: No entries for category ID = %d in database! Linker error.", [catID intValue]);
-        }                  
-    }
-}
-
-- (void)pickYourCategoriesFromLinker:(CategoryToBookMap *)categoryToBookMap {
-    
-    NSArray *categoriesForBook = [categoryToBookMap getCategoryIdentifiersForBookIdentifier:[self.bookID intValue]];
-    
-    for (NSNumber *catID in categoriesForBook) {        
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"categoryID = %d", [catID intValue]];
-        NSArray *categoriesWithID = [Category findAllWithPredicate:predicate];
-        if (categoriesWithID.count == 1) {
-            [self addCategoriesObject:(Category *)[categoriesWithID lastObject]];
-            //NSLog(@"Dodajem kategoriju %@ u knjigu %@", ((Category *)[categoriesWithID lastObject]).name, self.title);
-        }
-        else if (categoriesWithID.count > 1) {
-            NSLog(@"ERROR: Multiple entries for category ID = %d in database!", [catID intValue]);
-        }
-        else {
-            NSLog(@"ERROR: No entries for category ID = %d in database! Linker error.", [catID intValue]);
-        }                  
-    }
 }
 
 + (Book *)getBookWithId:(NSNumber *)bookID withErrorHandler:(NSError *)error {
@@ -522,6 +312,33 @@
         return nil;
     }
 }
+
+- (void)fillBookElement:(NSString *)element withDescription:(NSString *)description {
+    if ([element isEqualToString:@"Description"]) 
+        self.descriptionString = description;
+}
+
+- (void)pickYourCategoriesFromLinker:(CategoryToBookMap *)categoryToBookMap {
+    
+    NSArray *categoriesForBook = [categoryToBookMap getCategoryIdentifiersForBookIdentifier:[self.bookID intValue]];
+    
+    for (NSNumber *catID in categoriesForBook) {        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"categoryID = %d", [catID intValue]];
+        NSArray *categoriesWithID = [Category findAllWithPredicate:predicate];
+        if (categoriesWithID.count == 1) {
+            [self addCategoriesObject:(Category *)[categoriesWithID lastObject]];
+            //NSLog(@"Dodajem kategoriju %@ u knjigu %@", ((Category *)[categoriesWithID lastObject]).name, self.title);
+        }
+        else if (categoriesWithID.count > 1) {
+            NSLog(@"ERROR: Multiple entries for category ID = %d in database!", [catID intValue]);
+        }
+        else {
+            NSLog(@"ERROR: No entries for category ID = %d in database! Linker error.", [catID intValue]);
+        }                  
+    }
+}
+
+
 
 
 

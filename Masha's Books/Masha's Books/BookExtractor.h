@@ -29,8 +29,6 @@
 @class BookExtractor;
 @class PicturebookShop;
 
-
-
 @interface BookExtractor : NSObject <NSURLConnectionDataDelegate>
 
 @property (nonatomic, strong) Book *book;
@@ -38,8 +36,7 @@
 @property long long expectedZipSize;
 @property (nonatomic, strong) NSMutableData *downloadedZipData;
 @property BOOL downloading;
-//- (BookExtractor *)initExtractorWithUrl:(NSURL *)zipURL;
-- (BookExtractor *)initExtractorWithShop:(id)shop andContext:(NSManagedObjectContext *)context;
+- (BookExtractor *)initExtractorWithShop:(id)shop;
 - (void)extractBookFromFile:(NSString *)zipFile;
 - (BOOL)isDownloading;
 - (NSData *)getDownloadedData;

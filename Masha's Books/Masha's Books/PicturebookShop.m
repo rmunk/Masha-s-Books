@@ -25,16 +25,11 @@
 
 @property (nonatomic, strong) Book *bookWithLastReportedPercentage;
 
-
-
 @end
 
 @implementation PicturebookShop
 
 @synthesize urlBase = _urlBase;
-
-
-@synthesize libraryDatabase = _libraryDatabase;
 
 @synthesize shopURL = _shopURL;
 @synthesize xmlParser = _xmlParser;
@@ -61,16 +56,6 @@
     self.shopURL = [[NSURL alloc] initWithString:@"http://www.mashasbookstore.com/storeops/bookstore-xml.aspx"];
     //_shopURL = [[NSURL alloc] initWithString:@"http://dl.dropbox.com/u/286270/PicturebookShop.xml"];
     
-    
-    
-    // Init library database UIManagedDocument
-    if (!self.libraryDatabase) {
-        NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-        url = [url URLByAppendingPathComponent:@"Library"];
-        self.libraryDatabase = [[UIManagedDocument alloc] initWithFileURL:url];
-        
-    }
-    
     self.currentElementValue = [[NSString alloc] init];
     self.categoryToBookMap = [[CategoryToBookMap alloc] init];
     self.selectedBook = nil;
@@ -81,6 +66,9 @@
     
     self.isShopLoaded = NO;
     self.libraryLoaded = NO;
+    
+    self.extractor = [[BookExtractor alloc] initExtractorWithShop:self];
+    [self refreshShop];
     
     
     
@@ -96,41 +84,6 @@
 
 - (void)loadShopFromDatabase {
     self.isShopLoaded = YES;
-}
-
-// useDocument method   - if picture-book database does not exist, it creates it
-//                      - if picture-book database exists but it's not open, it opens it
-//                      - if picture-book database is open, use database
-- (void)useDocument
-{
-    if (![[NSFileManager defaultManager] fileExistsAtPath:[self.libraryDatabase.fileURL path]]) {
-        [self.libraryDatabase saveToURL:self.libraryDatabase.fileURL forSaveOperation:UIDocumentSaveForCreating completionHandler:^(BOOL success){
-            NSLog(@"Database at %@ does not exist. Creating...", self.libraryDatabase.fileURL);
-            [self useDocument];
-        }];
-    } else if (self.libraryDatabase.documentState == UIDocumentStateClosed) {
-        [self.libraryDatabase openWithCompletionHandler:^(BOOL success){
-            NSLog(@"Database at %@ exist. Opening...", self.libraryDatabase.fileURL);
-            [self useDocument];
-        }];
-    } else if (self.libraryDatabase.documentState == UIDocumentStateNormal) {
-        NSLog(@"Database at %@ is opened and ready for use.", self.libraryDatabase.fileURL);
-        //[self loadShopFromDatabase];
-        //self.isShopLoaded = YES;
-        self.libraryLoaded = YES;
-        [self.libraryDatabase.managedObjectContext setMergePolicy:NSOverwriteMergePolicy];
-        self.extractor = [[BookExtractor alloc] initExtractorWithShop:self andContext:self.libraryDatabase.managedObjectContext];
-        [self refreshShop];
-        //[self shopDataLoaded];
-    }
-}
-
-- (void)setLibraryDatabase:(UIManagedDocument *)libraryDatabase
-{
-    if (_libraryDatabase != libraryDatabase) {
-        _libraryDatabase = libraryDatabase;
-        [self useDocument];
-    }
 }
 
 - (void)userBuysBook:(Book *)book {
@@ -154,33 +107,27 @@
 }
 
 - (void)refreshShop {
-    if (self.libraryLoaded == YES) {    
-        PBDLOG_ARG(@"Picturebook shop: Refreshing shop from URL %@", [self.shopURL description]);
+    PBDLOG_ARG(@"Picturebook shop: Refreshing shop from URL %@", [self.shopURL description]);
     
-        //PicturebookCategory *all = [[PicturebookCategory alloc] initWithName:@"All" AndID:0];   
+    //PicturebookCategory *all = [[PicturebookCategory alloc] initWithName:@"All" AndID:0];   
 
-        //[self.categories addObject:all];    // Add "All" category to categories sets
-     
-        self.xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:self.shopURL];
-        if (self.xmlParser) {
-            PBDLOG_ARG(@"Picturebook shop found at %@", self.shopURL.description);
-        }
-        [self.xmlParser setDelegate:self];
+    //[self.categories addObject:all];    // Add "All" category to categories sets
     
-        BOOL parsingSuccesfull = [self.xmlParser parse];
+    self.xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:self.shopURL];
+    if (self.xmlParser) 
+        PBDLOG_ARG(@"Picturebook shop found at %@", self.shopURL.description);
+
+    [self.xmlParser setDelegate:self];
     
-        if (parsingSuccesfull == YES) {
-            //self.isShopLoaded = YES;
-            //[self shopDataLoaded];
-        }
-        else {
-            [self shopErrorLoading];
-        }
+    BOOL parsingSuccesfull = [self.xmlParser parse];
+    
+    if (parsingSuccesfull == YES) {
+        //self.isShopLoaded = YES;
+        //[self shopDataLoaded];
     }
     else {
-        NSLog(@"Library not loaded. Refresh will be called from useDocument funcion");
+        [self shopErrorLoading];
     }
-
 }
 
 - (void)putObject:(id)obj inContext:(NSManagedObjectContext *)context {
@@ -231,19 +178,10 @@
 }
 
 - (void)coversLoaded {
-    // save database
-    
-    [self.libraryDatabase saveToURL:self.libraryDatabase.fileURL forSaveOperation:UIDocumentSaveForOverwriting completionHandler:^(BOOL success) {
-        if (success) {
-            NSLog(@"Library database saved!");  
-            [self shopDataLoaded];
-        }
-    }];
-    
+    [self shopDataLoaded];
 }
 
 - (void)shopDataLoaded {
-    NSLog(@"Persistent store size: %llu bytes", [self directorySizeAtPath:[self.libraryDatabase.fileURL path]]);
     self.isShopLoaded = YES;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"PicturebookShopFinishedLoading" object:nil];
 }
@@ -267,51 +205,50 @@
         Info *info = [Info MR_findFirst];
         if (!info) info = [Info MR_createEntity];
         
-        [MagicalRecord saveInBackgroundUsingCurrentContextWithBlock:^(NSManagedObjectContext *localContext)
+        [MagicalRecord saveInBackgroundWithBlock:^(NSManagedObjectContext *localContext)
         {
-             //NSLog(@"Storing info");
-             NSLog(@"%@", [attributeDict objectForKey:@"appVer"]);
-             info.appVer = [attributeDict objectForKey:@"appVer"];
-             NSLog(@"%@", [attributeDict objectForKey:@"appStoreURL"]);
-             info.appStoreURL = [attributeDict objectForKey:@"appStoreURL"];
-             NSLog(@"%@", [attributeDict objectForKey:@"websiteURL"]);
-             info.websiteURL = [attributeDict objectForKey:@"websiteURL"];
-             NSLog(@"%@", [attributeDict objectForKey:@"facebookURL"]);
-             info.facebookURL = [attributeDict objectForKey:@"facebookURL"];
-             NSLog(@"%@", [attributeDict objectForKey:@"twitterURL"]);
-             info.twitterURL = [attributeDict objectForKey:@"twitterURL"];
-             NSLog(@"%@", [attributeDict objectForKey:@"contactURL"]);
-             info.contactURL = [attributeDict objectForKey:@"contactURL"];
-         }
-         completion:^{ NSLog(@"Web links saved to database."); }
-         errorHandler:^(NSError *error){ NSLog(@"%@", error.localizedDescription); }];
+            //NSLog(@"Storing info");
+            NSLog(@"%@", [attributeDict objectForKey:@"appVer"]);
+            info.appVer = [attributeDict objectForKey:@"appVer"];
+            NSLog(@"%@", [attributeDict objectForKey:@"appStoreURL"]);
+            info.appStoreURL = [attributeDict objectForKey:@"appStoreURL"];
+            NSLog(@"%@", [attributeDict objectForKey:@"websiteURL"]);
+            info.websiteURL = [attributeDict objectForKey:@"websiteURL"];
+            NSLog(@"%@", [attributeDict objectForKey:@"facebookURL"]);
+            info.facebookURL = [attributeDict objectForKey:@"facebookURL"];
+            NSLog(@"%@", [attributeDict objectForKey:@"twitterURL"]);
+            info.twitterURL = [attributeDict objectForKey:@"twitterURL"];
+            NSLog(@"%@", [attributeDict objectForKey:@"contactURL"]);
+            info.contactURL = [attributeDict objectForKey:@"contactURL"];
+        }
+        completion:^{ NSLog(@"Web links saved to database."); }
+         ];
     }
     else if([elementName isEqualToString:@"myBooks"]) {
         
         Design *design = [Design MR_findFirst];
         if (!design) design = [Design MR_createEntity];
         
-        [MagicalRecord saveInBackgroundUsingCurrentContextWithBlock:^(NSManagedObjectContext *localContext)
+        [MagicalRecord saveInBackgroundWithBlock:^(NSManagedObjectContext *localContext)
         {
              //NSLog(@"Setting BGImage %@", [attributeDict objectForKey:@"BGImage"]);
-             design.bgImageURL = [attributeDict objectForKey:@"BGImage"];
+            design.bgImageURL = [attributeDict objectForKey:@"BGImage"];
              //NSLog(@"Setting BGMasha %@", [attributeDict objectForKey:@"BGMasha"]);
-             design.bgMashaURL = [attributeDict objectForKey:@"BGMasha"];
+            design.bgMashaURL = [attributeDict objectForKey:@"BGMasha"];
              
-             NSURL *bacgroundURL = [[NSURL alloc] initWithString:
-                                    [NSString stringWithFormat:@"%@%@",
-                                     @"http://www.mashasbookstore.com", design.bgImageURL]];
-             NSURL *mashaURL = [[NSURL alloc] initWithString:
+            NSURL *bacgroundURL = [[NSURL alloc] initWithString:
                                 [NSString stringWithFormat:@"%@%@",
-                                 @"http://www.mashasbookstore.com", design.bgMashaURL]];
-             //NSLog(@"Downloading background images at %@ and %@", bacgroundURL, mashaURL);
+                                    @"http://www.mashasbookstore.com", design.bgImageURL]];
+            NSURL *mashaURL = [[NSURL alloc] initWithString:
+                            [NSString stringWithFormat:@"%@%@",
+                                @"http://www.mashasbookstore.com", design.bgMashaURL]];
+            //NSLog(@"Downloading background images at %@ and %@", bacgroundURL, mashaURL);
              
-             design.bgImage = [NSData dataWithContentsOfURL:bacgroundURL];
-             design.bgMasha = [NSData dataWithContentsOfURL:mashaURL];
+            design.bgImage = [NSData dataWithContentsOfURL:bacgroundURL];
+            design.bgMasha = [NSData dataWithContentsOfURL:mashaURL];
              
-         }
-         completion:^{ NSLog(@"My Books BG images downloaded and saved to database."); }
-         errorHandler:^(NSError *error){ NSLog(@"%@", error.localizedDescription); }];
+        }
+        completion:^{ NSLog(@"My Books BG images downloaded and saved to database."); } ];
     }
     else if([elementName isEqualToString:@"categories"]) {
 

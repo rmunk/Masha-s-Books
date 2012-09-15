@@ -15,7 +15,6 @@
 @property (nonatomic, strong) NSMutableOrderedSet *bookQue;
 @property (nonatomic, strong) Book *activeBook;
 @property (nonatomic, strong) NSString *file;
-@property (nonatomic, strong) NSManagedObjectContext *context;
 
 //- (void)saveDataToBook:(Book *)book FromPath:(NSString *)unzippedPath;
 @end
@@ -29,86 +28,22 @@
 @synthesize bookQue = _bookQue;
 @synthesize activeBook = _activeBook;
 @synthesize file = _file;
-@synthesize context = _context;
-
-
 
 @synthesize downloading = _downloading;
 
 @synthesize expectedZipSize = _expectedZipSize;
 @synthesize downloadedZipData = _downloadedZipData;
 
-
-/*
- - (BookExtractor *)initExtractorWithUrl:(NSURL *)zipURL {
- self = [super init];
- if (self) {
- self.downloadedZipData = [[NSMutableData alloc] init];
- self.downloadRequest = [[NSURLRequest alloc] initWithURL:zipURL cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10];
- self.downloadConnection = [[NSURLConnection alloc] initWithRequest:self.downloadRequest delegate:self];        self.downloading = NO;
- self.activeBook = nil;
- 
- }
- return self;
- }
- */
-
-- (BookExtractor *)initExtractorWithShop:(id)shop andContext:(NSManagedObjectContext *)context {
+- (BookExtractor *)initExtractorWithShop:(id)shop {
     self = [super init];
     if (self) {
-        //self.downloadedZipData = [[NSMutableData alloc] init];
-        //    self.downloadRequest = [[NSURLRequest alloc] initWithURL:zipURL cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10];
-        //   self.downloadConnection = [[NSURLConnection alloc] initWithRequest:self.downloadRequest delegate:self];
         self.bookQue = [[NSMutableOrderedSet alloc] init];
         self.delegate = shop;
         self.downloading = NO;
         self.activeBook = nil;
-        self.context = context;
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(anyContextSaved:) name:NSManagedObjectContextDidSaveNotification object:nil];
-        
-        
     }
     return self;
 }
-
-- (void)anyContextSaved:(NSNotification *)notification
-{
-    //[self performSelectorOnMainThread:@selector(mergeContexts:) withObject:notification waitUntilDone:NO];
-}
-
-- (void)contextSaved:(NSNotification *)notification
-{
-    NSLog(@"SaveThread reports context saved");
-    [self performSelectorOnMainThread:@selector(mergeContexts:) withObject:notification waitUntilDone:NO];
-    
-}
-
-- (void)mergeContexts:(NSNotification *)notification {
-    //[self.context.persistentStoreCoordinator unlock];
-    // Fault in all updated objects
-    NSError *error;
-	NSArray* updates = [[notification.userInfo objectForKey:@"updated"] allObjects];
-	for (NSInteger i = [updates count]-1; i >= 0; i--)
-	{
-		[[self.context objectWithID:[[updates objectAtIndex:i] objectID]] willAccessValueForKey:nil];
-	}
-    
-    NSLog(@"Merge contexts on main thread called");
-    
-    self.activeBook.status = @"ready";
-    self.activeBook.downloaded = [NSNumber numberWithInt:1];
-    //NSLog(@"activeBook info before merge: %@", self.activeBook);
-    [self.context mergeChangesFromContextDidSaveNotification:notification];
-    
-    if ([self.context save:&error]) {
-        //self.activeBook = [Book getBookWithId:self.activeBook.bookID inContext:self.context withErrorHandler:error];
-        self.activeBook = [Book getBookWithId:self.activeBook.bookID withErrorHandler:error];
-        //NSLog(@"activeBook info after merge: %@", self.activeBook);
-        [self.delegate performSelector:@selector(pagesAdded)];
-        [self processQue];
-    }
-}
-
 
 - (void)extractBookFromFile:(NSString *)zipFile
 {
@@ -187,7 +122,6 @@
             book.backgroundMusic = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingPathComponent:@"music.m4a"]];
             
             // Insert title page first
-            // NSManagedObjectContext *context = [book managedObjectContext];
             Page *page = [Page createInContext:localContext];
             page.pageNumber = [NSNumber numberWithInt:0];
             page.image = book.coverImage.image;
@@ -220,11 +154,10 @@
         }
     }
     completion:^{
-        //        NSLog(@"Pages added for book %@.", book.title);
+        [[NSManagedObjectContext MR_defaultContext] save:nil];
         [self.delegate performSelector:@selector(pagesAdded)];
         [self processQue];
     }];
-    //    errorHandler:^(NSError *error){ NSLog(@"%@", error.localizedDescription); }];
 }
 
 
@@ -245,54 +178,23 @@
     if (self.downloadConnection) {
         NSLog(@"Downloading zip file for book %@ through connection %@.", book.title, self.downloadConnection.description);
         self.downloading = YES;
-        //  [self.downloadConnection start];
-        
         
     }
     else {
         NSLog(@"Could not start download of %@.", book.title);
     }
-    
-    //    NSString *file = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"tmp/%@",book.downloadURL.lastPathComponent]];
-    
-    
-    
-    /*
-     
-     dispatch_queue_t downloadZipQueue = dispatch_queue_create("zip download", NULL);
-     dispatch_async(downloadZipQueue, ^{
-     
-     
-     //while ([bookExtractor isDownloading] == YES);
-     
-     
-     // NSData *zipFile = [NSData dataWithData:self.downloadedZipData];
-     //NSData *zipFile = [NSData dataWithContentsOfURL:zipURL];
-     //   [zipFile writeToFile:file atomically:YES];
-     
-     dispatch_async(dispatch_get_main_queue(), ^{
-     
-     });
-     
-     });
-     dispatch_release(downloadZipQueue); */
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     [self.downloadedZipData appendData:data];
     if (self.expectedZipSize != 0) {
         float percentage = (float)[self.downloadedZipData length]/(float)self.expectedZipSize;
-        //NSLog(@"Downloading %@", self.book.title);
-        // NSLog(@"Downloaded data size = %u, Expected data size = %llu, Download percentage = %f", [self.downloadedZipData length], self.expectedZipSize, percentage);
-        //[self.delegate extractorBook:self.book receivedNewPercentage:percentage];
-        //NSLog(@"Data received: %f %% ", percentage * 100);
         [self.delegate extractorBook:self.activeBook receivedNewPercentage:percentage];
     }
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
     self.expectedZipSize = [response expectedContentLength];
-    //   NSLog(@"Expected size %lld", self.expectedZipSize);
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
@@ -372,7 +274,6 @@
         NSLog(@"Que empty.");
         self.activeBook = nil;
     }
-    //NSLog(@"Que pass completed.");
 }
 
 - (void)addBookToQue:(Book *)book {
