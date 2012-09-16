@@ -8,30 +8,39 @@
 
 #import "SettingsViewController.h"
 #import "Book.h"
+#import "UIImage+Resize.h"
 
 
-@interface SettingsViewController () <UITableViewDataSource>
+@interface SettingsViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) NSArray *myBooks;
+@property (weak, nonatomic) IBOutlet UITableView *myBooksTableView;
 
 @end
 
 @implementation SettingsViewController
 @synthesize myBooks = _myBooks;
+@synthesize myBooksTableView = _myBooksTableView;
+
+#pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newBookReady:) name:@"BookReady" object:nil ];
+    self.myBooksTableView.editing = YES;
+}
 
+- (void)viewDidAppear:(BOOL)animated
+{
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"downloaded > 0"];
     self.myBooks = [Book MR_findAllSortedBy:@"downloadDate" ascending:NO withPredicate:predicate];
-
-    
-    
+    [self.myBooksTableView reloadData];
+    [super viewDidAppear:animated];
 }
 
 - (void)viewDidUnload
 {
+    [self setMyBooksTableView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -41,9 +50,45 @@
     return (interfaceOrientation != UIInterfaceOrientationPortrait && interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+#pragma mark - Store notifications
+
+- (void)newBookReady:(NSNotification *)notification
 {
-    UITableViewCell *cell;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"downloaded > 0"];
+    self.myBooks = [Book MR_findAllSortedBy:@"downloadDate" ascending:NO withPredicate:predicate];
+    [self.myBooksTableView reloadData];
 }
 
+#pragma mark - Table view data source
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.myBooks.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"MyBooksTableCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
+                                     reuseIdentifier:CellIdentifier];
+    }
+    
+    Book *book = [self.myBooks objectAtIndex:indexPath.row];
+    cell.textLabel.text = book.title;
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%d MB", ([book.bookID intValue] + 37)];
+    cell.imageView.image = [book.coverThumbnailImage resizedImage:CGSizeMake(64, 48) interpolationQuality:kCGInterpolationMedium];
+    
+    return cell;
+}
+
+//- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    if (indexPath.row % 2 == 0)
+//        return UITableViewCellEditingStyleInsert;
+//    else
+//        return UITableViewCellEditingStyleDelete;
+//}
+//
 @end
