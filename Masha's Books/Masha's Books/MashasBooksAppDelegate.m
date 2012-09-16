@@ -44,7 +44,7 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    [[NSManagedObjectContext MR_defaultContext] MR_save];
+    [[NSManagedObjectContext MR_defaultContext] save:nil];
     [MagicalRecord cleanUp];
 #warning Tu bi trebalo snimit bazu nekako
 }

@@ -1,22 +1,21 @@
 //
-//  Author.m
+//  Info.m
 //  Masha's Books
 //
 //  Created by Luka Miljak on 9/16/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "Author.h"
-#import "Book.h"
+#import "Info.h"
 
 
-@implementation Author
+@implementation Info
 
-@dynamic authorID;
-@dynamic bioHtml;
-@dynamic bookID;
-@dynamic name;
+@dynamic appStoreURL;
+@dynamic appVer;
+@dynamic contactURL;
+@dynamic facebookURL;
+@dynamic twitterURL;
 @dynamic websiteURL;
-@dynamic books;
 
 @end

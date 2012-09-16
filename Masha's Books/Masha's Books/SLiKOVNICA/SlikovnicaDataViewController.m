@@ -64,9 +64,9 @@
     [super viewWillAppear:animated];
     if(self.page)
     {
-        self.pageImage.image = self.page.image;
+        self.pageImage.image = [[UIImage alloc] initWithData:self.page.image];
         if (self.textVisibility)
-            self.textImage.image = self.page.text;
+            self.textImage.image = [[UIImage alloc] initWithData:self.page.text];
     }
 }
 

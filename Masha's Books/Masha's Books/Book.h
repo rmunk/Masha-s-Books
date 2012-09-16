@@ -2,7 +2,7 @@
 //  Book.h
 //  Masha's Books
 //
-//  Created by Luka Miljak on 9/3/12.
+//  Created by Luka Miljak on 9/16/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -18,8 +18,8 @@
 @property (nonatomic, retain) NSNumber * authorID;
 @property (nonatomic, retain) NSData * backgroundMusic;
 @property (nonatomic, retain) NSNumber * bookID;
-@property (nonatomic, retain) UIImage * coverThumbnailImage;
-@property (nonatomic, retain) UIImage * coverThumbnailImageMedium;
+@property (nonatomic, retain) NSData * coverThumbnailImage;
+@property (nonatomic, retain) NSData * coverThumbnailImageMedium;
 @property (nonatomic, retain) NSString * descriptionString;
 @property (nonatomic, retain) NSDate * downloadDate;
 @property (nonatomic, retain) NSNumber * downloaded;
@@ -28,14 +28,14 @@
 @property (nonatomic, retain) NSNumber * price;
 @property (nonatomic, retain) NSDate * publishDate;
 @property (nonatomic, retain) NSNumber * rate;
+@property (nonatomic, retain) NSData * rateImageUp;
 @property (nonatomic, retain) NSString * status;
 @property (nonatomic, retain) NSNumber * tag;
+@property (nonatomic, retain) NSData * tagImageLarge;
+@property (nonatomic, retain) NSData * tagImageSmall;
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSNumber * type;
 @property (nonatomic, retain) NSString * youTubeVideoURL;
-@property (nonatomic, retain) UIImage * rateImageUp;
-@property (nonatomic, retain) UIImage * tagImageLarge;
-@property (nonatomic, retain) UIImage * tagImageSmall;
 @property (nonatomic, retain) Author *author;
 @property (nonatomic, retain) NSSet *categories;
 @property (nonatomic, retain) Image *coverImage;

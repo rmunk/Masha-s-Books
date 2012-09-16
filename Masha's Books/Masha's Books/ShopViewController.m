@@ -58,7 +58,7 @@
                       duration:0.5f
                        options:UIViewAnimationOptionTransitionCrossDissolve
                     animations:^{
-                        self.backgroundView.image = category.bgImage;
+                        self.backgroundView.image = [[UIImage alloc] initWithData:category.bgImage];
                     } completion:NULL];
  
     self.categoryButton.titleLabel.text = category.name;
@@ -235,9 +235,9 @@
         NSLog(@"User selects book %@", self.picturebookShop.selectedBook.title);
         [self.picturebookShop userSelectsBook:self.picturebookShop.selectedBook];
     
-        self.thumbImageView.image = self.picturebookShop.selectedBook.coverThumbnailImageMedium;
-        self.tagViewLarge.image = self.picturebookShop.selectedBook.tagImageLarge;
-        self.rateImage.image = self.picturebookShop.selectedBook.rateImageUp;
+        self.thumbImageView.image = [[UIImage alloc] initWithData:self.picturebookShop.selectedBook.coverThumbnailImageMedium];
+        self.tagViewLarge.image = [[UIImage alloc] initWithData:self.picturebookShop.selectedBook.tagImageLarge];
+        self.rateImage.image = [[UIImage alloc] initWithData:self.picturebookShop.selectedBook.rateImageUp];
         self.bookTitleLabel.text = self.picturebookShop.selectedBook.title;
         self.priceLabel.text = [NSString stringWithFormat:@"$ %.2f", [self.picturebookShop.selectedBook.price floatValue]];
        [self.booksTableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
@@ -295,11 +295,11 @@
     }
 
     Book *book = [self.booksInSelectedCategory objectAtIndex:indexPath.row];
-    cell.coverImage.image = book.coverThumbnailImage;
+    cell.coverImage.image = [[UIImage alloc] initWithData:book.coverThumbnailImage];
     cell.bookTitle.text = book.title;
     cell.shortDescription.text = book.descriptionString;
-    cell.rateImage.image = book.rateImageUp;
-    cell.tagImage.image = book.tagImageSmall;
+    cell.rateImage.image = [[UIImage alloc] initWithData:book.rateImageUp];
+    cell.tagImage.image = [[UIImage alloc] initWithData:book.tagImageSmall];
     
     if ([book.status isEqualToString:@"qued"]) {
         cell.transparencyView.hidden = NO;

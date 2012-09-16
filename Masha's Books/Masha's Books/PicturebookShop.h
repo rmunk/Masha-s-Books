@@ -22,6 +22,7 @@
 #import "BookExtractor.h"
 #import "Info.h"
 #import "Design.h"
+//#import "Design+Addon.h"
 
 #define PICTUREBOOK_SHOP_DEBUG_LOGS 1
 

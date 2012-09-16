@@ -20,7 +20,6 @@
     
     if ([booksWithID count] == 0) {
         //ako knjige nema u bazi onda ovo
-        NSLog(@"NEMA JE !!!!!!!!!!!!!!!!!!!!!!");
         
         Book *book = [Book createEntity];
         
@@ -132,46 +131,49 @@
 
     //NSArray *books = [Book getAllBooksFromContext:shop.libraryDatabase.managedObjectContext];
     NSArray *books = [Book MR_findAll];
+    //Book *book = [books lastObject];
     
     shop.numberOfBooksWhinchNeedCoversDownloaded = books.count;
+    NSLog(@"Number of books for cover download = %d", shop.numberOfBooksWhinchNeedCoversDownloaded);
     
-    for (Book *book in books) {
+    [MagicalRecord saveInBackgroundUsingCurrentContextWithBlock:^(NSManagedObjectContext *localContext)
+     { 
+    
+         for (Book *book in books) {
+             
+            //Book *localBook = [book MR_inContext:localContext];
         
-        NSURL *coverThumbnailURL = [[NSURL alloc] initWithString:
+            NSURL *coverThumbnailURL = [[NSURL alloc] initWithString:
                                         [NSString stringWithFormat:@"%@%d%@", 
                                          coverUrlString, [book.bookID intValue], @"_s.jpg"]];
         
-        NSURL *coverThumbnailMediumURL = [[NSURL alloc] initWithString:
+            NSURL *coverThumbnailMediumURL = [[NSURL alloc] initWithString:
                                     [NSString stringWithFormat:@"%@%d%@", 
                                      coverUrlString, [book.bookID intValue], @"_m.jpg"]];
         
-        NSURL *rateImageUpURL = [[NSURL alloc] initWithString:
+            NSURL *rateImageUpURL = [[NSURL alloc] initWithString:
                                     [NSString stringWithFormat:@"%@%d%@", 
                                      @"http://www.mashasbookstore.com/tags/rate", [book.rate intValue], @".png"]];
         
-        NSURL *tagImageLargeURL = [[NSURL alloc] initWithString:
+            NSURL *tagImageLargeURL = [[NSURL alloc] initWithString:
                                     [NSString stringWithFormat:@"%@%d%@", 
                                      @"http://www.mashasbookstore.com/tags/tag", [book.tag intValue], @".png"]];
         
-        NSURL *tagImageSmallURL = [[NSURL alloc] initWithString:
+            NSURL *tagImageSmallURL = [[NSURL alloc] initWithString:
                                    [NSString stringWithFormat:@"%@%d%@", 
                                     @"http://www.mashasbookstore.com/tags/tag", [book.tag intValue], @"s.png"]];
 
         
-        NSLog(@"Downloading cover images for book %@ at %@", book.title, coverThumbnailURL);
-        NSLog(@"Tags URLs: %@ %@ %@", rateImageUpURL, tagImageLargeURL, tagImageSmallURL);
+            NSLog(@"Downloading cover images for book %@ at %@", book.title, coverThumbnailURL);
 
+             
             
-        
-                
-        [MagicalRecord saveInBackgroundWithBlock:^(NSManagedObjectContext *localContext)
-        {            
             // Get an image from the URL below
-            UIImage *coverThumbnailImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:coverThumbnailURL]];
-            UIImage *coverThumbnailUImageMedium = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:coverThumbnailMediumURL]];
-            UIImage *rateImageUp = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:rateImageUpURL]];
-            UIImage *tagImageLarge = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:tagImageLargeURL]];
-            UIImage *tagImageSmall = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:tagImageSmallURL]];
+            NSData *coverThumbnailImage = [NSData dataWithContentsOfURL:coverThumbnailURL];
+            NSData *coverThumbnailUImageMedium = [NSData dataWithContentsOfURL:coverThumbnailMediumURL];
+            NSData *rateImageUp = [NSData dataWithContentsOfURL:rateImageUpURL];
+            NSData *tagImageLarge = [NSData dataWithContentsOfURL:tagImageLargeURL];
+            NSData *tagImageSmall = [NSData dataWithContentsOfURL:tagImageSmallURL];
             
             if (coverThumbnailImage && coverThumbnailUImageMedium) {                                    
                                       
@@ -186,17 +188,24 @@
                 
             } 
         }
-        completion:^{ 
-            if (shop.numberOfBooksWhinchNeedCoversDownloaded > 1) {
-                shop.numberOfBooksWhinchNeedCoversDownloaded = shop.numberOfBooksWhinchNeedCoversDownloaded - 1;
-            }
-            else {
-                shop.numberOfBooksWhinchNeedCoversDownloaded = 0;
-                NSLog(@"Book covers downloaded");
-                [shop coversLoaded];
-            }
-        }]; 
-    } 
+     }
+    completion:^{ 
+        NSLog(@"Book covers downloaded");
+        [shop coversLoaded];
+
+//        if (shop.numberOfBooksWhinchNeedCoversDownloaded > 1) {
+//            shop.numberOfBooksWhinchNeedCoversDownloaded = shop.numberOfBooksWhinchNeedCoversDownloaded - 1;
+//            NSLog(@"Number of books left = %d", shop.numberOfBooksWhinchNeedCoversDownloaded);
+//        }
+//        else {
+//            shop.numberOfBooksWhinchNeedCoversDownloaded = 0;
+//            [[NSManagedObjectContext MR_defaultContext] save:nil];
+//            NSLog(@"Book covers downloaded");
+//            [shop coversLoaded];
+//        }
+    }
+    errorHandler:nil]; 
+     
 }
 
 

@@ -205,50 +205,40 @@
         Info *info = [Info MR_findFirst];
         if (!info) info = [Info MR_createEntity];
         
-        [MagicalRecord saveInBackgroundWithBlock:^(NSManagedObjectContext *localContext)
-        {
-            //NSLog(@"Storing info");
-            NSLog(@"%@", [attributeDict objectForKey:@"appVer"]);
-            info.appVer = [attributeDict objectForKey:@"appVer"];
-            NSLog(@"%@", [attributeDict objectForKey:@"appStoreURL"]);
-            info.appStoreURL = [attributeDict objectForKey:@"appStoreURL"];
-            NSLog(@"%@", [attributeDict objectForKey:@"websiteURL"]);
-            info.websiteURL = [attributeDict objectForKey:@"websiteURL"];
-            NSLog(@"%@", [attributeDict objectForKey:@"facebookURL"]);
-            info.facebookURL = [attributeDict objectForKey:@"facebookURL"];
-            NSLog(@"%@", [attributeDict objectForKey:@"twitterURL"]);
-            info.twitterURL = [attributeDict objectForKey:@"twitterURL"];
-            NSLog(@"%@", [attributeDict objectForKey:@"contactURL"]);
-            info.contactURL = [attributeDict objectForKey:@"contactURL"];
-        }
-        completion:^{ NSLog(@"Web links saved to database."); }
-         ];
+        info.appVer = [attributeDict objectForKey:@"appVer"];
+
+        info.appStoreURL = [attributeDict objectForKey:@"appStoreURL"];
+
+        info.websiteURL = [attributeDict objectForKey:@"websiteURL"];
+    
+        info.facebookURL = [attributeDict objectForKey:@"facebookURL"];
+ 
+        info.twitterURL = [attributeDict objectForKey:@"twitterURL"];
+
+        info.contactURL = [attributeDict objectForKey:@"contactURL"];
+       
     }
     else if([elementName isEqualToString:@"myBooks"]) {
         
         Design *design = [Design MR_findFirst];
         if (!design) design = [Design MR_createEntity];
         
-        [MagicalRecord saveInBackgroundWithBlock:^(NSManagedObjectContext *localContext)
-        {
-             //NSLog(@"Setting BGImage %@", [attributeDict objectForKey:@"BGImage"]);
-            design.bgImageURL = [attributeDict objectForKey:@"BGImage"];
-             //NSLog(@"Setting BGMasha %@", [attributeDict objectForKey:@"BGMasha"]);
-            design.bgMashaURL = [attributeDict objectForKey:@"BGMasha"];
+        //NSLog(@"Setting BGImage %@", [attributeDict objectForKey:@"BGImage"]);
+        design.bgImageURL = [attributeDict objectForKey:@"BGImage"];
+        //NSLog(@"Setting BGMasha %@", [attributeDict objectForKey:@"BGMasha"]);
+        design.bgMashaURL = [attributeDict objectForKey:@"BGMasha"];
              
-            NSURL *bacgroundURL = [[NSURL alloc] initWithString:
-                                [NSString stringWithFormat:@"%@%@",
-                                    @"http://www.mashasbookstore.com", design.bgImageURL]];
-            NSURL *mashaURL = [[NSURL alloc] initWithString:
+        NSURL *bacgroundURL = [[NSURL alloc] initWithString:
                             [NSString stringWithFormat:@"%@%@",
-                                @"http://www.mashasbookstore.com", design.bgMashaURL]];
-            //NSLog(@"Downloading background images at %@ and %@", bacgroundURL, mashaURL);
+                                    @"http://www.mashasbookstore.com", design.bgImageURL]];
+        NSURL *mashaURL = [[NSURL alloc] initWithString:
+                            [NSString stringWithFormat:@"%@%@",
+                            @"http://www.mashasbookstore.com", design.bgMashaURL]];
+        //NSLog(@"Downloading background images at %@ and %@", bacgroundURL, mashaURL);
              
-            design.bgImage = [NSData dataWithContentsOfURL:bacgroundURL];
-            design.bgMasha = [NSData dataWithContentsOfURL:mashaURL];
-             
-        }
-        completion:^{ NSLog(@"My Books BG images downloaded and saved to database."); } ];
+        //designLocal.bgImage = [NSData dataWithContentsOfURL:bacgroundURL];
+        //designLocal.bgMasha = [NSData dataWithContentsOfURL:mashaURL];
+       
     }
     else if([elementName isEqualToString:@"categories"]) {
 
@@ -307,8 +297,17 @@
         
         self.currentBook = nil;
     }
+    else if ([elementName isEqualToString:@"info"]) {
+        PBDLOG(@"Info storred!");
+    }
+    else if ([elementName isEqualToString:@"categorybooks"]) {
+        PBDLOG(@"Category-book mapping storred!");
+    }
+    else if ([elementName isEqualToString:@"myBooks"]) {
+        PBDLOG(@"Design info storred!");
+    }
     else if ([elementName isEqualToString:@"categories"]) {
-
+        PBDLOG(@"Category info storred!");
     }
     else if ([elementName isEqualToString:@"author"]) {        
         self.currentAuthor = nil;
@@ -316,6 +315,9 @@
     else if ([elementName isEqualToString:@"bookstore"]) {
        
         NSLog(@"PARSING FINISHED");
+        
+        
+       // [Design loadDesignImages];
         
         [Category loadBackgrounds];
 
