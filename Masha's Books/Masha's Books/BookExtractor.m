@@ -90,7 +90,7 @@
 
 - (void)saveDataToBook:(Book *)bookFromMainThread FromPath:(NSString *)unzippedPath {
     
-    [MagicalRecord saveInBackgroundWithBlock:^(NSManagedObjectContext *localContext) {
+    [MagicalRecord saveInBackgroundUsingCurrentContextWithBlock:^(NSManagedObjectContext *localContext) {
         NSError *error;
         
         Book *book = [bookFromMainThread MR_inContext:localContext];
@@ -112,11 +112,11 @@
             
             if (!book.coverImage){
                 Image *coverImage = [Image MR_createInContext:localContext];
-                coverImage.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingString:@"/title.jpg"]];
+                coverImage.image = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingString:@"/title.jpg"]];
                 book.coverImage = coverImage;
             }
             else
-                book.coverImage.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingString:@"/title.jpg"]];
+                book.coverImage.image = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingString:@"/title.jpg"]];
             
             
             book.backgroundMusic = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingPathComponent:@"music.m4a"]];
@@ -131,9 +131,9 @@
             for (NSString *pageFile in pageFiles) {
                 Page *page = [Page createInContext:localContext];
                 page.pageNumber = [NSNumber numberWithInt:pageNumber];
-                page.image = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingPathComponent:pageFile]];
-                page.thumbnail = [page.image resizedImage:CGSizeMake(138, 103) interpolationQuality:kCGInterpolationHigh];
-                page.text = [UIImage imageWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/text%03d.png",pageNumber]];
+                page.image = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingPathComponent:pageFile]];
+                //page.thumbnail = [page.image resizedImage:CGSizeMake(138, 103) interpolationQuality:kCGInterpolationHigh];
+                page.text = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/text%03d.png",pageNumber]];
                 page.voiceOver = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/voice%03d.m4a",pageNumber]];
                 page.sound = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/sound%03d.m4a",pageNumber]];
                 if(!page.sound){
@@ -157,7 +157,8 @@
         [[NSManagedObjectContext MR_defaultContext] save:nil];
         [self.delegate performSelector:@selector(pagesAdded)];
         [self processQue];
-    }];
+    }
+    errorHandler:nil];
 }
 
 

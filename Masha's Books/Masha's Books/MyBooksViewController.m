@@ -90,7 +90,8 @@
         [newCoverView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userTappedImage:)]];
  
         Book *book = [self.myBooks objectAtIndex:page];
-        UIImageView *bookCover = [[UIImageView alloc] initWithImage:book.coverImage.image];
+        UIImage *coverImage = [[UIImage alloc] initWithData:book.coverImage.image];
+        UIImageView *bookCover = [[UIImageView alloc] initWithImage:coverImage];
         bookCover.contentMode = UIViewContentModeScaleToFill;
         frame = CGRectMake(newCoverView.bounds.origin.x, newCoverView.bounds.origin.y, newCoverView.image.size.width - 35, newCoverView.bounds.size.height);
         frame = CGRectInset(frame, 50.0f, 32.0f);

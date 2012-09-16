@@ -2,7 +2,7 @@
 //  Info.m
 //  Masha's Books
 //
-//  Created by Luka Miljak on 8/23/12.
+//  Created by Luka Miljak on 9/16/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -11,11 +11,11 @@
 
 @implementation Info
 
-@dynamic appVer;
 @dynamic appStoreURL;
-@dynamic websiteURL;
+@dynamic appVer;
+@dynamic contactURL;
 @dynamic facebookURL;
 @dynamic twitterURL;
-@dynamic contactURL;
+@dynamic websiteURL;
 
 @end
