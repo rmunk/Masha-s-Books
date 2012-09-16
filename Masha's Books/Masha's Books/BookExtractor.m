@@ -118,8 +118,12 @@
             else
                 book.coverImage.image = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingString:@"/title.jpg"]];
             
-            
             book.backgroundMusic = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingPathComponent:@"music.m4a"]];
+            
+            float size = 0;
+            for (NSString *file in dirContents)
+                size += [[fileManager attributesOfItemAtPath:[unzippedPath stringByAppendingFormat:@"/%@", file] error:nil] fileSize];
+            book.size = [NSNumber numberWithFloat:size / 1048576];
             
             // Insert title page first
             Page *page = [Page createInContext:localContext];
@@ -170,7 +174,7 @@
     NSLog(@"Download request %@", self.downloadRequest.description);
     
     if ([self.downloadRequest.description isEqualToString:@"<NSURLRequest (null)>"]) {
-        self.activeBook.status = [NSString stringWithString:@"failed"];
+        self.activeBook.status = @"failed";
         [self processQue];
         return;
     }
@@ -222,7 +226,7 @@
 }
 
 - (void)processBook:(Book *)book {
-    book.status = [NSString stringWithString:@"downloading"];
+    book.status = @"downloading";
     [self downloadZipFileForBook:book];
     
 }
@@ -287,7 +291,7 @@
     else {
         NSLog(@"Book %@ added to que", book.title);
         [self.bookQue addObject:book];
-        book.status = [NSString stringWithString:@"qued"];
+        book.status = @"qued";
         if (self.activeBook == nil) {
             [self processQue];
         }

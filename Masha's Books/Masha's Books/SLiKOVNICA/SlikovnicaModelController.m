@@ -69,7 +69,7 @@
     if([self.book.pages indexOfObject:viewController.page] != NSNotFound)
         return [self.book.pages indexOfObject:viewController.page];
     else
-        return self.book.pages.count; //tu vratiti -1 ako necu da se moze listati unatrag na zadnju stranicu
+        return self.book.pages.count;
 }
 
 - (NSUInteger)numberOfPages
@@ -83,9 +83,9 @@
     NSMutableArray *thumbnails = [[NSMutableArray alloc] init];
     
     for (Page *page in self.book.pages) {
-        //        UIImage *thumbnail = [page.image resizedImage:CGSizeMake(138, 103) interpolationQuality:kCGInterpolationHigh];
-        if (page.thumbnail)
-            [thumbnails addObject:page.thumbnail];
+        UIImage *image = [UIImage imageWithData:page.image];
+        UIImage *thumbnail = [image resizedImage:CGSizeMake(138, 103) interpolationQuality:kCGInterpolationHigh];
+        [thumbnails addObject:thumbnail];
     }
     [self.book.managedObjectContext refreshObject:self.book mergeChanges:NO];
     

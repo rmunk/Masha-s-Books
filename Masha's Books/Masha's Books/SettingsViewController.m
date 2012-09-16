@@ -77,8 +77,8 @@
     
     Book *book = [self.myBooks objectAtIndex:indexPath.row];
     cell.textLabel.text = book.title;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%d MB", ([book.bookID intValue] + 37)];
-    cell.imageView.image = [book.coverThumbnailImage resizedImage:CGSizeMake(64, 48) interpolationQuality:kCGInterpolationMedium];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%.1f MB", [book.size floatValue]];
+    cell.imageView.image = [[UIImage imageWithData:book.coverThumbnailImage] resizedImage:CGSizeMake(64, 48) interpolationQuality:kCGInterpolationMedium];
     
     return cell;
 }

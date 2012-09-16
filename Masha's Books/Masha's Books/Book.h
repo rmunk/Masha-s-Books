@@ -2,8 +2,8 @@
 //  Book.h
 //  Masha's Books
 //
-//  Created by Luka Miljak on 9/16/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Created by Ranko Munk on 9/17/12.
+//
 //
 
 #import <Foundation/Foundation.h>
@@ -36,6 +36,7 @@
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSNumber * type;
 @property (nonatomic, retain) NSString * youTubeVideoURL;
+@property (nonatomic, retain) NSNumber * size;
 @property (nonatomic, retain) Author *author;
 @property (nonatomic, retain) NSSet *categories;
 @property (nonatomic, retain) Image *coverImage;
