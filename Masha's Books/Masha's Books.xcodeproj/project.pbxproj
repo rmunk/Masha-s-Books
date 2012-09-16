@@ -17,6 +17,7 @@
 		BA651EE715FB41B000352B2F /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = BA651EE415FB41B000352B2F /* UIImage+RoundedCorner.m */; };
 		BA651EED15FB454000352B2F /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = BA651EE215FB41B000352B2F /* UIImage+Resize.m */; };
 		BA651EF315FB96D700352B2F /* Page.m in Sources */ = {isa = PBXBuildFile; fileRef = BA651EF215FB96D700352B2F /* Page.m */; };
+		BA8473C016051CF8007FCEEE /* MBDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8473BF16051CF8007FCEEE /* MBDatabase.m */; };
 		BA8B446C15A387650098F063 /* Author+Addon.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8B446715A387650098F063 /* Author+Addon.m */; };
 		BA8B446D15A387650098F063 /* Book+Addon.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8B446915A387650098F063 /* Book+Addon.m */; };
 		BA8B446E15A387650098F063 /* Category+Addon.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8B446B15A387650098F063 /* Category+Addon.m */; };
@@ -197,6 +198,8 @@
 		BA651EE415FB41B000352B2F /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
 		BA651EF115FB96D700352B2F /* Page.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Page.h; sourceTree = "<group>"; };
 		BA651EF215FB96D700352B2F /* Page.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Page.m; sourceTree = "<group>"; };
+		BA8473BE16051CF8007FCEEE /* MBDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBDatabase.h; sourceTree = "<group>"; };
+		BA8473BF16051CF8007FCEEE /* MBDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBDatabase.m; sourceTree = "<group>"; };
 		BA8B446615A387650098F063 /* Author+Addon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Author+Addon.h"; sourceTree = "<group>"; };
 		BA8B446715A387650098F063 /* Author+Addon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Author+Addon.m"; sourceTree = "<group>"; };
 		BA8B446815A387650098F063 /* Book+Addon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Book+Addon.h"; sourceTree = "<group>"; };
@@ -798,6 +801,8 @@
 				C0B3FF7515742E41002DF30F /* MainStoryboard.storyboard */,
 				C09CC1B51602995B004E644F /* InitialViewController.h */,
 				C09CC1B61602995B004E644F /* InitialViewController.m */,
+				BA8473BE16051CF8007FCEEE /* MBDatabase.h */,
+				BA8473BF16051CF8007FCEEE /* MBDatabase.m */,
 				C098298F157501D1004EAA0D /* MyBooksViewController.h */,
 				C0982990157501D1004EAA0D /* MyBooksViewController.m */,
 				BAE41B7415CB218200731C71 /* ShopViewController.h */,
@@ -1094,6 +1099,7 @@
 				C09CC1B316028CC1004E644F /* Design.m in Sources */,
 				C09CC1B71602995B004E644F /* InitialViewController.m in Sources */,
 				C09EB7C61603FB52005DEA0D /* SlikovnicaLastPageViewController.m in Sources */,
+				BA8473C016051CF8007FCEEE /* MBDatabase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
