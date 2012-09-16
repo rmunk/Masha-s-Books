@@ -20,6 +20,7 @@
 		BA651EE615FB41B000352B2F /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = BA651EE215FB41B000352B2F /* UIImage+Resize.m */; };
 		BA651EE715FB41B000352B2F /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = BA651EE415FB41B000352B2F /* UIImage+RoundedCorner.m */; };
 		BA651EED15FB454000352B2F /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = BA651EE215FB41B000352B2F /* UIImage+Resize.m */; };
+		BA7A1D6216060CEE0050293B /* Design+Addon.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7A1D6116060CEE0050293B /* Design+Addon.m */; };
 		BA8473C016051CF8007FCEEE /* MBDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8473BF16051CF8007FCEEE /* MBDatabase.m */; };
 		BA8B446C15A387650098F063 /* Author+Addon.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8B446715A387650098F063 /* Author+Addon.m */; };
 		BA8B446D15A387650098F063 /* Book+Addon.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8B446915A387650098F063 /* Book+Addon.m */; };
@@ -204,6 +205,8 @@
 		BA651EE215FB41B000352B2F /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
 		BA651EE315FB41B000352B2F /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
 		BA651EE415FB41B000352B2F /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
+		BA7A1D6016060CEE0050293B /* Design+Addon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Design+Addon.h"; sourceTree = "<group>"; };
+		BA7A1D6116060CEE0050293B /* Design+Addon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Design+Addon.m"; sourceTree = "<group>"; };
 		BA8473BE16051CF8007FCEEE /* MBDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBDatabase.h; sourceTree = "<group>"; };
 		BA8473BF16051CF8007FCEEE /* MBDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBDatabase.m; sourceTree = "<group>"; };
 		BA8B446615A387650098F063 /* Author+Addon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Author+Addon.h"; sourceTree = "<group>"; };
@@ -487,6 +490,8 @@
 				BA158110160554C30000AFEC /* Image.m */,
 				BA15810C160554C10000AFEC /* Design.h */,
 				BA15810D160554C20000AFEC /* Design.m */,
+				BA7A1D6016060CEE0050293B /* Design+Addon.h */,
+				BA7A1D6116060CEE0050293B /* Design+Addon.m */,
 				BA158109160552990000AFEC /* Author.h */,
 				BA15810A160552990000AFEC /* Author.m */,
 				BA158106160552990000AFEC /* Info.h */,
@@ -1100,6 +1105,7 @@
 				BA158114160554C50000AFEC /* Category.m in Sources */,
 				BA158117160554C60000AFEC /* Book.m in Sources */,
 				BA15811A160554C70000AFEC /* Page.m in Sources */,
+				BA7A1D6216060CEE0050293B /* Design+Addon.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

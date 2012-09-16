@@ -228,12 +228,7 @@
         //NSLog(@"Setting BGMasha %@", [attributeDict objectForKey:@"BGMasha"]);
         design.bgMashaURL = [attributeDict objectForKey:@"BGMasha"];
              
-        NSURL *bacgroundURL = [[NSURL alloc] initWithString:
-                            [NSString stringWithFormat:@"%@%@",
-                                    @"http://www.mashasbookstore.com", design.bgImageURL]];
-        NSURL *mashaURL = [[NSURL alloc] initWithString:
-                            [NSString stringWithFormat:@"%@%@",
-                            @"http://www.mashasbookstore.com", design.bgMashaURL]];
+        
         //NSLog(@"Downloading background images at %@ and %@", bacgroundURL, mashaURL);
              
         //designLocal.bgImage = [NSData dataWithContentsOfURL:bacgroundURL];
@@ -317,7 +312,7 @@
         NSLog(@"PARSING FINISHED");
         
         
-       // [Design loadDesignImages];
+        [Design loadDesignImages];
         
         [Category loadBackgrounds];
 
