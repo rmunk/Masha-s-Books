@@ -194,6 +194,12 @@
     [self getMyBooks];
 }
 
+- (void)bookDeleted:(NSNotification *)notification {
+    NSLog(@"Calling getMyBooks");
+    [self getMyBooks];
+}
+
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
@@ -203,6 +209,7 @@
     self.library = [[UIManagedDocument alloc] initWithFileURL:url];
     //    [self getMyBooks];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newBookReady:) name:@"BookReady" object:nil ];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bookDeleted:) name:@"BookDeleted" object:nil ];
     
     [super viewDidLoad];
 }
@@ -214,7 +221,7 @@
     }
     
     [self loadDesignImages];
-    
+    [self getMyBooks];
     [super viewWillAppear:animated];
 }
 

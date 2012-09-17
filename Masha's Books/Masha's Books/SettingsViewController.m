@@ -21,6 +21,13 @@
 @synthesize myBooks = _myBooks;
 @synthesize myBooksTableView = _myBooksTableView;
 
+- (void)refresh
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"downloaded > 0"];
+    self.myBooks = [Book MR_findAllSortedBy:@"size" ascending:NO withPredicate:predicate];
+    [self.myBooksTableView reloadData];
+}
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
@@ -32,9 +39,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"downloaded > 0"];
-    self.myBooks = [Book MR_findAllSortedBy:@"downloadDate" ascending:NO withPredicate:predicate];
-    [self.myBooksTableView reloadData];
+    [self refresh];
     [super viewDidAppear:animated];
 }
 
@@ -54,9 +59,7 @@
 
 - (void)newBookReady:(NSNotification *)notification
 {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"downloaded > 0"];
-    self.myBooks = [Book MR_findAllSortedBy:@"downloadDate" ascending:NO withPredicate:predicate];
-    [self.myBooksTableView reloadData];
+    [self refresh];
 }
 
 #pragma mark - Table view data source
@@ -82,6 +85,19 @@
     
     return cell;
 }
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
+        [[self.myBooks objectAtIndex:indexPath.row] MR_deleteInContext:localContext];
+        [localContext MR_save];
+        [self refresh];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"BookDeleted" object:self];
+	}
+}
+
+
 
 //- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 //{
