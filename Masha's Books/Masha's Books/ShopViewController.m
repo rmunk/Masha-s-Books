@@ -413,6 +413,7 @@
     }
 }
 
+#pragma mark - YouTube Button
 - (void)embedYouTube:(NSString *)urlString frame:(CGRect)frame {
     
     NSString *embedHTML = @"\
