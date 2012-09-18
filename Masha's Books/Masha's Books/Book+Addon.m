@@ -129,9 +129,7 @@
 
 + (void)loadCoversFromURL:(NSString *)coverUrlString forShop:(PicturebookShop *)shop {
 
-    //NSArray *books = [Book getAllBooksFromContext:shop.libraryDatabase.managedObjectContext];
     NSArray *books = [Book MR_findAll];
-    //Book *book = [books lastObject];
     
     shop.numberOfBooksWhinchNeedCoversDownloaded = books.count;
     NSLog(@"Number of books for cover download = %d", shop.numberOfBooksWhinchNeedCoversDownloaded);
@@ -140,8 +138,6 @@
      { 
     
          for (Book *book in books) {
-             
-            //Book *localBook = [book MR_inContext:localContext];
         
             NSURL *coverThumbnailURL = [[NSURL alloc] initWithString:
                                         [NSString stringWithFormat:@"%@%d%@", 
@@ -182,27 +178,12 @@
                 book.rateImageUp = rateImageUp;
                 book.tagImageLarge = tagImageLarge;
                 book.tagImageSmall = tagImageSmall;
-                //book.coverImage = coverImage;
-                
-                //[self shopDataLoaded];
-                
             } 
         }
      }
     completion:^{ 
         NSLog(@"Book covers downloaded");
         [shop coversLoaded];
-
-//        if (shop.numberOfBooksWhinchNeedCoversDownloaded > 1) {
-//            shop.numberOfBooksWhinchNeedCoversDownloaded = shop.numberOfBooksWhinchNeedCoversDownloaded - 1;
-//            NSLog(@"Number of books left = %d", shop.numberOfBooksWhinchNeedCoversDownloaded);
-//        }
-//        else {
-//            shop.numberOfBooksWhinchNeedCoversDownloaded = 0;
-//            [[NSManagedObjectContext MR_defaultContext] save:nil];
-//            NSLog(@"Book covers downloaded");
-//            [shop coversLoaded];
-//        }
     }
     errorHandler:nil]; 
      

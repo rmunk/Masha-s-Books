@@ -77,6 +77,8 @@
     return self;
 }
 
+#pragma mark - View events responders
+
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
@@ -88,10 +90,18 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(picturebookShopFinishedLoading:) name:@"PicturebookShopFinishedLoading" object:nil ]; 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(picturebookShopLoadingError:) name:@"PicturebookShopLoadingError" object:nil ];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setDownloadStatus:) name:@"NewShopReceivedZipData" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bookExtracted:) name:@"" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bookExtractingError:) name:@"BookExtractingError" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bookExtractingError:) name:@"BookExtracted" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bookReady:) name:@"BookReady" object:self.picturebookShop];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    // progress bar update notification
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setDownloadStatus:) name:@"NewShopReceivedZipData" object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NewShopReceivedZipData" object:nil];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -120,13 +130,13 @@
     // Release any retained subviews of the main view.
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"PicturebookShopFinishedLoading" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"PicturebookShopLoadingError" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NewShopReceivedZipData" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"BookExtracted" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"BookExtractingError" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"BookReady" object:nil];
 }
-- (IBAction)categorySelection:(UIButton *)sender {
-}
+
+#pragma mark - Button action
+
 - (IBAction)bookBought:(UIButton *)sender {
 
     Book *bookJustBought = [self.picturebookShop getSelectedBook]; 
@@ -146,10 +156,13 @@
     indexPath = [NSIndexPath indexPathForRow:i inSection:0];
     [self bookSelectedAtIndexPath:indexPath];
 }
+
 - (IBAction)goToFacebookPage:(UIButton *)sender {
 }
+
 - (IBAction)goToTwitterPage:(UIButton *)sender {
 }
+
 - (IBAction)goToYoutubePage:(UIButton *)sender {
     NSString *youTubeURL = [NSString stringWithFormat:@"%@%@", @"http://www.youtube.com/watch?feature=player_embedded&v=", sender.titleLabel.text];
     NSLog(@"Youtube url: %@", youTubeURL);
@@ -163,6 +176,8 @@
     
     [self.view setNeedsDisplay];
 }
+
+#pragma mark - Database events responders
 
 - (void)picturebookShopFinishedLoading:(NSNotification *) notification {
     PBDLOG(@"Picture book shop reports loading finished!");
@@ -221,14 +236,14 @@
 
 }
 
+#pragma mark - Database modifiers
+
 - (void)bookSelectedAtIndexPath:(NSIndexPath *)indexPath {
 
     if (self.booksInSelectedCategory.count > 0) {
-        NSLog(@"bookSelected: Number of books in category %@ is %d", self.picturebookShop.selectedCategory.name, self.booksInSelectedCategory.count);
         if (![self.downloadProgressView isHidden]) {
             self.downloadProgressView.hidden = YES;
         }
-        
     
         self.picturebookShop.selectedBook = [self.booksInSelectedCategory objectAtIndex:indexPath.row];
         
@@ -260,8 +275,6 @@
         NSLog(@"No books in category");
     }
 }
-
-
 
 
 #pragma mark - Table view data source
@@ -336,7 +349,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {    
-    NSLog(@"User selects book at index %d", indexPath.row);
  
     [self bookSelectedAtIndexPath:indexPath];
     [self.booksTableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
@@ -481,14 +493,14 @@
     [button sendActionsForControlEvents:UIControlEventTouchUpInside];
 }
 
--(void)doneButtonClick:(NSNotification*)notification {
+- (void)doneButtonClick:(NSNotification*)notification {
     NSLog(@"Done button clicked");
     [self.youTubeVideoView removeFromSuperview];
     [self.youTubeTransparentView removeFromSuperview];
     [self.youTubeCloseButton removeFromSuperview];
 }
 
--(void)closeButtonClick {
+- (void)closeButtonClick {
     NSLog(@"Close button clicked");
     [self.youTubeVideoView loadHTMLString:@"" baseURL:nil];
     [self.youTubeVideoView removeFromSuperview];    

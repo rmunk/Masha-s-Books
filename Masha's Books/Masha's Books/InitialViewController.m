@@ -27,13 +27,14 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startMashasBookstore) name:@"DatabaseLoaded" object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
-    [self startMashasBookstore];
+  //  [self startMashasBookstore];
 
 }
 
@@ -41,6 +42,7 @@
 {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"DatabaseLoaded" object:nil];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

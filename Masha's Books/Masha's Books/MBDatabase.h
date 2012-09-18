@@ -28,20 +28,14 @@
 
 @interface MBDatabase : NSObject <NSXMLParserDelegate>
 
-- (MBDatabase *)initMBDatabase;
+- (MBDatabase *)initMBD;
 
-- (void)userSelectsCategory:(Category *)category;
-- (void)userSelectsBook:(Book *)book;
 - (void)userBuysBook:(Book *)book;
-
+- (void)userDeletesBook:(Book *)book;
 - (void)coversLoaded;
 
-- (Category *)getSelectedCategory;
-- (Book *)getSelectedBook;
-- (NSOrderedSet *)getBooksForSelectedCategory;
-- (NSOrderedSet *)getBooksForCategory:(Category *)category;
 - (NSOrderedSet *)getCategoriesInShop;
+- (NSOrderedSet *)getBooksForCategory:(Category *)category;
 
-- (void)userDeletesBook:(Book *)book;
 
 @end

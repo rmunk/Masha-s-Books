@@ -35,6 +35,7 @@
 
 
 #pragma mark - Initialization methods
+
 - (MBDatabase *)initMBD {
     self = [super init];
     self.urlBase = [[NSURL alloc] initWithString:URL_BookstoreXML];
@@ -77,11 +78,24 @@
 }
 
 #pragma mark - Query methods
+
 - (NSOrderedSet *)getCategoriesInShop {
     return [Category getAllCategories];
 }
 
+- (NSOrderedSet *)getBooksForCategory:(Category *)category {
+    return [Book getBooksForCategory:category];
+}
+
 #pragma mark - Action methods
+
+- (void)userBuysBook:(Book *)book {
+    [self.extractor addBookToQue:book];
+}
+
+- (void)userDeletesBook:(Book *)book {
+
+}
 
 #pragma mark - Parser methods
 
@@ -171,6 +185,10 @@
 }
 
 #pragma mark - Notification methods
+
+- (void)coversLoaded {
+    [self databaseLoaded];
+}
 
 - (void)databaseLoaded {
     
