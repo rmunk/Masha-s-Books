@@ -208,6 +208,64 @@
      
 }
 
++ (void)loadCoversFromURL:(NSString *)coverUrlString forDatabase:(MBDatabase *)database {
+    
+    NSArray *books = [Book MR_findAll];
+    
+    [MagicalRecord saveInBackgroundUsingCurrentContextWithBlock:^(NSManagedObjectContext *localContext)
+    { 
+         
+        for (Book *book in books) {
+             
+            NSURL *coverThumbnailURL = [[NSURL alloc] initWithString:
+                                         [NSString stringWithFormat:@"%@%d%@", 
+                                          coverUrlString, [book.bookID intValue], @"_s.jpg"]];
+             
+            NSURL *coverThumbnailMediumURL = [[NSURL alloc] initWithString:
+                                               [NSString stringWithFormat:@"%@%d%@", 
+                                                coverUrlString, [book.bookID intValue], @"_m.jpg"]];
+             
+            NSURL *rateImageUpURL = [[NSURL alloc] initWithString:
+                                      [NSString stringWithFormat:@"%@%d%@", 
+                                       @"http://www.mashasbookstore.com/tags/rate", [book.rate intValue], @".png"]];
+             
+            NSURL *tagImageLargeURL = [[NSURL alloc] initWithString:
+                                        [NSString stringWithFormat:@"%@%d%@", 
+                                         @"http://www.mashasbookstore.com/tags/tag", [book.tag intValue], @".png"]];
+             
+            NSURL *tagImageSmallURL = [[NSURL alloc] initWithString:
+                                        [NSString stringWithFormat:@"%@%d%@", 
+                                         @"http://www.mashasbookstore.com/tags/tag", [book.tag intValue], @"s.png"]];
+             
+             
+            NSLog(@"Downloading cover images for book %@ at %@", book.title, coverThumbnailURL);
+             
+             
+            // Get an image from the URL below
+            NSData *coverThumbnailImage = [NSData dataWithContentsOfURL:coverThumbnailURL];
+            NSData *coverThumbnailUImageMedium = [NSData dataWithContentsOfURL:coverThumbnailMediumURL];
+            NSData *rateImageUp = [NSData dataWithContentsOfURL:rateImageUpURL];
+            NSData *tagImageLarge = [NSData dataWithContentsOfURL:tagImageLargeURL];
+            NSData *tagImageSmall = [NSData dataWithContentsOfURL:tagImageSmallURL];
+             
+            if (coverThumbnailImage && coverThumbnailUImageMedium) {                                    
+                 
+                book.coverThumbnailImage = coverThumbnailImage;
+                book.coverThumbnailImageMedium = coverThumbnailUImageMedium;
+                book.rateImageUp = rateImageUp;
+                book.tagImageLarge = tagImageLarge;
+                book.tagImageSmall = tagImageSmall;
+                 
+            } 
+        }
+    }
+    completion:^{ 
+        NSLog(@"Book covers downloaded");
+        [database coversLoaded];
+    }
+    errorHandler:nil]; 
+}
+
 
 
 + (void)updateBook:(Book *)book withAttributes:(NSDictionary *)attributes {

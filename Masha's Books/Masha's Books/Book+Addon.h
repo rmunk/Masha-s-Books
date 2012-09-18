@@ -13,8 +13,10 @@
 #import "CategoryToBookMap.h"
 #import "Author+Addon.h"
 #import "PicturebookShop.h"
+#import "MBDatabase.h"
 
 @class PicturebookShop;
+@class MBDatabase;
 
 @interface Book (Addon)
 
@@ -27,6 +29,8 @@
 + (void)linkBooksToAuthors;
 
 + (void)loadCoversFromURL:(NSString *)coverUrlString forShop:(PicturebookShop *)shop;
+
++ (void)loadCoversFromURL:(NSString *)coverUrlString forDatabase:(MBDatabase *)database;
 
 + (void)updateBook:(Book *)book withAttributes:(NSDictionary *)attributes;
 
