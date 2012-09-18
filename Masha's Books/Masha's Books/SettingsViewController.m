@@ -8,6 +8,8 @@
 
 #import "SettingsViewController.h"
 #import "Book.h"
+#import "Page.h"
+#import "Image.h"
 #import "UIImage+Resize.h"
 
 
@@ -23,7 +25,7 @@
 
 - (void)refresh
 {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"downloaded > 0"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"status like 'ready' OR status like 'bought'"];
     self.myBooks = [Book MR_findAllSortedBy:@"size" ascending:NO withPredicate:predicate];
     [self.myBooksTableView reloadData];
 }
@@ -82,29 +84,51 @@
     cell.textLabel.text = book.title;
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%.1f MB", [book.size floatValue]];
     cell.imageView.image = [[UIImage imageWithData:book.coverThumbnailImage] resizedImage:CGSizeMake(64, 48) interpolationQuality:kCGInterpolationMedium];
-    
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
-        [[self.myBooks objectAtIndex:indexPath.row] MR_deleteInContext:localContext];
-        [localContext MR_save];
-        [self refresh];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"BookDeleted" object:self];
-	}
+        Book *bookFromMainThread = [self.myBooks objectAtIndex:indexPath.row];
+        
+        [MagicalRecord saveInBackgroundUsingCurrentContextWithBlock:^(NSManagedObjectContext *localContext) {
+        
+            Book *book = [bookFromMainThread MR_inContext:localContext];
+            Image *coverImage = [bookFromMainThread.coverImage MR_inContext:localContext];
+            NSLog(@"Fetched book %@ to delete", book.title);
+            for (Page *pageToDelete in book.pages) [pageToDelete MR_deleteEntity];
+            [coverImage MR_deleteEntity];
+            book.backgroundMusic = nil;
+            book.downloaded = 0;
+            book.status = @"bought";
+        }
+        completion:^{
+            [[NSManagedObjectContext MR_defaultContext] save:nil];
+            [self refresh];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"BookDeleted" object:self];
+        }
+        errorHandler:nil];
+    }
+    else if (editingStyle == UITableViewCellEditingStyleInsert)
+    {
+        //tu dodati da se ponovo skine knjiga
+    }
+        
 }
 
 
 
-//- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    if (indexPath.row % 2 == 0)
-//        return UITableViewCellEditingStyleInsert;
-//    else
-//        return UITableViewCellEditingStyleDelete;
-//}
-//
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    Book *book = [self.myBooks objectAtIndex:indexPath.row];
+    
+    if ([book.status isEqualToString:@"ready"])
+        return UITableViewCellEditingStyleDelete;
+    else if ([book.status isEqualToString:@"bought"])
+        return UITableViewCellEditingStyleInsert;
+    else
+        return UITableViewCellEditingStyleNone;
+}
+
 @end
