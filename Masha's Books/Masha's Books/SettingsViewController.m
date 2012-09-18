@@ -13,15 +13,17 @@
 #import "UIImage+Resize.h"
 
 
-@interface SettingsViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface SettingsViewController () <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
 @property (nonatomic, strong) NSArray *myBooks;
 @property (weak, nonatomic) IBOutlet UITableView *myBooksTableView;
+@property (strong, nonatomic) Book *selectedBook;
 
 @end
 
 @implementation SettingsViewController
 @synthesize myBooks = _myBooks;
 @synthesize myBooksTableView = _myBooksTableView;
+@synthesize selectedBook = _selectedBook;
 
 - (void)refresh
 {
@@ -88,36 +90,63 @@
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    self.selectedBook = [self.myBooks objectAtIndex:indexPath.row];
     
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        Book *bookFromMainThread = [self.myBooks objectAtIndex:indexPath.row];
-        
-        [MagicalRecord saveInBackgroundUsingCurrentContextWithBlock:^(NSManagedObjectContext *localContext) {
-        
-            Book *book = [bookFromMainThread MR_inContext:localContext];
-            Image *coverImage = [bookFromMainThread.coverImage MR_inContext:localContext];
-            NSLog(@"Fetched book %@ to delete", book.title);
-            for (Page *pageToDelete in book.pages) [pageToDelete MR_deleteEntity];
-            [coverImage MR_deleteEntity];
-            book.backgroundMusic = nil;
-            book.downloaded = 0;
-            book.status = @"bought";
-        }
-        completion:^{
-            [[NSManagedObjectContext MR_defaultContext] save:nil];
-            [self refresh];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"BookDeleted" object:self];
-        }
-        errorHandler:nil];
+    if (editingStyle == UITableViewCellEditingStyleDelete)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Delete Book"
+                                                        message:[NSString stringWithFormat:@"Do you want to delete book\n \"%@\"?", self.selectedBook.title]
+                                                       delegate:self
+                                              cancelButtonTitle:@"No"
+                                              otherButtonTitles:@"Yes", nil];
+        [alert show];
     }
     else if (editingStyle == UITableViewCellEditingStyleInsert)
     {
-        //tu dodati da se ponovo skine knjiga
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Restore Book"
+                                                        message:[NSString stringWithFormat:@"Do you want to restore book\n \"%@\"?", self.selectedBook.title]
+                                                       delegate:self
+                                              cancelButtonTitle:@"No"
+                                              otherButtonTitles:@"Yes", nil];
+        [alert show];
     }
-        
 }
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.title == @"Delete Book") {
+        if (buttonIndex == 1)
+        {
+            [MagicalRecord saveInBackgroundUsingCurrentContextWithBlock:^(NSManagedObjectContext *localContext) {
+            
+                Book *book = [self.selectedBook MR_inContext:localContext];
+                Image *coverImage = [self.selectedBook.coverImage MR_inContext:localContext];
+                NSLog(@"Fetched book %@ to delete", book.title);
+                for (Page *pageToDelete in book.pages) [pageToDelete MR_deleteEntity];
+                [coverImage MR_deleteEntity];
+                book.backgroundMusic = nil;
+                book.downloaded = 0;
+                book.status = @"bought";
+            }
+            completion:^{
+                [[NSManagedObjectContext MR_defaultContext] save:nil];
+                [self refresh];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"BookDeleted" object:self];
+            }
+            errorHandler:nil];
+        }
+        else
+            [self.myBooksTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[self.myBooks indexOfObject:self.selectedBook] inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
 
+    }
+    else if (alertView.title == @"Restore Book") {
+        if (buttonIndex == 1)
+        {
+            // Restore Book
+        }
+    }
+}
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
