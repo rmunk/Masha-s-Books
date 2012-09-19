@@ -16,6 +16,7 @@
 @interface SettingsViewController () <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
 @property (nonatomic, strong) NSArray *myBooks;
 @property (weak, nonatomic) IBOutlet UITableView *myBooksTableView;
+@property (strong, nonatomic) Book *selectedBook;
 @property (nonatomic, weak) MBDatabase *database;
 
 @end
@@ -23,6 +24,7 @@
 @implementation SettingsViewController
 @synthesize myBooks = _myBooks;
 @synthesize myBooksTableView = _myBooksTableView;
+@synthesize selectedBook = _selectedBook;
 @synthesize database = _database;
 
 - (void)refresh
