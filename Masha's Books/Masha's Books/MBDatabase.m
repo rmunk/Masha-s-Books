@@ -71,6 +71,7 @@
         [Book linkBooksToCategoriesWithLinker:self.categoryToBookMap];
         
         [Book loadCoversFromURL:URL_BookCovers forDatabase:self];
+        
     }
     else {
         MBDLOG(@"Error parsing XML from %@", self.urlBase);
@@ -79,7 +80,7 @@
 
 #pragma mark - Query methods
 
-- (NSOrderedSet *)getCategoriesInShop {
+- (NSOrderedSet *)getCategoriesInDatabase {
     return [Category getAllCategories];
 }
 
@@ -204,7 +205,8 @@
 }
 
 - (void)extractorBook:(Book *)book receivedNewPercentage:(float)percentage {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"BookDataReceived" object:self];
+    NSNumber *percent = [NSNumber numberWithFloat:percentage];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"BookDataReceived" object:percent];
 }
 
 - (void)extractorForBook:(Book *)book didFinishExtractingWithSuccess:(BOOL)success {

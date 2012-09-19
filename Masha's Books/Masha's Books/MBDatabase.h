@@ -22,7 +22,7 @@
 #endif
 
 #define URL_BookstoreXML @"http://www.mashasbookstore.com/storeops/bookstore-xml.aspx"
-#define URL_BookCovers @"http://www.mashasbookstore.com/storeops/bookstore-xml.aspx"
+#define URL_BookCovers @"http://www.mashasbookstore.com/covers/"
 
 @class MDDatabase;
 
@@ -34,7 +34,7 @@
 - (void)userDeletesBook:(Book *)book;
 - (void)coversLoaded;
 
-- (NSOrderedSet *)getCategoriesInShop;
+- (NSOrderedSet *)getCategoriesInDatabase;
 - (NSOrderedSet *)getBooksForCategory:(Category *)category;
 
 

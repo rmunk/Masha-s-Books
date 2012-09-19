@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
+#import "MBDatabase.h"
 
 @interface SettingsViewController : UIViewController
+
+- (void)setMBD:(MBDatabase *)database;
 
 @end

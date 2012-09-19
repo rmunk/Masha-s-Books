@@ -27,7 +27,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startMashasBookstore) name:@"DatabaseLoaded" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startMashasBookstore:) name:@"DatabaseLoaded" object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -50,10 +50,20 @@
     return (interfaceOrientation != UIInterfaceOrientationPortrait && interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
-- (void)startMashasBookstore
-{
+- (void)startMashasBookstore:(NSNotification *)notification {
     UITabBarController *tabBarController = [self.storyboard instantiateViewControllerWithIdentifier:@"TabBarController"];
     tabBarController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    MBDatabase *database = (MBDatabase *)notification.object;
+    
+    NSLog(@"Number of tabbarcontroller subviews is %d", tabBarController.viewControllers.count);
+    for (UIViewController *controller in tabBarController.viewControllers) {
+        if ([controller respondsToSelector:@selector(setMBD:)]) {
+            [controller performSelector:@selector(setMBD:) withObject:database];
+        }
+        else {
+            NSLog(@"Controller %@ does not respond to setMBD", controller.title);
+        }
+    }
     
     [self presentViewController:tabBarController animated:YES completion:nil];
 }

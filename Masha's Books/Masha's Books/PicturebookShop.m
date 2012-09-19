@@ -306,15 +306,12 @@
        
         NSLog(@"PARSING FINISHED");
         
+        [Book linkBooksToCategoriesWithLinker:self.categoryToBookMap];
         
         [Design loadDesignImages];
         
         [Category loadBackgrounds];
-
-        [Book linkBooksToCategoriesWithLinker:self.categoryToBookMap];
-
-        //[Book linkBooksToAuthors];
-
+        
         [Book loadCoversFromURL:@"http://www.mashasbookstore.com/covers/" forShop:self];
         
     }

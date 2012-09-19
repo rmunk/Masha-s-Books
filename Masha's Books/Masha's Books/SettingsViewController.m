@@ -16,18 +16,24 @@
 @interface SettingsViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) NSArray *myBooks;
 @property (weak, nonatomic) IBOutlet UITableView *myBooksTableView;
+@property (nonatomic, weak) MBDatabase *database;
 
 @end
 
 @implementation SettingsViewController
 @synthesize myBooks = _myBooks;
 @synthesize myBooksTableView = _myBooksTableView;
+@synthesize database = _database;
 
 - (void)refresh
 {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"status like 'ready' OR status like 'bought'"];
     self.myBooks = [Book MR_findAllSortedBy:@"size" ascending:NO withPredicate:predicate];
     [self.myBooksTableView reloadData];
+}
+
+- (void)setMBD:(MBDatabase *)database {
+    self.database = database;
 }
 
 #pragma mark - View lifecycle

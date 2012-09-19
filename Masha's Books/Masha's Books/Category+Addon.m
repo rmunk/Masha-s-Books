@@ -88,7 +88,7 @@
 
     NSArray *categories = [Category MR_findAll];
     
-    [MagicalRecord saveInBackgroundUsingCurrentContextWithBlock:^(NSManagedObjectContext *localContext)
+    [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext)
      {
     
          for (Category *category in categories) {
@@ -112,12 +112,12 @@
                 
             } 
         }
-     }
-    completion:^{
-        [[NSManagedObjectContext MR_defaultContext] save:nil];
-        NSLog(@"Categories background images downloaded and saved to database.");
-    }
-                                errorHandler:nil];
+     }];
+  //  completion:^{
+  //      [[NSManagedObjectContext MR_defaultContext] save:nil];
+  //      NSLog(@"Categories background images downloaded and saved to database.");
+  //  }
+  //                              errorHandler:nil];
 }
 
 - (void)pickYourBooksFromLinkerObject:(CategoryToBookMap *)categoryToBookMap {

@@ -24,12 +24,14 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
 
 @property (nonatomic, strong) NSManagedObjectContext *context;
+@property (nonatomic, weak) MBDatabase *database;
 @end
 
 @implementation MyBooksViewController
 @synthesize library = _library;
 @synthesize mashaImage = _mashaImage;
 @synthesize backgroundImage = _backgroundImage;
+@synthesize database = _database;
 
 @synthesize scrollView = _scrollView;
 @synthesize scrollViewContainer = _scrollViewContainer;
@@ -187,6 +189,10 @@
         _library = library;
         [self useDocument];
     }
+}
+
+- (void)setMBD:(MBDatabase *)database {
+    self.database = database;
 }
 
 - (void)newBookReady:(NSNotification *)notification {
