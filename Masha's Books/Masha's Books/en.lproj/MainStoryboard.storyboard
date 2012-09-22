@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2549" systemVersion="12A269" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="Jz7-kR-CaY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="Jz7-kR-CaY">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1498"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
     </dependencies>
     <scenes>
-        <!--Settings View Controller - Settings-->
+        <!--Settings View Controller - Settings View Controller-->
         <scene sceneID="0Fx-IG-xQZ">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U8O-nR-AnZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="4VB-yG-v2V" customClass="SettingsViewController" sceneMemberID="viewController">
+                <viewController title="Settings View Controller" id="4VB-yG-v2V" customClass="SettingsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="wVh-em-qVq">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="719"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -83,11 +83,11 @@
             </objects>
             <point key="canvasLocation" x="-517" y="178"/>
         </scene>
-        <!--My Books View Controller - My Books-->
+        <!--My Books View Controller - My Books View Controller-->
         <scene sceneID="9NB-gE-jkU">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RSf-8R-Xfj" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="i4c-PB-hBI" customClass="MyBooksViewController" sceneMemberID="viewController">
+                <viewController title="My Books View Controller" id="i4c-PB-hBI" customClass="MyBooksViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="EFD-r1-w2L">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="719"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -201,11 +201,11 @@
             </objects>
             <point key="canvasLocation" x="-517" y="-1656"/>
         </scene>
-        <!--Shop View Controller - Masha's Shop-->
+        <!--Shop View Controller - Shop View Controller-->
         <scene sceneID="s3E-db-7l0">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uDN-sc-5LV" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="qfq-Kt-d9p" customClass="ShopViewController" sceneMemberID="viewController">
+                <viewController title="Shop View Controller" id="qfq-Kt-d9p" customClass="ShopViewController" sceneMemberID="viewController">
                     <view key="view" opaque="NO" contentMode="scaleToFill" id="kKn-rT-VCm">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="719"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

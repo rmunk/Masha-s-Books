@@ -20,6 +20,7 @@
 		BA651EE715FB41B000352B2F /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = BA651EE415FB41B000352B2F /* UIImage+RoundedCorner.m */; };
 		BA651EED15FB454000352B2F /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = BA651EE215FB41B000352B2F /* UIImage+Resize.m */; };
 		BA7A1D6216060CEE0050293B /* Design+Addon.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7A1D6116060CEE0050293B /* Design+Addon.m */; };
+		BA7A1D6A16091C740050293B /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7A1D6916091C740050293B /* Book.m */; };
 		BA8473C016051CF8007FCEEE /* MBDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8473BF16051CF8007FCEEE /* MBDatabase.m */; };
 		BA8B446C15A387650098F063 /* Author+Addon.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8B446715A387650098F063 /* Author+Addon.m */; };
 		BA8B446D15A387650098F063 /* Book+Addon.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8B446915A387650098F063 /* Book+Addon.m */; };
@@ -152,7 +153,6 @@
 		C09D3E7515F81A42003D1896 /* AVAudioPlayer+PGFade.m in Sources */ = {isa = PBXBuildFile; fileRef = C09C32C215F6C71F00C21ADB /* AVAudioPlayer+PGFade.m */; };
 		C09EB5D715D9D7E8003FEBB0 /* tab-books copy.png in Resources */ = {isa = PBXBuildFile; fileRef = C09EB5D615D9D7E8003FEBB0 /* tab-books copy.png */; };
 		C09EB7C61603FB52005DEA0D /* SlikovnicaLastPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C09EB7C51603FB52005DEA0D /* SlikovnicaLastPageViewController.m */; };
-		C09F7398160694880015FF5A /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = C09F7397160694880015FF5A /* Book.m */; };
 		C0B3FF6415742E41002DF30F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0B3FF6315742E41002DF30F /* UIKit.framework */; };
 		C0B3FF6615742E41002DF30F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0B3FF6515742E41002DF30F /* Foundation.framework */; };
 		C0B3FF6815742E41002DF30F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0B3FF6715742E41002DF30F /* CoreGraphics.framework */; };
@@ -205,6 +205,8 @@
 		BA651EE415FB41B000352B2F /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
 		BA7A1D6016060CEE0050293B /* Design+Addon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Design+Addon.h"; sourceTree = "<group>"; };
 		BA7A1D6116060CEE0050293B /* Design+Addon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Design+Addon.m"; sourceTree = "<group>"; };
+		BA7A1D6816091C740050293B /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Book.h; sourceTree = "<group>"; };
+		BA7A1D6916091C740050293B /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Book.m; sourceTree = "<group>"; };
 		BA8473BE16051CF8007FCEEE /* MBDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBDatabase.h; sourceTree = "<group>"; };
 		BA8473BF16051CF8007FCEEE /* MBDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBDatabase.m; sourceTree = "<group>"; };
 		BA8B446615A387650098F063 /* Author+Addon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Author+Addon.h"; sourceTree = "<group>"; };
@@ -387,8 +389,6 @@
 		C09EB5D615D9D7E8003FEBB0 /* tab-books copy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-books copy.png"; sourceTree = "<group>"; };
 		C09EB7C41603FB52005DEA0D /* SlikovnicaLastPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlikovnicaLastPageViewController.h; sourceTree = "<group>"; };
 		C09EB7C51603FB52005DEA0D /* SlikovnicaLastPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlikovnicaLastPageViewController.m; sourceTree = "<group>"; };
-		C09F7396160694880015FF5A /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Book.h; sourceTree = "<group>"; };
-		C09F7397160694880015FF5A /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Book.m; sourceTree = "<group>"; };
 		C0B3FF5F15742E41002DF30F /* Masha's Books.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Masha's Books.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0B3FF6315742E41002DF30F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C0B3FF6515742E41002DF30F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -479,9 +479,9 @@
 		C08247061576870C00054A3A /* LibraryDataModel */ = {
 			isa = PBXGroup;
 			children = (
+				BA7A1D6816091C740050293B /* Book.h */,
+				BA7A1D6916091C740050293B /* Book.m */,
 				C08246EB157680E900054A3A /* Library.xcdatamodeld */,
-				C09F7396160694880015FF5A /* Book.h */,
-				C09F7397160694880015FF5A /* Book.m */,
 				BA158118160554C60000AFEC /* Page.h */,
 				BA158119160554C60000AFEC /* Page.m */,
 				BA158112160554C40000AFEC /* Category.h */,
@@ -1105,7 +1105,7 @@
 				BA158114160554C50000AFEC /* Category.m in Sources */,
 				BA15811A160554C70000AFEC /* Page.m in Sources */,
 				BA7A1D6216060CEE0050293B /* Design+Addon.m in Sources */,
-				C09F7398160694880015FF5A /* Book.m in Sources */,
+				BA7A1D6A16091C740050293B /* Book.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

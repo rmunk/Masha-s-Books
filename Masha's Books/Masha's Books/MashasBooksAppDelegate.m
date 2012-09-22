@@ -8,14 +8,22 @@
 
 #import "MashasBooksAppDelegate.h"
 
+@interface MashasBooksAppDelegate()
+
+@property (nonatomic, strong) MBDatabase *database;
+
+@end
+
 @implementation MashasBooksAppDelegate
 
 @synthesize window = _window;
+@synthesize database = _database;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
     [MagicalRecord setupCoreDataStack];
+    _database = [[MBDatabase alloc] initMBD];
     
     return YES;
 }

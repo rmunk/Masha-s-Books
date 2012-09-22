@@ -9,12 +9,14 @@
 #import "ShopViewController.h"
 
 @interface ShopViewController () <MFMailComposeViewControllerDelegate>
-@property (nonatomic, strong) PicturebookShop *picturebookShop;
 @property (nonatomic, strong) NSOrderedSet *booksInSelectedCategory;
 @property (nonatomic, strong) UIView *youTubeTransparentView;
 @property (nonatomic, strong) UIWebView *youTubeVideoView;
 @property (nonatomic, strong) UIButton *youTubeCloseButton;
-
+@property (nonatomic, strong) MBDatabase *database;
+@property (nonatomic, strong) Category *selectedCategory;
+@property (nonatomic, strong) NSOrderedSet *categoriesInDatabase;
+@property (nonatomic, strong) Book *selectedBook;
 @end
 
 @implementation ShopViewController
@@ -33,25 +35,23 @@
 @synthesize tagViewLarge = _tagViewLarge;
 @synthesize rateImage = _rateImage;
 @synthesize activityView = _activityView;
-@synthesize picturebookShop = _picturebookShop;
 @synthesize booksInSelectedCategory = _booksInSelectedCategory;
 @synthesize youTubeTransparentView = _youTubeTransparentView;
 @synthesize youTubeVideoView = _youTubeVideoView;
 @synthesize youTubeCloseButton = _youTubeCloseButton;
 
+@synthesize database = _database;
+@synthesize selectedCategory = _selectedCategory;
+@synthesize categoriesInDatabase = _categoriesInDatabase;
+@synthesize selectedBook = _selectedBook;
 
-- (PicturebookShop *)picturebookShop
-{
-    if (!_picturebookShop) {
-        _picturebookShop = [[PicturebookShop alloc] initShop];
-    }
-    return _picturebookShop;
-}
+
+#pragma mark - Initialization methods
 
 - (void)categoryPicked:(Category *)category inController:(CategoryTableViewController *)controller {
     NSIndexPath *indexPath = [[NSIndexPath alloc] init];
     indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    [self.picturebookShop userSelectsCategory:category];
+    self.selectedCategory = category;
     [controller dismissViewControllerAnimated:YES completion:nil];
     
     [UIView transitionWithView:self.view
@@ -62,7 +62,7 @@
                     } completion:NULL];
  
     self.categoryButton.titleLabel.text = category.name;
-    self.booksInSelectedCategory = [self.picturebookShop getBooksForSelectedCategory];
+    self.booksInSelectedCategory = [self.database getBooksForCategory:category];
     [self.booksTableView reloadData];
     [self bookSelectedAtIndexPath:indexPath];
     [self.view setNeedsDisplay];
@@ -77,21 +77,52 @@
     return self;
 }
 
+- (void)setMBD:(MBDatabase *)database {
+    self.database = database;
+}
+
+#pragma mark - View events responders
+
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
 
     self.downloadProgressView.hidden = YES;
-    if (self.picturebookShop.libraryLoaded == YES) {
-        [self.picturebookShop refreshShop];
-    }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(picturebookShopFinishedLoading:) name:@"PicturebookShopFinishedLoading" object:nil ]; 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(picturebookShopLoadingError:) name:@"PicturebookShopLoadingError" object:nil ];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setDownloadStatus:) name:@"NewShopReceivedZipData" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bookExtracted:) name:@"" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bookExtractingError:) name:@"BookExtractingError" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bookReady:) name:@"BookReady" object:self.picturebookShop];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bookExtractingError:) name:@"BookExtracted" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bookReady:) name:@"BookReady" object:self.database];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    // progress bar update notification
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setDownloadStatus:) name:@"BookDataReceived" object:nil       ];
+    
+    self.categoriesInDatabase = [self.database getCategoriesInDatabase];
+
+    if (self.categoriesInDatabase.count) {
+        self.selectedCategory = [self.categoriesInDatabase objectAtIndex:0];
+        self.booksInSelectedCategory = [self.database getBooksForCategory:self.selectedCategory];
+        for (Book *book in self.booksInSelectedCategory) {
+            NSLog(@"Book in category %@", book.title);
+        }
+        NSIndexPath *indexPath = [[NSIndexPath alloc] init];
+        indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        self.categoryButton.titleLabel.text = [NSString stringWithString:self.selectedCategory.name];
+        
+        [self.booksTableView reloadData];
+        [self bookSelectedAtIndexPath:indexPath];
+        
+        [self.view setNeedsDisplay];
+    }
+    
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"BookDataReceived" object:nil];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -120,19 +151,19 @@
     // Release any retained subviews of the main view.
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"PicturebookShopFinishedLoading" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"PicturebookShopLoadingError" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NewShopReceivedZipData" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"BookExtracted" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"BookExtractingError" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"BookReady" object:nil];
 }
-- (IBAction)categorySelection:(UIButton *)sender {
-}
+
+#pragma mark - Button action
+
 - (IBAction)bookBought:(UIButton *)sender {
 
-    Book *bookJustBought = [self.picturebookShop getSelectedBook]; 
+    Book *bookJustBought = self.selectedBook;
  
-    [self.picturebookShop userBuysBook:bookJustBought];
-    self. booksInSelectedCategory = [self.picturebookShop getBooksForSelectedCategory];
+    [self.database userBuysBook:bookJustBought];
+    self.booksInSelectedCategory = [self.database getBooksForCategory:self.selectedCategory];
     [self.booksTableView reloadData];
     
     NSIndexPath *indexPath = [[NSIndexPath alloc] init];
@@ -146,10 +177,13 @@
     indexPath = [NSIndexPath indexPathForRow:i inSection:0];
     [self bookSelectedAtIndexPath:indexPath];
 }
+
 - (IBAction)goToFacebookPage:(UIButton *)sender {
 }
+
 - (IBAction)goToTwitterPage:(UIButton *)sender {
 }
+
 - (IBAction)goToYoutubePage:(UIButton *)sender {
     NSString *youTubeURL = [NSString stringWithFormat:@"%@%@", @"http://www.youtube.com/watch?feature=player_embedded&v=", sender.titleLabel.text];
     NSLog(@"Youtube url: %@", youTubeURL);
@@ -159,30 +193,10 @@
 - (IBAction)shopRefresh:(UIBarButtonItem *)sender {
     PBDLOG(@"PicturebookShopViewController: Calling refreshShop."); 
     
-    [self.picturebookShop refreshShop];
-    
     [self.view setNeedsDisplay];
 }
 
-- (void)picturebookShopFinishedLoading:(NSNotification *) notification {
-    PBDLOG(@"Picture book shop reports loading finished!");
-        
-    [self.picturebookShop userSelectsCategoryAtIndex:0];
-    if ([self.picturebookShop getCategoriesInShop].count) {
-        NSIndexPath *indexPath = [[NSIndexPath alloc] init];
-        indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-        self.categoryButton.titleLabel.text = [NSString stringWithString:self.picturebookShop.selectedCategory.name];
-        
-        self.booksInSelectedCategory = [self.picturebookShop getBooksForSelectedCategory];
-        
-        [self.booksTableView reloadData];
-        [self bookSelectedAtIndexPath:indexPath];
-        
-        [self.view setNeedsDisplay];
-    }
-    
-    
-}
+#pragma mark - Database events responders
 
 - (void)picturebookShopLoadingError:(NSNotification *) notification {
     PBDLOG(@"ERROR: Picture book shop reports loading error!");
@@ -197,18 +211,6 @@
     [self.booksTableView reloadData];
 }
 
-- (void)setDownloadStatus:(NSNotification *) notification {
-    
-    if ([self.downloadProgressView isHidden]) 
-        self.downloadProgressView.hidden = NO;
-    else 
-        self.downloadProgressView.progress = self.picturebookShop.lastPercentage;
-    
-}
-
-- (void)setPercentage {
-    self.downloadProgressView.progress = self.picturebookShop.lastPercentage;
-}
 
 - (void)bookReady:(NSNotification *)notification {
     NSLog(@"ShopViewController: Received BookReady notification");
@@ -218,33 +220,45 @@
     [self.booksTableView reloadData];
     
     NSLog(@"ShopViewController: Posting PagesAdded notification");
-
 }
 
-- (void)bookSelectedAtIndexPath:(NSIndexPath *)indexPath {
+- (void)setDownloadStatus:(NSNotification *)notification {
+    if ([self.selectedBook.status isEqualToString:@"downloading"]) {
+        if(self.downloadProgressView.hidden == YES)
+            self.downloadProgressView.hidden = NO;
+        self.downloadProgressView.progress = [notification.object floatValue];
+    }
+    else {
+        if(self.downloadProgressView.hidden == NO)
+            self.downloadProgressView.hidden = YES;
+    }
+}
 
-    if (self.booksInSelectedCategory.count > 0) {
-        NSLog(@"bookSelected: Number of books in category %@ is %d", self.picturebookShop.selectedCategory.name, self.booksInSelectedCategory.count);
+#pragma mark - Database modifiers
+
+- (void)bookSelectedAtIndexPath:(NSIndexPath *)indexPath {
+    Book *book = ((Book *)[self.booksInSelectedCategory objectAtIndex:indexPath.row]);
+
+    if (book) {
+        
+        self.selectedBook = book;
+        
         if (![self.downloadProgressView isHidden]) {
             self.downloadProgressView.hidden = YES;
         }
         
+        NSLog(@"User selects book %@", book.title);
     
-        self.picturebookShop.selectedBook = [self.booksInSelectedCategory objectAtIndex:indexPath.row];
-        
-        NSLog(@"User selects book %@", self.picturebookShop.selectedBook.title);
-        [self.picturebookShop userSelectsBook:self.picturebookShop.selectedBook];
-    
-        self.thumbImageView.image = [[UIImage alloc] initWithData:self.picturebookShop.selectedBook.coverThumbnailImageMedium];
-        self.tagViewLarge.image = [[UIImage alloc] initWithData:self.picturebookShop.selectedBook.tagImageLarge];
-        self.rateImage.image = [[UIImage alloc] initWithData:self.picturebookShop.selectedBook.rateImageUp];
-        self.bookTitleLabel.text = self.picturebookShop.selectedBook.title;
-        self.priceLabel.text = [NSString stringWithFormat:@"$ %.2f", [self.picturebookShop.selectedBook.price floatValue]];
+        self.thumbImageView.image = [[UIImage alloc] initWithData:book.coverThumbnailImageMedium];
+        self.tagViewLarge.image = [[UIImage alloc] initWithData:book.tagImageLarge];
+        self.rateImage.image = [[UIImage alloc] initWithData:book.rateImageUp];
+        self.bookTitleLabel.text = book.title;
+        self.priceLabel.text = [NSString stringWithFormat:@"$ %.2f", [book.price floatValue]];
        [self.booksTableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
-        self.youtubeButton.titleLabel.text = self.picturebookShop.selectedBook.youTubeVideoURL;
+        self.youtubeButton.titleLabel.text = book.youTubeVideoURL;
     
         NSString *siteURL = @"http://www.mashasbookstore.com/storeops/story-long-description.aspx?id=";
-        NSString *urlAddress = [siteURL stringByAppendingString:[NSString stringWithFormat:@"%d", [self.picturebookShop.selectedBook.bookID intValue]]];
+        NSString *urlAddress = [siteURL stringByAppendingString:[NSString stringWithFormat:@"%d", [book.bookID intValue]]];
     
         //Create a URL object.
         NSURL *url = [NSURL URLWithString:urlAddress];
@@ -261,7 +275,8 @@
     }
 }
 
-
+- (IBAction)categorySelection:(UIButton *)sender {
+}
 
 
 #pragma mark - Table view data source
@@ -274,15 +289,9 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
-    if (self.picturebookShop.isShopLoaded) {
-        PBDLOG_ARG(@"Category table number of rows: %i", [self.picturebookShop getCategoriesInShop].count);
-        return [self.picturebookShop getBooksForSelectedCategory].count;        
-    }
-    else {
-        PBDLOG(@"Category table number of rows: Shop not red yet");
-        return 0;
-    }
+
+    PBDLOG_ARG(@"Category table number of rows: %i", self.categoriesInDatabase.count);
+    return self.booksInSelectedCategory.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -336,7 +345,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {    
-    NSLog(@"User selects book at index %d", indexPath.row);
  
     [self bookSelectedAtIndexPath:indexPath];
     [self.booksTableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
@@ -353,12 +361,10 @@
         popoverController = popoverSegue.popoverController;
         
         CategoryTableViewController *categoryVC = (CategoryTableViewController *)popoverSegue.destinationViewController;
-        categoryVC.categories = [Category getAllCategories];
+        categoryVC.categories = self.categoriesInDatabase;
    
         categoryVC.delegate = self;
         categoryVC.popoverController = popoverController;
-        
-
         
     }
 }
@@ -481,14 +487,14 @@
     [button sendActionsForControlEvents:UIControlEventTouchUpInside];
 }
 
--(void)doneButtonClick:(NSNotification*)notification {
+- (void)doneButtonClick:(NSNotification*)notification {
     NSLog(@"Done button clicked");
     [self.youTubeVideoView removeFromSuperview];
     [self.youTubeTransparentView removeFromSuperview];
     [self.youTubeCloseButton removeFromSuperview];
 }
 
--(void)closeButtonClick {
+- (void)closeButtonClick {
     NSLog(@"Close button clicked");
     [self.youTubeVideoView loadHTMLString:@"" baseURL:nil];
     [self.youTubeVideoView removeFromSuperview];    

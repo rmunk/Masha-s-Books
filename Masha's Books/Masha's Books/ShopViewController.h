@@ -35,6 +35,8 @@
 @property (strong, nonatomic) IBOutlet UIImageView *rateImage;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityView;
 
+- (void)setMBD:(MBDatabase *)database;
+
 //@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
 - (void)categoryPicked:(Category *)category inController:(CategoryTableViewController *)controller;

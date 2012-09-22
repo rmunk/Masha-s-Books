@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MBDatabase.h"
 
 @interface MashasBooksAppDelegate : UIResponder <UIApplicationDelegate>
 

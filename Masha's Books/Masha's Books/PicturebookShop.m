@@ -119,6 +119,7 @@
 
     [self.xmlParser setDelegate:self];
     
+    /*
     BOOL parsingSuccesfull = [self.xmlParser parse];
     
     if (parsingSuccesfull == YES) {
@@ -127,22 +128,16 @@
     }
     else {
         [self shopErrorLoading];
-    }
-}
-
-- (void)putObject:(id)obj inContext:(NSManagedObjectContext *)context {
-  
+    }*/
 }
 
 - (void)userSelectsCategoryAtIndex:(NSUInteger)index {
 
     NSArray *categories = [Category MR_findAllSortedBy:@"name" ascending:YES];
     
-    NSLog(@"Number of categories is %d", categories.count);
     if (categories.count && index < categories.count) {
         self.selectedCategory = [categories objectAtIndex:index];
         self.booksInSelectedCategory = [Book getBooksForCategory:self.selectedCategory];
-        NSLog(@"User selects category %@", self.selectedCategory.name);
     } 
     else {
         NSLog(@"ERROR: Index %d out of bounds for user selected category!", index);
@@ -311,15 +306,12 @@
        
         NSLog(@"PARSING FINISHED");
         
+        [Book linkBooksToCategoriesWithLinker:self.categoryToBookMap];
         
         [Design loadDesignImages];
         
         [Category loadBackgrounds];
-
-        [Book linkBooksToCategoriesWithLinker:self.categoryToBookMap];
-
-        //[Book linkBooksToAuthors];
-
+        
         [Book loadCoversFromURL:@"http://www.mashasbookstore.com/covers/" forShop:self];
         
     }

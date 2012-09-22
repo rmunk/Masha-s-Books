@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MBDatabase.h"
 
 @interface MyBooksViewController : UIViewController
 @property (nonatomic, strong) UIManagedDocument *library;
 @property (weak, nonatomic) IBOutlet UIImageView *mashaImage;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImage;
+
+- (void)setMBD:(MBDatabase *)database;
 @end

@@ -14,7 +14,7 @@
     
     Design *design = [[Design MR_findAll] lastObject];
     
-    [MagicalRecord saveInBackgroundUsingCurrentContextWithBlock:^(NSManagedObjectContext *localContext)
+    [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext)
     {
              
         NSURL *backgroundURL = [[NSURL alloc] initWithString:
@@ -37,12 +37,12 @@
             design.bgMasha = masha;
                  
         } 
-    }
-    completion:^{
-        [[NSManagedObjectContext MR_defaultContext] save:nil];
-        NSLog(@"Design images downloaded and saved to database.");
-    }
-    errorHandler:nil];
+    }];
+ //   completion:^{
+ //       [[NSManagedObjectContext MR_defaultContext] save:nil];
+ //       NSLog(@"Design images downloaded and saved to database.");
+ //   }
+ //   errorHandler:nil];
     
 }
 

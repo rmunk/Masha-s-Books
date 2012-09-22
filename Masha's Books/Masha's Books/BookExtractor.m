@@ -45,6 +45,17 @@
     return self;
 }
 
+- (BookExtractor *)initExtractorWithDatabase:(id)database {
+    self = [super init];
+    if (self) {
+        self.bookQue = [[NSMutableOrderedSet alloc] init];
+        self.delegate = database;
+        self.downloading = NO;
+        self.activeBook = nil;
+    }
+    return self;
+}
+
 - (void)extractBookFromFile:(NSString *)zipFile
 {
     NSFileManager *fileManager = [NSFileManager defaultManager];

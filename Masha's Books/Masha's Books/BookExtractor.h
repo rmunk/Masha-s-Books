@@ -14,7 +14,6 @@
 #import "Book.h"
 #import "Book+Addon.h"
 #import "UIImage+Resize.h"
-//#import "PicturebookShop.h"
 #import <CoreData/CoreData.h>
 
 
@@ -37,6 +36,7 @@
 @property (nonatomic, strong) NSMutableData *downloadedZipData;
 @property BOOL downloading;
 - (BookExtractor *)initExtractorWithShop:(id)shop;
+- (BookExtractor *)initExtractorWithDatabase:(id)database;
 - (void)extractBookFromFile:(NSString *)zipFile;
 - (BOOL)isDownloading;
 - (NSData *)getDownloadedData;
