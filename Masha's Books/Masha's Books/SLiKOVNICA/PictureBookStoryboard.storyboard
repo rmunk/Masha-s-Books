@@ -215,7 +215,7 @@
                 <relationship kind="outlet" name="textImage" candidateClass="UIImageView"/>
             </relationships>
         </class>
-        <class className="SlikovnicaLastPageViewController" superclassName="UIViewController">
+        <class className="SlikovnicaLastPageViewController" superclassName="SlikovnicaDataViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SlikovnicaLastPageViewController.h"/>
             <relationships>
                 <relationship kind="action" name="goBackToLibrary:" candidateClass="UIButton"/>

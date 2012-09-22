@@ -230,6 +230,7 @@
 }
 
 - (void)viewDidUnload {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self setScrollView:nil];
     [self setScrollViewContainer:nil];
     [self setMyBooks:nil];

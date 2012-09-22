@@ -9,9 +9,10 @@
 #import <AVFoundation/AVFoundation.h>
 #import "SlikovnicaDataViewController.h"
 #import "AVAudioPlayer+PGFade.h"
-//#define HACKINTOSH
+#define HACKINTOSH
 
 @interface SlikovnicaDataViewController () <AVAudioPlayerDelegate>
+@property (strong, nonatomic) IBOutlet UIImageView *pageImage;
 @property (weak, nonatomic) IBOutlet UIImageView *textImage;
 @property (strong, nonatomic) AVAudioPlayer *audioPlayerVoiceOver;
 @property (strong, nonatomic) AVAudioPlayer *audioPlayerSound;
@@ -23,7 +24,7 @@
 @synthesize textImage = _textImage;
 @synthesize audioPlayerVoiceOver = _audioPlayerVoiceOver;
 @synthesize audioPlayerSound = _audioPlayerSound;
-@synthesize textVisibility = _textVisibility;
+@synthesize textVisible = _textVisible;
 @synthesize voiceOverPlay = _voiceOverPlay;
 
 #ifndef HACKINTOSH
@@ -41,22 +42,23 @@
 - (AVAudioPlayer *)audioPlayerSound {return nil;}
 #endif
 
+- (void)setTextVisible:(BOOL)textVisible
+{
+    self.textImage.hidden = !(textVisible);
+    _textVisible = textVisible;
+}
+
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"Page %@", self.page.pageNumber];
 }
 
+#pragma mark - View lifecycle
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     //    NSLog(@"%@", self.description);
-}
-
-- (void)viewDidUnload
-{
-    [self setPageImage:nil];
-    [self setTextImage:nil];
-    [super viewDidUnload];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -65,9 +67,16 @@
     if(self.page)
     {
         self.pageImage.image = [[UIImage alloc] initWithData:self.page.image];
-        if (self.textVisibility)
-            self.textImage.image = [[UIImage alloc] initWithData:self.page.text];
+        self.textImage.image = [[UIImage alloc] initWithData:self.page.text];
+        self.textImage.hidden = !(self.textVisible);
     }
+}
+
+- (void)viewDidUnload
+{
+    [self setPageImage:nil];
+    [self setTextImage:nil];
+    [super viewDidUnload];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

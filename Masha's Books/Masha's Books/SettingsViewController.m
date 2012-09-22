@@ -49,6 +49,7 @@
 
 - (void)viewDidUnload
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self setMyBooksTableView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.

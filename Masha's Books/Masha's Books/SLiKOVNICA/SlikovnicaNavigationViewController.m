@@ -25,7 +25,7 @@
 @synthesize pageImages = _pageImages;
 @synthesize currentPage = _currentPage;
 @synthesize delegate = _delegate;
-@synthesize textVisibility = _textVisibility;
+@synthesize textVisible = _textVisible;
 @synthesize voiceOverPlay = _voiceOverPlay;
 
 - (void)setCurrentPage:(NSInteger)currentPage
@@ -66,18 +66,18 @@
 
 - (IBAction)turnTextOnOff:(UIBarButtonItem *)sender
 {
-    if (self.textVisibility) {
-        self.textVisibility = FALSE;
+    if (self.textVisible) {
+        self.textVisible = NO;
         sender.style = UIBarButtonItemStyleBordered;
         sender.image = [UIImage imageNamed:@"text-off.png"];
     }
     else {
-        self.textVisibility = TRUE;
+        self.textVisible = YES;
         sender.style = UIBarButtonItemStyleDone;
         sender.image = [UIImage imageNamed:@"text-on.png"];
     }
-    if ([self.delegate respondsToSelector:@selector(navigationController:setTextVisibility:)])
-        [self.delegate navigationController:self setTextVisibility:self.textVisibility];
+    if ([self.delegate respondsToSelector:@selector(navigationController:settextVisible:)])
+        [self.delegate navigationController:self settextVisible:self.textVisible];
 }
 
 #pragma mark - View lifecycle
@@ -135,7 +135,6 @@
     [self setPauseImage:nil];
     [self setToolbar:nil];
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -150,7 +149,7 @@
     UIImageView *currentPageView = (UIImageView *)[self.scrollView viewWithTag:self.currentPage];
     if ([currentPageView respondsToSelector:@selector(setHighlighted:)])
         currentPageView.highlighted = FALSE;
-    [UIView animateWithDuration:0.3
+    [UIView animateWithDuration:0.25
                           delay:0
                         options:UIViewAnimationCurveEaseIn
                      animations:^{
@@ -175,8 +174,8 @@
 
     //    page.highlighted = TRUE;
     
-    NSLog(@"Skip to Page %d", page.tag);
-                             [self.delegate navigationController:self didChoosePage:page.tag];
+    //    NSLog(@"Skip to Page %d", page.tag);
+    [self.delegate navigationController:self didChoosePage:page.tag];
     
     [UIView animateWithDuration:0.25
                           delay:0

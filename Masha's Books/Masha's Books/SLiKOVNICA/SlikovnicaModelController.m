@@ -21,55 +21,60 @@
 
 @interface SlikovnicaModelController()
 @property Page *nextPage;
+@property Page *previousPage;
 @end
 
 @implementation SlikovnicaModelController
 
 @synthesize book = _book;
-@synthesize textVisibility = _textVisibility;
+@synthesize textVisible = _textVisible;
 @synthesize voiceOverPlay = _voiceOverPlay;
 @synthesize numberOfPages = _numberOfPages;
+@synthesize nextPage = _nextPage;
+@synthesize previousPage = _previousPage;
 
 - (id)init
 {
     self = [super init];
     if (self)
     {
-        self.textVisibility = TRUE;
+        self.textVisible = TRUE;
         self.voiceOverPlay = TRUE;
     }
     return self;
 }
 
-- (UIViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard
+- (SlikovnicaDataViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard
 {
     // Return the data view controller for the given index.
     if (([self.book.pages count] == 0) || (index > [self.book.pages count])) {
         return nil;
     }
     
-    if (index == self.numberOfPages) return [storyboard instantiateViewControllerWithIdentifier:@"LastPage"];
-    
+    if (index == self.numberOfPages)
+    {
+        SlikovnicaLastPageViewController *lastPage = [storyboard instantiateViewControllerWithIdentifier:@"LastPage"];
+        lastPage.view.tag = index;
+        return lastPage;
+    }
     
     // Create a new view controller and pass suitable data.
     SlikovnicaDataViewController *dataViewController = [storyboard instantiateViewControllerWithIdentifier:@"SlikovnicaDataViewController"];
+    dataViewController.view.tag = index;
     dataViewController.page = [self.book.pages objectAtIndex:index];
-    dataViewController.textVisibility = self.textVisibility;
+    dataViewController.textVisible = self.textVisible;
     dataViewController.voiceOverPlay = self.voiceOverPlay;
     
+    //    Page *preloadNextPage = [self.book.pages objectAtIndex:index + 1];
     [self.book.managedObjectContext refreshObject:self.book mergeChanges:NO];
     
-    //    Page *preloadNextPage = [self.book.pages objectAtIndex:index + 1];
     return dataViewController;
 }
 
-- (NSUInteger)indexOfViewController:(SlikovnicaDataViewController *)viewController
+- (NSUInteger)indexOfViewController:(UIViewController *)viewController
 {
     // Return the index of the given data view controller.
-    if([self.book.pages indexOfObject:viewController.page] != NSNotFound)
-        return [self.book.pages indexOfObject:viewController.page];
-    else
-        return self.book.pages.count;
+    return viewController.view.tag;
 }
 
 - (NSUInteger)numberOfPages
@@ -95,26 +100,14 @@
 
 #pragma mark - Page View Controller Data Source
 
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
+- (SlikovnicaDataViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
-    NSUInteger index = [self indexOfViewController:(SlikovnicaDataViewController *)viewController];
-    if ((index == 0) || (index == NSNotFound)) {
-        return nil;
-    }
-    
-    index--;
-    return [self viewControllerAtIndex:index storyboard:viewController.storyboard];
+    return [self viewControllerAtIndex:viewController.view.tag - 1 storyboard:viewController.storyboard];
 }
 
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
+- (SlikovnicaDataViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
-    NSUInteger index = [self indexOfViewController:(SlikovnicaDataViewController *)viewController];
-    if (index == NSNotFound) {
-        return nil;
-    }
-    
-    index++;
-    return [self viewControllerAtIndex:index storyboard:viewController.storyboard];
+    return [self viewControllerAtIndex:viewController.view.tag + 1 storyboard:viewController.storyboard];
 }
 
 @end

@@ -12,10 +12,8 @@
 
 @interface SlikovnicaDataViewController : UIViewController
 @property (nonatomic, strong) Page *page;
-@property (nonatomic) BOOL textVisibility;
-@property (nonatomic) BOOL voiceOverPlay;
-@property (strong, nonatomic) IBOutlet UIImageView *pageImage;
-@property (strong, nonatomic) id delegate;
+@property (nonatomic, assign, getter=isTextVisible) BOOL textVisible;
+@property (nonatomic, assign) BOOL voiceOverPlay;
 
 - (void)playAudio;
 - (void)pauseAudio;
