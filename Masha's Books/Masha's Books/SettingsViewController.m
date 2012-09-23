@@ -153,6 +153,9 @@
             // Restore Book
         }
     }
+    else if (alertView.title == @"Leave Masha's Bookstore?") {
+        if (buttonIndex == 1) [[UIApplication sharedApplication] openURL:[NSURL URLWithString:alertView.accessibilityHint]];
+    }
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -165,6 +168,40 @@
         return UITableViewCellEditingStyleInsert;
     else
         return UITableViewCellEditingStyleNone;
+}
+
+#pragma mark - Top Buttons
+
+- (IBAction)topButtonPressed:(UIButton *)sender {
+    NSString *url;
+    NSString *message;
+    Info *info = [Info MR_findFirst];
+    switch (sender.tag) {
+        case 1:
+            url = info.websiteURL;
+            message = @"Go and visit Masha's Bookstore website.";
+            break;
+        case 2:
+            url = info.contactURL;
+            message = @"Go and contact Masha's Bookstore.";
+            break;
+        case 3:
+            url = info.facebookURL;
+            message = @"Go and like Masha's Bookstore on Facebook.";
+            break;
+        case 4:
+            url = info.twitterURL;
+            message = @"Go and follow Masha's Bookstore on Tweeter.";
+            break;
+        default:
+            break;
+    }
+    if (url){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Leave Masha's Bookstore?" message:message delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+        alert.accessibilityHint = url;
+        [alert show];
+    }
+    
 }
 
 @end
