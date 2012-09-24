@@ -20,8 +20,10 @@
  */
 
 @interface SlikovnicaModelController()
+
 @property Page *nextPage;
 @property Page *previousPage;
+
 @end
 
 @implementation SlikovnicaModelController
@@ -40,6 +42,9 @@
     {
         self.textVisible = TRUE;
         self.voiceOverPlay = TRUE;
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(nextPageLoaded:)
+                                                     name:@"NextPageLoaded" object:nil];
     }
     return self;
 }
@@ -59,16 +64,28 @@
     }
     
     // Create a new view controller and pass suitable data.
+    
     SlikovnicaDataViewController *dataViewController = [storyboard instantiateViewControllerWithIdentifier:@"SlikovnicaDataViewController"];
     dataViewController.view.tag = index;
-    dataViewController.page = [self.book.pages objectAtIndex:index];
     dataViewController.textVisible = self.textVisible;
     dataViewController.voiceOverPlay = self.voiceOverPlay;
+    if (index == [self.nextPage.pageNumber integerValue]) dataViewController.page = self.nextPage;
+    else if (index == [self.previousPage.pageNumber integerValue]) dataViewController.page = self.previousPage;
+    else dataViewController.page = [self.book.pages objectAtIndex:index];
     
-    //    Page *preloadNextPage = [self.book.pages objectAtIndex:index + 1];
     [self.book.managedObjectContext refreshObject:self.book mergeChanges:NO];
     
+//    NSLog(@"Start");
+//    [self.book preloadPageNumber:[NSNumber numberWithInt:index + 1]];
+//    [self.book preloadPageNumber:[NSNumber numberWithInt:index - 1]];
+    
     return dataViewController;
+}
+
+- (void)nextPageLoaded:(NSNotification *)notification
+{
+    NSLog(@"Stop");
+    self.nextPage = [notification.userInfo objectForKey:@"nextPage"];
 }
 
 - (NSUInteger)indexOfViewController:(UIViewController *)viewController
@@ -86,7 +103,6 @@
 {
     NSLog(@"Creating filmstrip thumbnails...");
     NSMutableArray *thumbnails = [[NSMutableArray alloc] init];
-    
     for (Page *page in self.book.pages) {
         UIImage *image = [UIImage imageWithData:page.image];
         UIImage *thumbnail = [image resizedImage:CGSizeMake(138, 103) interpolationQuality:kCGInterpolationHigh];
@@ -100,13 +116,20 @@
 
 #pragma mark - Page View Controller Data Source
 
-- (SlikovnicaDataViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
+//- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
+
+- (SlikovnicaDataViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(SlikovnicaDataViewController *)viewController
 {
+    self.nextPage = viewController.page;
+    [self.book preloadPageNumber:[NSNumber numberWithInt:viewController.view.tag - 1]];
     return [self viewControllerAtIndex:viewController.view.tag - 1 storyboard:viewController.storyboard];
 }
 
-- (SlikovnicaDataViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
+//- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
+- (SlikovnicaDataViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(SlikovnicaDataViewController *)viewController
 {
+    self.previousPage = viewController.page;
+    [self.book preloadPageNumber:[NSNumber numberWithInt:viewController.view.tag + 1]];
     return [self viewControllerAtIndex:viewController.view.tag + 1 storyboard:viewController.storyboard];
 }
 

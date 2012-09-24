@@ -337,6 +337,35 @@
     return [booksInCategory copy];
 }
 
++ (NSOrderedSet *)getMyBooks
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"downloaded > 0"];
+    NSArray *books = [Book MR_findAllSortedBy:@"downloadDate" ascending:NO withPredicate:predicate];
+    NSMutableOrderedSet *myBooks = [[NSMutableOrderedSet alloc] initWithArray:books];
+    
+    return [myBooks copy];
+}
+
+- (void)preloadPageNumber:(NSNumber *)pageNumber
+{
+    NSManagedObjectContext *mainContext  = [NSManagedObjectContext MR_defaultContext];
+    
+    dispatch_queue_t readQueue = dispatch_queue_create("readQueue", NULL);
+    dispatch_async(readQueue, ^{
+        
+        NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextWithParent:mainContext];
+        Page *page = [Page MR_findFirstByAttribute:@"pageNumber" withValue:pageNumber inContext:localContext];
+        NSManagedObjectID * pageID = [page objectID];
+        if(pageID){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                Page *nextPage = (Page *)[mainContext objectWithID:pageID];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"NextPageLoaded" object:self userInfo:[NSDictionary dictionaryWithObject:nextPage forKey:@"nextPage"]];
+            });
+        }
+    });
+    dispatch_release(readQueue);
+}
+
 + (Book *)getBookWithId:(NSNumber *)bookID withErrorHandler:(NSError *)error {
     
     NSMutableDictionary *errorDetails = [NSMutableDictionary dictionary];

@@ -18,12 +18,11 @@
 @property (nonatomic, weak) IBOutlet UIView *scrollViewContainer;
 @property (weak, nonatomic) IBOutlet UIImageView *leftBookImage;
 
-@property (nonatomic, strong) NSArray *myBooks;
+@property (nonatomic, strong) NSOrderedSet *myBooks;
 @property (nonatomic, strong) NSMutableArray *coverViews;
 @property (nonatomic, strong) UIActivityIndicatorView *bookLoadingIndicator;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
 
-@property (nonatomic, strong) NSManagedObjectContext *context;
 @property (nonatomic, weak) MBDatabase *database;
 @end
 
@@ -42,7 +41,6 @@
 @synthesize bookLoadingIndicator = _bookLoadingIndicator;
 @synthesize loadingIndicator = _loadingIndicator;
 
-@synthesize context = _context;
 
 #pragma mark - Load Pages
 
@@ -124,16 +122,11 @@
 
 - (void)getMyBooks
 {
-//    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"downloaded > 0"];
-//    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
-//    request.sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-//    
-//    NSError *error;
-//    self.myBooks = [self.library.managedObjectContext executeFetchRequest:request error:&error];
-    
-    self.myBooks = [Book MR_findAllSortedBy:@"downloadDate" ascending:NO withPredicate:predicate];
+//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"downloaded > 0"];
+//    self.myBooks = [Book MR_findAllSortedBy:@"downloadDate" ascending:NO withPredicate:predicate];
 
+    self.myBooks = [Book getMyBooks];
+    
     // Set up the array to hold the views for each page
     NSInteger pageCount = [self.myBooks count];
     self.coverViews = [[NSMutableArray alloc] init];

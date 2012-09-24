@@ -88,6 +88,12 @@
     return [Book getBooksForCategory:category];
 }
 
++ (NSOrderedSet *)getMyBooks
+{
+    return [Book getMyBooks];
+}
+
+
 #pragma mark - Action methods
 
 - (void)userBuysBook:(Book *)book {
@@ -95,13 +101,29 @@
 }
 
 - (void)userDeletesBook:(Book *)book {
-
+    book.status = @"deleting";
+    [MagicalRecord saveInBackgroundUsingCurrentContextWithBlock:^(NSManagedObjectContext *localContext) {
+         
+         Book *localBook = [book MR_inContext:localContext];
+         Image *coverImage = [book.coverImage MR_inContext:localContext];
+         NSLog(@"Fetched book %@ to delete", localBook.title);
+         for (Page *pageToDelete in localBook.pages) [pageToDelete MR_deleteEntity];
+         [coverImage MR_deleteEntity];
+         localBook.backgroundMusic = nil;
+         localBook.downloaded = 0;
+         localBook.status = @"bought";
+     }
+     completion:^{
+         [[NSManagedObjectContext MR_defaultContext] save:nil];
+         [self bookDeleted];
+     }
+     errorHandler:nil];
 }
 
 #pragma mark - Parser methods
 
-- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName 
-  namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qualifiedName 
+- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName
+  namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qualifiedName
 	attributes:(NSDictionary *)attributeDict {
     
     self.currentElementValue = elementName;

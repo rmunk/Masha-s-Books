@@ -191,6 +191,7 @@
 
 - (void)navigationControllerClosedBook:(SlikovnicaNavigationViewController *)sender
 {
+    [self.modelController.book.managedObjectContext refreshObject:self.modelController.book mergeChanges:NO];
     [self.delegate slikovnicaRootViewController:self closedPictureBook:self.modelController.book];
 }
 
@@ -226,6 +227,7 @@
 
 - (void)goBackToLibrary:(NSNotification *)notification
 {
+    [self.modelController.book.managedObjectContext refreshObject:self.modelController.book mergeChanges:NO];
     [self.delegate slikovnicaRootViewController:self closedPictureBook:self.modelController.book];
 }
 

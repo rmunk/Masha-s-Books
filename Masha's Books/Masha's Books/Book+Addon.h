@@ -38,10 +38,14 @@
 
 + (NSOrderedSet *)getBooksForCategory:(Category *)category;
 
++ (NSOrderedSet *)getMyBooks;
+
 + (Book *)getBookWithId:(NSNumber *)bookID withErrorHandler:(NSError *)error;
 
 - (void)fillBookElement:(NSString *)element withDescription:(NSString *)description;
 
 - (void)pickYourCategoriesFromLinker:(CategoryToBookMap *)categoryToBookMap;
+
+- (void)preloadPageNumber:(NSNumber *)pageNumber;
 
 @end
