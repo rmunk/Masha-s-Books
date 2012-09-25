@@ -154,36 +154,6 @@
     }
 }
 
-- (void)useDocument
-{
-    if (![[NSFileManager defaultManager] fileExistsAtPath:[self.library.fileURL path]]) {
-        // does not exist on disk, so create it
-        [self.library saveToURL:self.library.fileURL forSaveOperation:UIDocumentSaveForCreating completionHandler:^(BOOL success) {
-        // go to shop
-            [self useDocument];
-            
-        }];
-    } else if (self.library.documentState == UIDocumentStateClosed) {
-        // exists on disk, but we need to open it
-        [self.library openWithCompletionHandler:^(BOOL success) {
-            //[self getMyBooks];
-            [self useDocument];
-        }];
-    } else if (self.library.documentState == UIDocumentStateNormal) {
-        // already open and ready to use
-        [self loadDesignImages];
-        [self getMyBooks];
-    }
-}
-
-- (void)setLibrary:(UIManagedDocument *)library
-{
-    if (_library != library) {
-        _library = library;
-        [self useDocument];
-    }
-}
-
 - (void)setMBD:(MBDatabase *)database {
     self.database = database;
 }
@@ -203,10 +173,6 @@
 
 - (void)viewDidLoad
 {
-    NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-    url = [url URLByAppendingPathComponent:@"Library"];
-    self.library = [[UIManagedDocument alloc] initWithFileURL:url];
-    //    [self getMyBooks];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newBookReady:) name:@"BookReady" object:nil ];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bookDeleted:) name:@"BookDeleted" object:nil ];
     
@@ -250,16 +216,10 @@
 
 - (void)userTappedImage:(UITapGestureRecognizer *)sender 
 {
-    UIView *page = sender.view;
-    
-//    self.bookLoadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-//    self.bookLoadingIndicator.contentMode = UIViewContentModeCenter;
-//    self.bookLoadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-//    self.bookLoadingIndicator.frame = ((UIView *)[page.subviews lastObject]).frame;
-//    [page addSubview:self.bookLoadingIndicator];
-//    [self.bookLoadingIndicator startAnimating];
-
     [self.loadingIndicator startAnimating];
+    [self.loadingIndicator setNeedsDisplay];
+
+    UIView *page = sender.view;
     
     Book *selectedBook = [self.myBooks objectAtIndex:page.tag];
     NSLog(@"User selected book %@.", selectedBook.title);

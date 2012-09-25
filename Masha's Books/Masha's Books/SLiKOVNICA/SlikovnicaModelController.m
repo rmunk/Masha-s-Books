@@ -69,10 +69,12 @@
     dataViewController.view.tag = index;
     dataViewController.textVisible = self.textVisible;
     dataViewController.voiceOverPlay = self.voiceOverPlay;
-    if (index == [self.nextPage.pageNumber integerValue]) dataViewController.page = self.nextPage;
-    else if (index == [self.previousPage.pageNumber integerValue]) dataViewController.page = self.previousPage;
-    else dataViewController.page = [self.book.pages objectAtIndex:index];
+//    if (index == [self.nextPage.pageNumber integerValue]) dataViewController.page = self.nextPage;
+//    else if (index == [self.previousPage.pageNumber integerValue]) dataViewController.page = self.previousPage;
+//    else dataViewController.page = [self.book.pages objectAtIndex:index];
     
+    dataViewController.page = [self.book.pages objectAtIndex:index];
+
     [self.book.managedObjectContext refreshObject:self.book mergeChanges:NO];
     
 //    NSLog(@"Start");
@@ -80,6 +82,15 @@
 //    [self.book preloadPageNumber:[NSNumber numberWithInt:index - 1]];
     
     return dataViewController;
+}
+
+- (void)preloadPreviousAndNexPageFromCurrentPage:(Page *)currentPage
+{
+    NSInteger current = currentPage.pageNumber.integerValue;
+    NSInteger previous = self.previousPage.pageNumber.integerValue;
+    NSInteger next = self.nextPage.pageNumber.integerValue;
+    if (previous != current - 1) [self.book preloadPageNumber:[NSNumber numberWithInteger:previous]];
+    if (next != current + 1) [self.book preloadPageNumber:[NSNumber numberWithInteger:next]];
 }
 
 - (void)nextPageLoaded:(NSNotification *)notification
@@ -120,16 +131,16 @@
 
 - (SlikovnicaDataViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(SlikovnicaDataViewController *)viewController
 {
-    self.nextPage = viewController.page;
-    [self.book preloadPageNumber:[NSNumber numberWithInt:viewController.view.tag - 1]];
+//    self.nextPage = viewController.page;
+//    [self.book preloadPageNumber:[NSNumber numberWithInt:viewController.view.tag - 2]];
     return [self viewControllerAtIndex:viewController.view.tag - 1 storyboard:viewController.storyboard];
 }
 
 //- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 - (SlikovnicaDataViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(SlikovnicaDataViewController *)viewController
 {
-    self.previousPage = viewController.page;
-    [self.book preloadPageNumber:[NSNumber numberWithInt:viewController.view.tag + 1]];
+//    self.previousPage = viewController.page;
+//    [self.book preloadPageNumber:[NSNumber numberWithInt:viewController.view.tag + 2]];
     return [self viewControllerAtIndex:viewController.view.tag + 1 storyboard:viewController.storyboard];
 }
 

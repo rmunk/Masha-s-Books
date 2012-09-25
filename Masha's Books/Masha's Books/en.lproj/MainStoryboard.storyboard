@@ -146,7 +146,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="719"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="-1" contentMode="center" image="mybooks_norm.png" id="SxL-kz-zDU">
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="-1" contentMode="center" image="mybooks REF.png" id="SxL-kz-zDU">
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </imageView>
@@ -161,12 +161,6 @@
                                     <scrollView opaque="NO" multipleTouchEnabled="YES" tag="-1" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="Kdk-AG-gvB">
                                         <rect key="frame" x="76" y="0.0" width="903" height="371"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <subviews>
-                                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="whiteLarge" id="3dZ-CT-w32">
-                                                <rect key="frame" x="257" y="167" width="37" height="37"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            </activityIndicatorView>
-                                        </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <outlet property="delegate" destination="i4c-PB-hBI" id="7vU-cM-S0p"/>
@@ -182,6 +176,10 @@
                                 <rect key="frame" x="512" y="0.0" width="512" height="768"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </imageView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="whiteLarge" id="3dZ-CT-w32">
+                                <rect key="frame" x="335" y="376" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                             <button opaque="NO" tag="1" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="esv-JK-l7K">
                                 <rect key="frame" x="27" y="64" width="42" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -652,7 +650,7 @@
         <image name="like.png" width="52" height="27"/>
         <image name="mail.png" width="42" height="40"/>
         <image name="masha.png" width="512" height="768"/>
-        <image name="mybooks_norm.png" width="1024" height="768"/>
+        <image name="mybooks REF.png" width="1024" height="768"/>
         <image name="preview.png" width="37" height="36"/>
         <image name="rate_left3.png" width="42" height="42"/>
         <image name="settings.png" width="1024" height="768"/>
@@ -687,6 +685,7 @@
         <class className="MyBooksViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/MyBooksViewController.h"/>
             <relationships>
+                <relationship kind="action" name="topButtonPressed:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="backgroundImage" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="leftBookImage" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="loadingIndicator" candidateClass="UIActivityIndicatorView"/>
@@ -704,6 +703,7 @@
         <class className="SettingsViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
             <relationships>
+                <relationship kind="action" name="topButtonPressed:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="myBooksTableView" candidateClass="UITableView"/>
             </relationships>
         </class>

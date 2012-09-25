@@ -57,7 +57,7 @@
         /* ovde se treba provjerit jeli knjiga vec kupljena, ako je drugaciji botun treba bit za nju u shopu
          i za knjigu treba postavit status bought */
         
-        book.status = [NSString stringWithString:@"available"];
+        book.status = @"available";
         
         return book;
     }

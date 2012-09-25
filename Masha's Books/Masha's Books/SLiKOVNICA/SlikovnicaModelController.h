@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Book.h"
+#import "Book+Addon.h"
 
 @class SlikovnicaDataViewController;
 
