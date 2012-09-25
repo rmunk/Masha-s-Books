@@ -212,7 +212,7 @@
 {
     NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
     url = [url URLByAppendingPathComponent:@"Library"];
-    self.library = [[UIManagedDocument alloc] initWithFileURL:url];
+    //self.library = [[UIManagedDocument alloc] initWithFileURL:url];
     //    [self getMyBooks];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newBookReady:) name:@"BookReady" object:nil ];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bookDeleted:) name:@"BookDeleted" object:nil ];

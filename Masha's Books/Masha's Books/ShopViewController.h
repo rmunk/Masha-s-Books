@@ -33,6 +33,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *bookTitleLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *tagViewLarge;
 @property (strong, nonatomic) IBOutlet UIImageView *rateImage;
+@property (strong, nonatomic) IBOutlet UILabel *activityLabel;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityView;
 
 - (void)setMBD:(MBDatabase *)database;

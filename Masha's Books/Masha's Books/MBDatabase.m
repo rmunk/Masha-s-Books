@@ -84,6 +84,10 @@
     return [Category getAllCategories];
 }
 
+- (NSArray *)getBooksInDatabase {
+    return [Book getAllBooks];
+}
+
 - (NSOrderedSet *)getBooksForCategory:(Category *)category {
     return [Book getBooksForCategory:category];
 }
@@ -214,6 +218,14 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"BookExtracted" object:nil];
     else 
         [[NSNotificationCenter defaultCenter] postNotificationName:@"BookExtractingError" object:nil];
+}
+
+- (void)extractorForBook:(Book *)book didFinishDownloadingWithSuccess:(BOOL)success {
+    NSNumber *successNotification = [NSNumber numberWithBool:success]; 
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"BookDownloaded" object:successNotification];
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"BookDownloadError" object:successNotification];
 }
 
 

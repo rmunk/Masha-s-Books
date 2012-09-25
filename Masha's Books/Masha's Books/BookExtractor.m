@@ -8,6 +8,8 @@
 
 #import "BookExtractor.h"
 
+#define DOWN_DATA_REPORT_TRESHOLD 50000
+
 @interface BookExtractor()<SSZipArchiveDelegate>
 @property BOOL success;
 @property (nonatomic, strong) NSURLRequest *downloadRequest;
@@ -15,6 +17,8 @@
 @property (nonatomic, strong) NSMutableOrderedSet *bookQue;
 @property (nonatomic, strong) Book *activeBook;
 @property (nonatomic, strong) NSString *file;
+@property (readwrite) NSInteger datacounter;
+@property (readwrite) NSInteger lastDownloadedDataLength;
 
 //- (void)saveDataToBook:(Book *)book FromPath:(NSString *)unzippedPath;
 @end
@@ -28,6 +32,8 @@
 @synthesize bookQue = _bookQue;
 @synthesize activeBook = _activeBook;
 @synthesize file = _file;
+@synthesize datacounter = _datacounter;
+@synthesize lastDownloadedDataLength = _lastDownloadedDataLength;
 
 @synthesize downloading = _downloading;
 
@@ -52,6 +58,8 @@
         self.delegate = database;
         self.downloading = NO;
         self.activeBook = nil;
+        self.datacounter = 0;
+        self.lastDownloadedDataLength = 0;
     }
     return self;
 }
@@ -169,7 +177,7 @@
         }
     }
     completion:^{
-        [[NSManagedObjectContext MR_defaultContext] save:nil];
+        //[[NSManagedObjectContext MR_defaultContext] save:nil];
         [self.delegate performSelector:@selector(pagesAdded)];
         [self processQue];
     }
@@ -198,14 +206,20 @@
     }
     else {
         NSLog(@"Could not start download of %@.", book.title);
+        [self.delegate extractorForBook:self.activeBook didFinishDownloadingWithSuccess:NO];
     }
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     [self.downloadedZipData appendData:data];
-    if (self.expectedZipSize != 0) {
-        float percentage = (float)[self.downloadedZipData length]/(float)self.expectedZipSize;
+    NSInteger lengthOfDownloadedData = [self.downloadedZipData length];
+    self.datacounter += lengthOfDownloadedData - self.lastDownloadedDataLength;
+    self.lastDownloadedDataLength = lengthOfDownloadedData;
+    NSLog(@"%d", self.datacounter);
+    if (self.expectedZipSize != 0 && self.datacounter > DOWN_DATA_REPORT_TRESHOLD) {
+        float percentage = (float)lengthOfDownloadedData/(float)self.expectedZipSize;
         [self.delegate extractorBook:self.activeBook receivedNewPercentage:percentage];
+        self.datacounter = 0;
     }
 }
 
@@ -216,7 +230,9 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     
     [self.delegate extractorBook:self.activeBook receivedNewPercentage:1];
-    
+    [self.delegate extractorForBook:self.activeBook didFinishDownloadingWithSuccess:YES];
+    self.datacounter = 0;
+    self.lastDownloadedDataLength = 0;
     NSLog(@"Data download finished for book %@", self.activeBook.title);
     self.downloading = NO;
     self.file = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"tmp/%@",self.activeBook.downloadURL.lastPathComponent]];

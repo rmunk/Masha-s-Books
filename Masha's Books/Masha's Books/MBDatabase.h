@@ -35,6 +35,7 @@
 - (void)coversLoaded;
 
 - (NSOrderedSet *)getCategoriesInDatabase;
+- (NSArray *)getBooksInDatabase;
 - (NSOrderedSet *)getBooksForCategory:(Category *)category;
 
 

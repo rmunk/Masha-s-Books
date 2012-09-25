@@ -22,6 +22,7 @@
 - (void)extractorBook:(Book *)book receivedNewPercentage:(float)percentage;
 @optional
 - (void)extractorForBook:(Book *)book didFinishExtractingWithSuccess:(BOOL)success;
+- (void)extractorForBook:(Book *)book didFinishDownloadingWithSuccess:(BOOL)success;
 
 @end
 

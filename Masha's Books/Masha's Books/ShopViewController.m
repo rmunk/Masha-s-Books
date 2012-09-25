@@ -34,6 +34,7 @@
 @synthesize bookTitleLabel = _bookTitleLabel;
 @synthesize tagViewLarge = _tagViewLarge;
 @synthesize rateImage = _rateImage;
+@synthesize activityLabel = _activityLabel;
 @synthesize activityView = _activityView;
 @synthesize booksInSelectedCategory = _booksInSelectedCategory;
 @synthesize youTubeTransparentView = _youTubeTransparentView;
@@ -92,7 +93,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(picturebookShopFinishedLoading:) name:@"PicturebookShopFinishedLoading" object:nil ]; 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(picturebookShopLoadingError:) name:@"PicturebookShopLoadingError" object:nil ];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bookExtractingError:) name:@"BookExtractingError" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bookExtractingError:) name:@"BookExtracted" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bookExtracted:) name:@"BookExtracted" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bookDownloaded:) name:@"BookDownloaded" object:self.database];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bookReady:) name:@"BookReady" object:self.database];
 }
 
@@ -147,11 +149,13 @@
     [self setTagViewLarge:nil];
     [self setRateImage:nil];
     [self setActivityView:nil];
+    [self setActivityLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"PicturebookShopFinishedLoading" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"PicturebookShopLoadingError" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"BookExtracted" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"BookDownloaded" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"BookExtractingError" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"BookReady" object:nil];
 }
@@ -211,10 +215,15 @@
     [self.booksTableView reloadData];
 }
 
+- (void)bookDownloaded:(NSNotification *) notification {
+    NSLog(@"ShopViewController: Received BookExtracted notification");
+}
 
 - (void)bookReady:(NSNotification *)notification {
     NSLog(@"ShopViewController: Received BookReady notification");
+
     self.downloadProgressView.hidden = YES;
+    self.activityLabel.hidden = YES;
     [self.downloadProgressView setNeedsDisplay];
     
     [self.booksTableView reloadData];
@@ -226,7 +235,9 @@
     if ([self.selectedBook.status isEqualToString:@"downloading"]) {
         if(self.downloadProgressView.hidden == YES)
             self.downloadProgressView.hidden = NO;
+
         self.downloadProgressView.progress = [notification.object floatValue];
+
     }
     else {
         if(self.downloadProgressView.hidden == NO)

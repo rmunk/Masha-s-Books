@@ -78,7 +78,7 @@
 
 + (NSOrderedSet *)getAllCategories {
     
-    NSArray *categoriesArray = [Category MR_findAll];
+    NSArray *categoriesArray = [Category MR_findAllSortedBy:@"name" ascending:YES];
     NSOrderedSet *categories = [[NSOrderedSet alloc] initWithArray:categoriesArray];
     return categories;
     
