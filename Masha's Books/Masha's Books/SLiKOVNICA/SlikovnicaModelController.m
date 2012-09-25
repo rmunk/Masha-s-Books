@@ -20,56 +20,78 @@
  */
 
 @interface SlikovnicaModelController()
+
 @property Page *nextPage;
+@property Page *previousPage;
+
 @end
 
 @implementation SlikovnicaModelController
 
 @synthesize book = _book;
-@synthesize textVisibility = _textVisibility;
+@synthesize textVisible = _textVisible;
 @synthesize voiceOverPlay = _voiceOverPlay;
 @synthesize numberOfPages = _numberOfPages;
+@synthesize nextPage = _nextPage;
+@synthesize previousPage = _previousPage;
 
 - (id)init
 {
     self = [super init];
     if (self)
     {
-        self.textVisibility = TRUE;
+        self.textVisible = TRUE;
         self.voiceOverPlay = TRUE;
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(nextPageLoaded:)
+                                                     name:@"NextPageLoaded" object:nil];
     }
     return self;
 }
 
-- (UIViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard
+- (SlikovnicaDataViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard
 {
     // Return the data view controller for the given index.
     if (([self.book.pages count] == 0) || (index > [self.book.pages count])) {
         return nil;
     }
     
-    if (index == self.numberOfPages) return [storyboard instantiateViewControllerWithIdentifier:@"LastPage"];
-    
+    if (index == self.numberOfPages)
+    {
+        SlikovnicaLastPageViewController *lastPage = [storyboard instantiateViewControllerWithIdentifier:@"LastPage"];
+        lastPage.view.tag = index;
+        return lastPage;
+    }
     
     // Create a new view controller and pass suitable data.
+    
     SlikovnicaDataViewController *dataViewController = [storyboard instantiateViewControllerWithIdentifier:@"SlikovnicaDataViewController"];
-    dataViewController.page = [self.book.pages objectAtIndex:index];
-    dataViewController.textVisibility = self.textVisibility;
+    dataViewController.view.tag = index;
+    dataViewController.textVisible = self.textVisible;
     dataViewController.voiceOverPlay = self.voiceOverPlay;
+    if (index == [self.nextPage.pageNumber integerValue]) dataViewController.page = self.nextPage;
+    else if (index == [self.previousPage.pageNumber integerValue]) dataViewController.page = self.previousPage;
+    else dataViewController.page = [self.book.pages objectAtIndex:index];
     
     [self.book.managedObjectContext refreshObject:self.book mergeChanges:NO];
     
-    //    Page *preloadNextPage = [self.book.pages objectAtIndex:index + 1];
+//    NSLog(@"Start");
+//    [self.book preloadPageNumber:[NSNumber numberWithInt:index + 1]];
+//    [self.book preloadPageNumber:[NSNumber numberWithInt:index - 1]];
+    
     return dataViewController;
 }
 
-- (NSUInteger)indexOfViewController:(SlikovnicaDataViewController *)viewController
+- (void)nextPageLoaded:(NSNotification *)notification
+{
+    NSLog(@"Stop");
+    self.nextPage = [notification.userInfo objectForKey:@"nextPage"];
+}
+
+- (NSUInteger)indexOfViewController:(UIViewController *)viewController
 {
     // Return the index of the given data view controller.
-    if([self.book.pages indexOfObject:viewController.page] != NSNotFound)
-        return [self.book.pages indexOfObject:viewController.page];
-    else
-        return self.book.pages.count;
+    return viewController.view.tag;
 }
 
 - (NSUInteger)numberOfPages
@@ -81,7 +103,6 @@
 {
     NSLog(@"Creating filmstrip thumbnails...");
     NSMutableArray *thumbnails = [[NSMutableArray alloc] init];
-    
     for (Page *page in self.book.pages) {
         UIImage *image = [UIImage imageWithData:page.image];
         UIImage *thumbnail = [image resizedImage:CGSizeMake(138, 103) interpolationQuality:kCGInterpolationHigh];
@@ -95,26 +116,21 @@
 
 #pragma mark - Page View Controller Data Source
 
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
+//- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
+
+- (SlikovnicaDataViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(SlikovnicaDataViewController *)viewController
 {
-    NSUInteger index = [self indexOfViewController:(SlikovnicaDataViewController *)viewController];
-    if ((index == 0) || (index == NSNotFound)) {
-        return nil;
-    }
-    
-    index--;
-    return [self viewControllerAtIndex:index storyboard:viewController.storyboard];
+    self.nextPage = viewController.page;
+    [self.book preloadPageNumber:[NSNumber numberWithInt:viewController.view.tag - 1]];
+    return [self viewControllerAtIndex:viewController.view.tag - 1 storyboard:viewController.storyboard];
 }
 
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
+//- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
+- (SlikovnicaDataViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(SlikovnicaDataViewController *)viewController
 {
-    NSUInteger index = [self indexOfViewController:(SlikovnicaDataViewController *)viewController];
-    if (index == NSNotFound) {
-        return nil;
-    }
-    
-    index++;
-    return [self viewControllerAtIndex:index storyboard:viewController.storyboard];
+    self.previousPage = viewController.page;
+    [self.book preloadPageNumber:[NSNumber numberWithInt:viewController.view.tag + 1]];
+    return [self viewControllerAtIndex:viewController.view.tag + 1 storyboard:viewController.storyboard];
 }
 
 @end

@@ -315,6 +315,9 @@
     else if ([book.status isEqualToString:@"downloading"]) {
         NSLog(@"Book %@ id beeing downloaded", book.title);
     }
+    else if ([book.status isEqualToString:@"deleting"]) {
+        NSLog(@"Book %@ id beeing deleted", book.title);
+    }
     else {
         NSLog(@"Book %@ added to que", book.title);
         [self.bookQue addObject:book];

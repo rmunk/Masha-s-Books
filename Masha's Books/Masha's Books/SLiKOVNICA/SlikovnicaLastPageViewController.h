@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SlikovnicaDataViewController.h"
 
-@interface SlikovnicaLastPageViewController : UIViewController
+@interface SlikovnicaLastPageViewController : SlikovnicaDataViewController
 
 @end

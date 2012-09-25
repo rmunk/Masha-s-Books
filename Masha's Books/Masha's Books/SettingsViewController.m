@@ -29,7 +29,7 @@
 
 - (void)refresh
 {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"status like 'ready' OR status like 'bought'"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"status != 'available'"];
     self.myBooks = [Book MR_findAllSortedBy:@"size" ascending:NO withPredicate:predicate];
     [self.myBooksTableView reloadData];
 }
@@ -43,7 +43,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newBookReady:) name:@"BookReady" object:nil ];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh) name:@"BookReady" object:nil ];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh) name:@"BookDeleted" object:nil ];
     self.myBooksTableView.editing = YES;
 }
 
@@ -55,6 +56,7 @@
 
 - (void)viewDidUnload
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self setMyBooksTableView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
@@ -63,13 +65,6 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation != UIInterfaceOrientationPortrait && interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
-}
-
-#pragma mark - Store notifications
-
-- (void)newBookReady:(NSNotification *)notification
-{
-    [self refresh];
 }
 
 #pragma mark - Table view data source
@@ -92,6 +87,15 @@
     cell.textLabel.text = book.title;
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%.1f MB", [book.size floatValue]];
     cell.imageView.image = [[UIImage imageWithData:book.coverThumbnailImage] resizedImage:CGSizeMake(64, 48) interpolationQuality:kCGInterpolationMedium];
+    if ([[cell.subviews lastObject] isKindOfClass:[UIActivityIndicatorView class]] == NO) {
+        UIActivityIndicatorView *bookLoadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        bookLoadingIndicator.frame = CGRectMake(0, 0, 41, cell.frame.size.height-1);
+        bookLoadingIndicator.contentMode = UIViewContentModeCenter;
+        [cell addSubview:bookLoadingIndicator];
+    }
+    if (book.status == @"downloading" || book.status == @"deleting" || book.status == @"queued") {
+        [[cell.subviews lastObject] startAnimating];
+    }
     return cell;
 }
 
@@ -124,23 +128,8 @@
     if (alertView.title == @"Delete Book") {
         if (buttonIndex == 1)
         {
-            [MagicalRecord saveInBackgroundUsingCurrentContextWithBlock:^(NSManagedObjectContext *localContext) {
-            
-                Book *book = [self.selectedBook MR_inContext:localContext];
-                Image *coverImage = [self.selectedBook.coverImage MR_inContext:localContext];
-                NSLog(@"Fetched book %@ to delete", book.title);
-                for (Page *pageToDelete in book.pages) [pageToDelete MR_deleteEntity];
-                [coverImage MR_deleteEntity];
-                book.backgroundMusic = nil;
-                book.downloaded = 0;
-                book.status = @"bought";
-            }
-            completion:^{
-                [[NSManagedObjectContext MR_defaultContext] save:nil];
-                [self refresh];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"BookDeleted" object:self];
-            }
-            errorHandler:nil];
+            [self.database userDeletesBook:self.selectedBook];
+            [self refresh];
         }
         else
             [self.myBooksTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[self.myBooks indexOfObject:self.selectedBook] inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
@@ -149,8 +138,12 @@
     else if (alertView.title == @"Restore Book") {
         if (buttonIndex == 1)
         {
-            // Restore Book
+            [self.database userBuysBook:self.selectedBook];
+            [self refresh];
         }
+    }
+    else if (alertView.title == @"Leave Masha's Bookstore?") {
+        if (buttonIndex == 1) [[UIApplication sharedApplication] openURL:[NSURL URLWithString:alertView.accessibilityHint]];
     }
 }
 
@@ -164,6 +157,40 @@
         return UITableViewCellEditingStyleInsert;
     else
         return UITableViewCellEditingStyleNone;
+}
+
+#pragma mark - Top Buttons
+
+- (IBAction)topButtonPressed:(UIButton *)sender {
+    NSString *url;
+    NSString *message;
+    Info *info = [Info MR_findFirst];
+    switch (sender.tag) {
+        case 1:
+            url = info.websiteURL;
+            message = @"Go and visit Masha's Bookstore website.";
+            break;
+        case 2:
+            url = info.contactURL;
+            message = @"Go and contact Masha's Bookstore.";
+            break;
+        case 3:
+            url = info.facebookURL;
+            message = @"Go and like Masha's Bookstore on Facebook.";
+            break;
+        case 4:
+            url = info.twitterURL;
+            message = @"Go and follow Masha's Bookstore on Tweeter.";
+            break;
+        default:
+            break;
+    }
+    if (url){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Leave Masha's Bookstore?" message:message delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+        alert.accessibilityHint = url;
+        [alert show];
+    }
+    
 }
 
 @end

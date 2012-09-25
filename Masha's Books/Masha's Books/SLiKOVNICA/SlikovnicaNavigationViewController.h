@@ -16,7 +16,7 @@
 - (void)navigationControllerClosedBook:(SlikovnicaNavigationViewController *)sender;
 
 @optional
-- (void)navigationController:(SlikovnicaNavigationViewController *)sender setTextVisibility:(BOOL)textVisibility;
+- (void)navigationController:(SlikovnicaNavigationViewController *)sender settextVisible:(BOOL)textVisible;
 - (void)navigationController:(SlikovnicaNavigationViewController *)sender setVoiceoverPlay:(BOOL)voiceOverPlay;
 
 @end
@@ -26,7 +26,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *bookNameLabel;
 @property (nonatomic, copy) NSArray *pageImages;
 @property (nonatomic) NSInteger currentPage;
-@property (nonatomic) BOOL textVisibility;
+@property (nonatomic) BOOL textVisible;
 @property (nonatomic) BOOL voiceOverPlay;
 @property (nonatomic, assign) id<SlikovnicaNavigationViewControllerDelegate> delegate;
 

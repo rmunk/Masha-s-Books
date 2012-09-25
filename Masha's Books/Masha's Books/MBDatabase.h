@@ -37,6 +37,7 @@
 - (NSOrderedSet *)getCategoriesInDatabase;
 - (NSArray *)getBooksInDatabase;
 - (NSOrderedSet *)getBooksForCategory:(Category *)category;
+- (NSOrderedSet *)getMyBooks;
 
 
 @end
