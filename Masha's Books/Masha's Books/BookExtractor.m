@@ -215,7 +215,6 @@
     NSInteger lengthOfDownloadedData = [self.downloadedZipData length];
     self.datacounter += lengthOfDownloadedData - self.lastDownloadedDataLength;
     self.lastDownloadedDataLength = lengthOfDownloadedData;
-    NSLog(@"%d", self.datacounter);
     if (self.expectedZipSize != 0 && self.datacounter > DOWN_DATA_REPORT_TRESHOLD) {
         float percentage = (float)lengthOfDownloadedData/(float)self.expectedZipSize;
         [self.delegate extractorBook:self.activeBook receivedNewPercentage:percentage];

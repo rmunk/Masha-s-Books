@@ -50,10 +50,14 @@
 #pragma mark - Initialization methods
 
 - (void)categoryPicked:(Category *)category inController:(CategoryTableViewController *)controller {
+    [controller dismissViewControllerAnimated:YES completion:nil];
+    [self categoryPicked:category];
+}
+
+- (void)categoryPicked:(Category *)category {
     NSIndexPath *indexPath = [[NSIndexPath alloc] init];
     indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     self.selectedCategory = category;
-    [controller dismissViewControllerAnimated:YES completion:nil];
     
     [UIView transitionWithView:self.view
                       duration:0.5f
@@ -61,7 +65,7 @@
                     animations:^{
                         self.backgroundView.image = [[UIImage alloc] initWithData:category.bgImage];
                     } completion:NULL];
- 
+    
     self.categoryButton.titleLabel.text = category.name;
     self.booksInSelectedCategory = [self.database getBooksForCategory:category];
     [self.booksTableView reloadData];
@@ -105,7 +109,7 @@
     self.categoriesInDatabase = [self.database getCategoriesInDatabase];
 
     if (self.categoriesInDatabase.count) {
-        self.selectedCategory = [self.categoriesInDatabase objectAtIndex:0];
+        [self categoryPicked:[self.categoriesInDatabase objectAtIndex:0]];
         self.booksInSelectedCategory = [self.database getBooksForCategory:self.selectedCategory];
         for (Book *book in self.booksInSelectedCategory) {
             NSLog(@"Book in category %@", book.title);
