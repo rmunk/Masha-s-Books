@@ -9,7 +9,6 @@
 #import <AVFoundation/AVFoundation.h>
 #import "SlikovnicaDataViewController.h"
 #import "AVAudioPlayer+PGFade.h"
-#define HACKINTOSH
 
 @interface SlikovnicaDataViewController () <AVAudioPlayerDelegate>
 @property (strong, nonatomic) IBOutlet UIImageView *pageImage;

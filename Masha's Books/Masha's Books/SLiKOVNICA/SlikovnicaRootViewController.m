@@ -11,7 +11,6 @@
 #import "SlikovnicaNavigationViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import "AVAudioPlayer+PGFade.h"
-#define HACKINTOSH
 
 @interface SlikovnicaRootViewController ()<AVAudioPlayerDelegate, SlikovnicaNavigationViewControllerDelegate>
 @property (retain, nonatomic) SlikovnicaNavigationViewController *slikovnicaNavigationViewController;
@@ -133,7 +132,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [self.audioPlayerMusic play];
-    [self.currentPage playAudio];
+    self.currentPage = (SlikovnicaDataViewController *)[self.pageViewController.viewControllers objectAtIndex:0];
 }
 
 - (void)viewDidUnload
