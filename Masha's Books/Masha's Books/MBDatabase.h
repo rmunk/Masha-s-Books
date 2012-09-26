@@ -38,6 +38,6 @@
 - (NSArray *)getBooksInDatabase;
 - (NSOrderedSet *)getBooksForCategory:(Category *)category;
 - (NSOrderedSet *)getMyBooks;
-
+- (NSOrderedSet *)getBoughtBooks;
 
 @end

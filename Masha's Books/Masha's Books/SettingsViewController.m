@@ -14,7 +14,7 @@
 
 
 @interface SettingsViewController () <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
-@property (nonatomic, strong) NSArray *myBooks;
+@property (nonatomic, strong) NSOrderedSet *boughtBooks;
 @property (weak, nonatomic) IBOutlet UITableView *myBooksTableView;
 @property (strong, nonatomic) Book *selectedBook;
 @property (nonatomic, weak) MBDatabase *database;
@@ -22,15 +22,14 @@
 @end
 
 @implementation SettingsViewController
-@synthesize myBooks = _myBooks;
+@synthesize boughtBooks = _boughtBooks;
 @synthesize myBooksTableView = _myBooksTableView;
 @synthesize selectedBook = _selectedBook;
 @synthesize database = _database;
 
 - (void)refresh
 {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"status != 'available'"];
-    self.myBooks = [Book MR_findAllSortedBy:@"size" ascending:NO withPredicate:predicate];
+    self.boughtBooks = [self.database getBoughtBooks];
     [self.myBooksTableView reloadData];
 }
 
@@ -71,7 +70,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.myBooks.count;
+    return self.boughtBooks.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -83,7 +82,7 @@
                                      reuseIdentifier:CellIdentifier];
     }
     
-    Book *book = [self.myBooks objectAtIndex:indexPath.row];
+    Book *book = [self.boughtBooks objectAtIndex:indexPath.row];
     cell.textLabel.text = book.title;
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%.1f MB", [book.size floatValue]];
     cell.imageView.image = [[UIImage imageWithData:book.coverThumbnailImage] resizedImage:CGSizeMake(64, 48) interpolationQuality:kCGInterpolationMedium];
@@ -101,7 +100,7 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    self.selectedBook = [self.myBooks objectAtIndex:indexPath.row];
+    self.selectedBook = [self.boughtBooks objectAtIndex:indexPath.row];
     
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
@@ -132,7 +131,7 @@
             [self refresh];
         }
         else
-            [self.myBooksTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[self.myBooks indexOfObject:self.selectedBook] inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+            [self.myBooksTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[self.boughtBooks indexOfObject:self.selectedBook] inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
 
     }
     else if (alertView.title == @"Restore Book") {
@@ -149,7 +148,7 @@
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Book *book = [self.myBooks objectAtIndex:indexPath.row];
+    Book *book = [self.boughtBooks objectAtIndex:indexPath.row];
     
     if ([book.status isEqualToString:@"ready"])
         return UITableViewCellEditingStyleDelete;

@@ -92,11 +92,15 @@
     return [Book getBooksForCategory:category];
 }
 
-+ (NSOrderedSet *)getMyBooks
+- (NSOrderedSet *)getMyBooks
 {
     return [Book getMyBooks];
 }
 
+- (NSOrderedSet *)getBoughtBooks
+{
+    return [Book getBoughtBooks];
+}
 
 #pragma mark - Action methods
 
