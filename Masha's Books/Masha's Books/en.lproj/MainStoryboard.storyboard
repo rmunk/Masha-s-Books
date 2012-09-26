@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2549" systemVersion="12A269" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="Jz7-kR-CaY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="Jz7-kR-CaY">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1498"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
     </dependencies>
     <scenes>
         <!--Settings View Controller - Settings View Controller-->
@@ -363,22 +363,32 @@
                                 <rect key="frame" x="251" y="135" width="41" height="35"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="tailTruncation" id="a5l-9e-Uj7">
+                            <button autoresizesSubviews="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="tailTruncation" id="a5l-9e-Uj7">
                                 <rect key="frame" x="16" y="117" width="287" height="63"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" none="YES" button="YES" staticText="YES"/>
+                                </accessibility>
+                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="28"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="contentEdgeInsets" minX="53" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <inset key="titleEdgeInsets" minX="-40" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <inset key="titleEdgeInsets" minX="-40" minY="0.0" maxX="-20" maxY="0.0"/>
                                 <inset key="imageEdgeInsets" minX="224" minY="7" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" title="Category                 ">
-                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal">
+                                    <color key="titleColor" red="0.60000002379999995" green="0.80000007149999997" blue="0.20000001789999999" alpha="1" colorSpace="deviceRGB"/>
+                                    <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="disabled">
+                                    <color key="titleColor" red="0.60000002379999995" green="0.80000007149999997" blue="0.20000001789999999" alpha="1" colorSpace="deviceRGB"/>
+                                </state>
+                                <state key="selected">
+                                    <color key="titleColor" red="0.60000002379999995" green="0.80000007149999997" blue="0.20000001789999999" alpha="1" colorSpace="deviceRGB"/>
                                 </state>
                                 <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="0.60000002379999995" green="0.80000007149999997" blue="0.20000001789999999" alpha="1" colorSpace="deviceRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="categorySelection:" destination="qfq-Kt-d9p" eventType="touchUpInside" id="qO5-H6-NDe"/>
                                     <segue destination="oOe-2c-AvR" kind="popover" identifier="segueToCategoryTable" popoverAnchorView="a5l-9e-Uj7" id="TFc-Sl-feU">
                                         <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                                     </segue>
@@ -555,7 +565,7 @@
                         <outlet property="bookWebView" destination="WnR-hZ-Zew" id="bNb-8o-MEd"/>
                         <outlet property="booksTableView" destination="V92-dz-yS4" id="VSm-I0-m7Y"/>
                         <outlet property="buyButton" destination="p6B-WU-VrQ" id="y8i-tH-5f5"/>
-                        <outlet property="categoryButton" destination="a5l-9e-Uj7" id="cd5-0b-w9w"/>
+                        <outlet property="categoryButton" destination="a5l-9e-Uj7" id="uT5-ut-Ofh"/>
                         <outlet property="downloadProgressView" destination="af5-7l-ada" id="ghB-5v-Tzi"/>
                         <outlet property="facebookButton" destination="OcG-gV-JOz" id="Gda-Wr-f8b"/>
                         <outlet property="priceLabel" destination="fgv-lU-3s6" id="fjH-PP-KoS"/>

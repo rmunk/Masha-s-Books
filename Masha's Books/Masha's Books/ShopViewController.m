@@ -66,7 +66,7 @@
                         self.backgroundView.image = [[UIImage alloc] initWithData:category.bgImage];
                     } completion:NULL];
     
-    self.categoryButton.titleLabel.text = category.name;
+    [self.categoryButton setTitle:category.name forState:UIControlStateNormal];
     self.booksInSelectedCategory = [self.database getBooksForCategory:category];
     [self.booksTableView reloadData];
     [self bookSelectedAtIndexPath:indexPath];
@@ -93,6 +93,7 @@
 	[super viewDidLoad];
 
     self.downloadProgressView.hidden = YES;
+    self.categoryButton.titleLabel.hidden = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(picturebookShopFinishedLoading:) name:@"PicturebookShopFinishedLoading" object:nil ]; 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(picturebookShopLoadingError:) name:@"PicturebookShopLoadingError" object:nil ];
