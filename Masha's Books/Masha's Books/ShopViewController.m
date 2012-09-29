@@ -333,7 +333,7 @@
             [cell.activityView startAnimating];
             [cell.activityView setNeedsDisplay];
         }
-        cell.statusLabel.text = @"Waiting...";
+        cell.statusLabel.text = @"Waiting";
     }
     else if ([book.status isEqualToString:@"downloading"]) {
         cell.transparencyView.hidden = NO;
@@ -342,7 +342,7 @@
             [cell.activityView startAnimating];
         }
         
-        cell.statusLabel.text = @"Downloading...";
+        cell.statusLabel.text = @"Downloading";
     }
     else {
         cell.transparencyView.hidden = YES;
@@ -456,7 +456,7 @@
     CGFloat scale = 0.5;
     CGFloat cbX = width * (1 + scale) / 2; 
     CGFloat cbY = height * (1 - scale) / 2;
-    CGFloat cbD = 15;
+    CGFloat cbD = 17;
     
     CGRect youTubeFrame = CGRectMake(width * (1 - scale) / 2, height * (1 - scale) / 2, width * scale, height * scale);
     CGRect closeButtonFrame = CGRectMake(cbX - cbD, cbY - cbD, 2 * cbD, 2 * cbD);

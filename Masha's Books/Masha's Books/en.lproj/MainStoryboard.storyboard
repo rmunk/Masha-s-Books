@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="Jz7-kR-CaY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2549" systemVersion="12A269" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="Jz7-kR-CaY">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1498"/>
     </dependencies>
     <scenes>
         <!--Settings View Controller - Settings View Controller-->
@@ -283,16 +283,16 @@
                                                     <rect key="frame" x="-1" y="0.0" width="304" height="173"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
-                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="icon.png" id="23g-ch-5lA">
-                                                    <rect key="frame" x="11" y="10" width="117" height="80"/>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" image="blank-left.png" id="23g-ch-5lA">
+                                                    <rect key="frame" x="11" y="10" width="116" height="81"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Prva Prica qqqqqqqq" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="none" minimumFontSize="14" id="DXy-Z1-F4j">
-                                                    <rect key="frame" x="134" y="45" width="144" height="46"/>
+                                                    <rect key="frame" x="134" y="48" width="144" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
-                                                    <color key="textColor" red="0.59607845544815063" green="0.80000007152557373" blue="0.19215688109397888" alpha="1" colorSpace="deviceRGB"/>
-                                                    <color key="highlightedColor" red="0.59607845544815063" green="0.80000007152557373" blue="0.18823531270027161" alpha="1" colorSpace="deviceRGB"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="highlightedColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" editable="NO" id="ZQL-MU-aXy">
                                                     <rect key="frame" x="2" y="89" width="276" height="64"/>
@@ -302,30 +302,34 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textView>
-                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="rate_left3.png" id="u8n-qX-Ced">
-                                                    <rect key="frame" x="236" y="10" width="42" height="42"/>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="rate3.png" id="u8n-qX-Ced">
+                                                    <rect key="frame" x="246" y="7" width="42" height="42"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="NSk-wa-FBc">
-                                                    <rect key="frame" x="11" y="10" width="117" height="80"/>
+                                                    <rect key="frame" x="11" y="10" width="116" height="81"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <view hidden="YES" opaque="NO" alpha="0.60000000000000009" contentMode="scaleToFill" id="fdw-qH-MQr">
-                                                    <rect key="frame" x="11" y="10" width="117" height="80"/>
+                                                <view hidden="YES" opaque="NO" contentMode="scaleToFill" id="fdw-qH-MQr">
+                                                    <rect key="frame" x="11" y="10" width="116" height="81"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <subviews>
+                                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" style="white" id="bqZ-D8-3V0">
+                                                            <rect key="frame" x="48" y="31" width="20" height="20"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </activityIndicatorView>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="guR-R2-3DO">
+                                                            <rect key="frame" x="3" y="58" width="110" height="18"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <color key="shadowColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
+                                                            <size key="shadowOffset" width="1" height="1"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
                                                 </view>
-                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" style="white" id="bqZ-D8-3V0">
-                                                    <rect key="frame" x="60" y="39" width="20" height="20"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </activityIndicatorView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="guR-R2-3DO">
-                                                    <rect key="frame" x="33" y="63" width="57" height="18"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -394,7 +398,7 @@
                                     </segue>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="JO4-Mq-aBd">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" image="blank-middle.png" id="JO4-Mq-aBd">
                                 <rect key="frame" x="345" y="135" width="285" height="194"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -412,13 +416,14 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <dataDetectorType key="dataDetectorTypes"/>
                             </webView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="p6B-WU-VrQ">
-                                <rect key="frame" x="594" y="337" width="36" height="36"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="p6B-WU-VrQ">
+                                <rect key="frame" x="345" y="335" width="159" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Buy" image="buy.png">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="boldSystem" size="button"/>
+                                <state key="normal" title="Buy">
+                                    <color key="titleColor" red="0.19607843137254902" green="0.30980392156862746" blue="0.52156862745098043" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -428,7 +433,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="$2,99" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="fgv-lU-3s6">
-                                <rect key="frame" x="548" y="368" width="87" height="41"/>
+                                <rect key="frame" x="499" y="329" width="87" height="41"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="27"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -450,7 +455,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Dc8-xW-0pJ">
-                                <rect key="frame" x="548" y="330" width="36" height="36"/>
+                                <rect key="frame" x="594" y="332" width="36" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" image="preview.png">
@@ -479,15 +484,15 @@
                                     <action selector="goToTwitterPage:" destination="qfq-Kt-d9p" eventType="touchUpInside" id="Ajq-U6-Joh"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="TopLeft" text="Prva prica" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="none" minimumFontSize="14" id="cus-tJ-CEc">
-                                <rect key="frame" x="344" y="330" width="156" height="66"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="TopLeft" text="Prva prica jako jako jako dugackog naslova" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="none" minimumFontSize="14" adjustsFontSizeToFit="NO" id="cus-tJ-CEc">
+                                <rect key="frame" x="345" y="370" width="285" height="52"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="highlightedColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             </label>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="rate_left3.png" id="s5k-PB-C3T">
-                                <rect key="frame" x="504" y="335" width="37" height="38"/>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="rate3.png" id="s5k-PB-C3T">
+                                <rect key="frame" x="588" y="142" width="37" height="38"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </imageView>
                             <button opaque="NO" tag="1" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="IkL-U1-qq6">
@@ -658,19 +663,19 @@
     <resources>
         <image name="Default-Landscape~ipad.png" width="1024" height="768"/>
         <image name="MyBooks.png" width="30" height="30"/>
+        <image name="blank-left.png" width="116" height="87"/>
+        <image name="blank-middle.png" width="284" height="213"/>
         <image name="box.png" width="304" height="173"/>
-        <image name="box_norm.png" width="557" height="384"/>
+        <image name="box_norm.png" width="558" height="384"/>
         <image name="box_sel.png" width="315" height="174"/>
-        <image name="buy.png" width="36" height="36"/>
         <image name="dropdown.png" width="41" height="35"/>
         <image name="facebook1.png" width="42" height="40"/>
-        <image name="icon.png" width="72" height="72"/>
         <image name="like.png" width="52" height="27"/>
         <image name="mail.png" width="42" height="40"/>
         <image name="masha.png" width="512" height="768"/>
         <image name="mybooks REF.png" width="1024" height="768"/>
         <image name="preview.png" width="37" height="36"/>
-        <image name="rate_left3.png" width="42" height="42"/>
+        <image name="rate3.png" width="38" height="37"/>
         <image name="settings.png" width="1024" height="768"/>
         <image name="store_back.png" width="1024" height="768"/>
         <image name="tab-mybooks.png" width="30" height="30"/>
@@ -680,6 +685,80 @@
         <image name="twitter1.png" width="42" height="40"/>
         <image name="web.png" width="42" height="40"/>
     </resources>
+    <classes>
+        <class className="BooksTableCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BooksTableCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="activityView" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="bookTitle" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="coverImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="rateImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="shortDescription" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="statusLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="tagImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="transparencyView" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="CategoryTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CategoryTableViewController.h"/>
+        </class>
+        <class className="InitialViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/InitialViewController.h"/>
+        </class>
+        <class className="MyBooksViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MyBooksViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="topButtonPressed:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="backgroundImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="leftBookImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="loadingIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="mashaImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="scrollViewContainer" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="ScrollViewContainer" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ScrollViewContainer.h"/>
+            <relationships>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+            </relationships>
+        </class>
+        <class className="SettingsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="topButtonPressed:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="myBooksTableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="ShopViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ShopViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="bookBought:" candidateClass="UIButton"/>
+                <relationship kind="action" name="categorySelection:" candidateClass="UIButton"/>
+                <relationship kind="action" name="goToFacebookPage:" candidateClass="UIButton"/>
+                <relationship kind="action" name="goToTwitterPage:" candidateClass="UIButton"/>
+                <relationship kind="action" name="goToYoutubePage:" candidateClass="UIButton"/>
+                <relationship kind="action" name="shopRefresh:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="action" name="topButtonPressed:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="activityLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="activityView" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="backgroundView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="bookTitleLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="bookWebView" candidateClass="UIWebView"/>
+                <relationship kind="outlet" name="booksTableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="buyButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="categoryButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="downloadProgressView" candidateClass="UIProgressView"/>
+                <relationship kind="outlet" name="facebookButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="priceLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="rateImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="tagViewLarge" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="thumbImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="twitterButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="youtubeButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <nil key="statusBar"/>
         <simulatedOrientationMetrics key="orientation" orientation="landscapeRight"/>
