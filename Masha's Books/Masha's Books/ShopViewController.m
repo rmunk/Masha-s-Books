@@ -94,6 +94,24 @@
 
     self.downloadProgressView.hidden = YES;
     self.categoryButton.titleLabel.hidden = NO;
+
+    self.categoriesInDatabase = [self.database getCategoriesInDatabase];
+
+    if (self.categoriesInDatabase.count) {
+        [self categoryPicked:[self.categoriesInDatabase objectAtIndex:0]];
+        self.booksInSelectedCategory = [self.database getBooksForCategory:self.selectedCategory];
+        for (Book *book in self.booksInSelectedCategory) {
+            NSLog(@"Book in category %@", book.title);
+    }
+    NSIndexPath *indexPath = [[NSIndexPath alloc] init];
+    indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    self.categoryButton.titleLabel.text = [NSString stringWithString:self.selectedCategory.name];
+    
+    [self.booksTableView reloadData];
+    [self bookSelectedAtIndexPath:indexPath];
+    
+    [self.view setNeedsDisplay];
+}
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(picturebookShopFinishedLoading:) name:@"PicturebookShopFinishedLoading" object:nil ]; 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(picturebookShopLoadingError:) name:@"PicturebookShopLoadingError" object:nil ];
@@ -105,25 +123,9 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     // progress bar update notification
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setDownloadStatus:) name:@"BookDataReceived" object:nil       ];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setDownloadStatus:) name:@"BookDataReceived" object:nil];
     
-    self.categoriesInDatabase = [self.database getCategoriesInDatabase];
-
-    if (self.categoriesInDatabase.count) {
-        [self categoryPicked:[self.categoriesInDatabase objectAtIndex:0]];
-        self.booksInSelectedCategory = [self.database getBooksForCategory:self.selectedCategory];
-        for (Book *book in self.booksInSelectedCategory) {
-            NSLog(@"Book in category %@", book.title);
-        }
-        NSIndexPath *indexPath = [[NSIndexPath alloc] init];
-        indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-        self.categoryButton.titleLabel.text = [NSString stringWithString:self.selectedCategory.name];
-        
-        [self.booksTableView reloadData];
-        [self bookSelectedAtIndexPath:indexPath];
-        
-        [self.view setNeedsDisplay];
-    }
+    
     
     
 }
@@ -263,14 +265,14 @@
             self.downloadProgressView.hidden = YES;
         }
         
-        NSLog(@"User selects book %@", book.title);
+        NSLog(@"User selects book %@. Book status: %@", book.title, book.status);
     
         self.thumbImageView.image = [[UIImage alloc] initWithData:book.coverThumbnailImageMedium];
         self.tagViewLarge.image = [[UIImage alloc] initWithData:book.tagImageLarge];
         self.rateImage.image = [[UIImage alloc] initWithData:book.rateImageUp];
         self.bookTitleLabel.text = book.title;
         self.priceLabel.text = [NSString stringWithFormat:@"$ %.2f", [book.price floatValue]];
-       [self.booksTableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+        [self.booksTableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
         self.youtubeButton.titleLabel.text = book.youTubeVideoURL;
     
         NSString *siteURL = @"http://www.mashasbookstore.com/storeops/story-long-description.aspx?id=";
