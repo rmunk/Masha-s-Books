@@ -222,10 +222,12 @@
     NSLog(@"ShopViewController: Received BookExtracted notification");
     NSLog(@"Selected book status: %@", self.selectedBook.status);
     NSIndexPath *selectedBookIndexPath = self.booksTableView.indexPathForSelectedRow;
+    
+    
     Book *book = ((Book *)[self.booksInSelectedCategory objectAtIndex:selectedBookIndexPath.row]);
     [self refreshBuyButtonWithBookState:book];
     [self.booksTableView reloadData];
-    [self.booksTableView selectRowAtIndexPath:selectedBookIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+    [self.booksTableView selectRowAtIndexPath:selectedBookIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
 }
 
 - (void)bookExtractingError:(NSNotification *) notification {
@@ -237,10 +239,12 @@
     NSLog(@"ShopViewController: Received BookDownloaded notification");
     NSLog(@"Selected book status: %@", self.selectedBook.status);
     NSIndexPath *selectedBookIndexPath = self.booksTableView.indexPathForSelectedRow;
+    
+    
     Book *book = ((Book *)[self.booksInSelectedCategory objectAtIndex:selectedBookIndexPath.row]);
     [self refreshBuyButtonWithBookState:book];
     [self.booksTableView reloadData];
-    [self.booksTableView selectRowAtIndexPath:selectedBookIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+    [self.booksTableView selectRowAtIndexPath:selectedBookIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
 }
 
 - (void)bookReady:(NSNotification *)notification {
@@ -252,11 +256,13 @@
     [self.downloadProgressView setNeedsDisplay];
     
     NSIndexPath *selectedBookIndexPath = self.booksTableView.indexPathForSelectedRow;
+    
+    
     Book *book = ((Book *)[self.booksInSelectedCategory objectAtIndex:selectedBookIndexPath.row]);
     [self refreshBuyButtonWithBookState:book];
-    [self.booksTableView reloadData];
-    [self.booksTableView selectRowAtIndexPath:selectedBookIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
     
+    [self.booksTableView reloadData];
+    [self.booksTableView selectRowAtIndexPath:selectedBookIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
     NSLog(@"ShopViewController: Posting PagesAdded notification");
 }
 
@@ -368,7 +374,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 
-    PBDLOG_ARG(@"Category table number of rows: %i", self.categoriesInDatabase.count);
+    //PBDLOG_ARG(@"Category table number of rows: %i", self.categoriesInDatabase.count);
     return self.booksInSelectedCategory.count;
 }
 
@@ -396,6 +402,24 @@
             [cell.activityView setNeedsDisplay];
         }
         cell.statusLabel.text = @"Waiting";
+    }
+    else if ([book.status isEqualToString:@"extracting"]) {
+        cell.transparencyView.hidden = NO;
+        cell.activityView.hidden = NO;
+        if (![cell.activityView isAnimating]) {
+            [cell.activityView startAnimating];
+        }
+        
+        cell.statusLabel.text = @"Extracting";
+    }
+    else if ([book.status isEqualToString:@"saving"]) {
+        cell.transparencyView.hidden = NO;
+        cell.activityView.hidden = NO;
+        if (![cell.activityView isAnimating]) {
+            [cell.activityView startAnimating];
+        }
+        
+        cell.statusLabel.text = @"Saving";
     }
     else if ([book.status isEqualToString:@"downloading"]) {
         cell.transparencyView.hidden = NO;

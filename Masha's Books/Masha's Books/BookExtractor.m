@@ -178,8 +178,9 @@
     }
     completion:^{
         //[[NSManagedObjectContext MR_defaultContext] save:nil];
-        [self.delegate performSelector:@selector(pagesAdded)];
         [self processQue];
+        [self.delegate performSelector:@selector(pagesAdded)];
+       
     }
     errorHandler:nil];
 }
