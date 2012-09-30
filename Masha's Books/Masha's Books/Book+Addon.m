@@ -346,6 +346,15 @@
     return [myBooks copy];
 }
 
++ (NSOrderedSet *)getBoughtBooks
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"status != 'available' && status != 'failed'"];
+    NSArray *books = [Book MR_findAllSortedBy:@"size" ascending:NO withPredicate:predicate];
+    NSMutableOrderedSet *boughtBooks = [[NSMutableOrderedSet alloc] initWithArray:books];
+    
+    return [boughtBooks copy];
+}
+
 - (void)preloadPageNumber:(NSNumber *)pageNumber
 {
     NSManagedObjectContext *mainContext  = [NSManagedObjectContext MR_defaultContext];
@@ -355,6 +364,25 @@
         
         NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextWithParent:mainContext];
         Page *page = [Page MR_findFirstByAttribute:@"pageNumber" withValue:pageNumber inContext:localContext];
+        NSManagedObjectID * pageID = [page objectID];
+        if(pageID){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                Page *nextPage = (Page *)[mainContext objectWithID:pageID];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"NextPageLoaded" object:self userInfo:[NSDictionary dictionaryWithObject:nextPage forKey:@"nextPage"]];
+            });
+        }
+    });
+    dispatch_release(readQueue);
+}
+
+- (void)preloadPageAfterCurrentPage:(Page *)currentPage
+{
+    NSManagedObjectContext *mainContext  = [NSManagedObjectContext MR_defaultContext];
+    
+    dispatch_queue_t readQueue = dispatch_queue_create("readQueue", NULL);
+    dispatch_async(readQueue, ^{
+        
+        Page *page = [self.pages objectAtIndex:currentPage.pageNumber.integerValue];
         NSManagedObjectID * pageID = [page objectID];
         if(pageID){
             dispatch_async(dispatch_get_main_queue(), ^{

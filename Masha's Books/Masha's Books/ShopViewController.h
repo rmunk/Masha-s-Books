@@ -18,7 +18,7 @@
 #define BOOKCELL_HEIGHT 200
 
 
-@interface ShopViewController : UIViewController <categoryTableViewControllerProtocol>
+@interface ShopViewController : UIViewController <categoryTableViewControllerProtocol, UIWebViewDelegate>
 @property (strong, nonatomic) IBOutlet UIButton *categoryButton;
 @property (strong, nonatomic) IBOutlet UITableView *booksTableView;
 @property (strong, nonatomic) IBOutlet UIImageView *thumbImageView;

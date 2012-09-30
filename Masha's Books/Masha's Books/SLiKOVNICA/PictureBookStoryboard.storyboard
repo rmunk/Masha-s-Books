@@ -50,15 +50,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Default-Landscape~ipad.png" id="wyZ-MF-aKI">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="play-again.png" id="wyZ-MF-aKI">
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="foq-4h-SLG">
-                                <rect key="frame" x="202" y="510" width="124" height="117"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="foq-4h-SLG">
+                                <rect key="frame" x="50" y="206" width="283" height="143"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Ponovo">
+                                <state key="normal" title="Ponovo" image="play-again-left.png">
                                     <color key="titleColor" red="1" green="0.0" blue="0.85882359740000003" alpha="1" colorSpace="deviceRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -69,11 +69,11 @@
                                     <action selector="readAgain:" destination="g38-DR-cOU" eventType="touchUpInside" id="Nd5-bc-Cd0"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="R16-R3-0yQ">
-                                <rect key="frame" x="698" y="510" width="124" height="117"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="R16-R3-0yQ">
+                                <rect key="frame" x="696" y="207" width="282" height="143"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Aj kuci">
+                                <state key="normal" title="Aj kuci" image="play-again-right.png">
                                     <color key="titleColor" red="1" green="0.0" blue="0.85882359740000003" alpha="1" colorSpace="deviceRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -139,7 +139,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
-                                    <barButtonItem systemItem="bookmarks" id="gag-K0-oT0">
+                                    <barButtonItem image="backtomybooks.png" id="gag-K0-oT0">
                                         <connections>
                                             <action selector="goBackToLibrary:" destination="uxW-mI-LhG" id="gfu-2r-uah"/>
                                         </connections>
@@ -163,7 +163,7 @@
                             <scrollView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="UqZ-TK-rsC">
                                 <rect key="frame" x="0.0" y="632" width="1024" height="136"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.75" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.70000000000000007" colorSpace="calibratedWhite"/>
                             </scrollView>
                             <view contentMode="scaleToFill" id="n2P-sd-2fW">
                                 <rect key="frame" x="262" y="54" width="500" height="570"/>
@@ -202,10 +202,13 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Default-Landscape~ipad.png" width="1024" height="768"/>
+        <image name="backtomybooks.png" width="20" height="20"/>
+        <image name="play-again-left.png" width="283" height="143"/>
+        <image name="play-again-right.png" width="282" height="143"/>
+        <image name="play-again.png" width="1024" height="768"/>
         <image name="play.png" width="289" height="288"/>
-        <image name="text-on.png" width="43" height="20"/>
-        <image name="voice-on.png" width="55" height="20"/>
+        <image name="text-on.png" width="20" height="20"/>
+        <image name="voice-on.png" width="20" height="20"/>
     </resources>
     <classes>
         <class className="SlikovnicaDataViewController" superclassName="UIViewController">

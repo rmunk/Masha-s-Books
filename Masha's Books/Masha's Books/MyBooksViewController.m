@@ -120,12 +120,16 @@
 
 #pragma mark - Setup Database
 
+- (void)setMBD:(MBDatabase *)database {
+    self.database = database;
+}
+
 - (void)getMyBooks
 {
 //    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"downloaded > 0"];
 //    self.myBooks = [Book MR_findAllSortedBy:@"downloadDate" ascending:NO withPredicate:predicate];
 
-    self.myBooks = [Book getMyBooks];
+    self.myBooks = [self.database getMyBooks];
     
     // Set up the array to hold the views for each page
     NSInteger pageCount = [self.myBooks count];
@@ -154,9 +158,7 @@
     }
 }
 
-- (void)setMBD:(MBDatabase *)database {
-    self.database = database;
-}
+#pragma mark - Database notifications
 
 - (void)newBookReady:(NSNotification *)notification {
     NSLog(@"Calling getMyBooks");

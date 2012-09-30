@@ -21,8 +21,9 @@
 
 @interface SlikovnicaModelController()
 
-@property Page *nextPage;
-@property Page *previousPage;
+@property (strong, nonatomic) SlikovnicaDataViewController *previousPage;
+@property (strong, nonatomic) SlikovnicaDataViewController *currentPage;
+@property (strong, nonatomic) SlikovnicaDataViewController *nextPage;
 
 @end
 
@@ -32,8 +33,9 @@
 @synthesize textVisible = _textVisible;
 @synthesize voiceOverPlay = _voiceOverPlay;
 @synthesize numberOfPages = _numberOfPages;
-@synthesize nextPage = _nextPage;
 @synthesize previousPage = _previousPage;
+@synthesize currentPage = _currentPage;
+@synthesize nextPage = _nextPage;
 
 - (id)init
 {
@@ -84,14 +86,14 @@
     return dataViewController;
 }
 
-- (void)preloadPreviousAndNexPageFromCurrentPage:(Page *)currentPage
-{
-    NSInteger current = currentPage.pageNumber.integerValue;
-    NSInteger previous = self.previousPage.pageNumber.integerValue;
-    NSInteger next = self.nextPage.pageNumber.integerValue;
-    if (previous != current - 1) [self.book preloadPageNumber:[NSNumber numberWithInteger:previous]];
-    if (next != current + 1) [self.book preloadPageNumber:[NSNumber numberWithInteger:next]];
-}
+//- (void)preloadPreviousAndNexPageFromCurrentPage:(Page *)currentPage
+//{
+//    NSInteger current = currentPage.pageNumber.integerValue;
+//    NSInteger previous = self.previousPage.pageNumber.integerValue;
+//    NSInteger next = self.nextPage.pageNumber.integerValue;
+//    if (previous != current - 1) [self.book preloadPageNumber:[NSNumber numberWithInteger:previous]];
+//    if (next != current + 1) [self.book preloadPageNumber:[NSNumber numberWithInteger:next]];
+//}
 
 - (void)nextPageLoaded:(NSNotification *)notification
 {

@@ -117,13 +117,18 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(picturebookShopLoadingError:) name:@"PicturebookShopLoadingError" object:nil ];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bookExtractingError:) name:@"BookExtractingError" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bookExtracted:) name:@"BookExtracted" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bookDownloaded:) name:@"BookDownloaded" object:self.database];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bookDownloaded:) name:@"BookDownloaded" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bookReady:) name:@"BookReady" object:self.database];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     // progress bar update notification
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setDownloadStatus:) name:@"BookDataReceived" object:nil];
+    NSIndexPath *selectedBookIndexPath = self.booksTableView.indexPathForSelectedRow;
+    Book *book = ((Book *)[self.booksInSelectedCategory objectAtIndex:selectedBookIndexPath.row]);
+    [self refreshBuyButtonWithBookState:book];
+    [self.booksTableView reloadData];
+    [self.booksTableView selectRowAtIndexPath:selectedBookIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
     
     
     
@@ -215,6 +220,12 @@
 
 - (void)bookExtracted:(NSNotification *) notification {
     NSLog(@"ShopViewController: Received BookExtracted notification");
+    NSLog(@"Selected book status: %@", self.selectedBook.status);
+    NSIndexPath *selectedBookIndexPath = self.booksTableView.indexPathForSelectedRow;
+    Book *book = ((Book *)[self.booksInSelectedCategory objectAtIndex:selectedBookIndexPath.row]);
+    [self refreshBuyButtonWithBookState:book];
+    [self.booksTableView reloadData];
+    [self.booksTableView selectRowAtIndexPath:selectedBookIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
 }
 
 - (void)bookExtractingError:(NSNotification *) notification {
@@ -223,17 +234,28 @@
 }
 
 - (void)bookDownloaded:(NSNotification *) notification {
-    NSLog(@"ShopViewController: Received BookExtracted notification");
+    NSLog(@"ShopViewController: Received BookDownloaded notification");
+    NSLog(@"Selected book status: %@", self.selectedBook.status);
+    NSIndexPath *selectedBookIndexPath = self.booksTableView.indexPathForSelectedRow;
+    Book *book = ((Book *)[self.booksInSelectedCategory objectAtIndex:selectedBookIndexPath.row]);
+    [self refreshBuyButtonWithBookState:book];
+    [self.booksTableView reloadData];
+    [self.booksTableView selectRowAtIndexPath:selectedBookIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
 }
 
 - (void)bookReady:(NSNotification *)notification {
     NSLog(@"ShopViewController: Received BookReady notification");
+    NSLog(@"Selected book status: %@", self.selectedBook.status);
 
     self.downloadProgressView.hidden = YES;
     self.activityLabel.hidden = YES;
     [self.downloadProgressView setNeedsDisplay];
     
+    NSIndexPath *selectedBookIndexPath = self.booksTableView.indexPathForSelectedRow;
+    Book *book = ((Book *)[self.booksInSelectedCategory objectAtIndex:selectedBookIndexPath.row]);
+    [self refreshBuyButtonWithBookState:book];
     [self.booksTableView reloadData];
+    [self.booksTableView selectRowAtIndexPath:selectedBookIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
     
     NSLog(@"ShopViewController: Posting PagesAdded notification");
 }
@@ -272,6 +294,10 @@
         self.rateImage.image = [[UIImage alloc] initWithData:book.rateImageUp];
         self.bookTitleLabel.text = book.title;
         self.priceLabel.text = [NSString stringWithFormat:@"$ %.2f", [book.price floatValue]];
+        [self.priceLabel setHidden:YES];
+        
+        [self refreshBuyButtonWithBookState:book];
+        
         [self.booksTableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
         self.youtubeButton.titleLabel.text = book.youTubeVideoURL;
     
@@ -290,6 +316,40 @@
     }
     else {
         NSLog(@"No books in category");
+    }
+}
+
+- (void)refreshBuyButtonWithBookState:(Book *)book {
+    if ([book.status isEqualToString:@"ready"]) {
+        [self.buyButton setTitle:@"Installed" forState:UIControlStateNormal];
+        [self.buyButton setEnabled:NO];
+    }
+    else if ([book.status isEqualToString:@"bought"]) {
+        [self.buyButton setEnabled:YES];
+        [self.buyButton setTitle:@"Download" forState:UIControlStateNormal];
+    }
+    else if ([book.status isEqualToString:@"downloading"]) {
+        [self.buyButton setTitle:@"Downloading" forState:UIControlStateNormal];
+        [self.buyButton setEnabled:NO];
+    }
+    else if ([book.status isEqualToString:@"qued"]) {
+        [self.buyButton setTitle:@"Waiting" forState:UIControlStateNormal];
+        [self.buyButton setEnabled:NO];
+    }
+    else if ([book.status isEqualToString:@"extracting"]) {
+        [self.buyButton setTitle:@"Extracting" forState:UIControlStateNormal];
+        [self.buyButton setEnabled:NO];
+    }
+    else if ([book.status isEqualToString:@"saving"]) {
+        [self.buyButton setTitle:@"Saving" forState:UIControlStateNormal];
+        [self.buyButton setEnabled:NO];
+    }
+    else {
+        [self.buyButton setEnabled:YES];
+        if ([book.price floatValue] == 0.0f) 
+            [self.buyButton setTitle:@"Free" forState:UIControlStateNormal];
+        else
+            [self.buyButton setTitle:[NSString stringWithFormat:@"$ %.2f", [book.price floatValue]] forState:UIControlStateNormal];
     }
 }
 
@@ -335,7 +395,7 @@
             [cell.activityView startAnimating];
             [cell.activityView setNeedsDisplay];
         }
-        cell.statusLabel.text = @"Waiting...";
+        cell.statusLabel.text = @"Waiting";
     }
     else if ([book.status isEqualToString:@"downloading"]) {
         cell.transparencyView.hidden = NO;
@@ -344,7 +404,7 @@
             [cell.activityView startAnimating];
         }
         
-        cell.statusLabel.text = @"Downloading...";
+        cell.statusLabel.text = @"Downloading";
     }
     else {
         cell.transparencyView.hidden = YES;
@@ -441,24 +501,24 @@
 - (void)embedYouTube:(NSString *)urlString frame:(CGRect)frame {
     
     NSString *embedHTML = @"\
-    <html><head>\
-    <style type=\"text/css\">\
-    body {\
-    background-color: transparent;\
-    color: white;\
-    }\
-    </style>\
-    </head><body style=\"margin:0\">\
-    <embed id=\"yt\" src=\"%@\" type=\"application/x-shockwave-flash\" \
-    width=\"%0.0f\" height=\"%0.0f\"></embed>\
-    </body></html>";
+                            <html><head>\
+                            <style type=\"text/css\">\
+                            body {\
+                                background-color: transparent;\
+                                color: white;\
+                            }\
+                            </style>\
+                            </head><body style=\"margin:0\">\
+                            <embed id=\"yt\" src=\"%@\" type=\"application/x-shockwave-flash\" \
+                            width=\"%0.0f\" height=\"%0.0f\"></embed>\
+                            </body></html>";
     
     CGFloat width = self.view.frame.size.width;
     CGFloat height = self.view.frame.size.height;
     CGFloat scale = 0.5;
     CGFloat cbX = width * (1 + scale) / 2; 
     CGFloat cbY = height * (1 - scale) / 2;
-    CGFloat cbD = 15;
+    CGFloat cbD = 17;
     
     CGRect youTubeFrame = CGRectMake(width * (1 - scale) / 2, height * (1 - scale) / 2, width * scale, height * scale);
     CGRect closeButtonFrame = CGRectMake(cbX - cbD, cbY - cbD, 2 * cbD, 2 * cbD);
@@ -467,18 +527,32 @@
     
     self.youTubeTransparentView = [[UIView alloc] initWithFrame:self.view.frame];
     self.youTubeTransparentView.backgroundColor = [UIColor blackColor];
-    self.youTubeTransparentView.alpha = 0.8;     
+    self.youTubeTransparentView.alpha = 0.0;     
     [self.view addSubview:self.youTubeTransparentView];
     
-    self.youTubeVideoView = [[UIWebView alloc] initWithFrame:youTubeFrame];
-    [self.youTubeVideoView loadHTMLString:html baseURL:nil];
+    self.youTubeVideoView = [[UIWebView alloc] init];
+    self.youTubeVideoView.delegate = self;
     [self.view addSubview:self.youTubeVideoView];
     
-    self.youTubeCloseButton = [[UIButton alloc] initWithFrame:closeButtonFrame];
+    self.youTubeCloseButton = [[UIButton alloc] init];
     [self.youTubeCloseButton setImage:closeButtonImage forState:UIControlStateNormal];
     self.youTubeCloseButton.backgroundColor = [UIColor clearColor];
     [self.youTubeCloseButton addTarget:self action:@selector(closeButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.youTubeCloseButton];
+    
+    
+    self.youTubeVideoView.frame = CGRectMake(width * (1 - scale) / 2, 0.0f, width * scale, height * scale);
+    self.youTubeCloseButton.frame = CGRectMake(cbX - cbD, cbY - cbD - height * (1 - scale * 1.5), 2 * cbD, 2 * cbD);
+    [UIView animateWithDuration:0.4
+                     animations:^{
+                         self.youTubeTransparentView.alpha = 0.8;
+                         self.youTubeVideoView.frame = youTubeFrame;
+                         self.youTubeCloseButton.frame = closeButtonFrame;
+                     }];
+
+    [self.youTubeVideoView loadHTMLString:html baseURL:nil];
+    
+    
     
 }
 
@@ -486,6 +560,7 @@
     UIButton *button = nil;
     
     if ([view isMemberOfClass:[UIButton class]]) {
+        NSLog(@"Button found");
         return (UIButton *)view;
     }
     
@@ -500,8 +575,9 @@
 }
 
 
-- (void)webViewDidFinishLoad:(UIWebView *)_webView {
-    UIButton *button = [self findButtonInView:_webView];
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    UIButton *button = [self findButtonInView:webView];
+    NSLog(@"Webview loaded");
     [button sendActionsForControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -513,11 +589,14 @@
 }
 
 - (void)closeButtonClick {
+
     NSLog(@"Close button clicked");
     [self.youTubeVideoView loadHTMLString:@"" baseURL:nil];
     [self.youTubeVideoView removeFromSuperview];    
     [self.youTubeTransparentView removeFromSuperview];
     [self.youTubeCloseButton removeFromSuperview];
+   
+    
 }
 
 @end

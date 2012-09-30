@@ -40,6 +40,8 @@
 
 + (NSOrderedSet *)getMyBooks;
 
++ (NSOrderedSet *)getBoughtBooks;
+
 + (Book *)getBookWithId:(NSNumber *)bookID withErrorHandler:(NSError *)error;
 
 - (void)fillBookElement:(NSString *)element withDescription:(NSString *)description;

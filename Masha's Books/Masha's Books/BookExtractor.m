@@ -98,8 +98,8 @@
             }
             else {                
                 NSLog(@"Extracting %@ Done!", zipFile.lastPathComponent);
+                self.activeBook.status = @"saving";
                 [self.delegate extractorForBook:self.activeBook didFinishExtractingWithSuccess:YES];
-    
                 [self saveDataToBook:self.activeBook FromPath:newDir];
             }
         });
@@ -228,6 +228,7 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     
+    self.activeBook.status = @"extracting";
     [self.delegate extractorBook:self.activeBook receivedNewPercentage:1];
     [self.delegate extractorForBook:self.activeBook didFinishDownloadingWithSuccess:YES];
     self.datacounter = 0;
