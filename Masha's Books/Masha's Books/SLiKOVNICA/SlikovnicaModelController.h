@@ -18,10 +18,12 @@
 @property (nonatomic) BOOL textVisible;
 @property (nonatomic) BOOL voiceOverPlay;
 @property (nonatomic) NSUInteger numberOfPages;
+@property (strong, nonatomic) SlikovnicaDataViewController *currentPage;
 
 - (SlikovnicaDataViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard;
 - (NSUInteger)indexOfViewController:(SlikovnicaDataViewController *)viewController;
 - (NSArray *)getPageThumbnails;
+- (void)preloadPreviousAndNexPage;
 
 @end
 

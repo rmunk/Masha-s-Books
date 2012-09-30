@@ -122,7 +122,7 @@
          localBook.status = @"bought";
      }
      completion:^{
-         [[NSManagedObjectContext MR_defaultContext] save:nil];
+//         [[NSManagedObjectContext MR_defaultContext] save:nil];
          [self bookDeleted];
      }
      errorHandler:nil];

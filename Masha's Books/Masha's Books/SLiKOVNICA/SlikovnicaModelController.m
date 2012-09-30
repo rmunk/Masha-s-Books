@@ -11,6 +11,7 @@
 #import "SlikovnicaLastPageViewController.h"
 #import "Image.h"
 #import "UIImage+Resize.h"
+#define preloading
 
 /*
  The controller serves as the data source for the page view controller; it therefore implements pageViewController:viewControllerBeforeViewController: and pageViewController:viewControllerAfterViewController:.
@@ -22,7 +23,6 @@
 @interface SlikovnicaModelController()
 
 @property (strong, nonatomic) SlikovnicaDataViewController *previousPage;
-@property (strong, nonatomic) SlikovnicaDataViewController *currentPage;
 @property (strong, nonatomic) SlikovnicaDataViewController *nextPage;
 
 @end
@@ -36,6 +36,24 @@
 @synthesize previousPage = _previousPage;
 @synthesize currentPage = _currentPage;
 @synthesize nextPage = _nextPage;
+
+-(void)setVoiceOverPlay:(BOOL)voiceOverPlay
+{
+    self.previousPage.voiceOverPlay = voiceOverPlay;
+    self.currentPage.voiceOverPlay = voiceOverPlay;
+    self.nextPage.voiceOverPlay = voiceOverPlay;
+    _voiceOverPlay = voiceOverPlay;
+}
+
+-(void)setTextVisible:(BOOL)textVisible
+{
+    self.previousPage.textVisible = textVisible;
+    self.currentPage.textVisible = textVisible;
+    self.nextPage.textVisible = textVisible;
+    _textVisible = textVisible;
+}
+
+
 
 - (id)init
 {
@@ -86,14 +104,33 @@
     return dataViewController;
 }
 
-//- (void)preloadPreviousAndNexPageFromCurrentPage:(Page *)currentPage
-//{
-//    NSInteger current = currentPage.pageNumber.integerValue;
-//    NSInteger previous = self.previousPage.pageNumber.integerValue;
-//    NSInteger next = self.nextPage.pageNumber.integerValue;
-//    if (previous != current - 1) [self.book preloadPageNumber:[NSNumber numberWithInteger:previous]];
-//    if (next != current + 1) [self.book preloadPageNumber:[NSNumber numberWithInteger:next]];
-//}
+- (void)preloadPreviousAndNexPage
+{
+#ifdef preloading
+    NSInteger current = self.currentPage.view.tag;
+    NSInteger previous = self.previousPage.view.tag;
+    NSInteger next = self.nextPage.view.tag;
+
+    self.nextPage = nil;
+    self.previousPage = nil;
+    
+//    if (current == next)
+//    {
+//        self.nextPage = [self viewControllerAtIndex:current + 1 storyboard:self.currentPage.storyboard];
+//        self.previousPage = [self.currentPage copy];
+//    }
+//    else if (current == previous)
+//    {
+//        self.nextPage = [self.currentPage copy];
+//        self.previousPage = [self viewControllerAtIndex:current - 1 storyboard:self.currentPage.storyboard];
+//    }
+//    else
+    {
+        self.nextPage = [self viewControllerAtIndex:current + 1 storyboard:self.currentPage.storyboard];
+        self.previousPage = [self viewControllerAtIndex:current - 1 storyboard:self.currentPage.storyboard];
+    }
+#endif
+}
 
 - (void)nextPageLoaded:(NSNotification *)notification
 {
@@ -133,17 +170,27 @@
 
 - (SlikovnicaDataViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(SlikovnicaDataViewController *)viewController
 {
-//    self.nextPage = viewController.page;
-//    [self.book preloadPageNumber:[NSNumber numberWithInt:viewController.view.tag - 2]];
+#ifndef preloading
     return [self viewControllerAtIndex:viewController.view.tag - 1 storyboard:viewController.storyboard];
+#else
+    if (viewController.view.tag - 1 == self.previousPage.view.tag) 
+        return self.previousPage;
+    else
+        return [self viewControllerAtIndex:viewController.view.tag - 1 storyboard:viewController.storyboard];
+#endif
 }
 
 //- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 - (SlikovnicaDataViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(SlikovnicaDataViewController *)viewController
 {
-//    self.previousPage = viewController.page;
-//    [self.book preloadPageNumber:[NSNumber numberWithInt:viewController.view.tag + 2]];
+#ifndef preloading
     return [self viewControllerAtIndex:viewController.view.tag + 1 storyboard:viewController.storyboard];
+#else
+    if (viewController.view.tag + 1 == self.nextPage.view.tag) 
+        return self.nextPage;
+    else
+        return [self viewControllerAtIndex:viewController.view.tag + 1 storyboard:viewController.storyboard];
+#endif
 }
 
 @end
