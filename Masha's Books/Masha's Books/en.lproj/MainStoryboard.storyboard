@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2549" systemVersion="12A269" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="Jz7-kR-CaY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="Jz7-kR-CaY">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1498"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
     </dependencies>
     <scenes>
         <!--Settings View Controller - Settings View Controller-->
@@ -390,7 +390,7 @@
                                     <color key="titleColor" red="0.60000002379999995" green="0.80000007149999997" blue="0.20000001789999999" alpha="1" colorSpace="deviceRGB"/>
                                 </state>
                                 <state key="highlighted">
-                                    <color key="titleColor" red="0.60000002379999995" green="0.80000007149999997" blue="0.20000001789999999" alpha="1" colorSpace="deviceRGB"/>
+                                    <color key="titleColor" red="0.43070432127050212" green="0.63018176020408156" blue="0.080262765756055329" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
                                     <segue destination="oOe-2c-AvR" kind="popover" identifier="segueToCategoryTable" popoverAnchorView="a5l-9e-Uj7" id="TFc-Sl-feU">
@@ -416,17 +416,19 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <dataDetectorType key="dataDetectorTypes"/>
                             </webView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="p6B-WU-VrQ">
-                                <rect key="frame" x="345" y="335" width="159" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="p6B-WU-VrQ">
+                                <rect key="frame" x="345" y="335" width="160" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="boldSystem" size="button"/>
-                                <state key="normal" title="Buy">
-                                    <color key="titleColor" red="0.19607843137254902" green="0.30980392156862746" blue="0.52156862745098043" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                <state key="normal" title="Buy" backgroundImage="buy_button.png">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="disabled" backgroundImage="buy_button_disabled.png">
+                                    <color key="titleColor" cocoaTouchSystemColor="lightTextColor"/>
+                                </state>
+                                <state key="highlighted" backgroundImage="buy_button.png">
+                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="bookBought:" destination="qfq-Kt-d9p" eventType="touchUpInside" id="6ah-ZO-iia"/>
@@ -455,7 +457,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Dc8-xW-0pJ">
-                                <rect key="frame" x="594" y="332" width="36" height="36"/>
+                                <rect key="frame" x="594" y="329" width="36" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" image="preview.png">
@@ -668,6 +670,8 @@
         <image name="box.png" width="304" height="173"/>
         <image name="box_norm.png" width="558" height="384"/>
         <image name="box_sel.png" width="315" height="174"/>
+        <image name="buy_button.png" width="160" height="30"/>
+        <image name="buy_button_disabled.png" width="160" height="30"/>
         <image name="dropdown.png" width="41" height="35"/>
         <image name="facebook1.png" width="42" height="40"/>
         <image name="like.png" width="52" height="27"/>
@@ -708,7 +712,6 @@
         <class className="MyBooksViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/MyBooksViewController.h"/>
             <relationships>
-                <relationship kind="action" name="topButtonPressed:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="backgroundImage" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="leftBookImage" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="loadingIndicator" candidateClass="UIActivityIndicatorView"/>
@@ -726,20 +729,12 @@
         <class className="SettingsViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
             <relationships>
-                <relationship kind="action" name="topButtonPressed:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="myBooksTableView" candidateClass="UITableView"/>
             </relationships>
         </class>
         <class className="ShopViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ShopViewController.h"/>
             <relationships>
-                <relationship kind="action" name="bookBought:" candidateClass="UIButton"/>
-                <relationship kind="action" name="categorySelection:" candidateClass="UIButton"/>
-                <relationship kind="action" name="goToFacebookPage:" candidateClass="UIButton"/>
-                <relationship kind="action" name="goToTwitterPage:" candidateClass="UIButton"/>
-                <relationship kind="action" name="goToYoutubePage:" candidateClass="UIButton"/>
-                <relationship kind="action" name="shopRefresh:" candidateClass="UIBarButtonItem"/>
-                <relationship kind="action" name="topButtonPressed:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="activityLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="activityView" candidateClass="UIActivityIndicatorView"/>
                 <relationship kind="outlet" name="backgroundView" candidateClass="UIImageView"/>

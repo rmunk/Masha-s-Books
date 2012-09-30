@@ -247,11 +247,10 @@
 }
 
 - (void)extractorForBook:(Book *)book didFinishDownloadingWithSuccess:(BOOL)success {
-    NSNumber *successNotification = [NSNumber numberWithBool:success]; 
-
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"BookDownloaded" object:successNotification];
-
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"BookDownloadError" object:successNotification];
+    if (success == YES)
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"BookDownloaded" object:nil];
+    else
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"BookDownloadError" object:nil];
 }
 
 
