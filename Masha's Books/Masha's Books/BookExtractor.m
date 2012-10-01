@@ -90,10 +90,11 @@
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if ((self.success == NO) && [self.delegate respondsToSelector:@selector(extractorForBook:didFinishExtractingWithSuccess:)]) {
-                [self.delegate extractorForBook:self.activeBook didFinishExtractingWithSuccess:self.success];
+                
                 [self.downloadedZipData setLength:0];
                 self.activeBook.status = @"failed";
                 [self processQue];
+                [self.delegate extractorForBook:self.activeBook didFinishExtractingWithSuccess:self.success];
                 return;
             }
             else {                

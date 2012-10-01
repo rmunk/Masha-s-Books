@@ -93,6 +93,8 @@
 	[super viewDidLoad];
 
     self.downloadProgressView.hidden = YES;
+    CGAffineTransform transform = CGAffineTransformMakeScale(1.0f, 2.0f);
+    self.downloadProgressView.transform = transform;
     self.categoryButton.titleLabel.hidden = NO;
 
     self.categoriesInDatabase = [self.database getCategoriesInDatabase];
@@ -129,6 +131,10 @@
     [self refreshBuyButtonWithBookState:book];
     [self.booksTableView reloadData];
     [self.booksTableView selectRowAtIndexPath:selectedBookIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+    
+    if ([self.selectedBook.status isEqualToString:@"downloading"] && [self.downloadProgressView isHidden]) {
+        [self.downloadProgressView setHidden:NO];
+    }
     
     
     
@@ -177,21 +183,26 @@
 - (IBAction)bookBought:(UIButton *)sender {
 
     Book *bookJustBought = self.selectedBook;
+    NSIndexPath *selectedBookIndexPath = self.booksTableView.indexPathForSelectedRow;
  
     [self.database userBuysBook:bookJustBought];
     self.booksInSelectedCategory = [self.database getBooksForCategory:self.selectedCategory];
+    
+    [self refreshBuyButtonWithBookState:bookJustBought];
+    
     [self.booksTableView reloadData];
+    [self.booksTableView selectRowAtIndexPath:selectedBookIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
     
-    NSIndexPath *indexPath = [[NSIndexPath alloc] init];
-    int i = 0;
-    for (i = 0; i < self.booksInSelectedCategory.count; i++) {
-        if (bookJustBought.bookID == ((Book *)[self.booksInSelectedCategory objectAtIndex:i]).bookID) {
-            break;
-        }
-    }
+  //  NSIndexPath *indexPath = [[NSIndexPath alloc] init];
+  //  int i = 0;
+   // for (i = 0; i < self.booksInSelectedCategory.count; i++) {
+   //     if (bookJustBought.bookID == ((Book *)[self.booksInSelectedCategory objectAtIndex:i]).bookID) {
+   //         break;
+   //     }
+   // }
     
-    indexPath = [NSIndexPath indexPathForRow:i inSection:0];
-    [self bookSelectedAtIndexPath:indexPath];
+   // indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+   // [self bookSelectedAtIndexPath:indexPath];
 }
 
 - (IBAction)goToFacebookPage:(UIButton *)sender {
@@ -227,12 +238,16 @@
     Book *book = ((Book *)[self.booksInSelectedCategory objectAtIndex:selectedBookIndexPath.row]);
     [self refreshBuyButtonWithBookState:book];
     [self.booksTableView reloadData];
-    [self.booksTableView selectRowAtIndexPath:selectedBookIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+    [self.booksTableView selectRowAtIndexPath:selectedBookIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
 }
 
 - (void)bookExtractingError:(NSNotification *) notification {
     NSLog(@"ShopViewController: Received BookExtracting error notification");
+    NSIndexPath *selectedBookIndexPath = self.booksTableView.indexPathForSelectedRow;
+    Book *book = ((Book *)[self.booksInSelectedCategory objectAtIndex:selectedBookIndexPath.row]);
+    [self refreshBuyButtonWithBookState:book];
     [self.booksTableView reloadData];
+    [self.booksTableView selectRowAtIndexPath:selectedBookIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
 }
 
 - (void)bookDownloaded:(NSNotification *) notification {
@@ -244,7 +259,7 @@
     Book *book = ((Book *)[self.booksInSelectedCategory objectAtIndex:selectedBookIndexPath.row]);
     [self refreshBuyButtonWithBookState:book];
     [self.booksTableView reloadData];
-    [self.booksTableView selectRowAtIndexPath:selectedBookIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+    [self.booksTableView selectRowAtIndexPath:selectedBookIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
 }
 
 - (void)bookReady:(NSNotification *)notification {
@@ -262,7 +277,7 @@
     [self refreshBuyButtonWithBookState:book];
     
     [self.booksTableView reloadData];
-    [self.booksTableView selectRowAtIndexPath:selectedBookIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+    [self.booksTableView selectRowAtIndexPath:selectedBookIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
     NSLog(@"ShopViewController: Posting PagesAdded notification");
 }
 
