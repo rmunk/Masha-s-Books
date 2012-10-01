@@ -128,6 +128,18 @@
      errorHandler:nil];
 }
 
+- (void)cleanup {
+    for (Book *book in [Book getAllBooks]) {
+        if ([book.status isEqualToString:@"qued"] || [book.status isEqualToString:@"downloading"]) {
+            [self.extractor addBookToQue:book];
+        }
+        else if ([book.status isEqualToString:@"failed"]) {
+            book.status = @"ready";
+        }
+    }
+    [self.extractor processQue];
+}
+
 #pragma mark - Parser methods
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName
@@ -247,6 +259,7 @@
 }
 
 - (void)extractorForBook:(Book *)book didFinishDownloadingWithSuccess:(BOOL)success {
+    
     if (success == YES)
         [[NSNotificationCenter defaultCenter] postNotificationName:@"BookDownloaded" object:nil];
     else

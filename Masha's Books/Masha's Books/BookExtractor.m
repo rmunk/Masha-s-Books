@@ -132,14 +132,22 @@
             
             if (!book.coverImage){
                 Image *coverImage = [Image MR_createInContext:localContext];
-                coverImage.image = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingString:@"/title.jpg"]];
+                //coverImage.image = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingString:@"/title.jpg"]];
+                coverImage.image = [[NSData alloc] initWithContentsOfFile:[unzippedPath stringByAppendingString:@"/title.jpg"] 
+                                                                  options:NSDataReadingMapped 
+                                                                    error:nil];
                 book.coverImage = coverImage;
             }
             else
-                book.coverImage.image = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingString:@"/title.jpg"]];
+                //book.coverImage.image = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingString:@"/title.jpg"]];
+                book.coverImage.image = [[NSData alloc] initWithContentsOfFile:[unzippedPath stringByAppendingString:@"/title.jpg"] 
+                                                                       options:NSDataReadingMapped 
+                                                                         error:nil];
             
-            book.backgroundMusic = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingPathComponent:@"music.m4a"]];
-            
+            //book.backgroundMusic = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingPathComponent:@"music.m4a"]];
+            book.backgroundMusic = [[NSData alloc] initWithContentsOfFile:[unzippedPath stringByAppendingPathComponent:@"music.m4a"] 
+                                                                  options:NSDataReadingMapped 
+                                                                    error:nil];            
             float size = 0;
             for (NSString *file in dirContents)
                 size += [[fileManager attributesOfItemAtPath:[unzippedPath stringByAppendingFormat:@"/%@", file] error:nil] fileSize];
@@ -155,13 +163,30 @@
             for (NSString *pageFile in pageFiles) {
                 Page *page = [Page createInContext:localContext];
                 page.pageNumber = [NSNumber numberWithInt:pageNumber];
-                page.image = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingPathComponent:pageFile]];
+
+                //page.image = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingPathComponent:pageFile]];
+                page.image = [[NSData alloc] initWithContentsOfFile:[unzippedPath stringByAppendingPathComponent:pageFile] 
+                                                            options:NSDataReadingMapped 
+                                                              error:nil];
+                
                 //page.thumbnail = [page.image resizedImage:CGSizeMake(138, 103) interpolationQuality:kCGInterpolationHigh];
-                page.text = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/text%03d.png",pageNumber]];
-                page.voiceOver = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/voice%03d.m4a",pageNumber]];
-                page.sound = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/sound%03d.m4a",pageNumber]];
+                page.text = [[NSData alloc] initWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/text%03d.png",pageNumber] 
+                                                           options:NSDataReadingMapped 
+                                                             error:nil];
+                //page.text = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/text%03d.png",pageNumber]];
+                //page.voiceOver = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/voice%03d.m4a",pageNumber]];
+                page.voiceOver = [[NSData alloc] initWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/voice%03d.m4a",pageNumber] 
+                                                           options:NSDataReadingMapped 
+                                                             error:nil];
+                //page.sound = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/sound%03d.m4a",pageNumber]];
+                page.sound = [[NSData alloc] initWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/sound%03d.m4a",pageNumber]
+                                                            options:NSDataReadingMapped 
+                                                              error:nil];
                 if(!page.sound){
-                    page.sound = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/sound%03d_L.m4a",pageNumber]];
+                    //page.sound = [NSData dataWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/sound%03d_L.m4a",pageNumber]];
+                    page.sound = [[NSData alloc] initWithContentsOfFile:[unzippedPath stringByAppendingFormat:@"/sound%03d_L.m4a",pageNumber]
+                                                                options:NSDataReadingMapped 
+                                                                    error:nil];
                     if(page.sound) page.soundLoop = [NSNumber numberWithBool:TRUE];
                 }
                 [book insertObject:page inPagesAtIndex:pageNumber];
@@ -175,10 +200,12 @@
             book.downloaded = [NSNumber numberWithInt:1];
             NSLog(@"book.status old:%@ new:%@", book.status, @"ready");
             book.status = @"ready";
+            
         }
     }
     completion:^{
         //[[NSManagedObjectContext MR_defaultContext] save:nil];
+        //[[NSManagedObjectContext MR_defaultContext] refreshObject:bookFromMainThread mergeChanges:YES];
         [self processQue];
         [self.delegate performSelector:@selector(pagesAdded)];
        
@@ -214,6 +241,7 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     [self.downloadedZipData appendData:data];
+    data = nil;
     NSInteger lengthOfDownloadedData = [self.downloadedZipData length];
     self.datacounter += lengthOfDownloadedData - self.lastDownloadedDataLength;
     self.lastDownloadedDataLength = lengthOfDownloadedData;
@@ -239,8 +267,10 @@
     self.downloading = NO;
     self.file = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"tmp/%@",self.activeBook.downloadURL.lastPathComponent]];
     NSLog(@"Saving zip file...");
-    NSData *zipFile = [NSData dataWithData:self.downloadedZipData];
-    [zipFile writeToFile:self.file atomically:YES];
+    //NSData *zipFile = [NSData dataWithData:self.downloadedZipData];
+    [self.downloadedZipData writeToFile:self.file atomically:YES];
+    self.downloadedZipData = nil;
+    //zipFile = nil;
     NSLog(@"Zip file saved.");
     
     [self extractBookFromFile:self.file];

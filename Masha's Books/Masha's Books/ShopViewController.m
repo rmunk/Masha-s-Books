@@ -55,8 +55,7 @@
 }
 
 - (void)categoryPicked:(Category *)category {
-    NSIndexPath *indexPath = [[NSIndexPath alloc] init];
-    indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     self.selectedCategory = category;
     
     [UIView transitionWithView:self.view
@@ -105,8 +104,7 @@
         for (Book *book in self.booksInSelectedCategory) {
             NSLog(@"Book in category %@", book.title);
     }
-    NSIndexPath *indexPath = [[NSIndexPath alloc] init];
-    indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     self.categoryButton.titleLabel.text = [NSString stringWithString:self.selectedCategory.name];
     
     [self.booksTableView reloadData];
@@ -260,6 +258,8 @@
     [self refreshBuyButtonWithBookState:book];
     [self.booksTableView reloadData];
     [self.booksTableView selectRowAtIndexPath:selectedBookIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+    
+
 }
 
 - (void)bookReady:(NSNotification *)notification {
@@ -279,6 +279,7 @@
     [self.booksTableView reloadData];
     [self.booksTableView selectRowAtIndexPath:selectedBookIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
     NSLog(@"ShopViewController: Posting PagesAdded notification");
+    
 }
 
 - (void)setDownloadStatus:(NSNotification *)notification {

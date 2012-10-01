@@ -33,6 +33,7 @@
 - (void)userBuysBook:(Book *)book;
 - (void)userDeletesBook:(Book *)book;
 - (void)coversLoaded;
+- (void)cleanup;
 
 - (NSOrderedSet *)getCategoriesInDatabase;
 - (NSArray *)getBooksInDatabase;
