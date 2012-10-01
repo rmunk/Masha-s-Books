@@ -86,14 +86,18 @@
     cell.textLabel.text = book.title;
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%.1f MB", [book.size floatValue]];
     cell.imageView.image = [[UIImage imageWithData:book.coverThumbnailImage] resizedImage:CGSizeMake(64, 48) interpolationQuality:kCGInterpolationMedium];
-    if ([[cell.subviews lastObject] isKindOfClass:[UIActivityIndicatorView class]] == NO) {
+    
+    int indexOfBookLoadingIndicator = [cell.subviews indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+        return  [obj isKindOfClass:[UIActivityIndicatorView class]]; }];
+    if (indexOfBookLoadingIndicator == NSNotFound) {
         UIActivityIndicatorView *bookLoadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        bookLoadingIndicator.frame = CGRectMake(0, 0, 41, cell.frame.size.height-1);
+        bookLoadingIndicator.frame = CGRectMake(0, 0, 41, cell.frame.size.height);
         bookLoadingIndicator.contentMode = UIViewContentModeCenter;
         [cell addSubview:bookLoadingIndicator];
+        indexOfBookLoadingIndicator = [cell.subviews indexOfObject:bookLoadingIndicator];
     }
     if (book.status == @"downloading" || book.status == @"deleting" || book.status == @"queued") {
-        [[cell.subviews lastObject] startAnimating];
+        [[cell.subviews objectAtIndex:indexOfBookLoadingIndicator] startAnimating];
     }
     return cell;
 }

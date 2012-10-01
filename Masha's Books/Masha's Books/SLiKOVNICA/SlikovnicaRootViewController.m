@@ -35,6 +35,8 @@
 - (AVAudioPlayer *)audioPlayerMusic{return nil;}
 #endif
 
+#pragma mark - Data Model
+
 - (SlikovnicaModelController *)modelController
 {
     if (!_modelController) {
@@ -45,6 +47,7 @@
 
 - (void)setCurrentPage:(SlikovnicaDataViewController *)currentPage
 {
+    self.modelController.currentPage = currentPage;
     if (currentPage != [self.pageViewController.viewControllers objectAtIndex:0])
     {
         _currentPage = currentPage;
@@ -56,6 +59,7 @@
                                              [currentPage playAudio];
                                              if (currentPage.description == @"Last Page") self.navigationRequestView.hidden = YES;
                                              else self.navigationRequestView.hidden = NO;
+                                             [self.modelController preloadPreviousAndNexPage];
                                          }];
     }
     else
@@ -64,6 +68,7 @@
         [currentPage playAudio];
         if (currentPage.description == @"Last Page") self.navigationRequestView.hidden = YES;
         else self.navigationRequestView.hidden = NO;
+        [self.modelController preloadPreviousAndNexPage];
     }
     NSLog(@"%@", self.currentPage.description);
 }
@@ -179,13 +184,13 @@
 - (void)navigationController:(SlikovnicaNavigationViewController *)sender settextVisible:(BOOL)textVisible
 {
     self.modelController.textVisible = textVisible;
-    self.currentPage.textVisible = textVisible;
+    //    self.currentPage.textVisible = textVisible;
 }
 
 - (void)navigationController:(SlikovnicaNavigationViewController *)sender setVoiceoverPlay:(BOOL)voiceOverPlay
 {
     self.modelController.voiceOverPlay = voiceOverPlay;
-    self.currentPage.voiceOverPlay = voiceOverPlay;
+    //    self.currentPage.voiceOverPlay = voiceOverPlay;
 }
 
 - (void)navigationControllerClosedBook:(SlikovnicaNavigationViewController *)sender
