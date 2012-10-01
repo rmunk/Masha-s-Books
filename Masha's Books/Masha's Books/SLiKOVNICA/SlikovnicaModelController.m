@@ -89,6 +89,7 @@
     dataViewController.view.tag = index;
     dataViewController.textVisible = self.textVisible;
     dataViewController.voiceOverPlay = self.voiceOverPlay;
+    
 //    if (index == [self.nextPage.pageNumber integerValue]) dataViewController.page = self.nextPage;
 //    else if (index == [self.previousPage.pageNumber integerValue]) dataViewController.page = self.previousPage;
 //    else dataViewController.page = [self.book.pages objectAtIndex:index];
