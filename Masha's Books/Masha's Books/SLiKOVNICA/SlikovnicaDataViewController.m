@@ -41,6 +41,30 @@
 - (AVAudioPlayer *)audioPlayerSound {return nil;}
 #endif
 
+- (void)setPage:(Page *)page
+{
+    if(page)
+    {
+        self.pageImage.image = [[UIImage alloc] initWithData:page.image];
+        self.textImage.image = [[UIImage alloc] initWithData:page.text];
+
+        NSError *error;
+        self.audioPlayerVoiceOver = [[AVAudioPlayer alloc] initWithData:self.page.voiceOver error:&error];
+        if(error) self.audioPlayerVoiceOver = nil;
+        self.audioPlayerVoiceOver.delegate = self;
+        [self.audioPlayerVoiceOver prepareToPlay];
+
+        self.audioPlayerSound = [[AVAudioPlayer alloc] initWithData:self.page.sound error:&error];
+        if(error) self.audioPlayerSound = nil;
+        self.audioPlayerSound.delegate = self;
+        self.audioPlayerSound.volume = 1;
+        if (self.page.soundLoop == [NSNumber numberWithInt:1])
+            self.audioPlayerSound.numberOfLoops = -1;
+        [self.audioPlayerSound prepareToPlay];
+    }
+    _page = page;
+}
+
 - (void)setTextVisible:(BOOL)textVisible
 {
     self.textImage.hidden = !(textVisible);
@@ -62,19 +86,16 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    self.textImage.hidden = !(self.textVisible);
     [super viewWillAppear:animated];
-    if(self.page)
-    {
-        self.pageImage.image = [[UIImage alloc] initWithData:self.page.image];
-        self.textImage.image = [[UIImage alloc] initWithData:self.page.text];
-        self.textImage.hidden = !(self.textVisible);
-    }
 }
 
 - (void)viewDidUnload
 {
     [self setPageImage:nil];
     [self setTextImage:nil];
+    [self setAudioPlayerVoiceOver:nil];
+    [self setAudioPlayerSound:nil];
     [super viewDidUnload];
 }
 

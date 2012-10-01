@@ -145,6 +145,7 @@
     [self setNavigationRequestView:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self setNavigationTapGestureRecognizer:nil];
+    [self setAudioPlayerMusic:nil];
     [super viewDidUnload];
 }
 
