@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1487" systemVersion="12A269" minimumToolsVersion="Xcode 4.1" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Author" representedClassName="Author" syncable="YES">
+        <attribute name="authorID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="bioHtml" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bookID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="websiteURL" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="books" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Book" inverseName="author" inverseEntity="Book" syncable="YES"/>
+    </entity>
+    <entity name="Book" representedClassName="Book" syncable="YES">
+        <attribute name="active" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="appStoreID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="authorID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="backgroundMusic" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="bookID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="coverThumbnailImage" optional="YES" attributeType="Binary" valueTransformerName="UIImageToDataTransformer" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="coverThumbnailImageMedium" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="descriptionString" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="downloadDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="downloaded" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="downloadURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="facebookLikeURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="price" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="publishDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="rate" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="rateImageUp" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="size" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tag" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="tagImageLarge" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="tagImageSmall" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="youTubeVideoURL" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="author" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Author" inverseName="books" inverseEntity="Author" syncable="YES"/>
+        <relationship name="categories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Category" inverseName="books" inverseEntity="Category" syncable="YES"/>
+        <relationship name="coverImage" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Image" inverseName="book" inverseEntity="Image" syncable="YES"/>
+        <relationship name="pages" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Page" inverseName="book" inverseEntity="Page" syncable="YES"/>
+    </entity>
+    <entity name="Category" representedClassName="Category" syncable="YES">
+        <attribute name="bgImage" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="bgImageURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="categoryID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="books" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Book" inverseName="categories" inverseEntity="Book" syncable="YES"/>
+    </entity>
+    <entity name="Design" representedClassName="Design" syncable="YES">
+        <attribute name="bgImage" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="bgImageURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bgMasha" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="bgMashaURL" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Image" representedClassName="Image" syncable="YES">
+        <attribute name="image" optional="YES" attributeType="Binary" valueTransformerName="UIImageToDataTransformer" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <relationship name="book" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Book" inverseName="coverImage" inverseEntity="Book" syncable="YES"/>
+    </entity>
+    <entity name="Info" representedClassName="Info" syncable="YES">
+        <attribute name="appStoreURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="appVer" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="contactURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="facebookURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="twitterURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="websiteURL" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Page" representedClassName="Page" syncable="YES">
+        <attribute name="image" optional="YES" attributeType="Binary" valueTransformerName="UIImageToDataTransformer" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="pageNumber" optional="YES" attributeType="Integer 32" minValueString="0" defaultValueString="0" syncable="YES"/>
+        <attribute name="sound" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="soundLoop" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="text" optional="YES" attributeType="Binary" valueTransformerName="UIImageToDataTransformer" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="thumbnail" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="voiceOver" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <relationship name="book" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Book" inverseName="pages" inverseEntity="Book" syncable="YES"/>
+    </entity>
+    <fetchRequest name="DownloadedBooks" entity="Book" predicateString="downloaded == 1"/>
+    <elements>
+        <element name="Author" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Book" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Category" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Design" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Image" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Info" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Page" positionX="0" positionY="0" width="0" height="0"/>
+    </elements>
+</model>
