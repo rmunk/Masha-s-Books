@@ -128,7 +128,7 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (alertView.title == @"Delete Book") {
+    if ([alertView.title isEqualToString:@"Delete Book"]) {
         if (buttonIndex == 1)
         {
             [self.database userDeletesBook:self.selectedBook];
@@ -138,14 +138,14 @@
             [self.myBooksTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[self.boughtBooks indexOfObject:self.selectedBook] inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
 
     }
-    else if (alertView.title == @"Restore Book") {
+    else if ([alertView.title isEqualToString:@"Restore Book"]) {
         if (buttonIndex == 1)
         {
             [self.database userBuysBook:self.selectedBook];
             [self refresh];
         }
     }
-    else if (alertView.title == @"Leave Masha's Bookstore?") {
+    else if ([alertView.title isEqualToString:@"Leave Masha's Bookstore?"]) {
         if (buttonIndex == 1) [[UIApplication sharedApplication] openURL:[NSURL URLWithString:alertView.accessibilityHint]];
     }
 }

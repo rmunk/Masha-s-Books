@@ -47,26 +47,25 @@
 
 - (void)setCurrentPage:(SlikovnicaDataViewController *)currentPage
 {
+    _currentPage = currentPage;
     self.modelController.currentPage = currentPage;
-    if (currentPage != [self.pageViewController.viewControllers objectAtIndex:0])
+    if ([self.pageViewController.viewControllers indexOfObject:currentPage] != 0)
     {
-        _currentPage = currentPage;
         NSArray *viewControllers = [NSArray arrayWithObject:currentPage];
         [self.pageViewController setViewControllers:viewControllers
                                           direction:UIPageViewControllerNavigationDirectionForward
                                            animated:YES
                                          completion:^(BOOL finished){
                                              [currentPage playAudio];
-                                             if (currentPage.description == @"Last Page") self.navigationRequestView.hidden = YES;
+                                             if ([currentPage.description isEqualToString:@"Last Page"]) self.navigationRequestView.hidden = YES;
                                              else self.navigationRequestView.hidden = NO;
                                              [self.modelController preloadPreviousAndNexPage];
                                          }];
     }
     else
     {
-        _currentPage = currentPage;
         [currentPage playAudio];
-        if (currentPage.description == @"Last Page") self.navigationRequestView.hidden = YES;
+        if ([currentPage.description isEqualToString:@"Last Page"]) self.navigationRequestView.hidden = YES;
         else self.navigationRequestView.hidden = NO;
         [self.modelController preloadPreviousAndNexPage];
     }
@@ -213,7 +212,8 @@
 - (UIPageViewControllerSpineLocation)pageViewController:(UIPageViewController *)pageViewController spineLocationForInterfaceOrientation:(UIInterfaceOrientation)orientation
 {
     // Set the spine position to "min" and the page view controller's view controllers array to contain just one view controller. Setting the spine position to 'UIPageViewControllerSpineLocationMid' in landscape orientation sets the doubleSided property to YES, so set it to NO here.
-    NSArray *viewControllers = [NSArray arrayWithObject:self.currentPage];
+    UIViewController *currentViewController = [self.pageViewController.viewControllers objectAtIndex:0];
+    NSArray *viewControllers = [NSArray arrayWithObject:currentViewController];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:NULL];
     
     self.pageViewController.doubleSided = NO;
