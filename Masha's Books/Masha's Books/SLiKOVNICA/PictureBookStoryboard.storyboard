@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2549" systemVersion="12A269" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="bF8-g2-sFo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2843" systemVersion="12C54" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="bF8-g2-sFo">
     <dependencies>
-        <deployment defaultVersion="1296" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1498"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1929"/>
     </dependencies>
     <scenes>
         <!--Slikovnica Root View Controller-->
         <scene sceneID="80C-VF-FRm">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="RZc-ti-Sc7" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="bF8-g2-sFo" customClass="SlikovnicaRootViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="weP-6B-hKi">
                         <rect key="frame" x="0.0" y="20" width="1024" height="748"/>
@@ -33,6 +31,7 @@
                         <outlet property="navigationTapGestureRecognizer" destination="MAC-IE-yJt" id="NiC-QO-t2W"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RZc-ti-Sc7" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="MAC-IE-yJt">
                     <connections>
                         <action selector="userTappedForNavigation:" destination="bF8-g2-sFo" id="Gsg-IJ-NMw"/>
@@ -44,7 +43,6 @@
         <!--Slikovnica Last Page View Controller-->
         <scene sceneID="Gaq-dR-9c8">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="PtC-yN-o7p" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="LastPage" id="g38-DR-cOU" customClass="SlikovnicaLastPageViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ldz-Kn-VEO">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
@@ -89,13 +87,13 @@
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PtC-yN-o7p" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-3722" y="-1657"/>
         </scene>
         <!--Slikovnica Data View Controller-->
         <scene sceneID="EFH-7R-dlT">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="WxR-UL-H4g" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="SlikovnicaDataViewController" id="wtX-iZ-Lwt" customClass="SlikovnicaDataViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="JMx-KC-OAv">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
@@ -123,13 +121,13 @@
                         <outlet property="textImage" destination="hkN-Gs-5vm" id="MYO-fN-bF1"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WxR-UL-H4g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-4821" y="-1657"/>
         </scene>
         <!--Slikovnica Navigation View Controller-->
         <scene sceneID="EJg-cx-mdn">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="oAg-oS-JN7" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="Navigation" id="uxW-mI-LhG" customClass="SlikovnicaNavigationViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1yB-oE-IvH">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
@@ -192,6 +190,7 @@
                         <outlet property="toolbar" destination="n6y-tU-zbR" id="nlH-xL-7Lj"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oAg-oS-JN7" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="jdI-0t-2GB">
                     <connections>
                         <action selector="tapReturn:" destination="uxW-mI-LhG" id="2iO-PU-Tz7"/>
@@ -210,40 +209,6 @@
         <image name="text-on.png" width="20" height="20"/>
         <image name="voice-on.png" width="20" height="20"/>
     </resources>
-    <classes>
-        <class className="SlikovnicaDataViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SlikovnicaDataViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="pageImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="textImage" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="SlikovnicaLastPageViewController" superclassName="SlikovnicaDataViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SlikovnicaLastPageViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="goBackToLibrary:" candidateClass="UIButton"/>
-                <relationship kind="action" name="readAgain:" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="SlikovnicaNavigationViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SlikovnicaNavigationViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="bookNameLabel" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="pageNumberLabel" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="pauseImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
-            </relationships>
-        </class>
-        <class className="SlikovnicaRootViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SlikovnicaRootViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="userTappedForNavigation:" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="outlet" name="navigationRequestView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="navigationTapGestureRecognizer" candidateClass="UITapGestureRecognizer"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <nil key="statusBar"/>
         <simulatedOrientationMetrics key="orientation" orientation="landscapeRight"/>

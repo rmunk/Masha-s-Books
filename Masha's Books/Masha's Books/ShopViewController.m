@@ -532,7 +532,7 @@
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (alertView.title == @"Leave Masha's Bookstore?") {
+    if ([alertView.title isEqualToString:@"Leave Masha's Bookstore?"]) {
         if (buttonIndex == 1) [[UIApplication sharedApplication] openURL:[NSURL URLWithString:alertView.accessibilityHint]];
     }
 }
@@ -540,18 +540,7 @@
 #pragma mark - YouTube Button
 - (void)embedYouTube:(NSString *)urlString frame:(CGRect)frame {
     
-    NSString *embedHTML = @"\
-                            <html><head>\
-                            <style type=\"text/css\">\
-                            body {\
-                                background-color: transparent;\
-                                color: white;\
-                            }\
-                            </style>\
-                            </head><body style=\"margin:0\">\
-                            <embed id=\"yt\" src=\"%@\" type=\"application/x-shockwave-flash\" \
-                            width=\"%0.0f\" height=\"%0.0f\"></embed>\
-                            </body></html>";
+    
     
     CGFloat width = self.view.frame.size.width;
     CGFloat height = self.view.frame.size.height;
@@ -562,7 +551,29 @@
     
     CGRect youTubeFrame = CGRectMake(width * (1 - scale) / 2, height * (1 - scale) / 2, width * scale, height * scale);
     CGRect closeButtonFrame = CGRectMake(cbX - cbD, cbY - cbD, 2 * cbD, 2 * cbD);
-    NSString *html = [NSString stringWithFormat:embedHTML, urlString, youTubeFrame.size.width, youTubeFrame.size.height];
+    
+    NSString *embedHTML = @"\
+                           <html><head>\
+                           <style type=\"text/css\">\
+                           body {\
+                           background-color: transparent;\
+                           color: white;\
+                           }\
+                           </style>\
+                           </head><body style=\"margin:0\">\
+                           <embed id=\"yt\" src=\"%@\" type=\"application/x-shockwave-flash\" \
+                           width=\"%0.0f\" height=\"%0.0f\"></embed>\
+                           </body></html>";
+    
+    // iOS6 change: URL format changed for YouTube embedded videos 
+    float iOSVer = [[[UIDevice currentDevice] systemVersion] floatValue];
+    NSString *html;
+    if (iOSVer < 6.0) 
+        html = [NSString stringWithFormat:embedHTML, urlString, youTubeFrame.size.width, youTubeFrame.size.height];
+    else
+        html = [NSString stringWithFormat:embedHTML, [urlString stringByReplacingOccurrencesOfString:@"watch?feature=player_embedded&v=" withString:@"v/"],
+                youTubeFrame.size.width, youTubeFrame.size.height];
+
     UIImage *closeButtonImage = [UIImage imageNamed:@"close.png"];
     
     self.youTubeTransparentView = [[UIView alloc] initWithFrame:self.view.frame];

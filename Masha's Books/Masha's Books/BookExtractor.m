@@ -304,12 +304,12 @@
         flag = 0;
         
         for (Book *book in self.bookQue) {
-            if (book.status == @"ready") {
+            if ([book.status isEqualToString:@"ready"]) {
                 NSLog(@"Book %@ is ready", book.title);
                 bookToDelete = book;
                 flag = 1;
             }
-            else if (book.status == @"failed") {
+            else if ([book.status isEqualToString:@"failed"]) {
                 NSLog(@"Book %@ failed", book.title);
                 //book.status = [NSString stringWithString:@"available"];
                 bookToDelete = book;

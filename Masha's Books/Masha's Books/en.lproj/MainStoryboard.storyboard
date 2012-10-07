@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2549" systemVersion="12A269" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="Jz7-kR-CaY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2843" systemVersion="12C54" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="Jz7-kR-CaY">
     <dependencies>
-        <deployment defaultVersion="1296" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1498"/>
+        <deployment defaultVersion="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1929"/>
     </dependencies>
     <scenes>
         <!--Settings View Controller - Settings View Controller-->
         <scene sceneID="0Fx-IG-xQZ">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="U8O-nR-AnZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController title="Settings View Controller" id="4VB-yG-v2V" customClass="SettingsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="wVh-em-qVq">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="719"/>
@@ -134,13 +133,13 @@
                         <outlet property="myBooksTableView" destination="aor-1G-OdE" id="KUD-yp-vvB"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="U8O-nR-AnZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-517" y="178"/>
         </scene>
         <!--My Books View Controller - My Books View Controller-->
         <scene sceneID="9NB-gE-jkU">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="RSf-8R-Xfj" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController title="My Books View Controller" id="i4c-PB-hBI" customClass="MyBooksViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="EFD-r1-w2L">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="719"/>
@@ -250,13 +249,13 @@
                         <outlet property="scrollViewContainer" destination="lfJ-I4-Nyn" id="ZOR-el-rBr"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RSf-8R-Xfj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-517" y="-1656"/>
         </scene>
         <!--Shop View Controller - Shop View Controller-->
         <scene sceneID="s3E-db-7l0">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="uDN-sc-5LV" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController title="Shop View Controller" id="qfq-Kt-d9p" customClass="ShopViewController" sceneMemberID="viewController">
                     <view key="view" opaque="NO" contentMode="scaleToFill" id="kKn-rT-VCm">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="719"/>
@@ -585,13 +584,13 @@
                         <outlet property="youtubeButton" destination="Dc8-xW-0pJ" id="tCP-SF-BWI"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uDN-sc-5LV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-517" y="-762"/>
         </scene>
         <!--Category Table View Controller-->
         <scene sceneID="y7E-q2-OpF">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="DAa-Oh-KWg" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="oOe-2c-AvR" customClass="CategoryTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Qwq-E3-fn2">
                         <rect key="frame" x="0.0" y="0.0" width="288" height="400"/>
@@ -616,13 +615,13 @@
                     </tableView>
                     <value key="contentSizeForViewInPopover" type="size" width="287" height="400"/>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DAa-Oh-KWg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="787" y="-578"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="I8b-r3-gmp">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="G9T-9i-TNR" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tabBarController storyboardIdentifier="TabBarController" definesPresentationContext="YES" id="Vx0-Iu-9ec" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="8Ta-5e-Rxt"/>
                     <nil key="simulatedBottomBarMetrics"/>
@@ -637,13 +636,13 @@
                         <segue destination="4VB-yG-v2V" kind="relationship" relationship="viewControllers" id="zJU-0Z-7mh"/>
                     </connections>
                 </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="G9T-9i-TNR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2153" y="-762"/>
         </scene>
         <!--Initial View Controller-->
         <scene sceneID="0Eo-UK-OAM">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Eyn-oh-JD5" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="Jz7-kR-CaY" customClass="InitialViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4AL-LF-Gp0">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
@@ -660,6 +659,7 @@
                     <navigationItem key="navigationItem" id="7uy-Jt-K1J"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Eyn-oh-JD5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-3374" y="-762"/>
         </scene>

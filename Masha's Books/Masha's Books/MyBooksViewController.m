@@ -318,7 +318,7 @@
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (alertView.title == @"Leave Masha's Bookstore?") {
+    if ([alertView.title isEqualToString:@"Leave Masha's Bookstore?"]) {
         if (buttonIndex == 1) [[UIApplication sharedApplication] openURL:[NSURL URLWithString:alertView.accessibilityHint]];
     }
 }
