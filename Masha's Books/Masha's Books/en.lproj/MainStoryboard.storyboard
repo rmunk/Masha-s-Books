@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2843" systemVersion="12C54" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="Jz7-kR-CaY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2843" systemVersion="12C60" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="Jz7-kR-CaY">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1929"/>
@@ -17,7 +17,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <button opaque="NO" tag="1" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="cbD-IM-XWu">
+                            <button hidden="YES" opaque="NO" tag="1" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="cbD-IM-XWu">
                                 <rect key="frame" x="27" y="64" width="42" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -31,7 +31,7 @@
                                     <action selector="topButtonPressed:" destination="4VB-yG-v2V" eventType="touchUpInside" id="TJv-xN-HNt"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" tag="2" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="Cvu-Mk-lGW">
+                            <button hidden="YES" opaque="NO" tag="2" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="Cvu-Mk-lGW">
                                 <rect key="frame" x="77" y="64" width="42" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -42,7 +42,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
-                            <button opaque="NO" tag="3" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="VPG-0x-vdO">
+                            <button hidden="YES" opaque="NO" tag="3" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="VPG-0x-vdO">
                                 <rect key="frame" x="917" y="64" width="42" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -56,7 +56,7 @@
                                     <action selector="topButtonPressed:" destination="4VB-yG-v2V" eventType="touchUpInside" id="1W4-GW-qeI"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" tag="4" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="34L-0Z-zWP">
+                            <button hidden="YES" opaque="NO" tag="4" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="34L-0Z-zWP">
                                 <rect key="frame" x="968" y="64" width="42" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -145,7 +145,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="719"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="-1" contentMode="center" image="mybooks REF.png" id="SxL-kz-zDU">
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="-1" contentMode="center" image="mybooks_norm.png" id="SxL-kz-zDU">
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </imageView>
@@ -179,7 +179,7 @@
                                 <rect key="frame" x="335" y="376" width="37" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
-                            <button opaque="NO" tag="1" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="esv-JK-l7K">
+                            <button hidden="YES" opaque="NO" tag="1" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="esv-JK-l7K">
                                 <rect key="frame" x="27" y="64" width="42" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -193,7 +193,7 @@
                                     <action selector="topButtonPressed:" destination="i4c-PB-hBI" eventType="touchUpInside" id="al2-AF-33b"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" tag="2" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="rG6-Gf-5Yn">
+                            <button hidden="YES" opaque="NO" tag="2" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="rG6-Gf-5Yn">
                                 <rect key="frame" x="77" y="64" width="42" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -207,7 +207,7 @@
                                     <action selector="topButtonPressed:" destination="i4c-PB-hBI" eventType="touchUpInside" id="bow-PP-gUL"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" tag="3" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="zbY-eG-Hxh">
+                            <button hidden="YES" opaque="NO" tag="3" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="zbY-eG-Hxh">
                                 <rect key="frame" x="917" y="64" width="42" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -221,7 +221,7 @@
                                     <action selector="topButtonPressed:" destination="i4c-PB-hBI" eventType="touchUpInside" id="cWA-WK-urK"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" tag="4" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="ZxN-rK-ybZ">
+                            <button hidden="YES" opaque="NO" tag="4" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="ZxN-rK-ybZ">
                                 <rect key="frame" x="967" y="64" width="42" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -406,10 +406,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <progressView opaque="NO" contentMode="scaleToFill" progressViewStyle="bar" progress="0.5" id="af5-7l-ada">
-                                <rect key="frame" x="356" y="148" width="138" height="11"/>
+                                <rect key="frame" x="361" y="305" width="252" height="11"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="progressTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="trackTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="progressTintColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </progressView>
                             <webView opaque="NO" contentMode="scaleToFill" id="WnR-hZ-Zew">
                                 <rect key="frame" x="686" y="124" width="311" height="538"/>
@@ -554,20 +553,12 @@
                                     <action selector="topButtonPressed:" destination="qfq-Kt-d9p" eventType="touchUpInside" id="hx8-U9-GE3"/>
                                 </connections>
                             </button>
-                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="WdL-Bg-fMO">
-                                <rect key="frame" x="386" y="294" width="203" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Masha's Shop" image="tab-store.png" id="mp9-Qy-S3d"/>
                     <connections>
-                        <outlet property="activityLabel" destination="WdL-Bg-fMO" id="qcm-Kr-YxK"/>
                         <outlet property="backgroundView" destination="zds-sV-jqY" id="hU0-RK-Ulx"/>
                         <outlet property="bookTitleLabel" destination="cus-tJ-CEc" id="DXl-Bj-SX2"/>
                         <outlet property="bookWebView" destination="WnR-hZ-Zew" id="bNb-8o-MEd"/>
@@ -679,7 +670,7 @@
         <image name="like.png" width="52" height="27"/>
         <image name="mail.png" width="42" height="40"/>
         <image name="masha.png" width="512" height="768"/>
-        <image name="mybooks REF.png" width="1024" height="768"/>
+        <image name="mybooks_norm.png" width="1024" height="768"/>
         <image name="preview.png" width="37" height="36"/>
         <image name="rate3.png" width="38" height="37"/>
         <image name="settings.png" width="1024" height="768"/>
@@ -691,6 +682,73 @@
         <image name="twitter1.png" width="42" height="40"/>
         <image name="web.png" width="42" height="40"/>
     </resources>
+    <classes>
+        <class className="BooksTableCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BooksTableCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="activityView" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="bookTitle" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="coverImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="rateImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="shortDescription" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="statusLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="tagImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="transparencyView" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="CategoryTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CategoryTableViewController.h"/>
+        </class>
+        <class className="InitialViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/InitialViewController.h"/>
+        </class>
+        <class className="MyBooksViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MyBooksViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="backgroundImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="leftBookImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="loadingIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="mashaImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="scrollViewContainer" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="ScrollViewContainer" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ScrollViewContainer.h"/>
+            <relationships>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+            </relationships>
+        </class>
+        <class className="SettingsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="topButtonPressed:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="myBooksTableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="ShopViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ShopViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="categorySelection:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="activityLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="activityView" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="backgroundView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="bookTitleLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="bookWebView" candidateClass="UIWebView"/>
+                <relationship kind="outlet" name="booksTableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="buyButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="categoryButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="downloadProgressView" candidateClass="UIProgressView"/>
+                <relationship kind="outlet" name="facebookButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="priceLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="rateImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="tagViewLarge" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="thumbImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="twitterButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="youtubeButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <nil key="statusBar"/>
         <simulatedOrientationMetrics key="orientation" orientation="landscapeRight"/>

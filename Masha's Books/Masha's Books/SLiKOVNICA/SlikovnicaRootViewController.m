@@ -47,6 +47,9 @@
 
 - (void)setCurrentPage:(SlikovnicaDataViewController *)currentPage
 {
+    if (self.currentPage) {
+        [self.currentPage stopAudio];
+    }
     _currentPage = currentPage;
     self.modelController.currentPage = currentPage;
     if ([self.pageViewController.viewControllers indexOfObject:currentPage] != 0)

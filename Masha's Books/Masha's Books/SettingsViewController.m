@@ -11,6 +11,7 @@
 #import "Page.h"
 #import "Image.h"
 #import "UIImage+Resize.h"
+#import "Reachability.h"
 
 
 @interface SettingsViewController () <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
@@ -117,12 +118,24 @@
     }
     else if (editingStyle == UITableViewCellEditingStyleInsert)
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Restore Book"
-                                                        message:[NSString stringWithFormat:@"Do you want to restore book\n \"%@\"?", self.selectedBook.title]
-                                                       delegate:self
-                                              cancelButtonTitle:@"No"
-                                              otherButtonTitles:@"Yes", nil];
-        [alert show];
+        Reachability *reachability = [Reachability reachabilityWithHostname:@"www.mashasbookstore.com"];
+        if (reachability.currentReachabilityStatus == 0) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No network connection"
+                                                            message:@"You must be connected to internet to restore book content"
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+           
+        }
+        else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Restore Book"
+                                                            message:[NSString stringWithFormat:@"Do you want to restore book\n \"%@\"?", self.selectedBook.title]
+                                                           delegate:self
+                                                  cancelButtonTitle:@"No"
+                                                  otherButtonTitles:@"Yes", nil];
+            [alert show];
+        }
     }
 }
 

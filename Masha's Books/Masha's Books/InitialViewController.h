@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "MBDatabase.h"
+#import "Reachability.h"
 
-@interface InitialViewController : UIViewController
+@interface InitialViewController : UIViewController <UITabBarControllerDelegate>
 
 @end

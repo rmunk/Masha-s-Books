@@ -92,8 +92,6 @@
 	[super viewDidLoad];
 
     self.downloadProgressView.hidden = YES;
-    CGAffineTransform transform = CGAffineTransformMakeScale(1.0f, 2.0f);
-    self.downloadProgressView.transform = transform;
     self.categoryButton.titleLabel.hidden = NO;
 
     self.categoriesInDatabase = [self.database getCategoriesInDatabase];

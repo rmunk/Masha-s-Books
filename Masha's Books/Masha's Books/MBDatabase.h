@@ -29,6 +29,7 @@
 @interface MBDatabase : NSObject <NSXMLParserDelegate>
 
 - (MBDatabase *)initMBD;
+- (void)loadMBD;
 
 - (void)userBuysBook:(Book *)book;
 - (void)userDeletesBook:(Book *)book;

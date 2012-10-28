@@ -14,6 +14,9 @@
 		BA158111160554C40000AFEC /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = BA158110160554C30000AFEC /* Image.m */; };
 		BA158114160554C50000AFEC /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = BA158113160554C40000AFEC /* Category.m */; };
 		BA15811A160554C70000AFEC /* Page.m in Sources */ = {isa = PBXBuildFile; fileRef = BA158119160554C60000AFEC /* Page.m */; };
+		BA25A1DA163C853900819C52 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = BA25A1D9163C853900819C52 /* Reachability.m */; };
+		BA25A1DB163C855500819C52 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = BA25A1D9163C853900819C52 /* Reachability.m */; };
+		BA25A1DD163C859F00819C52 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA25A1DC163C859F00819C52 /* SystemConfiguration.framework */; };
 		BA651EE515FB41B000352B2F /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = BA651EE015FB41B000352B2F /* UIImage+Alpha.m */; };
 		BA651EE615FB41B000352B2F /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = BA651EE215FB41B000352B2F /* UIImage+Resize.m */; };
 		BA651EE715FB41B000352B2F /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = BA651EE415FB41B000352B2F /* UIImage+RoundedCorner.m */; };
@@ -213,6 +216,9 @@
 		BA158113160554C40000AFEC /* Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Category.m; sourceTree = "<group>"; };
 		BA158118160554C60000AFEC /* Page.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Page.h; sourceTree = "<group>"; };
 		BA158119160554C60000AFEC /* Page.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Page.m; sourceTree = "<group>"; };
+		BA25A1D8163C853900819C52 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		BA25A1D9163C853900819C52 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		BA25A1DC163C859F00819C52 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		BA651EDF15FB41B000352B2F /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Alpha.h"; sourceTree = "<group>"; };
 		BA651EE015FB41B000352B2F /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Alpha.m"; sourceTree = "<group>"; };
 		BA651EE115FB41B000352B2F /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
@@ -451,6 +457,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA25A1DD163C859F00819C52 /* SystemConfiguration.framework in Frameworks */,
 				C093EB58159E784100035D20 /* libz.dylib in Frameworks */,
 				BAF45EAB15C5F20C00A461FC /* StoreKit.framework in Frameworks */,
 				C08247201576895D00054A3A /* CoreData.framework in Frameworks */,
@@ -824,6 +831,7 @@
 		C0B3FF5415742E41002DF30F = {
 			isa = PBXGroup;
 			children = (
+				BA25A1DC163C859F00819C52 /* SystemConfiguration.framework */,
 				C0B3FF6915742E41002DF30F /* Masha's Books */,
 				C0B3FF8715742E42002DF30F /* Masha's BooksTests */,
 				C0B3FF6215742E41002DF30F /* Frameworks */,
@@ -889,6 +897,8 @@
 				C09C32C215F6C71F00C21ADB /* AVAudioPlayer+PGFade.m */,
 				C00383701575510F00999A19 /* ScrollViewContainer.h */,
 				C00383711575510F00999A19 /* ScrollViewContainer.m */,
+				BA25A1D8163C853900819C52 /* Reachability.h */,
+				BA25A1D9163C853900819C52 /* Reachability.m */,
 				C0B3FF7215742E41002DF30F /* MashasBooksAppDelegate.h */,
 				C0B3FF7315742E41002DF30F /* MashasBooksAppDelegate.m */,
 				C0B3FF6B15742E41002DF30F /* Masha's Books-Info.plist */,
@@ -1117,6 +1127,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA25A1DB163C855500819C52 /* Reachability.m in Sources */,
 				BA651EED15FB454000352B2F /* UIImage+Resize.m in Sources */,
 				C09D3E7515F81A42003D1896 /* AVAudioPlayer+PGFade.m in Sources */,
 				C0B3FF7015742E41002DF30F /* main.m in Sources */,
@@ -1197,6 +1208,7 @@
 				BA651EE515FB41B000352B2F /* UIImage+Alpha.m in Sources */,
 				BA651EE615FB41B000352B2F /* UIImage+Resize.m in Sources */,
 				BA651EE715FB41B000352B2F /* UIImage+RoundedCorner.m in Sources */,
+				BA25A1DA163C853900819C52 /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

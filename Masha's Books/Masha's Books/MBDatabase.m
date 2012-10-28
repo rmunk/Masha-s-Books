@@ -7,6 +7,7 @@
 //
 
 #import "MBDatabase.h"
+#import "Reachability.h"
 
 @interface MBDatabase()
 
@@ -47,34 +48,46 @@
     [self.df setDateFormat:@"dd.mm.yyyy"]; 
     
     self.extractor = [[BookExtractor alloc] initExtractorWithShop:self];
-    [self loadMBD];
+    //[self loadMBD];
     
     return self;
 }
 
 - (void)loadMBD {
     MBDLOG(@"Picturebook shop: Refreshing shop from URL %@", [self.urlBase description]);
+    Reachability *reachability = [Reachability reachabilityWithHostname:@"www.mashasbookstore.com"];
     
-    self.xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:self.urlBase];
-    if (self.xmlParser) 
-        MBDLOG(@"Database found at %@", self.urlBase.description);
-    
-    [self.xmlParser setDelegate:self];
-    
-    BOOL parsingSuccesfull = [self.xmlParser parse];
-    
-    if (parsingSuccesfull == YES) {
-        [Design loadDesignImages];
-        
-        [Category loadBackgrounds];
-        
-        [Book linkBooksToCategoriesWithLinker:self.categoryToBookMap];
-        
-        [Book loadCoversFromURL:URL_BookCovers forDatabase:self];
-        
+    if (reachability.currentReachabilityStatus == 0) {
+        NSLog(@"Site not available! Network status: %@", reachability.currentReachabilityString);
+        [self databaseLoaded];
     }
     else {
-        MBDLOG(@"Error parsing XML from %@", self.urlBase);
+        NSLog(@"Site available! Network status: %@", reachability.currentReachabilityString);
+
+        self.xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:self.urlBase];
+        if (!self.xmlParser) {
+            MBDLOG(@"Database not found at %@", self.urlBase.description);
+        }
+        else {
+            MBDLOG(@"Database found at %@", self.urlBase.description);
+            [self.xmlParser setDelegate:self];
+            
+            BOOL parsingSuccesfull = [self.xmlParser parse];
+    
+            if (parsingSuccesfull == YES) {
+                [Design loadDesignImages];
+        
+                [Category loadBackgrounds];
+        
+                [Book linkBooksToCategoriesWithLinker:self.categoryToBookMap];
+        
+                [Book loadCoversFromURL:URL_BookCovers forDatabase:self];
+        
+            }
+            else {
+                MBDLOG(@"Error parsing XML from %@", self.urlBase);
+            }
+        }
     }
 }
 
@@ -100,6 +113,17 @@
 - (NSOrderedSet *)getBoughtBooks
 {
     return [Book getBoughtBooks];
+}
+
+- (NSOrderedSet *)getDownloadedBooks
+{
+    NSMutableOrderedSet *downloadedBooks = [[NSMutableOrderedSet alloc] init];
+    for (Book *book in [Book getBoughtBooks]) {
+        if (book.downloaded != 0) {
+            [downloadedBooks addObject:book];
+        }
+    }
+    return [downloadedBooks copy];
 }
 
 #pragma mark - Action methods
